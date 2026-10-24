@@ -24,3 +24,11 @@ Visual previews:
 - [Destination and plans](previews/plans-desktop.png)
 
 No live payments, provider purchases, production deployment, or eSIM provisioning occurred.
+
+## Visual refinement verification
+
+The refined production build passed lint, TypeScript, Prettier, 4 catalog tests and 10 desktop/mobile browser scenarios. The responsive browser flow now also verifies that the sticky header stays at viewport top after scrolling. Search, trip-duration filtering, equivalent locale routes, FAQ, plan details, inactive checkout and focus restoration continue to pass.
+
+The repeated UI audit returned no findings for its scoped contrast/accessibility rules at 360 and 1440 px or overflow checks at 360, 768, 1024 and 1440 px. The preview images above were regenerated from the production server after the update. The reusable destination and hero image slots use original provisional illustrations; the six destination SVG assets share one visual direction and the hero retains the original traveler-cat asset.
+
+The brand blue remains `#1677FF`; buttons with small white labels use `#126DE8` to meet text contrast in the audited states. No external services, credentials, payments or database access were introduced by this refinement.

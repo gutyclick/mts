@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, MapPin, Search, X } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin, Search, X } from "lucide-react";
 import { searchDestinations } from "@/lib/catalog";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 
@@ -79,9 +79,11 @@ export function DestinationSearch({
         }}
       >
         <div className="destination-field">
-          <label htmlFor={`${id}-input`}>{t.destination}</label>
+          <label htmlFor={`${id}-input`}>
+            <MapPin size={14} />
+            {t.destination}
+          </label>
           <div className="search-input-wrap">
-            <Search size={19} />
             <input
               ref={input}
               id={`${id}-input`}
@@ -147,7 +149,10 @@ export function DestinationSearch({
         </div>
         {!compact && (
           <div className="duration-field">
-            <label htmlFor={`${id}-duration`}>{t.duration}</label>
+            <label htmlFor={`${id}-duration`}>
+              <CalendarDays size={14} />
+              {t.duration}
+            </label>
             <select
               id={`${id}-duration`}
               value={duration}

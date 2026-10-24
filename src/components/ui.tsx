@@ -1,6 +1,25 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, type LucideIcon } from "lucide-react";
+
+export function IconBadge({
+  icon: Icon,
+  tone = "blue",
+  className = "",
+}: {
+  icon: LucideIcon;
+  tone?: "blue" | "orange";
+  className?: string;
+}) {
+  return (
+    <span
+      className={`icon-badge icon-badge-${tone} ${className}`}
+      aria-hidden="true"
+    >
+      <Icon size={21} strokeWidth={1.8} />
+    </span>
+  );
+}
 
 export function Brand() {
   return (

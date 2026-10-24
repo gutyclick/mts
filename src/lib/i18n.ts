@@ -48,7 +48,7 @@ export const dictionaries = {
     heroAccent: "wherever",
     heroEnd: "you go.",
     heroDescription:
-      "Explore affordable eSIM plans for your next adventure. Stay connected wherever your journey takes you.",
+      "Find a little data for your next big adventure. Explore travel eSIMs and take your connection with you.",
     destination: "Where are you headed?",
     searchPlaceholder: "Search a country or region",
     duration: "Trip duration",
@@ -70,12 +70,12 @@ export const dictionaries = {
       },
       { title: "Secure checkout", body: "Built for peace of mind." },
       { title: "Easy installation", body: "A few taps and you're ready." },
+      { title: "Clear pricing", body: "The details, before you decide." },
     ],
     previewNotice:
       "You're exploring our preview catalog. Prices and plans are illustrative; checkout is not yet available.",
     popularTitle: "Explore popular destinations",
-    popularDescription:
-      "Big city weekends or off-the-grid adventures. Find your connection.",
+    popularDescription: "A city break or a bigger adventure. Start here.",
     allDestinations: "All destinations",
     from: "From",
     samplePrice: "Sample price",
@@ -88,15 +88,15 @@ export const dictionaries = {
     steps: [
       {
         title: "Choose your destination",
-        body: "Find a data plan that fits where you're going and how long you're staying.",
+        body: "Pick your destination and a plan that fits your trip.",
       },
       {
         title: "Buy your eSIM",
-        body: "Once checkout launches, you'll be able to pay online and receive installation details.",
+        body: "Once checkout launches, pay online and receive your setup guide.",
       },
       {
         title: "Scan and connect",
-        body: "Follow the installation guide, then activate according to your plan's terms.",
+        body: "Install with your guide. Activate when your plan's terms say to.",
       },
     ],
     whyEyebrow: "MADE FOR THE WAY YOU TRAVEL",
@@ -274,7 +274,7 @@ export const dictionaries = {
     heroAccent: "dondequiera",
     heroEnd: "que vayas.",
     heroDescription:
-      "Explora planes eSIM para tu próxima aventura. Mantente conectado, sin importar adónde te lleve el viaje.",
+      "Un poco de datos para tu próxima gran aventura. Explora planes eSIM y lleva tu conexión contigo.",
     destination: "¿Cuál es tu próximo destino?",
     searchPlaceholder: "Busca un país o región",
     duration: "Duración del viaje",
@@ -296,12 +296,13 @@ export const dictionaries = {
       },
       { title: "Pago seguro", body: "Diseñado para tu tranquilidad." },
       { title: "Instalación sencilla", body: "Unos pasos y a explorar." },
+      { title: "Precios claros", body: "Los detalles, antes de elegir." },
     ],
     previewNotice:
       "Estás explorando nuestro catálogo de prueba. Los precios y planes son ilustrativos; el pago aún no está disponible.",
     popularTitle: "Explora los destinos favoritos",
     popularDescription:
-      "Escapadas urbanas o aventuras lejanas. Encuentra tu conexión.",
+      "Una escapada o una gran aventura. Tu viaje empieza aquí.",
     allDestinations: "Todos los destinos",
     from: "Desde",
     samplePrice: "Precio de ejemplo",
@@ -314,15 +315,15 @@ export const dictionaries = {
     steps: [
       {
         title: "Elige tu destino",
-        body: "Encuentra un plan que se ajuste a tu destino y a los días de tu viaje.",
+        body: "Elige tu destino y un plan que se ajuste a tu viaje.",
       },
       {
         title: "Compra tu eSIM",
-        body: "Cuando habilitemos el pago, podrás comprar y recibir las instrucciones en línea.",
+        body: "Cuando habilitemos el pago, compra en línea y recibe tu guía.",
       },
       {
         title: "Escanea y conéctate",
-        body: "Sigue la guía de instalación y activa el plan según sus condiciones.",
+        body: "Instala con tu guía y activa según las condiciones del plan.",
       },
     ],
     whyEyebrow: "PARA TU FORMA DE VIAJAR",

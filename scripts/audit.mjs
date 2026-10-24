@@ -3,6 +3,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const browser = await chromium.launch({ channel: "msedge", headless: true });
 const failures = [];
+const baseURL = process.env.BASE_URL ?? "http://localhost:3000";
 for (const width of [360, 768, 1024, 1440]) {
   const page = await browser.newPage({ viewport: { width, height: 950 } });
   for (const path of [
@@ -12,7 +13,7 @@ for (const width of [360, 768, 1024, 1440]) {
     "/en/esim/japan",
     "/es/compatibilidad",
   ]) {
-    await page.goto(`http://localhost:3000${path}`, {
+    await page.goto(`${baseURL}${path}`, {
       waitUntil: "networkidle",
     });
     const overflow = await page.evaluate(

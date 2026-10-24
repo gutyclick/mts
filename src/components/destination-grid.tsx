@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Globe2 } from "lucide-react";
 import { destinations, money, type Destination } from "@/lib/catalog";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
+import { DestinationArtwork } from "./illustrations";
 
 export function DestinationGrid({
   locale,
@@ -21,12 +21,7 @@ export function DestinationGrid({
           className="destination-card"
         >
           <div className="destination-photo">
-            <Image
-              src={destination.image}
-              alt={destination.name[locale]}
-              fill
-              sizes="(max-width: 540px) 46vw, (max-width: 900px) 45vw, 29vw"
-            />
+            <DestinationArtwork destination={destination} locale={locale} />
             <span className="country-stamp">
               {destination.type === "region" ? (
                 <Globe2 size={15} />

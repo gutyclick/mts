@@ -6,6 +6,7 @@ export interface Destination {
   intro: Record<Locale, string>;
   aliases: string[];
   image: string;
+  illustration?: string;
   code: string;
   type: "country" | "region";
   startingPrice: number;
@@ -32,6 +33,7 @@ export const destinations: Destination[] = [
     },
     aliases: ["japon", "nippon", "tokyo", "tokio", "kyoto"],
     image: "/images/japan.jpg",
+    illustration: "/illustrations/japan.svg",
     code: "JP",
     type: "country",
     startingPrice: 4.5,
@@ -54,6 +56,7 @@ export const destinations: Destination[] = [
       "nueva york",
     ],
     image: "/images/united-states.jpg",
+    illustration: "/illustrations/united-states.svg",
     code: "US",
     type: "country",
     startingPrice: 4,
@@ -78,6 +81,7 @@ export const destinations: Destination[] = [
       "italia",
     ],
     image: "/images/europe.jpg",
+    illustration: "/illustrations/europe.svg",
     code: "EU",
     type: "region",
     startingPrice: 5,
@@ -95,6 +99,7 @@ export const destinations: Destination[] = [
     },
     aliases: ["thai", "tailandia", "bangkok", "phuket"],
     image: "/images/thailand.jpg",
+    illustration: "/illustrations/thailand.svg",
     code: "TH",
     type: "country",
     startingPrice: 3.5,
@@ -120,6 +125,7 @@ export const destinations: Destination[] = [
       "escocia",
     ],
     image: "/images/united-kingdom.jpg",
+    illustration: "/illustrations/united-kingdom.svg",
     code: "GB",
     type: "country",
     startingPrice: 4.5,
@@ -134,6 +140,7 @@ export const destinations: Destination[] = [
     },
     aliases: ["au", "sydney", "sidney", "melbourne"],
     image: "/images/australia.jpg",
+    illustration: "/illustrations/australia.svg",
     code: "AU",
     type: "country",
     startingPrice: 5,

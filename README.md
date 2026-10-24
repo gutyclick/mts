@@ -28,7 +28,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 - Next.js App Router, TypeScript estricto, Tailwind CSS 4, Lucide, ESLint y Prettier. Componentes nativos accesibles en lugar de agregar una biblioteca de UI sin necesidad.
 - Portada con héroe, búsqueda, duración opcional, beneficios, seis destinos, pasos, ventajas, FAQ y pie de página.
-- Identidad azul/naranja, Plus Jakarta Sans e Inter mediante `next/font`, sistema de tokens, gato viajero SVG original reemplazable y fotografía local optimizada por `next/image`.
+- Identidad azul/naranja, Plus Jakarta Sans e Inter mediante `next/font`, sistema de tokens, gato viajero SVG original y miniaturas ilustradas reemplazables mediante `next/image`.
 - Diccionarios centralizados, rutas traducidas y cambio de idioma que conserva la página equivalente. El cambio de idioma realiza navegación de documento para actualizar correctamente `<html lang>`; el resto utiliza navegación de Next.js.
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
 - Directorio filtrable; páginas de Japón, Estados Unidos, Europa, Tailandia, Reino Unido y Australia.
@@ -111,9 +111,17 @@ La búsqueda por alias, rutas equivalentes, precios de prueba y filtros tienen t
 
 ## Assets
 
+### Refinamiento visual
+
+La portada usa un header fijo con fondo translúcido, controles de relieve discreto, buscador elevado con dos campos y CTA completo, cuatro beneficios, miniaturas ilustradas, secciones más compactas y FAQ con transiciones nativas progresivas. Se conservan las rutas, el catálogo, las traducciones y el comportamiento de compra desactivado.
+
+El azul de marca es `#1677FF`, con `#126DE8` para botones con texto blanco y `#0D5BD7` para hover y texto. El naranja `#FF8A3D` y su superficie `#FFE7D6` aportan personalidad; el titular usa un derivado de naranja con contraste suficiente. Los estilos de marketing viven en `src/styles/marketing.css`; las bases y páginas informativas/planes permanecen en `src/app/globals.css`.
+
+`IconBadge` unifica los iconos de confianza y ventajas. `MascotIllustration` y `DestinationArtwork` separan el asset de su composición. Las seis ilustraciones provisionales originales de `public/illustrations/` comparten geometría, proporción y paleta; se reemplazan mediante `Destination.illustration` en el catálogo. Si se omite esa propiedad, el componente admite la fotografía original como alternativa. La mascota se usa únicamente en el hero.
+
 `public/images/traveler-cat.svg` es una ilustración original provisional, construida para esta fase. Sustituir este archivo por la mascota final conservando el espacio del componente `Hero`. No es la identidad final aprobada.
 
-Fotografías descargadas de Unsplash y servidas localmente. Procedencia:
+Fotografías originales conservadas como alternativas locales. Procedencia:
 
 | Destino        | Recurso de origen                                                                                         |
 | -------------- | --------------------------------------------------------------------------------------------------------- |

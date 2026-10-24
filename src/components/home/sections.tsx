@@ -13,10 +13,10 @@ import {
 } from "lucide-react";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 import { DestinationGrid } from "../destination-grid";
-import { ArrowLink, SectionHeading } from "../ui";
+import { ArrowLink, IconBadge, SectionHeading } from "../ui";
 
 export function TrustStrip({ locale }: { locale: Locale }) {
-  const icons = [Zap, ShieldCheck, QrCode];
+  const icons = [Zap, ShieldCheck, QrCode, Tags];
   return (
     <div className="container">
       <div className="trust-strip">
@@ -24,7 +24,7 @@ export function TrustStrip({ locale }: { locale: Locale }) {
           const Icon = icons[index];
           return (
             <div className="trust-item" key={item.title}>
-              <Icon size={23} strokeWidth={1.6} />
+              <IconBadge icon={Icon} tone={index === 0 ? "orange" : "blue"} />
               <div>
                 <h2>{item.title}</h2>
                 <p>{item.body}</p>
@@ -40,7 +40,7 @@ export function TrustStrip({ locale }: { locale: Locale }) {
 export function PopularDestinations({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
   return (
-    <section className="section container">
+    <section className="section container popular-destinations">
       <SectionHeading title={t.popularTitle} description={t.popularDescription}>
         <ArrowLink href={pathFor(locale, "destinations")}>
           {t.allDestinations}
@@ -97,9 +97,7 @@ export function WhyUs({ locale }: { locale: Locale }) {
   return (
     <section className="section container why-section">
       <div className="why-intro">
-        <span className="mini-mark">
-          <Sparkles size={24} />
-        </span>
+        <IconBadge icon={Sparkles} tone="orange" className="mini-mark" />
         <p className="eyebrow">{t.whyEyebrow}</p>
         <h2>{t.whyTitle}</h2>
         <p>{t.whyDescription}</p>
@@ -109,7 +107,7 @@ export function WhyUs({ locale }: { locale: Locale }) {
           const Icon = icons[index];
           return (
             <div className="benefit" key={benefit.title}>
-              <Icon size={24} strokeWidth={1.6} />
+              <IconBadge icon={Icon} />
               <h3>{benefit.title}</h3>
               <p>{benefit.body}</p>
             </div>

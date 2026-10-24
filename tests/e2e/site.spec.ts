@@ -110,6 +110,16 @@ test("responsive layouts have no overflow, assets load and mobile navigation wor
   ]) {
     await page.goto(route);
     await expect(page.locator("h1")).toBeVisible();
+    await page.evaluate(() => window.scrollTo(0, 500));
+    await expect
+      .poll(() =>
+        page
+          .locator(".site-header")
+          .evaluate((element) =>
+            Math.round(element.getBoundingClientRect().top),
+          ),
+      )
+      .toBe(0);
     const widths = await page.evaluate(() => ({
       page: document.documentElement.scrollWidth,
       viewport: window.innerWidth,

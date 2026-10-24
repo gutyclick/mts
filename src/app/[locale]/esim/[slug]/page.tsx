@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Globe2, Smartphone } from "lucide-react";
 import { FAQ } from "@/components/faq";
 import { PlanBrowser } from "@/components/plan-browser";
+import { DestinationArtwork } from "@/components/illustrations";
 import { destinations } from "@/lib/catalog";
 import { dictionaries, isLocale, locales, pathFor } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
@@ -59,12 +59,11 @@ export default async function DestinationPage({
           <p>{destination.intro[locale]}</p>
         </div>
         <div className="banner-photo">
-          <Image
-            src={destination.image}
-            alt={destination.name[locale]}
-            fill
+          <DestinationArtwork
+            destination={destination}
+            locale={locale}
             sizes="(max-width: 650px) 90vw, 34vw"
-            priority
+            eager
           />
         </div>
       </section>

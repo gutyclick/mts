@@ -24,7 +24,9 @@ export function FAQ({
               {faq.question}
               <Plus size={19} />
             </summary>
-            <p>{faq.answer}</p>
+            <div className="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
           </details>
         ))}
       </div>

@@ -54,11 +54,19 @@ for (const [name, width, height, path, fullPage = true] of [
       })
       .click();
     await page.screenshot({ path: `docs/previews/${name}-compatibility.png` });
+    const checker = page.getByRole("dialog");
+    await checker.getByRole("button", { name: /Apple/ }).click();
+    await checker.locator(".compat-footer .button-primary").click();
+    await checker.locator('input[type="search"]').fill("iPhone 16");
+    await page.screenshot({
+      path: `docs/previews/${name}-compatibility-search.png`,
+    });
     await page.keyboard.press("Escape");
   }
   if (name === "plans-mobile") {
-    await page.getByRole("button", { name: "Ver plan" }).first().click();
-    await page.screenshot({ path: "docs/previews/mobile-plan-sheet.png" });
+    await page.locator(".plan-option input").nth(1).check();
+    await page.locator(".plan-information").scrollIntoViewIfNeeded();
+    await page.screenshot({ path: "docs/previews/mobile-plan-selection.png" });
   }
   if (name === "checkout-mobile" || name === "checkout-desktop") {
     await page

@@ -17,8 +17,10 @@ test("search supports keyboard, localized destination and trip duration", async 
   await expect(
     page.getByRole("heading", { name: "Japón eSIM", exact: true }),
   ).toBeVisible();
-  await expect(page.locator(".plan-card").first()).toBeVisible();
-  for (const validity of await page.locator(".plan-card .plan-validity").all())
+  await expect(page.locator(".plan-option").first()).toBeVisible();
+  for (const validity of await page
+    .locator(".plan-option .plan-validity")
+    .all())
     await expect(validity).toHaveText("15 días");
   await page
     .getByRole("link", { name: "Cambiar idioma: English" })
@@ -27,11 +29,11 @@ test("search supports keyboard, localized destination and trip duration", async 
   await expect(page).toHaveURL(/\/en\/esim\/japan/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
 });
-test("plan details never complete a purchase and restore focus", async ({
+test("plan selection updates inline and never completes a purchase", async ({
   page,
 }) => {
   await page.goto("/en/esim/japan");
-  await expect(page.locator(".plan-card")).toHaveCount(23);
+  await expect(page.locator(".plan-option")).toHaveCount(23);
   await expect(page.getByRole("button", { name: /Daily data/ })).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText("Daily data");
   await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
@@ -39,18 +41,14 @@ test("plan details never complete a purchase and restore focus", async ({
   await page.getByLabel("Duration", { exact: true }).selectOption("7");
   await expect(page.locator(".empty-state")).toBeVisible();
   await page.getByRole("button", { name: "Reset filters" }).first().click();
-  const trigger = page.getByRole("button", { name: "View plan" }).first();
-  await trigger.click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByRole("dialog").locator(".plan-specs")).toContainText(
-    "Japan",
-  );
-  await expect(
-    page.getByRole("dialog").getByRole("button", { name: "Back to plans" }),
-  ).toBeVisible();
-  await page.keyboard.press("Escape");
+  const radio = page.getByRole("radio").nth(1);
+  await radio.check();
+  await expect(radio).toBeChecked();
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await expect(trigger).toBeFocused();
+  await expect(
+    page.getByRole("region", { name: "Full plan details", exact: true }),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/\/en\/esim\/japan\?plan=/);
 });
 test("empty search, FAQ, and equivalent informational routes work", async ({
   page,

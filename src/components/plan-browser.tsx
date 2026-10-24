@@ -1,29 +1,28 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import Link from "next/link";
-import { ArrowRight, CalendarDays, Info, Wifi, X } from "lucide-react";
-import { planPath } from "@/lib/experience-routes";
-import { experienceCopy } from "@/lib/experience-copy";
+import { ArrowDown, Check, SlidersHorizontal, Wifi } from "lucide-react";
 import type { Destination } from "@/lib/catalog";
-import { filterPlans, type Plan } from "@/lib/plan-utils";
-import { dictionaries, type Locale } from "@/lib/i18n";
+import { filterPlans, sortPlans, type Plan } from "@/lib/plan-utils";
+import { type Locale, pathFor } from "@/lib/i18n";
 import { catalogCopy } from "@/lib/catalog-copy";
-import { DestinationFlag } from "./destination-flag";
+import { PlanInformation } from "./experience/plan-information";
 
 export function PlanBrowser({
   locale,
   destination,
   availablePlans,
   initialDays = "",
+  initialPlanId = "",
 }: {
   locale: Locale;
   destination: Destination;
   availablePlans: Plan[];
   initialDays?: string;
+  initialPlanId?: string;
 }) {
-  const t = dictionaries[locale];
   const c = catalogCopy[locale];
+  const es = locale === "es";
   const id = useId();
   const durations = [...new Set(availablePlans.map((plan) => plan.days))].sort(
     (a, b) => a - b,
@@ -37,196 +36,204 @@ export function PlanBrowser({
   const [days, setDays] = useState(
     durations.includes(Number(initialDays)) ? initialDays : "",
   );
-  const [selected, setSelected] = useState<Plan | null>(null);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const plans = filterPlans(availablePlans, data, days);
+  const [order, setOrder] = useState<"data" | "days">("data");
+  const [selectedId, setSelectedId] = useState(initialPlanId);
+  const options = useRef<HTMLFieldSetElement>(null);
   useEffect(() => {
-    if (!selected) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    dialog.current?.showModal();
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [selected]);
-  const close = () => {
-    dialog.current?.close();
-    setSelected(null);
-  };
-  const reset = () => {
-    setData("");
-    setDays("");
-  };
+    if (!initialPlanId) return;
+    const list = options.current;
+    const row = list
+      ?.querySelector<HTMLInputElement>("input:checked")
+      ?.closest("label");
+    if (list && row)
+      list.scrollTop +=
+        row.getBoundingClientRect().top - list.getBoundingClientRect().top - 5;
+  }, [initialPlanId]);
+  const plans = sortPlans(filterPlans(availablePlans, data, days), order);
+  const allSorted = sortPlans(availablePlans);
+  const selected = plans.find((plan) => plan.id === selectedId) ?? plans[0];
+  function updateUrl(plan: Plan | undefined, duration: string) {
+    const query = new URLSearchParams(window.location.search);
+    if (plan) query.set("plan", plan.id);
+    else query.delete("plan");
+    if (duration) query.set("days", duration);
+    else query.delete("days");
+    const suffix = query.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${pathFor(locale, undefined, destination.slug)}${suffix ? `?${suffix}` : ""}`,
+    );
+  }
+  function filter(nextData: string, nextDays: string) {
+    setData(nextData);
+    setDays(nextDays);
+    const next = sortPlans(
+      filterPlans(availablePlans, nextData, nextDays),
+      order,
+    );
+    const active = next.find((plan) => plan.id === selected?.id) ?? next[0];
+    setSelectedId(active?.id ?? "");
+    updateUrl(active, nextDays);
+  }
   return (
-    <section className="plans-section catalog-browser">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">{destination.name[locale]}</p>
-          <h2>{t.plans}</h2>
-          <p className="section-description">{t.plansDescription}</p>
-        </div>
-        <span className="plan-result-count" aria-live="polite">
-          {plans.length} {plans.length === 1 ? c.plan : c.plans}
-        </span>
-      </div>
-      <div className="plan-filters">
-        <div className="filter-field">
-          <label htmlFor={`${id}-data`}>{c.data}</label>
+    <section
+      className="plan-workspace"
+      aria-label={es ? "Planes y ficha completa" : "Plans and full details"}
+    >
+      <div className="plan-selector">
+        <header className="plan-selector-heading">
+          <h2>{es ? "Elige tu plan" : "Choose your plan"}</h2>
+          <span aria-live="polite">
+            {plans.length} {plans.length === 1 ? c.plan : c.plans}
+          </span>
+        </header>
+        <div className="plan-controls">
+          <label htmlFor={`${id}-sort`}>
+            <SlidersHorizontal size={15} />
+            {es ? "Ordenar por" : "Sort by"}
+          </label>
           <select
-            id={`${id}-data`}
-            value={data}
-            onChange={(event) => setData(event.target.value)}
+            id={`${id}-sort`}
+            value={order}
+            onChange={(event) =>
+              setOrder(event.target.value as "data" | "days")
+            }
           >
-            <option value="">{c.allData}</option>
-            {allowances.map(([gb, label]) => (
-              <option key={gb} value={gb}>
-                {label}
-              </option>
-            ))}
+            <option value="data">
+              {es ? "GB: de menos a más" : "GB: low to high"}
+            </option>
+            <option value="days">
+              {es ? "Días: de menos a más" : "Days: low to high"}
+            </option>
           </select>
-        </div>
-        <div className="filter-field">
-          <label htmlFor={`${id}-days`}>{c.duration}</label>
-          <select
-            id={`${id}-days`}
-            value={days}
-            onChange={(event) => setDays(event.target.value)}
-          >
-            <option value="">{c.allDurations}</option>
-            {durations.map((duration) => (
-              <option key={duration} value={duration}>
-                {duration} {duration === 1 ? c.day : c.days}
-              </option>
-            ))}
-          </select>
-        </div>
-        {(data || days) && (
-          <button className="reset-button" onClick={reset}>
-            {c.reset}
-          </button>
-        )}
-      </div>
-      {plans.length > 0 ? (
-        <div className="plan-group">
-          <div className="plan-group-heading">
-            <h3>
-              {c.fixed}
-              <span>{plans.length}</span>
-            </h3>
-            <p>{c.fixedDescription}</p>
-          </div>
-          <div className="plans-grid">
-            {plans.map((plan) => (
-              <article
-                className="plan-card"
-                key={plan.id}
-                data-plan-id={plan.id}
+          <div className="plan-compact-filters">
+            <div>
+              <label htmlFor={`${id}-data`}>{c.data}</label>
+              <select
+                id={`${id}-data`}
+                value={data}
+                onChange={(event) => filter(event.target.value, days)}
               >
-                <div className="plan-card-top">
-                  <span className="plan-icon">
-                    <Wifi size={23} />
-                  </span>
-                  <span className="plan-type">{c.fixed}</span>
-                </div>
-                <p className="plan-name">{plan.name}</p>
-                <h3>{plan.allowance}</h3>
-                <p className="plan-validity">
-                  <CalendarDays size={16} />
-                  {plan.days} {plan.days === 1 ? c.day : c.days}
-                </p>
-                <div className="plan-destination">
-                  <DestinationFlag destination={destination} />
-                  <span>{destination.name[locale]}</span>
-                </div>
-                <button
-                  className="button button-secondary"
-                  onClick={() => setSelected(plan)}
-                >
-                  {c.details}
-                  <ArrowRight size={17} />
-                </button>
-              </article>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="empty-state">
-          <Wifi size={28} />
-          <p>{c.empty}</p>
-          <button className="button button-secondary" onClick={reset}>
-            {c.reset}
-          </button>
-        </div>
-      )}
-      <p className="catalog-disclaimer">
-        <Info size={16} />
-        {c.sourceNote}
-      </p>
-      <dialog
-        ref={dialog}
-        className="plan-dialog catalog-dialog"
-        aria-labelledby="plan-dialog-title"
-        onCancel={close}
-        onClick={(event) => {
-          if (event.target === dialog.current) close();
-        }}
-        onClose={() => setSelected(null)}
-      >
-        {selected && (
-          <>
-            <button
-              className="icon-button dialog-close"
-              onClick={close}
-              aria-label={t.close}
-            >
-              <X size={21} />
-            </button>
-            <DestinationFlag destination={destination} />
-            <p className="eyebrow">{t.details}</p>
-            <h2 id="plan-dialog-title">{selected.name}</h2>
-            <div className="dialog-data">
-              <span>
-                <Wifi size={17} />
-                {selected.allowance}
-              </span>
-              <span>
-                <CalendarDays size={17} />
-                {selected.days} {selected.days === 1 ? c.day : c.days}
-              </span>
+                <option value="">{es ? "Todos" : "Any"}</option>
+                {allowances.map(([gb, label]) => (
+                  <option key={gb} value={gb}>
+                    {label}
+                  </option>
+                ))}
+              </select>
             </div>
-            <dl className="plan-specs">
-              {[
-                [c.destination, destination.name[locale]],
-                [
-                  c.coverageType,
-                  destination.type === "region" ? c.region : c.country,
-                ],
-                [c.planType, c.fixed],
-                [c.planName, selected.name],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <dt>{label}</dt>
-                  <dd>{value}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="dialog-disclaimer">{c.sourceNote}</p>
-            <Link
-              className="button button-primary full-width plan-full-details"
-              href={planPath(locale, destination.slug, selected.id)}
-            >
-              {experienceCopy[locale].fullDetails}
-              <ArrowRight size={17} />
-            </Link>
-            <button
-              className="button button-primary full-width"
-              onClick={close}
-            >
-              {c.back}
+            <div>
+              <label htmlFor={`${id}-days`}>{c.duration}</label>
+              <select
+                id={`${id}-days`}
+                value={days}
+                onChange={(event) => filter(data, event.target.value)}
+              >
+                <option value="">{es ? "Todos" : "Any"}</option>
+                {durations.map((duration) => (
+                  <option key={duration} value={duration}>
+                    {duration} {duration === 1 ? c.day : c.days}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {(data || days) && (
+            <button className="reset-button" onClick={() => filter("", "")}>
+              {c.reset}
             </button>
-          </>
+          )}
+        </div>
+        {plans.length ? (
+          <fieldset ref={options} className="plan-options">
+            <legend className="sr-only">
+              {es ? "Selecciona GB y días" : "Select data and duration"}
+            </legend>
+            {plans.map((plan) => {
+              const variants = allSorted.filter(
+                (item) =>
+                  item.dataGb === plan.dataGb && item.days === plan.days,
+              );
+              const variantNumber =
+                variants.findIndex((item) => item.id === plan.id) + 1;
+              return (
+                <label
+                  className="plan-option"
+                  key={plan.id}
+                  data-plan-id={plan.id}
+                  data-selected={selected?.id === plan.id}
+                >
+                  <input
+                    type="radio"
+                    name={`${id}-plan`}
+                    value={plan.id}
+                    checked={selected?.id === plan.id}
+                    aria-controls={`${id}-details`}
+                    onChange={() => {
+                      setSelectedId(plan.id);
+                      updateUrl(plan, days);
+                    }}
+                  />
+                  <Wifi size={20} aria-hidden="true" />
+                  <span className="plan-option-data">
+                    <strong>{plan.allowance}</strong>
+                    {variants.length > 1 && (
+                      <small>
+                        {es ? "Variante" : "Variant"} {variantNumber}
+                      </small>
+                    )}
+                  </span>
+                  <span className="plan-validity">
+                    {plan.days} {plan.days === 1 ? c.day : c.days}
+                  </span>
+                  <span className="plan-option-check" aria-hidden="true">
+                    {selected?.id === plan.id && <Check size={14} />}
+                  </span>
+                </label>
+              );
+            })}
+          </fieldset>
+        ) : (
+          <div className="empty-state">
+            <Wifi size={25} />
+            <p>{c.empty}</p>
+            <button
+              className="button button-secondary"
+              onClick={() => filter("", "")}
+            >
+              {c.reset}
+            </button>
+          </div>
         )}
-      </dialog>
+        {selected && (
+          <a className="plan-details-jump" href={`#${id}-details`}>
+            {es
+              ? "Ver ficha del plan seleccionado"
+              : "See selected plan details"}
+            <ArrowDown size={15} />
+          </a>
+        )}
+      </div>
+      <div id={`${id}-details`} className="selected-plan-panel">
+        {selected ? (
+          <PlanInformation
+            locale={locale}
+            destination={destination}
+            plan={selected}
+          />
+        ) : (
+          <div className="plan-selection-empty">
+            <Wifi size={30} />
+            <h2>{es ? "Encuentra tu plan" : "Find your plan"}</h2>
+            <p>
+              {es
+                ? "Prueba otros filtros para ver la ficha completa."
+                : "Try other filters to see full plan details."}
+            </p>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

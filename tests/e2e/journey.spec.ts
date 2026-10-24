@@ -8,12 +8,9 @@ test("a catalog plan connects to detail, checkout preview and example wallet", a
     if (request.method() !== "GET") mutations.push(request.url());
   });
   await page.goto("/en/esim/japan");
-  await page
-    .getByRole("button", { name: "View plan", exact: true })
-    .first()
-    .click();
-  await page.getByRole("link", { name: "Full plan details" }).click();
-  await expect(page).toHaveURL(/\/en\/plan\/japan\//);
+  await expect(
+    page.getByRole("region", { name: "Full plan details", exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Japan");
   await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
   await page.getByRole("link", { name: "Preview purchase" }).click();

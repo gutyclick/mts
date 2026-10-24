@@ -1,134 +1,12 @@
-/* Rounded travel checklist: existing Jakarta/Inter, blue ink and soft sky. */
-.plan-information {
-  padding: 22px;
-  overflow: hidden;
-}
-.plan-information-top {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
-}
-.plan-info-tabs {
-  display: flex;
-  padding: 5px;
-  background: #f1f5fa;
-  border-radius: 16px;
-  flex: 1;
-  min-width: 230px;
-}
-.plan-info-tabs button {
-  flex: 1;
-  min-height: 47px;
-  padding: 10px 12px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  color: #56677e;
-  font-size: 12px;
-  font-weight: 700;
-}
-.plan-info-tabs button[aria-selected="true"] {
-  color: #174e91;
-  background: #fff;
-  border-color: #dbe5ef;
-  box-shadow: 0 2px 0 #dce7f3;
-}
-.compat-launch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 14px 16px;
-  min-height: 48px;
-  background: #fff;
-  color: #175ca6;
-  border: 1px solid #b9d4f5;
-  border-radius: 14px;
-  font-size: 12px;
-  font-weight: 700;
-  box-shadow: 0 3px 0 #e3edf9;
-}
-.compat-launch:hover {
-  background: #edf5ff;
-}
-.plan-info-features {
-  list-style: none;
-  margin: 28px 0;
-  padding: 0;
-  display: grid;
-  gap: 24px;
-}
-.plan-info-features li {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-}
-.plan-info-features li > span {
-  display: grid;
-  place-items: center;
-  background: #edf5ff;
-  color: #175ca6;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 14px;
-}
-.plan-info-features li:nth-child(2) > span {
-  background: #fff0e5;
-  color: #a24c11;
-}
-.plan-info-features h2 {
-  font-size: 14px;
-  letter-spacing: -0.025em;
-  padding-top: 2px;
-}
-.plan-info-features p,
-.plan-coverage-heading p {
-  font-size: 12px;
-  color: #56677e;
-  line-height: 1.8;
-  margin-top: 6px;
-}
-.plan-info-note {
-  background: #edf5ff;
-  color: #305776;
-  border-radius: 12px;
-  padding: 13px 15px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 11px;
-  line-height: 1.8;
-}
-.plan-info-note svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.plan-coverage-heading {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  margin-top: 28px;
-}
-.plan-coverage-heading h2 {
-  font-size: 20px;
-}
-.plan-information [role="tabpanel"] {
-  margin-block: 15px;
-  border-radius: 8px;
-}
-.compat-guide-launch {
-  margin-bottom: 28px;
-}
+/* Guided eSIM compatibility: calm surfaces, compact controls, one focus ring. */
 .compat-dialog {
   position: fixed;
   inset: 0;
   margin: auto;
   border: 1px solid #dbe5ef;
-  border-radius: 28px;
+  border-radius: 22px;
   padding: 0;
-  width: min(850px, calc(100% - 48px));
+  width: min(720px, calc(100% - 48px));
   max-width: none;
   max-height: min(880px, calc(100dvh - 48px));
   color: #152a45;
@@ -142,8 +20,12 @@
 }
 .compat-shell {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
 }
 .compat-top {
+  flex-shrink: 0;
   padding: 18px 25px;
   display: flex;
   align-items: center;
@@ -179,13 +61,14 @@
   background: #f1f5fa;
 }
 .compat-progress {
+  flex-shrink: 0;
   display: flex;
   list-style: none;
   justify-content: space-between;
-  padding: 22px 42px;
+  padding: 16px 32px;
   margin: 0;
   gap: 8px;
-  background: #f8fbff;
+  background: #fff;
   border-bottom: 1px solid #e6edf5;
 }
 .compat-progress li {
@@ -214,7 +97,10 @@
   border-color: #175ca6;
 }
 .compat-content {
-  padding: 30px 55px;
+  padding: 28px 36px;
+  overflow-y: auto;
+  min-height: 0;
+  overscroll-behavior: contain;
 }
 .compat-hero-icon {
   height: 65px;
@@ -230,7 +116,7 @@
   transform: rotate(-5deg);
 }
 .compat-content > h2 {
-  font-size: clamp(24px, 3vw, 31px);
+  font-size: clamp(23px, 3vw, 27px);
   line-height: 1.3;
   font-weight: 800;
 }
@@ -253,13 +139,13 @@
   border: 2px solid #e1e9f3;
   background: #fff;
   border-radius: 17px;
-  padding: 20px 14px;
+  padding: 17px 14px;
   text-align: left;
   display: flex;
   flex-direction: column;
   gap: 15px;
   position: relative;
-  min-height: 130px;
+  min-height: 114px;
 }
 .compat-brand-symbol {
   display: grid;
@@ -328,10 +214,17 @@
   width: 100%;
   min-width: 0;
   border: 0;
-  padding-block: 14px;
+  padding-block: 13px;
   color: #233c5c;
   background: transparent;
   font-size: 16px;
+}
+.compat-search:focus-within {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 3px #1677ff26;
+}
+.compat-search input:focus-visible {
+  outline: none;
 }
 .compat-models {
   display: grid;
@@ -348,9 +241,9 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 14px;
+  padding: 12px 14px;
   border-radius: 12px;
-  border: 2px solid #e1e9f3;
+  border: 1px solid #dbe5ef;
   background: #fff;
   color: #233c5c;
   font-size: 13px;
@@ -417,6 +310,20 @@
   color: #56677e;
   line-height: 1.9;
   margin-block: 10px 14px;
+}
+.compat-check-help {
+  margin-block: 10px 14px;
+}
+.compat-check-help summary {
+  color: #175ca6;
+  font-size: 11px;
+  padding-block: 6px;
+}
+.compat-check-help p {
+  color: #56677e;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-block: 10px;
 }
 .compat-question > div {
   display: flex;
@@ -509,9 +416,10 @@
   flex-shrink: 0;
 }
 .compat-footer {
+  flex-shrink: 0;
   padding: 18px 30px 24px;
   border-top: 1px solid #e6edf5;
-  background: #f8fbff;
+  background: #fff;
 }
 .compat-footer > p {
   font-size: 10px;
@@ -564,9 +472,7 @@
     border: 0;
   }
   .compat-shell {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+    height: 100%;
   }
   .compat-top {
     padding: max(10px, env(safe-area-inset-top)) 18px 10px;
@@ -616,6 +522,6 @@
     justify-content: flex-start;
   }
   .compat-models {
-    max-height: 32dvh;
+    max-height: min(230px, 28dvh);
   }
 }

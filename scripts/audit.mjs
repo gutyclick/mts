@@ -59,6 +59,14 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
           });
       }
       await auditState("initial");
+      if (path === "/en/esim/japan") {
+        await page.getByLabel("Sort by", { exact: true }).selectOption("days");
+        await page.locator(".plan-option input").last().check();
+        await auditState("inline-plan-selected");
+        await page.getByLabel("Data allowance").selectOption("50");
+        await page.getByLabel("Duration", { exact: true }).selectOption("7");
+        await auditState("inline-plan-empty");
+      }
       if (path === "/es/compatibilidad") {
         await page
           .getByRole("button", {
@@ -83,7 +91,9 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
         await dialog
           .getByLabel("¿Dónde compraste el equipo?")
           .selectOption("unknown");
-        for (const group of await dialog.getByRole("group").all())
+        for (const group of await dialog
+          .locator("fieldset.compat-question")
+          .all())
           await group.getByLabel("No lo sé", { exact: true }).check();
         await dialog.getByRole("button", { name: "Ver resultado" }).click();
         await auditState("compatibility-result");

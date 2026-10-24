@@ -1,5 +1,15 @@
 # Verification — 2026-10-23
 
+## One-screen plan selection and cleaner onboarding — 2026-10-24
+
+Destination pages and existing plan links now share a compact radio selector and a complete, initially visible plan sheet. GB/day ordering is numeric with deterministic tie-breaks; filters, selected data/duration, conditions and purchase-preview links update together. Selection survives reload and locale changes through the URL. Distinct products with equal data/duration remain selectable and are labelled with stable variant numbers. Empty filters remove the purchase-preview link. Intermediate plan dialogs and plan-information tabs were removed. The supplied Germany banner was synchronized, bringing mapped banners to nineteen.
+
+The checker has a single search-field focus ring, less repeated copy, optional setup instructions and separate scrollable content/footer areas so actions do not cover choices. Changing the brand/model clears old region/unlock/eSIM answers. The source-based compatibility rules are unchanged.
+
+Production build, lint, TypeScript, formatting and eleven unit tests passed. The full 46-scenario desktop/mobile browser suite passed, including sorting, inline selection, reload/translation, invalid/old plan routes, no stale purchase links, focus styling, answer reset and footer/content separation. After the final heading-weight and shortened filter-option polish, the production build, sixteen focused catalog/selection browser scenarios and a scoped product audit passed again. The main responsive/axe audit returned no findings across thirteen routes/seven widths, including selected/empty plans and all checker stages; the final scoped check covered Japan in both languages and a regional destination at 320/390/768/1440px, with selected axe A/AA checks at 390/1440px and no findings.
+
+Reviewed [desktop selection](previews/plans-desktop.png), [mobile selection](previews/plans-mobile.png), [inline mobile sheet](previews/mobile-plan-selection.png), and the [focused mobile model search](previews/plan-detail-mobile-compatibility-search.png). Physical-device checks on iOS Safari and Android Chrome remain recommended; browser emulation does not validate real keyboards or device eSIM provisioning.
+
 ## Plan information and device onboarding — 2026-10-24
 
 The full plan page now has accessible Details/Coverage tabs and a compatibility checker, shared with the compatibility guide. The candidate registry contains 223 model entries across 20 brand groups; 110 have model/family manufacturer evidence, while all remaining candidates explicitly require confirmation. Documented support is distinct from a guarantee for a specific device. See [research and evidence rules](device-compatibility.md).

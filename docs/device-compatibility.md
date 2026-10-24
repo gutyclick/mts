@@ -1,6 +1,6 @@
 # Plan information and device compatibility
 
-Reviewed on 2026-10-24. The plan detail page has keyboard-operable Details/Coverage tabs and a reusable compatibility dialog, also accessible from the compatibility guide. The dialog has brand, searchable model, purchase-region/device checks and result stages. Native modal focus containment, Escape, focus restoration and body scroll restoration are supported. Mobile uses the full viewport with safe-area padding; no device identifiers are collected or persisted.
+Reviewed on 2026-10-24. Destination and existing plan links use the same selector with full details, coverage and conditions visible together. No plan-details tabs or intermediate plan dialog are required. The reusable compatibility dialog is also accessible from the compatibility guide, with brand, searchable model, purchase-region/device checks and result stages. Native modal focus containment, Escape, focus restoration and body scroll restoration are supported. Mobile uses the full viewport with safe-area padding; no device identifiers are collected or persisted. The model search uses one visible focus ring around the whole field; instructions can be expanded when needed. Choosing another brand/model clears previous device-check answers.
 
 ## Evidence policy
 

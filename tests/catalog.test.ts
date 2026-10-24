@@ -13,7 +13,7 @@ import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import catalog from "../src/data/plans.json" with { type: "json" };
 import { destinations, searchDestinations } from "../src/lib/catalog.ts";
-import { filterPlans, type Plan } from "../src/lib/plan-utils.ts";
+import { filterPlans, sortPlans, type Plan } from "../src/lib/plan-utils.ts";
 import {
   equivalentPath,
   pathFor,
@@ -215,4 +215,24 @@ test("visual journey routes preserve translated pages and selected plan identity
   assert.equal(url.searchParams.get("plan"), plan.id);
   assert.equal(url.searchParams.get("destination"), "japan");
   assert.ok(planPath("en", "japan", "a/b ?").endsWith("a%2Fb%20%3F"));
+});
+
+test("plan ordering is numeric, deterministic and does not mutate the catalog", () => {
+  const input = [
+    { id: "b", dataGb: 10, days: 7 },
+    { id: "c", dataGb: 2, days: 30 },
+    { id: "a", dataGb: 2, days: 7 },
+  ] as Plan[];
+  assert.deepEqual(
+    sortPlans(input, "data").map((p) => p.id),
+    ["a", "c", "b"],
+  );
+  assert.deepEqual(
+    sortPlans(input, "days").map((p) => p.id),
+    ["a", "b", "c"],
+  );
+  assert.deepEqual(
+    input.map((p) => p.id),
+    ["b", "c", "a"],
+  );
 });

@@ -14,3 +14,11 @@ export function filterPlans(plans: Plan[], data: string, days: string) {
       (!days || plan.days === Number(days)),
   );
 }
+export function sortPlans(plans: Plan[], order: "data" | "days" = "data") {
+  return [...plans].sort(
+    (a, b) =>
+      (order === "days"
+        ? a.days - b.days || a.dataGb - b.dataGb
+        : a.dataGb - b.dataGb || a.days - b.days) || a.id.localeCompare(b.id),
+  );
+}

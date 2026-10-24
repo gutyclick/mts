@@ -13,7 +13,7 @@ La fase visual conecta el catálogo existente con la ficha completa de un plan, 
 | Instalación           | `/en/install`                               | `/es/instalar`                            |
 | Administración visual | `/en/studio`                                | `/es/estudio`                             |
 
-Desde una tarjeta de plan se conserva el vistazo rápido y se puede abrir la ficha completa. La ficha conserva el identificador exacto del producto, datos, duración y clasificación. El resumen adopta la forma de un pase de viaje con banner y divisor perforado. Las fichas de destino incorporan navegación a planes, cobertura e instalación y un resumen de opciones. No se inventan operadores, países de un regional o reglas de activación.
+El destino y los enlaces existentes a un plan abren un único selector: filas compactas de GB/días, ordenación ascendente por GB o duración, filtros combinables y ficha completa visible desde el inicio. Elegir otro plan actualiza datos, duración, condiciones y enlace de compra de ejemplo sin abrir un diálogo ni cambiar de pantalla. Los detalles y la cobertura están juntos. El enlace conserva el identificador elegido mediante `?plan=…` y la duración filtrada, también al cambiar de idioma. Los antiguos enlaces `/plan/[slug]/[planId]` siguen funcionando con el plan correspondiente seleccionado. No se inventan operadores, países de un regional o reglas de activación.
 
 La compra de ejemplo muestra resumen, diseño de pago y confirmación de demostración. Los datos del viajero son ficticios y de solo lectura; el formulario de tarjeta es una ilustración sin campos. Las casillas son controles de muestra, no una validación de compra. Avanzar no envía información ni crea pedidos. La confirmación declara que no hubo pago ni emisión de eSIM.
 
@@ -29,7 +29,7 @@ La administración visual es una muestra pública, claramente identificada como 
 - No se generan códigos de activación, credenciales, ICCID, QR funcionales, pedidos ni información personal real.
 - Los estados de consumo y fechas de la cartera son ejemplos visibles, sin conexión a servicios externos.
 - Los nuevos banners de México, Paraguay y Uruguay se vinculan mediante la sincronización de imágenes existente.
-- También se vincularon las imágenes añadidas después de Australia, Canadá, China, Egipto, Noruega y Puerto Rico. Hay 18 banners vinculados en esta entrega.
+- También se vincularon las imágenes añadidas después de Australia, Canadá, China, Egipto, Noruega, Puerto Rico y Alemania. Hay 19 banners vinculados.
 
 ## Verificación prevista
 

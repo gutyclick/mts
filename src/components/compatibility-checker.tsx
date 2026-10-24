@@ -42,7 +42,7 @@ const copy = {
     ],
     intro: [
       "Vamos a comprobar tu equipo, paso a paso.",
-      "El nombre exacto importa. Puedes encontrarlo en Ajustes → Información del dispositivo.",
+      "Encuéntralo en Ajustes → Información.",
       "La versión de tu equipo y su operador también cuentan.",
       "Esta orientación combina documentación oficial y tus respuestas; no detecta ni prueba tu dispositivo.",
     ],
@@ -52,7 +52,7 @@ const copy = {
     missing: "Mi modelo no aparece",
     empty:
       "No encontramos ese modelo. Puedes continuar con una comprobación manual.",
-    official: "Documentación oficial disponible",
+    official: "Soporte documentado",
     pending: "Pendiente de confirmar con el fabricante",
     candidate:
       "La lista es orientativa: algunas versiones cambian según el país y el operador.",
@@ -123,7 +123,7 @@ const copy = {
     ],
     intro: [
       "Let's check your device, one step at a time.",
-      "The exact model matters. Find it in Settings → About your device.",
+      "Find the exact name in Settings → About.",
       "Your device variant and carrier matter too.",
       "This guidance combines official documentation and your answers; it does not detect or test your device.",
     ],
@@ -132,7 +132,7 @@ const copy = {
     search: "Search models",
     missing: "My model is not listed",
     empty: "We couldn't find that model. You can continue with a manual check.",
-    official: "Official documentation available",
+    official: "Documented support",
     pending: "Awaiting manufacturer confirmation",
     candidate:
       "This list is a guide: some variants differ by purchase country and carrier.",
@@ -246,7 +246,10 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
     };
   }, [open]);
   useEffect(() => {
-    if (open) heading.current?.focus();
+    if (open) {
+      heading.current?.focus();
+      dialog.current?.querySelector(".compat-content")?.scrollTo(0, 0);
+    }
   }, [open, step]);
   const close = () => {
     dialog.current?.close();
@@ -261,6 +264,17 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
     setRegion("");
     setUnlocked("");
     setEsim("");
+  };
+  const chooseModel = (name: string) => {
+    setModelName(name);
+    setRegion("");
+    setUnlocked("");
+    setEsim("");
+  };
+  const chooseBrand = (name: string) => {
+    setBrand(name);
+    chooseModel("");
+    setSearch("");
   };
   return (
     <>
@@ -320,13 +334,6 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
             ))}
           </ol>
           <div className="compat-content">
-            <div className="compat-hero-icon" aria-hidden="true">
-              {step === 3 ? (
-                <ShieldCheck size={32} />
-              ) : (
-                <Smartphone size={32} />
-              )}
-            </div>
             <h2 id={`${uid}-title`} ref={heading} tabIndex={-1}>
               {c.title[step]}
             </h2>
@@ -340,11 +347,7 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
                     <button
                       key={item.name}
                       aria-pressed={brand === item.name}
-                      onClick={() => {
-                        setBrand(item.name);
-                        setModelName("");
-                        setSearch("");
-                      }}
+                      onClick={() => chooseBrand(item.name)}
                     >
                       <span className="compat-brand-symbol">
                         {["i", "S", "G"][index]}
@@ -366,15 +369,15 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
                       ? brand
                       : ""
                   }
-                  onChange={(event) => {
-                    setBrand(event.target.value);
-                    setModelName("");
-                    setSearch("");
-                  }}
+                  onChange={(event) => chooseBrand(event.target.value)}
                 >
                   <option value="">{c.brand}</option>
                   {deviceBrands.slice(3).map((item) => (
-                    <option key={item.name}>{item.name}</option>
+                    <option key={item.name} value={item.name}>
+                      {item.name === "Other brands" && locale === "es"
+                        ? "Otras marcas"
+                        : item.name}
+                    </option>
                   ))}
                 </select>
               </>
@@ -404,7 +407,7 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
                     <button
                       key={item.name}
                       aria-pressed={modelName === item.name}
-                      onClick={() => setModelName(item.name)}
+                      onClick={() => chooseModel(item.name)}
                     >
                       <span>
                         {item.name}
@@ -424,7 +427,7 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
                 <button
                   className="compat-missing"
                   aria-pressed={modelName === "unlisted"}
-                  onClick={() => setModelName("unlisted")}
+                  onClick={() => chooseModel("unlisted")}
                 >
                   <CircleHelp size={17} />
                   {c.missing}
@@ -472,7 +475,12 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
                 ].map((question, index) => (
                   <fieldset className="compat-question" key={question.label}>
                     <legend>{question.label}</legend>
-                    <p id={`${uid}-help-${index}`}>{question.help}</p>
+                    <details className="compat-check-help">
+                      <summary>
+                        {locale === "es" ? "Cómo comprobarlo" : "How to check"}
+                      </summary>
+                      <p id={`${uid}-help-${index}`}>{question.help}</p>
+                    </details>
                     <div>
                       {(["yes", "no", "unknown"] as const).map((answer, i) => (
                         <label key={answer}>

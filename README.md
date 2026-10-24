@@ -32,7 +32,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 - Diccionarios centralizados, rutas traducidas y cambio de idioma que conserva la página equivalente. El cambio de idioma realiza navegación de documento para actualizar correctamente `<html lang>`; el resto utiliza navegación de Next.js.
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
 - Directorio buscable con categorías y carga progresiva: 202 países/territorios y 39 regiones. Cada destino tiene todos sus planes fijos.
-- Filtros combinables de datos y duración, detalle en diálogo accesible y hoja inferior móvil. La duración de la portada se conserva como filtro inicial. No se muestran precios ni se ofrece checkout real.
+- Selección de planes en filas compactas de GB/días, ordenación numérica y filtros combinables. La ficha completa se actualiza en la misma pantalla, sin diálogo intermedio ni pestañas. La duración de la portada se conserva como filtro inicial; el plan seleccionado se conserva al compartir y traducir el enlace. No se muestran precios ni se ofrece checkout real.
 - Guías de funcionamiento, compatibilidad, centro de ayuda por temas y FAQ con 29 preguntas buscables por idioma. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
 - Metadata localizada, canonical, hreflang, Open Graph, imagen social, sitemap, robots y datos estructurados veraces de la organización. Sin reseñas ni ofertas estructuradas ficticias.
 - Diseño adaptable, menú móvil, foco visible, enlace para saltar al contenido, FAQ nativa y respeto a movimiento reducido.
@@ -40,7 +40,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 ## Rutas
 
-La ficha del plan incluye pestañas de detalles/cobertura y un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
+La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
 El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM, instalación y administración de muestra. Consulta [pantallas, rutas y límites](docs/visual-journey.md). Las pantallas de demostración usan datos ficticios y no realizan compras, pagos ni activaciones.
 
@@ -71,7 +71,7 @@ src/
     home/                    Secciones independientes de portada
     destination-search.tsx   Combobox y navegación del catálogo
     destination-directory.tsx
-    plan-browser.tsx         Filtros y diálogo de detalle
+    plan-browser.tsx         Selector, filtros, ordenación y ficha en la misma pantalla
     faq-center.tsx           Búsqueda por tema y acordeones nativos
     site-navigation.tsx      Menú e idioma
     mobile-navigation.tsx    Navegación inferior y respuesta al teclado

@@ -1,25 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-test("plan information has keyboard tabs and a complete compatibility journey", async ({
+test("plan information and a complete compatibility journey share one screen", async ({
   page,
 }) => {
   await page.goto("/en/esim/japan");
-  await page
-    .getByRole("button", { name: "View plan", exact: true })
-    .first()
-    .click();
-  await page.getByRole("link", { name: "Full plan details" }).click();
-  const details = page.getByRole("tab", { name: "eSIM details" });
-  await details.focus();
-  await details.press("ArrowRight");
   await expect(
-    page.getByRole("tab", { name: "Coverage", exact: true }),
-  ).toBeFocused();
-  await expect(page.getByRole("tabpanel")).toContainText("Japan");
-  await page.getByRole("tab", { name: "Coverage", exact: true }).press("Home");
-  await expect(page.getByRole("tabpanel")).toContainText(
-    "A fixed data allowance",
-  );
+    page.getByRole("region", { name: "Full plan details", exact: true }),
+  ).toBeVisible();
   const launch = page.getByRole("button", {
     name: "Check compatibility",
     exact: true,
@@ -34,7 +21,7 @@ test("plan information has keyboard tabs and a complete compatibility journey", 
   await dialog.getByRole("button", { name: "Continue", exact: true }).click();
   await dialog.getByLabel("Search models").fill("iPhone 16");
   await dialog
-    .getByRole("button", { name: "iPhone 16 Official", exact: false })
+    .getByRole("button", { name: "iPhone 16 Documented", exact: false })
     .click();
   await dialog.getByRole("button", { name: "Continue", exact: true }).click();
   await dialog.getByLabel("Where did you buy your device?").selectOption("es");
@@ -98,7 +85,7 @@ test("unlisted devices and carrier locks never produce approval", async ({
   await dialog.getByRole("button", { name: "My model is not listed" }).click();
   await dialog.getByRole("button", { name: "Continue", exact: true }).click();
   await dialog.getByLabel("Where did you buy your device?").selectOption("us");
-  for (const group of await dialog.getByRole("group").all())
+  for (const group of await dialog.locator("fieldset.compat-question").all())
     await group.getByLabel("Yes", { exact: true }).check();
   await dialog.getByRole("button", { name: "See result" }).click();
   await expect(

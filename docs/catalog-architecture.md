@@ -6,6 +6,8 @@ La portada presenta la búsqueda y destinos destacados. Las guías de funcionami
 
 El directorio contiene 241 destinos: 202 países/territorios y 39 regiones. Presenta 24 tarjetas a la vez con botón para cargar más, búsqueda localizada y categorías. Cada página de destino muestra todos sus planes fijos, con filtros acumulables por cantidad de datos y días. Las opciones se obtienen de los planes reales de cada destino.
 
+La selección usa filas compactas con GB/días y radios nativos. Se ordena por GB ascendentes (desempate por días) o por días ascendentes (desempate por GB), sin modificar el catálogo. Los productos distintos con los mismos GB/días se conservan y reciben un número de variante estable dentro de ese grupo; el nombre original sigue visible en la ficha. El proveedor debe aclarar sus diferencias antes de habilitar ventas. El plan inicial siempre tiene su ficha completa visible; selección, cobertura, condiciones y enlace de compra de ejemplo se actualizan juntos sin otra ruta ni pestañas. `?plan=…` permite compartir/restaurar la selección y cambiar de idioma.
+
 ## Importación
 
 ```sh

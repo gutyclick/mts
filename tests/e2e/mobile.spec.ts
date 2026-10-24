@@ -77,25 +77,23 @@ test("phone search remains usable in a short viewport and dock returns after edi
   await expect(page.locator(".mobile-bottom-nav")).toBeVisible();
 });
 
-test("phone plan details behave as a scrollable bottom sheet", async ({
+test("phone plan selection keeps complete details on the same page", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/en/esim/japan");
-  const trigger = page.getByRole("button", { name: "View plan" }).first();
-  await trigger.click();
-  const dialog = page.getByRole("dialog");
-  await expect(dialog).toBeVisible();
-  await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
-  const box = await dialog.boundingBox();
-  expect(box!.width).toBe(390);
-  expect(Math.round(box!.y + box!.height)).toBe(844);
-  await expect(dialog.locator(".plan-specs")).toContainText("Japan");
-  await expect(dialog).not.toContainText(/\$|€|USD\s*\d/);
-  await page.getByRole("button", { name: "Back to plans" }).click();
-  await expect(dialog).not.toBeVisible();
+  const radio = page.getByRole("radio").nth(2);
+  await radio.check();
+  await expect(radio).toBeChecked();
   await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
-  await expect(trigger).toBeFocused();
+  await page.getByRole("link", { name: "See selected plan details" }).click();
+  const details = page.getByRole("region", {
+    name: "Full plan details",
+    exact: true,
+  });
+  await expect(details).toBeInViewport();
+  await expect(details).not.toContainText(/USD\s*\d/);
+  await expect(page.getByRole("tab")).toHaveCount(0);
 });
 
 test("small phones, tablets and landscape layouts do not overflow", async ({

@@ -1,6 +1,11 @@
 {
+  "argentina": "/images/destinations/Argentina.png",
+  "brazil": "/images/destinations/brasil.png",
+  "colombia": "/images/destinations/colombia.png",
   "france": "/images/destinations/france.png",
   "italy": "/images/destinations/italy.png",
   "japan": "/images/destinations/japon.png",
+  "panama": "/images/destinations/panama.png",
+  "peru": "/images/destinations/peru.png",
   "united-states": "/images/destinations/usa.png"
 }

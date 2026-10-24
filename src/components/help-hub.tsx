@@ -1,21 +1,13 @@
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  Compass,
-  Smartphone,
-  QrCode,
-  Wifi,
-  Plane,
-  LifeBuoy,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { helpTopicIcons } from "./help-topic-icons";
 import { helpContent } from "@/lib/help-content";
 import { pathFor, type Locale } from "@/lib/i18n";
-const icons = [Compass, Smartphone, QrCode, Wifi, Plane, LifeBuoy];
 export function HelpHub({ locale }: { locale: Locale }) {
   return (
     <div className="help-topic-grid">
-      {helpContent[locale].categories.map((category, index) => {
-        const Icon = icons[index];
+      {helpContent[locale].categories.map((category) => {
+        const Icon = helpTopicIcons[category.id as keyof typeof helpTopicIcons];
         return (
           <Link
             key={category.id}

@@ -11,6 +11,7 @@ import {
   routeSegments,
 } from "../src/lib/i18n.ts";
 import { helpContent } from "../src/lib/help-content.ts";
+import { parseFAQVote } from "../src/lib/faq-feedback.ts";
 const plansByDestination = catalog as Record<string, Plan[]>;
 test("search accepts localized names, aliases, corrected source names and codes", () => {
   for (const query of ["JAPÓN", " japon ", "Japan", "Tokio", "JP"])
@@ -93,6 +94,39 @@ test("language switching preserves informational routes and destinations", () =>
   for (const locale of locales)
     assert.equal(
       helpContent[locale].categories.flatMap((c) => c.questions).length,
-      24,
+      29,
     );
+});
+
+test("FAQ IDs survive translation and related articles reference existing questions", () => {
+  const english = helpContent.en.categories.flatMap((c) => c.questions);
+  const spanish = helpContent.es.categories.flatMap((c) => c.questions);
+  assert.deepEqual(
+    english.map((q) => q.id),
+    spanish.map((q) => q.id),
+  );
+  const ids = new Set(english.map((q) => q.id));
+  assert.equal(ids.size, english.length);
+  for (const locale of locales)
+    for (const category of helpContent[locale].categories)
+      for (const q of category.questions) {
+        assert.ok(q.question && q.answer);
+        for (const text of [q.answer, q.note ?? "", ...(q.steps ?? [])])
+          assert.ok(
+            !text.includes("?"),
+            `Unexpected replacement character in ${locale}/${q.id}`,
+          );
+        if (locale === "es") assert.match(q.question, /^(¿|Tengo)/);
+        assert.match(q.id, /^[a-z]+(?:-[a-z]+)*$/);
+        for (const related of q.related ?? []) {
+          assert.ok(ids.has(related));
+          assert.notEqual(related, q.id);
+        }
+        for (const link of q.links ?? [])
+          assert.ok(new URL(link.href).protocol === "https:");
+      }
+  for (const value of [null, "unknown", "true", "{vote:helpful}", 1])
+    assert.equal(parseFAQVote(value), null);
+  assert.equal(parseFAQVote("helpful"), "helpful");
+  assert.equal(parseFAQVote("more-help"), "more-help");
 });

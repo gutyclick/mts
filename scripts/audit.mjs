@@ -24,25 +24,54 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     if (overflow) failures.push({ width, path, issue: "horizontal overflow" });
     if (width === 360 || width === 1440) {
       await page.addScriptTag({ path: require.resolve("axe-core/axe.min.js") });
-      const results = await page.evaluate(() =>
-        window.axe.run(document, {
-          runOnly: {
-            type: "tag",
-            values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
-          },
-        }),
-      );
-      for (const violation of results.violations)
-        failures.push({
-          width,
-          path,
-          issue: violation.id,
-          impact: violation.impact,
-          nodes: violation.nodes.map((node) => ({
-            target: node.target,
-            summary: node.failureSummary,
-          })),
-        });
+      async function auditState(state) {
+        const results = await page.evaluate(() =>
+          window.axe.run(document, {
+            runOnly: {
+              type: "tag",
+              values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
+            },
+          }),
+        );
+        for (const violation of results.violations)
+          failures.push({
+            width,
+            path,
+            state,
+            issue: violation.id,
+            impact: violation.impact,
+            nodes: violation.nodes.map((node) => ({
+              target: node.target,
+              summary: node.failureSummary,
+            })),
+          });
+      }
+      await auditState("initial");
+      if (path === "/es/preguntas-frecuentes") {
+        await page.locator("#faq-hotspot summary").click();
+        await page.evaluate(() =>
+          Promise.allSettled(
+            document.getAnimations().map((animation) => animation.finished),
+          ),
+        );
+        await auditState("expanded-answer");
+        await page
+          .locator("#faq-hotspot")
+          .getByRole("button", { name: "Necesito más ayuda" })
+          .click();
+        await auditState("more-help");
+        if (
+          await page.evaluate(
+            () => document.documentElement.scrollWidth > window.innerWidth,
+          )
+        )
+          failures.push({
+            width,
+            path,
+            state: "more-help",
+            issue: "horizontal overflow",
+          });
+      }
     }
   }
   await page.close();

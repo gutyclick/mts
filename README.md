@@ -33,7 +33,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
 - Directorio buscable con categorías y carga progresiva: 202 países/territorios y 42 regiones. Cada destino tiene todos sus planes.
 - Filtros combinables de datos, duración y tipo (fijos/diarios), detalle en diálogo accesible y hoja inferior móvil. La duración de la portada se conserva como filtro inicial. No se muestran precios ni se ofrece checkout.
-- Guías de funcionamiento, compatibilidad, centro de ayuda por temas y FAQ con 24 preguntas buscables por idioma. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
+- Guías de funcionamiento, compatibilidad, centro de ayuda por temas y FAQ con 29 preguntas buscables por idioma. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
 - Metadata localizada, canonical, hreflang, Open Graph, imagen social, sitemap, robots y datos estructurados veraces de la organización. Sin reseñas ni ofertas estructuradas ficticias.
 - Diseño adaptable, menú móvil, foco visible, enlace para saltar al contenido, FAQ nativa y respeto a movimiento reducido.
 - Experiencia móvil con navegación inferior localizada, controles táctiles amplios, buscador adaptado al teclado, áreas seguras de pantalla y detalle de plan en hoja inferior. La barra inferior responde a cambios del viewport al abrir/cerrar el teclado. Ver [diseño móvil](docs/mobile-experience.md).

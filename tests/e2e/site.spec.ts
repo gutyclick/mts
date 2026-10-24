@@ -65,7 +65,9 @@ test("empty search, FAQ, and equivalent informational routes work", async ({
   await expect(page.locator("details[open]")).toContainText(
     "digital SIM profile",
   );
-  await page.getByLabel("Search questions").fill("hotspot");
+  await page
+    .getByLabel("Search questions")
+    .fill("Can I share data with a hotspot?");
   await expect(page.locator(".faq-list details")).toHaveCount(1);
   await page.goto("/en/how-it-works");
   await page

@@ -48,3 +48,13 @@ The catalog update passed a production build, ESLint, TypeScript, four updated c
 The updated audit covered seven representative routes at 320, 360, 390, 430, 768, 1024 and 1440px, including FAQ and help. It returned no horizontal overflow or selected axe WCAG A/AA findings. Screenshots were generated from this production build and visually reviewed: [desktop FAQ](previews/faq-desktop.png), [mobile FAQ](previews/faq-mobile.png), [mobile directory](previews/directory-mobile.png), [destination banner](previews/plans-desktop.png) and [mobile detail](previews/mobile-plan-sheet.png).
 
 The CSV itself remains outside the repository. The imported data contains plan identifiers, original names, allowance, duration, type and coverage code only. There are no payment or provider API calls and no Supabase credentials in this change. Image synchronization matched the four supplied destination banners; local MIT-licensed Circle Flags cover the 202 country/territory entries.
+
+## Provider FAQ and local feedback
+
+The expanded FAQ contains 29 questions per language with stable translated IDs, six illustrated topic selectors, procedural steps and provider-specific policies for roaming, hotspot, single-device QR installation and the Japan iPhone APN exception. Wi-Fi Calling and stored eSIM capacity remain qualified by device and carrier support. See [content sources and feedback behavior](faq-experience.md).
+
+The production build, ESLint, TypeScript and five catalog/content tests passed. All 26 browser scenarios passed; after correcting text encoding, the eight FAQ scenarios were rerun against the final build and passed. They cover direct article links, topic/search filtering, persistent choices across reloads and languages, related-answer navigation and focus, blocked storage, clipboard success and manual-copy fallback. Content checks also reject encoding replacement marks in answer text and malformed Spanish question openings.
+
+The refreshed responsive/axe audit includes the expanded hotspot answer and “more help” states at 360 and 1440px. It returned no findings. Visual review covered [mobile answer](previews/faq-mobile-answer.png), [mobile next steps](previews/faq-mobile-help.png), [desktop answer](previews/faq-desktop-answer.png) and [desktop next steps](previews/faq-desktop-help.png).
+
+The user confirmed there is no support contact or connected Supabase yet. Votes remain in the browser, with clear wording that they are not sent to the team. More help provides related answers and a copyable question without creating support tickets. No contact details, activation secrets or analytics backend were invented. The image sync also picked up the five additional user-supplied banners for Argentina, Brazil, Colombia, Panama and Peru.

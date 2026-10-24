@@ -31,6 +31,29 @@ for (const [name, width, height, path, fullPage = true] of [
     await page.getByRole("button", { name: "Ver plan" }).first().click();
     await page.screenshot({ path: "docs/previews/mobile-plan-sheet.png" });
   }
+  if (name === "faq-mobile" || name === "faq-desktop") {
+    await page.goto(`${baseURL}${path}#faq-hotspot`, {
+      waitUntil: "networkidle",
+    });
+    await page.locator("#faq-hotspot summary").focus();
+    await page.waitForFunction(
+      () => document.querySelector("#faq-hotspot")?.open === true,
+    );
+    await page.evaluate(() =>
+      Promise.allSettled(
+        document.getAnimations().map((animation) => animation.finished),
+      ),
+    );
+    await page.screenshot({ path: `docs/previews/${name}-answer.png` });
+    await page
+      .locator("#faq-hotspot")
+      .getByRole("button", {
+        name: name === "faq-mobile" ? "Necesito más ayuda" : "I need more help",
+      })
+      .click();
+    await page.locator("#faq-hotspot .faq-next-step").scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `docs/previews/${name}-help.png` });
+  }
   await page.close();
 }
 await browser.close();

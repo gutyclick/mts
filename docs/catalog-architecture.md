@@ -2,7 +2,7 @@
 
 ## Contenido
 
-La portada presenta la búsqueda y destinos destacados. Las guías de funcionamiento, compatibilidad, ayuda y FAQ tienen rutas propias en inglés y español. El FAQ contiene 24 preguntas en seis temas, búsqueda por pregunta/respuesta, filtros de tema y enlaces oficiales de Apple y Google.
+La portada presenta la búsqueda y destinos destacados. Las guías de funcionamiento, compatibilidad, ayuda y FAQ tienen rutas propias en inglés y español. El FAQ contiene 29 preguntas en seis temas, búsqueda por pregunta/respuesta, filtros de tema y enlaces oficiales de Apple y Google.
 
 El directorio contiene 244 destinos: 202 países/territorios y 42 regiones. Presenta 24 tarjetas a la vez con botón para cargar más, búsqueda localizada y categorías. Cada página de destino muestra todos sus planes, agrupados en datos fijos y datos diarios, con filtros acumulables por cantidad, días y tipo. Las opciones se obtienen de los planes reales de cada destino.
 
@@ -36,4 +36,4 @@ Las banderas son SVG redondas de [Circle Flags](https://hatscripts.github.io/cir
 
 ## Validación
 
-Los tests comprueban los 244 destinos, 3.186 identificadores únicos, ausencia de campos ajenos a la lista permitida, correspondencia de códigos de país, imágenes existentes, variantes de búsqueda, filtros reales y 24 preguntas por idioma. Playwright verifica escritorio/móvil, páginas independientes, ausencia de importes en planes, navegación y detalle accesible. La auditoría visual incluye FAQ y ayuda además del catálogo.
+Los tests comprueban los 244 destinos, 3.186 identificadores únicos, ausencia de campos ajenos a la lista permitida, correspondencia de códigos de país, imágenes existentes, variantes de búsqueda, filtros reales y 29 preguntas por idioma. Playwright verifica escritorio/móvil, páginas independientes, ausencia de importes en planes, navegación y detalle accesible. La auditoría visual incluye FAQ y ayuda además del catálogo.

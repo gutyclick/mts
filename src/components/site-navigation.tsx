@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ArrowRight, Globe2, Menu, X } from "lucide-react";
 import {
   dictionaries,
@@ -17,11 +17,12 @@ import { experienceCopy } from "@/lib/experience-copy";
 
 export function LanguageSwitcher({ locale }: { locale: Locale }) {
   const pathname = usePathname();
+  const query = useSearchParams().toString();
   const target = locale === "en" ? "es" : "en";
   return (
     <a
       className="language-switch"
-      href={equivalentPath(pathname, target)}
+      href={`${equivalentPath(pathname, target)}${query ? `?${query}` : ""}`}
       onClick={(event) => {
         event.currentTarget.href = `${equivalentPath(pathname, target)}${window.location.search}${window.location.hash}`;
       }}

@@ -1,14 +1,20 @@
 {
   "argentina": "/images/destinations/Argentina.png",
+  "australia": "/images/destinations/australia.png",
   "brazil": "/images/destinations/brasil.png",
+  "canada": "/images/destinations/canada.png",
+  "china": "/images/destinations/china.png",
   "colombia": "/images/destinations/colombia.png",
+  "egypt": "/images/destinations/egipto.png",
   "france": "/images/destinations/france.png",
   "italy": "/images/destinations/italy.png",
   "japan": "/images/destinations/japon.png",
   "mexico": "/images/destinations/mexico.png",
+  "norway": "/images/destinations/noruega.png",
   "panama": "/images/destinations/panama.png",
   "paraguay": "/images/destinations/paraguay.png",
   "peru": "/images/destinations/peru.png",
+  "puerto-rico": "/images/destinations/puerto rico.png",
   "united-states": "/images/destinations/usa.png",
   "uruguay": "/images/destinations/uruguay.png"
 }

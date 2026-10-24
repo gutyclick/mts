@@ -1,6 +1,6 @@
 # Visual traveler journey implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Complete a connected bilingual visual journey from destination and plan selection through checkout preview, example eSIM management, installation and a separate administration preview.
 
@@ -32,26 +32,26 @@
 
 **Files:** `src/lib/experience-routes.ts`, `src/lib/experience-copy.ts`, `src/components/experience/plan-detail.tsx`, `src/components/experience/destination-overview.tsx`, `src/app/[locale]/plan/[slug]/[planId]/page.tsx`, existing catalog components and `src/styles/experience.css`.
 
-- [ ] Define localized paths and selected-plan route without putting the full plan catalog in a client bundle.
-- [ ] Add destination section navigation, allowance/duration range and honest coverage/activation details.
-- [ ] Keep quick-look dialog and add a full detail link; build a travel-pass summary and expandable conditions.
-- [ ] Verify exact plan identity, malformed paths, fixed/daily labels and regional unknowns.
+- [x] Define localized paths and selected-plan route without putting the full plan catalog in a client bundle.
+- [x] Add destination section navigation, allowance/duration range and honest coverage/activation details.
+- [x] Keep quick-look dialog and add a full detail link; build a travel-pass summary and expandable conditions.
+- [x] Verify exact plan identity, malformed paths, fixed/daily labels and regional unknowns.
 
 ## Task 2: Checkout preview and eSIM views
 
 **Files:** `src/components/experience/checkout-preview.tsx`, `src/components/experience/esim-wallet.tsx`, `src/components/experience/install-guide.tsx`, `src/components/experience/shared.tsx`, `src/components/experience/experience-page.tsx`, `src/lib/demo-esims.ts`, generic localized page route and navigation.
 
-- [ ] Add connected review/payment-layout/completion preview using read-only fictional buyer information and no payment entry.
-- [ ] Add wallet status filters and details, sample allowance meter, non-scannable QR illustration and installation links.
-- [ ] Add selectable iPhone/Android instruction views referencing confirmed provider FAQ; activation timing remains per-plan.
-- [ ] Add recoverable loading/empty/error examples and keyboard-friendly interactions.
-- [ ] Verify no purchase/provider requests, no payment fields or real identifiers, and successful connected navigation.
+- [x] Add connected review/payment-layout/completion preview using read-only fictional buyer information and no payment entry.
+- [x] Add wallet status filters and details, sample allowance meter, non-scannable QR illustration and installation links.
+- [x] Add selectable iPhone/Android instruction views referencing confirmed provider FAQ; activation timing remains per-plan.
+- [x] Add recoverable loading/empty/error examples and keyboard-friendly interactions.
+- [x] Verify no purchase/provider requests, no payment fields or real identifiers, and successful connected navigation.
 
 ## Task 3: Administration and polish
 
 **Files:** `src/components/experience/admin-preview.tsx`, documentation, tests and capture/audit scripts.
 
-- [ ] Build a separate clearly labeled admin preview with destination search, plan review, content/FAQ and fictional order views, without claiming access control.
-- [ ] Verify bilingual navigation, responsive layouts, touch targets and scoped axe checks on all new screens and states.
-- [ ] Run build, lint, typecheck, unit/browser tests and secret scan; capture/review desktop/mobile screens.
-- [ ] Commit authorized changes, push to the existing repository and confirm Vercel deployment.
+- [x] Build a separate clearly labeled admin preview with destination search, plan review, content/FAQ and fictional order views, without claiming access control.
+- [x] Verify bilingual navigation, responsive layouts, touch targets and scoped axe checks on all new screens and states.
+- [x] Run build, lint, typecheck, unit/browser tests and secret scan; capture/review desktop/mobile screens.
+- [x] Commit authorized changes, push to the existing repository and confirm Vercel deployment.

@@ -103,6 +103,9 @@ test("preview pages protect plan identity, locale context and indexing", async (
     expect(await response.text()).toContain('content="noindex, nofollow"');
   }
   await page.goto(`/en/checkout?destination=japan&plan=${encoded}`);
+  await expect(
+    page.getByRole("link", { name: "Change language: Español" }).first(),
+  ).toHaveAttribute("href", `/es/compra?destination=japan&plan=${encoded}`);
   await page
     .getByRole("link", { name: "Change language: Español" })
     .first()

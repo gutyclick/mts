@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --experimental-strip-types --test tests/catalog.test.ts",
+    "test": "node --experimental-strip-types --test tests/catalog.test.ts tests/device-compatibility.test.ts",
     "test:e2e": "playwright test",
     "audit:ui": "node scripts/audit.mjs",
     "capture": "node scripts/capture.mjs",

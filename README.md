@@ -40,6 +40,8 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 ## Rutas
 
+La ficha del plan incluye pestañas de detalles/cobertura y un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
+
 El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM, instalación y administración de muestra. Consulta [pantallas, rutas y límites](docs/visual-journey.md). Las pantallas de demostración usan datos ficticios y no realizan compras, pagos ni activaciones.
 
 | Página           | Inglés              | Español                    |

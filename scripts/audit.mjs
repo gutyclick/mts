@@ -59,6 +59,42 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
           });
       }
       await auditState("initial");
+      if (path === "/es/compatibilidad") {
+        await page
+          .getByRole("button", {
+            name: "Verificar compatibilidad",
+            exact: true,
+          })
+          .click();
+        const dialog = page.getByRole("dialog");
+        await auditState("compatibility-brand");
+        await dialog.getByRole("button", { name: "Google Pixel" }).click();
+        await dialog
+          .getByRole("button", { name: "Continuar", exact: true })
+          .click();
+        await auditState("compatibility-model");
+        await dialog
+          .getByRole("button", { name: "Mi modelo no aparece" })
+          .click();
+        await dialog
+          .getByRole("button", { name: "Continuar", exact: true })
+          .click();
+        await auditState("compatibility-checks");
+        await dialog
+          .getByLabel("¿Dónde compraste el equipo?")
+          .selectOption("unknown");
+        for (const group of await dialog.getByRole("group").all())
+          await group.getByLabel("No lo sé", { exact: true }).check();
+        await dialog.getByRole("button", { name: "Ver resultado" }).click();
+        await auditState("compatibility-result");
+        if (await dialog.evaluate((el) => el.scrollWidth > el.clientWidth))
+          failures.push({
+            width,
+            path,
+            issue: "compatibility dialog horizontal overflow",
+          });
+        await page.keyboard.press("Escape");
+      }
       if (path === checkoutPath) {
         await page
           .getByRole("button", { name: "Continue to payment preview" })

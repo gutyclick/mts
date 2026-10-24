@@ -244,7 +244,7 @@ export const dictionaries = {
       },
     ],
     compatibilityNote:
-      "We don't maintain a verified device database yet. These checks are guidance and do not guarantee compatibility.",
+      "Check your brand, exact model and purchase region in the checker. Some models have official documentation; others still need manufacturer confirmation. Guidance does not guarantee service on a specific device.",
     helpTitle: "A little help for the journey.",
     helpDescription:
       "Start with the essentials. Our guides cover the questions travelers ask before choosing an eSIM.",
@@ -485,7 +485,7 @@ export const dictionaries = {
       },
     ],
     compatibilityNote:
-      "Aún no contamos con una base de dispositivos verificados. Estas indicaciones orientan y no garantizan la compatibilidad.",
+      "Revisa tu marca, modelo exacto y región de compra en el verificador. Algunos modelos cuentan con documentación oficial; otros necesitan confirmación del fabricante. Esta orientación no garantiza el servicio en una unidad concreta.",
     helpTitle: "Una mano para el camino.",
     helpDescription:
       "Empieza por lo esencial. Nuestras guías responden las dudas comunes antes de elegir una eSIM.",

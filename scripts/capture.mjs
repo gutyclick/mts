@@ -43,6 +43,19 @@ for (const [name, width, height, path, fullPage = true] of [
     Array.from(document.images).every((image) => image.complete),
   );
   await page.screenshot({ path: `docs/previews/${name}.png`, fullPage });
+  if (name === "plan-detail-desktop" || name === "plan-detail-mobile") {
+    await page
+      .getByRole("button", {
+        name:
+          name === "plan-detail-mobile"
+            ? "Verificar compatibilidad"
+            : "Check compatibility",
+        exact: true,
+      })
+      .click();
+    await page.screenshot({ path: `docs/previews/${name}-compatibility.png` });
+    await page.keyboard.press("Escape");
+  }
   if (name === "plans-mobile") {
     await page.getByRole("button", { name: "Ver plan" }).first().click();
     await page.screenshot({ path: "docs/previews/mobile-plan-sheet.png" });

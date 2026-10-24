@@ -6,6 +6,7 @@ import "@/styles/marketing.css";
 import "@/styles/mobile.css";
 import "@/styles/catalog.css";
 import "@/styles/experience.css";
+import "@/styles/compatibility.css";
 
 export const viewport: Viewport = {
   width: "device-width",

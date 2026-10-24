@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check, Info } from "lucide-react";
 import { DestinationDirectory } from "@/components/destination-directory";
+import { CompatibilityChecker } from "@/components/compatibility-checker";
 import { FAQCenter } from "@/components/faq-center";
 import { HelpHub } from "@/components/help-hub";
 import { helpContent } from "@/lib/help-content";
@@ -147,6 +148,9 @@ export default async function ContentPage({
       )}
       {key === "compatibility" && (
         <section className="container guide-section">
+          <div className="compat-guide-launch">
+            <CompatibilityChecker locale={locale} />
+          </div>
           <div className="guide-grid">
             {t.compatibilitySteps.map((step, index) => (
               <article key={step.title}>

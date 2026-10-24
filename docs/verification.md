@@ -1,5 +1,13 @@
 # Verification — 2026-10-23
 
+## Plan information and device onboarding — 2026-10-24
+
+The full plan page now has accessible Details/Coverage tabs and a compatibility checker, shared with the compatibility guide. The candidate registry contains 223 model entries across 20 brand groups; 110 have model/family manufacturer evidence, while all remaining candidates explicitly require confirmation. Documented support is distinct from a guarantee for a specific device. See [research and evidence rules](device-compatibility.md).
+
+The final production build, ESLint, TypeScript, formatting and all ten unit tests passed. All 40 desktop/mobile browser scenarios passed, including tab keyboard controls, complete documented-model guidance, unknown models, carrier locks, modal focus restoration, Escape, body scroll restoration and Spanish onboarding at 320px. The responsive audit across thirteen routes at seven viewport widths returned no findings. Scoped axe checks at 360/1440px now include all four onboarding stages, in addition to the existing page/FAQ/checkout/wallet states.
+
+Visually reviewed [desktop plan information](previews/plan-detail-desktop.png), [desktop checker](previews/plan-detail-desktop-compatibility.png) and [mobile checker](previews/plan-detail-mobile-compatibility.png). No backend, device identifiers, purchases or activation requests were added. The existing fixed-only catalog and hidden prices are unchanged.
+
 Environment: Windows, Node.js 24.15.0, Next.js 16.4.3, production server on port 3000. Microsoft Edge was used for desktop and emulated mobile browser checks.
 
 | Check                  | Result                                                                        |

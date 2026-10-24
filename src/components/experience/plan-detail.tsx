@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, Check, Globe2, Smartphone, Wifi } from "lucide-react";
+import { ArrowRight, Smartphone } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
 import { experienceCopy } from "@/lib/experience-copy";
 import type { Destination } from "@/lib/catalog";
 import type { Plan } from "@/lib/plan-utils";
 import { ActionLink, BackLink, PassSummary } from "./shared";
+import { PlanInformation } from "./plan-information";
 export function PlanDetail({
   locale,
   destination,
@@ -28,40 +29,11 @@ export function PlanDetail({
       </header>
       <div className="experience-columns">
         <div>
-          <div className="plan-feature-pills">
-            <span>
-              <Wifi size={16} />
-              {c[plan.kind]}
-            </span>
-            <span>
-              <Check size={16} />
-              eSIM
-            </span>
-          </div>
-          <section className="experience-card">
-            <div className="card-title">
-              <Globe2 size={23} />
-              <h2>{c.coverage}</h2>
-            </div>
-            <div className="coverage-destination">
-              <span>{destination.name[locale]}</span>
-              <small>
-                {destination.type === "region"
-                  ? c.regionalCoverage
-                  : c.countryCoverage}
-              </small>
-            </div>
-            <dl className="experience-facts">
-              <div>
-                <dt>{c.networks}</dt>
-                <dd>{c.pending}</dd>
-              </div>
-              <div>
-                <dt>{c.activation}</dt>
-                <dd>{c.pending}</dd>
-              </div>
-            </dl>
-          </section>
+          <PlanInformation
+            locale={locale}
+            destination={destination}
+            plan={plan}
+          />
           <section className="experience-card">
             <h2>{c.conditions}</h2>
             <p>{c.conditionsBody}</p>

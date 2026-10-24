@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Check, Info } from "lucide-react";
+import { ArrowRight, Info } from "lucide-react";
 import { DestinationDirectory } from "@/components/destination-directory";
 import { CompatibilityChecker } from "@/components/compatibility-checker";
 import { FAQCenter } from "@/components/faq-center";
 import { HelpHub } from "@/components/help-hub";
 import { helpContent } from "@/lib/help-content";
 import { catalogCopy } from "@/lib/catalog-copy";
-import { Steps } from "@/components/home/sections";
+import { HowItWorksPage } from "@/components/how-it-works-page";
 import {
   dictionaries,
   isLocale,
@@ -108,6 +108,7 @@ export default async function ContentPage({
     );
   const key = pageKey(locale, page);
   if (!key) notFound();
+  if (key === "how") return <HowItWorksPage locale={locale} />;
   const t = dictionaries[locale];
   const [title, description] = heading(locale, key);
   return (
@@ -122,29 +123,6 @@ export default async function ContentPage({
           <DestinationDirectory locale={locale} />
           <p className="preview-note">{t.previewNotice}</p>
         </section>
-      )}
-      {key === "how" && (
-        <>
-          <Steps locale={locale} standalone />
-          <section className="container guide-section">
-            <h2>{t.howChecklist}</h2>
-            <ul className="checklist">
-              {t.howItems.map((item) => (
-                <li key={item}>
-                  <Check size={20} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={pathFor(locale, "destinations")}
-              className="button button-primary"
-            >
-              {t.find}
-              <ArrowRight size={17} />
-            </Link>
-          </section>
-        </>
       )}
       {key === "compatibility" && (
         <section className="container guide-section">
@@ -185,7 +163,7 @@ export default async function ContentPage({
         </section>
       )}
       {key === "faq" && <FAQCenter locale={locale} />}
-      {(key === "how" || key === "compatibility") && (
+      {key === "compatibility" && (
         <div className="container guide-support-link">
           <Link
             className="button button-secondary"

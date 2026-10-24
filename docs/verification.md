@@ -1,5 +1,11 @@
 # Verification — 2026-10-23
 
+## Organized How it works page — 2026-10-24
+
+The localized How it works page now has a dedicated server-rendered layout and scoped styles. A centered introduction, a numbered three-card sequence and a preparation panel share one bounded reading grid. Preparation groups the checklist with compatibility/installation links, and the destination/FAQ actions sit together in one footer row (stacked at phone widths). Long checklist and card text stay left-aligned for reading. The home page's shared Steps component and the existing metadata/routes remain in place.
+
+Production build including TypeScript, lint and formatting passed. All ten existing site browser scenarios passed on desktop/mobile, including locale navigation, public route responses, FAQ navigation and responsive checks. A focused audit of both localized How it works pages and both home pages returned no findings at seven widths (320–1440px), with axe WCAG A/AA checks at 360/1440px. Reviewed [desktop](previews/how-desktop.png), [tablet](previews/how-tablet.png), [phone](previews/how-mobile.png) and [phone preparation panel](previews/how-mobile-preparation.png). No backend integration or commercial data was introduced.
+
 ## Separate FAQ topic pages — 2026-10-24
 
 The FAQ home is now a six-topic directory instead of an inline category filter. Each topic has an independent localized URL, heading, breadcrumb, scoped search and native answer disclosures. The desktop sidebar becomes a horizontal topic navigator on phones, with the current topic brought into view without moving the page vertically. Global search returns links to answers on their topic pages. Feedback, copyable summaries and related answers preserve stable question IDs. Help, installation and compatibility links now target the new routes directly; old FAQ home category/question fragments resolve to their appropriate topic page. Localized canonical/hreflang/Open Graph entries and sitemap URLs cover all twelve topic pages.

@@ -15,6 +15,8 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
   for (const path of [
     "/en",
     "/es",
+    "/en/how-it-works",
+    "/es/como-funciona",
     "/es/destinos",
     "/en/esim/japan",
     "/es/esim/europe",
@@ -30,6 +32,11 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/instalar",
     "/es/estudio",
   ]) {
+    if (
+      process.env.AUDIT_SCOPE === "how" &&
+      !["/en", "/es", "/en/how-it-works", "/es/como-funciona"].includes(path)
+    )
+      continue;
     if (
       process.env.AUDIT_SCOPE === "faq" &&
       !/faq|preguntas-frecuentes/.test(path)

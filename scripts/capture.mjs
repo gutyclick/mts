@@ -12,6 +12,9 @@ const baseURL = process.env.BASE_URL ?? "http://localhost:3000";
 for (const [name, width, height, path, fullPage = true] of [
   ["home-desktop", 1440, 1000, "/en"],
   ["home-mobile", 390, 844, "/es"],
+  ["how-desktop", 1440, 1000, "/es/como-funciona"],
+  ["how-tablet", 768, 1024, "/en/how-it-works"],
+  ["how-mobile", 390, 844, "/es/como-funciona", false],
   ["plans-desktop", 1440, 1000, "/en/esim/japan", false],
   ["regional-networks-desktop", 1440, 1000, "/es/esim/europe", false],
   ["regional-networks-mobile", 390, 844, "/es/esim/europe", false],
@@ -61,6 +64,17 @@ for (const [name, width, height, path, fullPage = true] of [
     Array.from(document.images).every((image) => image.complete),
   );
   await page.screenshot({ path: `docs/previews/${name}.png`, fullPage });
+  if (name === "how-mobile") {
+    await page
+      .locator(".how-preparation")
+      .evaluate((el) =>
+        window.scrollTo(
+          0,
+          window.scrollY + el.getBoundingClientRect().top - 85,
+        ),
+      );
+    await page.screenshot({ path: "docs/previews/how-mobile-preparation.png" });
+  }
   if (name === "plans-desktop" || name === "plans-mobile") {
     await page
       .locator(".plan-information")

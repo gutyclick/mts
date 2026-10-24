@@ -8,6 +8,7 @@ import "@/styles/catalog.css";
 import "@/styles/experience.css";
 import "@/styles/compatibility.css";
 import "@/styles/plan-selection.css";
+import "@/styles/how-it-works.css";
 
 export const viewport: Viewport = {
   width: "device-width",

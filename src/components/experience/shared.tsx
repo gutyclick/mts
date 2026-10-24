@@ -86,7 +86,6 @@ export function PassSummary({
         <div className="pass-allowance">
           <Wifi size={23} />
           <strong>{plan.allowance}</strong>
-          {plan.kind === "daily" && <small>{c.perDay}</small>}
         </div>
         <p className="pass-duration">
           <CalendarDays size={16} />

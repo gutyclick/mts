@@ -1,6 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+} from "node:fs";
+import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
+import { basename, dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import catalog from "../src/data/plans.json" with { type: "json" };
 import { destinations, searchDestinations } from "../src/lib/catalog.ts";
 import { filterPlans, type Plan } from "../src/lib/plan-utils.ts";
@@ -14,6 +24,56 @@ import { helpContent } from "../src/lib/help-content.ts";
 import { parseFAQVote } from "../src/lib/faq-feedback.ts";
 import { experiencePath, planPath } from "../src/lib/experience-routes.ts";
 const plansByDestination = catalog as Record<string, Plan[]>;
+
+test("importer excludes daily packages, retains one-day fixed plans and omits empty regions", () => {
+  const root = resolve(tmpdir());
+  const directory = mkdtempSync(join(root, "mts-fixed-"));
+  try {
+    const source = join(directory, "catalog.csv");
+    writeFileSync(
+      source,
+      [
+        "Type,Code,Slug,Location,GBs,Days,Plan,Plan Name",
+        "Single Country,JP,JP_FIXED,Japan,5GB,7,Full Speed,Japan 5GB 7Days",
+        "Single Country,JP,JP_ONE_DAY,Japan,1GB,1,Full Speed,Japan 1GB 1Day",
+        "Single Country,JP,JP_DAILY,Japan,1GB,1,Unlimited FUP,Japan Daily",
+        "Regional,TEST,REGION_DAILY,Daily Region,1GB,1,Unlimited FUP,Region Daily",
+      ].join("\n"),
+    );
+    execFileSync(
+      process.execPath,
+      [
+        fileURLToPath(
+          new URL("../scripts/import-catalog.mjs", import.meta.url),
+        ),
+        source,
+      ],
+      { cwd: directory },
+    );
+    const plans = JSON.parse(
+      readFileSync(join(directory, "src/data/plans.json"), "utf8"),
+    );
+    const entries = JSON.parse(
+      readFileSync(join(directory, "src/data/destinations.json"), "utf8"),
+    );
+    const summary = JSON.parse(
+      readFileSync(join(directory, "src/data/catalog-summary.json"), "utf8"),
+    );
+    assert.deepEqual(Object.keys(plans), ["japan"]);
+    assert.deepEqual(
+      plans.japan.map((p: Plan) => p.id),
+      ["JP_ONE_DAY", "JP_FIXED"],
+    );
+    assert.ok(plans.japan.every((p: Plan) => p.kind === "fixed"));
+    assert.equal(entries[0].planCount, 2);
+    assert.equal(summary.excludedDailyPlans, 2);
+    assert.equal(summary.importPolicy, "fixed-only");
+  } finally {
+    assert.equal(dirname(resolve(directory)), root);
+    assert.ok(basename(directory).startsWith("mts-fixed-"));
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
 test("search accepts localized names, aliases, corrected source names and codes", () => {
   for (const query of ["JAPÓN", " japon ", "Japan", "Tokio", "JP"])
     assert.equal(searchDestinations(query)[0]?.slug, "japan");
@@ -24,12 +84,12 @@ test("search accepts localized names, aliases, corrected source names and codes"
   assert.equal(searchDestinations("Cayman lslands")[0]?.code, "KY");
   assert.equal(searchDestinations("Philippine")[0]?.code, "PH");
   assert.equal(searchDestinations("unlikely-place").length, 0);
-  assert.equal(searchDestinations(" ").length, 244);
+  assert.equal(searchDestinations(" ").length, 241);
 });
-test("all source plans are retained once, organized and allowlisted without prices", () => {
-  assert.equal(destinations.length, 244);
+test("only fixed plans are retained once, organized and allowlisted without prices", () => {
+  assert.equal(destinations.length, 241);
   assert.equal(destinations.filter((d) => d.type === "country").length, 202);
-  assert.equal(destinations.filter((d) => d.type === "region").length, 42);
+  assert.equal(destinations.filter((d) => d.type === "region").length, 39);
   const ids = new Set<string>();
   for (const destination of destinations) {
     const plans = plansByDestination[destination.slug];
@@ -52,26 +112,26 @@ test("all source plans are retained once, organized and allowlisted without pric
       assert.ok(!ids.has(plan.id));
       ids.add(plan.id);
       assert.ok(plan.name && plan.dataGb > 0 && plan.days > 0);
-      assert.ok(["fixed", "daily"].includes(plan.kind));
+      assert.equal(plan.kind, "fixed");
       if (destination.type === "country")
         assert.equal(plan.coverageCode, destination.code);
     }
   }
-  assert.equal(ids.size, 3186);
-  assert.equal(plansByDestination.japan.length, 43);
+  assert.equal(ids.size, 1730);
+  assert.equal(plansByDestination.japan.length, 23);
   for (const slug of ["japan", "united-states", "france", "italy"])
     assert.equal(
       destinations.find((d) => d.slug === slug)?.artworkKind,
       "banner",
     );
 });
-test("real catalog filters intersect allowance, duration and daily/fixed type", () => {
+test("fixed plan filters intersect allowance and duration", () => {
   const plans = plansByDestination.japan;
-  assert.equal(filterPlans(plans, "", "").length, 43);
-  const matching = filterPlans(plans, "1", "1", "daily");
+  assert.equal(filterPlans(plans, "", "").length, 23);
+  const matching = filterPlans(plans, "1", "7");
   assert.ok(matching.length > 0);
   assert.ok(
-    matching.every((p) => p.dataGb === 1 && p.days === 1 && p.kind === "daily"),
+    matching.every((p) => p.dataGb === 1 && p.days === 7 && p.kind === "fixed"),
   );
   assert.equal(filterPlans(plans, "50", "1").length, 0);
   assert.ok(plans.some((p) => p.allowance === "100MB" && p.dataGb === 0.1));

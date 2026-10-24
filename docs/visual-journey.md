@@ -19,7 +19,7 @@ La compra de ejemplo muestra resumen, diseño de pago y confirmación de demostr
 
 Mis eSIM muestra tres perfiles ficticios (por instalar, activo y finalizado), filtros, detalle de consumo de ejemplo, vigencia, instalación manual pendiente y un dibujo no escaneable en lugar de un QR real. La guía permite alternar entre iPhone y Android. Los controles de demostración de la cartera muestran estados normal, vacío, carga y error, con recuperación al ejemplo.
 
-La administración visual es una muestra pública, claramente identificada como tal, con búsqueda de los 244 destinos, revisión de planes, pedidos ficticios y acceso al contenido del FAQ. No pretende ofrecer autenticación, permisos ni edición real. La navegación de escritorio, móvil y el pie de página permiten acceder a las nuevas pantallas. El cambio de idioma conserva ruta, plan seleccionado y parámetros de contexto.
+La administración visual es una muestra pública, claramente identificada como tal, con búsqueda de los 241 destinos, revisión de planes fijos, pedidos ficticios y acceso al contenido del FAQ. No pretende ofrecer autenticación, permisos ni edición real. La navegación de escritorio, móvil y el pie de página permiten acceder a las nuevas pantallas. El cambio de idioma conserva ruta, plan seleccionado y parámetros de contexto.
 
 ## Límites de esta fase
 

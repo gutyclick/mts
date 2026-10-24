@@ -6,6 +6,8 @@ El centro de ayuda conserva Plus Jakarta Sans para títulos, Inter para texto, e
 
 Las 29 respuestas por idioma se organizan en primeros pasos, compatibilidad, instalación, datos, viaje y conexión. Los IDs son estables y compartidos entre idiomas. Los enlaces `#faq-hotspot`, `#faq-data-roaming` y equivalentes abren y enfocan una respuesta concreta. Los enlaces relacionados limpian filtros para no ocultar el destino y mantienen el foco de teclado en su encabezado.
 
+El catálogo ofrece únicamente datos fijos. La respuesta con ID estable `daily-fup` ahora aclara que no se ofrecen paquetes diarios; se conserva el ID para mantener los enlaces existentes.
+
 ## Información del proveedor
 
 Las políticas sobre datos sin llamadas/SMS salvo indicación expresa, roaming obligatorio en la eSIM de viaje, QR vinculado a un solo dispositivo y soporte de hotspot proceden de las respuestas entregadas por el usuario. No se atribuyen esas políticas a todos los proveedores de eSIM.

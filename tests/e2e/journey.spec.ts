@@ -86,6 +86,18 @@ test("preview pages protect plan identity, locale context and indexing", async (
   const encoded = encodeURIComponent(id!);
   expect((await request.get(`/en/plan/france/${encoded}`)).status()).toBe(404);
   expect((await request.get("/en/plan/japan/not-a-plan")).status()).toBe(404);
+  expect((await request.get("/en/plan/japan/JP_0.5_Daily")).status()).toBe(404);
+  expect(
+    (
+      await request.get("/en/checkout?destination=japan&plan=JP_0.5_Daily")
+    ).status(),
+  ).toBe(404);
+  expect((await request.get("/en/esim/china-mainland-and-hk")).status()).toBe(
+    404,
+  );
+  expect(await (await request.get("/sitemap.xml")).text()).not.toContain(
+    "china-mainland-and-hk",
+  );
   expect(
     (
       await request.get(`/en/checkout?destination=france&plan=${encoded}`)

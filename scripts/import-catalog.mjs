@@ -21,6 +21,7 @@ const slugify = (value) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 const names = new Map();
+const sourceIds = new Set();
 for (const row of rows) {
   if (
     !["Single Country", "Regional"].includes(row.Type) ||
@@ -28,6 +29,10 @@ for (const row of rows) {
     !row.Slug
   )
     throw new Error("Invalid catalog row identity");
+  if (sourceIds.has(row.Slug)) throw new Error("Duplicate plan identifier");
+  sourceIds.add(row.Slug);
+  if (!["Full Speed", "Unlimited FUP"].includes(row.Plan))
+    throw new Error(`Invalid plan type: ${row.Slug}`);
   const key = `${row.Type}:${row.Code}`;
   if (!names.has(key)) names.set(key, new Map());
   const variants = names.get(key);
@@ -94,6 +99,8 @@ const aliases = {
 const groups = new Map();
 const ids = new Set();
 for (const row of rows) {
+  // Product policy: daily/FUP packages never enter the published catalog.
+  if (row.Plan !== "Full Speed") continue;
   const country = row.Type === "Single Country";
   const name = canonical.get(`${row.Type}:${row.Code}`).trim();
   const key = country ? `country:${row.Code}` : `region:${normalize(name)}`;
@@ -102,7 +109,7 @@ for (const row of rows) {
       name,
       country,
       code: row.Code,
-      aliases: new Set(),
+      aliases: new Set(names.get(`${row.Type}:${row.Code}`).keys()),
       plans: [],
     });
   const group = groups.get(key);
@@ -125,7 +132,7 @@ for (const row of rows) {
     allowance: row.GBs,
     dataGb: Number(match[1]) / (match[2] === "MB" ? 1000 : 1),
     days,
-    kind: row.Plan === "Full Speed" ? "fixed" : "daily",
+    kind: "fixed",
     coverageCode: row.Code,
   });
 }
@@ -169,6 +176,8 @@ await writeFile("src/data/plans.json", JSON.stringify(plans, null, 2) + "\n");
 const summary = {
   sourceRows: rows.length,
   importedPlans: ids.size,
+  excludedDailyPlans: rows.filter((row) => row.Plan === "Unlimited FUP").length,
+  importPolicy: "fixed-only",
   destinations: destinations.length,
   countries: destinations.filter((d) => d.type === "country").length,
   regions: destinations.filter((d) => d.type === "region").length,
@@ -193,12 +202,15 @@ await writeFile(
 await mkdir("public/flags", { recursive: true });
 for (const destination of destinations.filter((d) => d.type === "country")) {
   await copyFile(
-    `node_modules/circle-flags/flags/${destination.code.toLowerCase()}.svg`,
+    new URL(
+      `../node_modules/circle-flags/flags/${destination.code.toLowerCase()}.svg`,
+      import.meta.url,
+    ),
     `public/flags/${destination.code.toLowerCase()}.svg`,
   );
 }
 await copyFile(
-  "node_modules/circle-flags/LICENSE.md",
+  new URL("../node_modules/circle-flags/LICENSE.md", import.meta.url),
   "public/flags/LICENSE.md",
 );
 console.log(JSON.stringify(summary, null, 2));

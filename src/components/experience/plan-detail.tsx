@@ -1,12 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Check,
-  Globe2,
-  Info,
-  Smartphone,
-  Wifi,
-} from "lucide-react";
+import { ArrowRight, Check, Globe2, Smartphone, Wifi } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
 import { experienceCopy } from "@/lib/experience-copy";
@@ -72,12 +65,6 @@ export function PlanDetail({
           <section className="experience-card">
             <h2>{c.conditions}</h2>
             <p>{c.conditionsBody}</p>
-            {plan.kind === "daily" && (
-              <p className="experience-note">
-                <Info size={19} />
-                {c.fup}
-              </p>
-            )}
             <details className="experience-accordion">
               <summary>
                 {c.hotspot}

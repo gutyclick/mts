@@ -1,9 +1,11 @@
 {
   "sourceRows": 3186,
-  "importedPlans": 3186,
-  "destinations": 244,
+  "importedPlans": 1730,
+  "excludedDailyPlans": 1456,
+  "importPolicy": "fixed-only",
+  "destinations": 241,
   "countries": 202,
-  "regions": 42,
+  "regions": 39,
   "normalizedLocations": 6,
   "excludedFields": [
     "Price",

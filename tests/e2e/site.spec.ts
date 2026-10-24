@@ -31,10 +31,12 @@ test("plan details never complete a purchase and restore focus", async ({
   page,
 }) => {
   await page.goto("/en/esim/japan");
-  await expect(page.locator(".plan-card")).toHaveCount(43);
+  await expect(page.locator(".plan-card")).toHaveCount(23);
+  await expect(page.getByRole("button", { name: /Daily data/ })).toHaveCount(0);
+  await expect(page.locator("main")).not.toContainText("Daily data");
   await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
   await page.getByLabel("Data allowance").selectOption("50");
-  await page.getByLabel("Duration", { exact: true }).selectOption("1");
+  await page.getByLabel("Duration", { exact: true }).selectOption("7");
   await expect(page.locator(".empty-state")).toBeVisible();
   await page.getByRole("button", { name: "Reset filters" }).first().click();
   const trigger = page.getByRole("button", { name: "View plan" }).first();

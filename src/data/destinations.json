@@ -8,8 +8,8 @@
     "code": "AF",
     "type": "country",
     "aliases": ["Afghanistan"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -34,7 +34,7 @@
     "code": "AF-21",
     "type": "region",
     "aliases": ["Africa (21 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -47,8 +47,8 @@
     "code": "AX",
     "type": "country",
     "aliases": ["Aland Islands"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -60,7 +60,7 @@
     "code": "AL",
     "type": "country",
     "aliases": ["Albania"],
-    "planCount": 14,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -73,7 +73,7 @@
     "code": "DZ",
     "type": "country",
     "aliases": ["Algeria"],
-    "planCount": 16,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -86,8 +86,8 @@
     "code": "AD",
     "type": "country",
     "aliases": ["Andorra"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -99,8 +99,8 @@
     "code": "AO",
     "type": "country",
     "aliases": ["Angola"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 5,
+    "dataMinGb": 1,
     "dataMaxGb": 10
   },
   {
@@ -112,8 +112,8 @@
     "code": "AI",
     "type": "country",
     "aliases": ["Anguilla"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -125,8 +125,8 @@
     "code": "AG",
     "type": "country",
     "aliases": ["Antigua and Barbuda"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -138,7 +138,7 @@
     "code": "AR",
     "type": "country",
     "aliases": ["Argentina"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -151,7 +151,7 @@
     "code": "AM",
     "type": "country",
     "aliases": ["Armenia"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -164,7 +164,7 @@
     "code": "AW",
     "type": "country",
     "aliases": ["Aruba"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -177,8 +177,8 @@
     "code": "AS-12",
     "type": "region",
     "aliases": ["Asia (12 areas)"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -190,7 +190,7 @@
     "code": "AS-14",
     "type": "region",
     "aliases": ["Asia (14 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -203,8 +203,8 @@
     "code": "AS-21",
     "type": "region",
     "aliases": ["Asia (20 areas)"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -216,8 +216,8 @@
     "code": "AS-7",
     "type": "region",
     "aliases": ["Asia (7 areas)"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -255,7 +255,7 @@
     "code": "AU",
     "type": "country",
     "aliases": ["Australia", "sydney", "sidney", "melbourne"],
-    "planCount": 34,
+    "planCount": 16,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -268,8 +268,8 @@
     "code": "AUNZ-2",
     "type": "region",
     "aliases": ["Australia & New Zealand"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -281,8 +281,8 @@
     "code": "AT",
     "type": "country",
     "aliases": ["Austria"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -294,7 +294,7 @@
     "code": "AZ",
     "type": "country",
     "aliases": ["Azerbaijan"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -307,8 +307,8 @@
     "code": "BS",
     "type": "country",
     "aliases": ["Bahamas"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -320,8 +320,8 @@
     "code": "BH",
     "type": "country",
     "aliases": ["Bahrain"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -333,8 +333,8 @@
     "code": "EU-7",
     "type": "region",
     "aliases": ["Balkans (5+ areas)"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -346,8 +346,8 @@
     "code": "BD",
     "type": "country",
     "aliases": ["Bangladesh"],
-    "planCount": 12,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -359,8 +359,8 @@
     "code": "BB",
     "type": "country",
     "aliases": ["Barbados"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -372,8 +372,8 @@
     "code": "BY",
     "type": "country",
     "aliases": ["Belarus"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -385,8 +385,8 @@
     "code": "BE",
     "type": "country",
     "aliases": ["Belgium"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -398,8 +398,8 @@
     "code": "BZ",
     "type": "country",
     "aliases": ["Belize"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -411,8 +411,8 @@
     "code": "BJ",
     "type": "country",
     "aliases": ["Benin"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -424,8 +424,8 @@
     "code": "BM",
     "type": "country",
     "aliases": ["Bermuda"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -437,7 +437,7 @@
     "code": "BT",
     "type": "country",
     "aliases": ["Bhutan"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -450,7 +450,7 @@
     "code": "BO",
     "type": "country",
     "aliases": ["Bolivia"],
-    "planCount": 8,
+    "planCount": 7,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -463,7 +463,7 @@
     "code": "BQ",
     "type": "country",
     "aliases": ["Bonaire"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -476,8 +476,8 @@
     "code": "BA",
     "type": "country",
     "aliases": ["Bosnia and Herzegovina"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -489,8 +489,8 @@
     "code": "BW",
     "type": "country",
     "aliases": ["Botswana"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -502,7 +502,7 @@
     "code": "BR",
     "type": "country",
     "aliases": ["Brazil"],
-    "planCount": 17,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -515,8 +515,8 @@
     "code": "BN",
     "type": "country",
     "aliases": ["Brunei Darussalam"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 5,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -528,8 +528,8 @@
     "code": "BG",
     "type": "country",
     "aliases": ["Bulgaria"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -541,8 +541,8 @@
     "code": "BF",
     "type": "country",
     "aliases": ["Burkina Faso"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -554,7 +554,7 @@
     "code": "KH",
     "type": "country",
     "aliases": ["Cambodia"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -567,8 +567,8 @@
     "code": "CM",
     "type": "country",
     "aliases": ["Cameroon"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -580,7 +580,7 @@
     "code": "CA",
     "type": "country",
     "aliases": ["Canada"],
-    "planCount": 33,
+    "planCount": 16,
     "dataMinGb": 0.1,
     "dataMaxGb": 75
   },
@@ -593,8 +593,8 @@
     "code": "CV",
     "type": "country",
     "aliases": ["Cape Verde"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -606,8 +606,8 @@
     "code": "CB-25",
     "type": "region",
     "aliases": ["Caribbean (20+ areas)"],
-    "planCount": 7,
-    "dataMinGb": 0.5,
+    "planCount": 4,
+    "dataMinGb": 1,
     "dataMaxGb": 10
   },
   {
@@ -619,8 +619,8 @@
     "code": "KY",
     "type": "country",
     "aliases": ["Cayman Islands", "Cayman lslands"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -645,8 +645,8 @@
     "code": "AS-5",
     "type": "region",
     "aliases": ["Central Asia"],
-    "planCount": 13,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -658,7 +658,7 @@
     "code": "CA-4",
     "type": "region",
     "aliases": ["Central Asia (4 areas)"],
-    "planCount": 13,
+    "planCount": 7,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -671,8 +671,8 @@
     "code": "TD",
     "type": "country",
     "aliases": ["Chad"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -684,7 +684,7 @@
     "code": "CL",
     "type": "country",
     "aliases": ["Chile"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -697,22 +697,9 @@
     "code": "CN",
     "type": "country",
     "aliases": ["China"],
-    "planCount": 34,
+    "planCount": 17,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
-  },
-  {
-    "slug": "china-mainland-and-hk",
-    "name": {
-      "en": "China (mainland & HK)",
-      "es": "China (continental y HK)"
-    },
-    "code": "CNHK-2",
-    "type": "region",
-    "aliases": ["China (mainland & HK)"],
-    "planCount": 1,
-    "dataMinGb": 3,
-    "dataMaxGb": 3
   },
   {
     "slug": "china-mainland-hk-macao",
@@ -723,8 +710,8 @@
     "code": "CN-3",
     "type": "region",
     "aliases": ["China (mainland HK Macao)"],
-    "planCount": 17,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -736,8 +723,8 @@
     "code": "CNJPKR-3",
     "type": "region",
     "aliases": ["China mainland & Japan & South Korea"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -749,7 +736,7 @@
     "code": "CO",
     "type": "country",
     "aliases": ["Colombia"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -762,8 +749,8 @@
     "code": "CR",
     "type": "country",
     "aliases": ["Costa Rica"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -775,7 +762,7 @@
     "code": "CI",
     "type": "country",
     "aliases": ["Cote d'Ivoire"],
-    "planCount": 7,
+    "planCount": 5,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -788,8 +775,8 @@
     "code": "HR",
     "type": "country",
     "aliases": ["Croatia"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -801,8 +788,8 @@
     "code": "CW",
     "type": "country",
     "aliases": ["Curaçao"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -814,8 +801,8 @@
     "code": "CY",
     "type": "country",
     "aliases": ["Cyprus"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -827,8 +814,8 @@
     "code": "CZ",
     "type": "country",
     "aliases": ["Czech Republic"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -840,8 +827,8 @@
     "code": "CD",
     "type": "country",
     "aliases": ["Democratic Republic of the Congo"],
-    "planCount": 13,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -853,8 +840,8 @@
     "code": "DK",
     "type": "country",
     "aliases": ["Denmark"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -866,8 +853,8 @@
     "code": "DM",
     "type": "country",
     "aliases": ["Dominica"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -879,7 +866,7 @@
     "code": "DO",
     "type": "country",
     "aliases": ["Dominican Republic"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -892,8 +879,8 @@
     "code": "EC",
     "type": "country",
     "aliases": ["Ecuador"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -905,7 +892,7 @@
     "code": "EG",
     "type": "country",
     "aliases": ["Egypt"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -918,7 +905,7 @@
     "code": "SV",
     "type": "country",
     "aliases": ["El Salvador"],
-    "planCount": 7,
+    "planCount": 6,
     "dataMinGb": 0.1,
     "dataMaxGb": 5
   },
@@ -931,8 +918,8 @@
     "code": "EE",
     "type": "country",
     "aliases": ["Estonia"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -944,8 +931,8 @@
     "code": "SZ",
     "type": "country",
     "aliases": ["Eswatini"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -957,7 +944,7 @@
     "code": "ET",
     "type": "country",
     "aliases": ["Ethiopia"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -970,8 +957,8 @@
     "code": "EU-42",
     "type": "region",
     "aliases": ["Europe"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -996,7 +983,7 @@
     "code": "EU-33",
     "type": "region",
     "aliases": ["Europe (33 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1009,7 +996,7 @@
     "code": "EU-35",
     "type": "region",
     "aliases": ["Europe (35 areas)"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 1,
     "dataMaxGb": 100
   },
@@ -1022,7 +1009,7 @@
     "code": "EU-43",
     "type": "region",
     "aliases": ["Europe (40+ areas) & Morocco"],
-    "planCount": 7,
+    "planCount": 5,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1035,8 +1022,8 @@
     "code": "EU-30",
     "type": "region",
     "aliases": ["Europe(30+", "Europe(30+ areas)"],
-    "planCount": 16,
-    "dataMinGb": 0.3,
+    "planCount": 10,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1048,8 +1035,8 @@
     "code": "FO",
     "type": "country",
     "aliases": ["Faroe Islands"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1061,8 +1048,8 @@
     "code": "FJ",
     "type": "country",
     "aliases": ["Fiji"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1074,8 +1061,8 @@
     "code": "FI",
     "type": "country",
     "aliases": ["Finland"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1087,7 +1074,7 @@
     "code": "FR",
     "type": "country",
     "aliases": ["France"],
-    "planCount": 18,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1100,8 +1087,8 @@
     "code": "GF",
     "type": "country",
     "aliases": ["French Guiana"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1113,8 +1100,8 @@
     "code": "PF",
     "type": "country",
     "aliases": ["French Polynesia"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1126,8 +1113,8 @@
     "code": "GA",
     "type": "country",
     "aliases": ["Gabon"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1139,8 +1126,8 @@
     "code": "GM",
     "type": "country",
     "aliases": ["Gambia"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1152,7 +1139,7 @@
     "code": "SAAEQAKWOMBH-6",
     "type": "region",
     "aliases": ["GCC"],
-    "planCount": 5,
+    "planCount": 4,
     "dataMinGb": 1,
     "dataMaxGb": 10
   },
@@ -1165,8 +1152,8 @@
     "code": "GE",
     "type": "country",
     "aliases": ["Georgia"],
-    "planCount": 13,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1178,8 +1165,8 @@
     "code": "DE",
     "type": "country",
     "aliases": ["Germany"],
-    "planCount": 17,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1191,8 +1178,8 @@
     "code": "GH",
     "type": "country",
     "aliases": ["Ghana"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1204,8 +1191,8 @@
     "code": "GI",
     "type": "country",
     "aliases": ["Gibraltar"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1217,7 +1204,7 @@
     "code": "GL-120",
     "type": "region",
     "aliases": ["Global (120+ areas)"],
-    "planCount": 9,
+    "planCount": 7,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1243,7 +1230,7 @@
     "code": "GR",
     "type": "country",
     "aliases": ["Greece"],
-    "planCount": 19,
+    "planCount": 10,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1256,7 +1243,7 @@
     "code": "GL",
     "type": "country",
     "aliases": ["Greenland"],
-    "planCount": 8,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1269,8 +1256,8 @@
     "code": "GD",
     "type": "country",
     "aliases": ["Grenada"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1282,7 +1269,7 @@
     "code": "GP",
     "type": "country",
     "aliases": ["Guadeloupe"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1295,8 +1282,8 @@
     "code": "GU",
     "type": "country",
     "aliases": ["Guam"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1308,7 +1295,7 @@
     "code": "GT",
     "type": "country",
     "aliases": ["Guatemala"],
-    "planCount": 15,
+    "planCount": 7,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -1334,8 +1321,8 @@
     "code": "GN",
     "type": "country",
     "aliases": ["Guinea"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1347,8 +1334,8 @@
     "code": "GW",
     "type": "country",
     "aliases": ["Guinea-Bissau"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1360,8 +1347,8 @@
     "code": "ME-6",
     "type": "region",
     "aliases": ["Gulf Region"],
-    "planCount": 8,
-    "dataMinGb": 0.5,
+    "planCount": 4,
+    "dataMinGb": 1,
     "dataMaxGb": 10
   },
   {
@@ -1373,8 +1360,8 @@
     "code": "GY",
     "type": "country",
     "aliases": ["Guyana"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1386,7 +1373,7 @@
     "code": "HT",
     "type": "country",
     "aliases": ["Haiti"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1399,7 +1386,7 @@
     "code": "HN",
     "type": "country",
     "aliases": ["Honduras"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -1412,7 +1399,7 @@
     "code": "HK",
     "type": "country",
     "aliases": ["Hong Kong"],
-    "planCount": 30,
+    "planCount": 16,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1425,8 +1412,8 @@
     "code": "HU",
     "type": "country",
     "aliases": ["Hungary"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1438,7 +1425,7 @@
     "code": "IS",
     "type": "country",
     "aliases": ["Iceland"],
-    "planCount": 15,
+    "planCount": 8,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -1451,7 +1438,7 @@
     "code": "IN",
     "type": "country",
     "aliases": ["India"],
-    "planCount": 16,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1464,7 +1451,7 @@
     "code": "ID",
     "type": "country",
     "aliases": ["Indonesia"],
-    "planCount": 32,
+    "planCount": 15,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1477,8 +1464,8 @@
     "code": "IQ",
     "type": "country",
     "aliases": ["Iraq"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1490,7 +1477,7 @@
     "code": "IE",
     "type": "country",
     "aliases": ["Ireland"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.5,
     "dataMaxGb": 50
   },
@@ -1503,7 +1490,7 @@
     "code": "IESI-2",
     "type": "region",
     "aliases": ["Ireland & Slovenia"],
-    "planCount": 7,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -1529,8 +1516,8 @@
     "code": "IM",
     "type": "country",
     "aliases": ["Isle of Man"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1542,8 +1529,8 @@
     "code": "IL",
     "type": "country",
     "aliases": ["Israel"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1555,8 +1542,8 @@
     "code": "IT",
     "type": "country",
     "aliases": ["Italy"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1581,7 +1568,7 @@
     "code": "JP",
     "type": "country",
     "aliases": ["Japan", "japon", "tokio", "tokyo", "kyoto"],
-    "planCount": 43,
+    "planCount": 23,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1594,7 +1581,7 @@
     "code": "JPKR-2",
     "type": "region",
     "aliases": ["Japan & South Korea"],
-    "planCount": 12,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1607,8 +1594,8 @@
     "code": "JE",
     "type": "country",
     "aliases": ["Jersey"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1620,7 +1607,7 @@
     "code": "JO",
     "type": "country",
     "aliases": ["Jordan"],
-    "planCount": 15,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -1633,7 +1620,7 @@
     "code": "KZ",
     "type": "country",
     "aliases": ["Kazakhstan"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -1646,7 +1633,7 @@
     "code": "KE",
     "type": "country",
     "aliases": ["Kenya"],
-    "planCount": 17,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -1659,7 +1646,7 @@
     "code": "XK",
     "type": "country",
     "aliases": ["kosovo", "Kosovo"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1672,7 +1659,7 @@
     "code": "KW",
     "type": "country",
     "aliases": ["Kuwait"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -1685,8 +1672,8 @@
     "code": "KG",
     "type": "country",
     "aliases": ["Kyrgyzstan"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1698,8 +1685,8 @@
     "code": "LA",
     "type": "country",
     "aliases": ["Laos"],
-    "planCount": 26,
-    "dataMinGb": 0.5,
+    "planCount": 12,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1711,7 +1698,7 @@
     "code": "LV",
     "type": "country",
     "aliases": ["Latvia"],
-    "planCount": 13,
+    "planCount": 7,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -1724,7 +1711,7 @@
     "code": "LS",
     "type": "country",
     "aliases": ["Lesotho"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1750,8 +1737,8 @@
     "code": "LY",
     "type": "country",
     "aliases": ["Libya"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1763,7 +1750,7 @@
     "code": "LI",
     "type": "country",
     "aliases": ["Liechtenstein"],
-    "planCount": 12,
+    "planCount": 7,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -1776,8 +1763,8 @@
     "code": "LT",
     "type": "country",
     "aliases": ["Lithuania"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1789,8 +1776,8 @@
     "code": "LU",
     "type": "country",
     "aliases": ["Luxembourg"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1802,8 +1789,8 @@
     "code": "MO",
     "type": "country",
     "aliases": ["Macao"],
-    "planCount": 28,
-    "dataMinGb": 0.5,
+    "planCount": 14,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -1828,8 +1815,8 @@
     "code": "MW",
     "type": "country",
     "aliases": ["Malawi"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1841,7 +1828,7 @@
     "code": "MY",
     "type": "country",
     "aliases": ["Malaysia"],
-    "planCount": 35,
+    "planCount": 18,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1854,7 +1841,7 @@
     "code": "MV",
     "type": "country",
     "aliases": ["Maldives"],
-    "planCount": 9,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1880,7 +1867,7 @@
     "code": "MT",
     "type": "country",
     "aliases": ["Malta"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1893,7 +1880,7 @@
     "code": "MQ",
     "type": "country",
     "aliases": ["Martinique"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1906,7 +1893,7 @@
     "code": "MR",
     "type": "country",
     "aliases": ["Mauritania"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1919,8 +1906,8 @@
     "code": "MU",
     "type": "country",
     "aliases": ["Mauritius"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -1932,7 +1919,7 @@
     "code": "YT",
     "type": "country",
     "aliases": ["Mayotte"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1945,7 +1932,7 @@
     "code": "MX",
     "type": "country",
     "aliases": ["Mexico"],
-    "planCount": 16,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -1971,7 +1958,7 @@
     "code": "ME-5",
     "type": "region",
     "aliases": ["Middle East (5 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -1997,8 +1984,8 @@
     "code": "MD",
     "type": "country",
     "aliases": ["Moldova"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2010,8 +1997,8 @@
     "code": "MC",
     "type": "country",
     "aliases": ["Monaco"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2023,7 +2010,7 @@
     "code": "MN",
     "type": "country",
     "aliases": ["Mongolia"],
-    "planCount": 13,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2036,8 +2023,8 @@
     "code": "ME",
     "type": "country",
     "aliases": ["Montenegro"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2049,8 +2036,8 @@
     "code": "MS",
     "type": "country",
     "aliases": ["Montserrat"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2062,7 +2049,7 @@
     "code": "MA",
     "type": "country",
     "aliases": ["Morocco"],
-    "planCount": 17,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2088,7 +2075,7 @@
     "code": "NR",
     "type": "country",
     "aliases": ["Nauru"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2101,8 +2088,8 @@
     "code": "NP",
     "type": "country",
     "aliases": ["Nepal"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2114,8 +2101,8 @@
     "code": "NL",
     "type": "country",
     "aliases": ["Netherlands"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2127,7 +2114,7 @@
     "code": "NC",
     "type": "country",
     "aliases": ["New Caledonia"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2140,7 +2127,7 @@
     "code": "NZ",
     "type": "country",
     "aliases": ["New Zealand"],
-    "planCount": 17,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2153,7 +2140,7 @@
     "code": "NI",
     "type": "country",
     "aliases": ["Nicaragua"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2166,8 +2153,8 @@
     "code": "NE",
     "type": "country",
     "aliases": ["Niger"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2179,7 +2166,7 @@
     "code": "NG",
     "type": "country",
     "aliases": ["Nigeria"],
-    "planCount": 12,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2192,8 +2179,8 @@
     "code": "NA-3",
     "type": "region",
     "aliases": ["North", "North America"],
-    "planCount": 19,
-    "dataMinGb": 0.5,
+    "planCount": 9,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2205,8 +2192,8 @@
     "code": "MK",
     "type": "country",
     "aliases": ["North Macedonia"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2218,8 +2205,8 @@
     "code": "NO",
     "type": "country",
     "aliases": ["Norway"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2231,7 +2218,7 @@
     "code": "OCE-8",
     "type": "region",
     "aliases": ["Oceania (8 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2244,8 +2231,8 @@
     "code": "OM",
     "type": "country",
     "aliases": ["Oman"],
-    "planCount": 12,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2257,7 +2244,7 @@
     "code": "PK",
     "type": "country",
     "aliases": ["Pakistan"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2270,7 +2257,7 @@
     "code": "PA",
     "type": "country",
     "aliases": ["Panama"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2283,7 +2270,7 @@
     "code": "PG",
     "type": "country",
     "aliases": ["Papua New Guinea"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2296,7 +2283,7 @@
     "code": "PY",
     "type": "country",
     "aliases": ["Paraguay"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2309,7 +2296,7 @@
     "code": "PE",
     "type": "country",
     "aliases": ["Peru"],
-    "planCount": 17,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2322,7 +2309,7 @@
     "code": "PH",
     "type": "country",
     "aliases": ["Philippine", "Philippines"],
-    "planCount": 18,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2335,8 +2322,8 @@
     "code": "PL",
     "type": "country",
     "aliases": ["Poland"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2348,8 +2335,8 @@
     "code": "PT",
     "type": "country",
     "aliases": ["Portugal"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2374,7 +2361,7 @@
     "code": "QA",
     "type": "country",
     "aliases": ["Qatar"],
-    "planCount": 15,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2387,8 +2374,8 @@
     "code": "CG",
     "type": "country",
     "aliases": ["Republic of the Congo"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2400,7 +2387,7 @@
     "code": "RE",
     "type": "country",
     "aliases": ["Reunion"],
-    "planCount": 17,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2413,8 +2400,8 @@
     "code": "RO",
     "type": "country",
     "aliases": ["Romania"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2426,7 +2413,7 @@
     "code": "RU",
     "type": "country",
     "aliases": ["Russia"],
-    "planCount": 12,
+    "planCount": 9,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2439,8 +2426,8 @@
     "code": "RW",
     "type": "country",
     "aliases": ["Rwanda"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2452,7 +2439,7 @@
     "code": "BL",
     "type": "country",
     "aliases": ["Saint Barthelemy"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2465,8 +2452,8 @@
     "code": "KN",
     "type": "country",
     "aliases": ["Saint Kitts and Nevis"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2478,8 +2465,8 @@
     "code": "LC",
     "type": "country",
     "aliases": ["Saint Lucia"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2491,7 +2478,7 @@
     "code": "MF",
     "type": "country",
     "aliases": ["Saint Martin"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2504,8 +2491,8 @@
     "code": "VC",
     "type": "country",
     "aliases": ["Saint Vincent and the Grenadines"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2517,8 +2504,8 @@
     "code": "WS",
     "type": "country",
     "aliases": ["Samoa"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2530,7 +2517,7 @@
     "code": "SM",
     "type": "country",
     "aliases": ["San Marino"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2543,8 +2530,8 @@
     "code": "SA",
     "type": "country",
     "aliases": ["Saudi Arabia"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2556,7 +2543,7 @@
     "code": "SN",
     "type": "country",
     "aliases": ["Senegal"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2569,7 +2556,7 @@
     "code": "RS",
     "type": "country",
     "aliases": ["Serbia"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2582,8 +2569,8 @@
     "code": "SC",
     "type": "country",
     "aliases": ["Seychelles"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2595,8 +2582,8 @@
     "code": "SL",
     "type": "country",
     "aliases": ["Sierra Leone"],
-    "planCount": 10,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2608,22 +2595,9 @@
     "code": "SG",
     "type": "country",
     "aliases": ["Singapore"],
-    "planCount": 31,
+    "planCount": 15,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
-  },
-  {
-    "slug": "singapore-and-malaysia",
-    "name": {
-      "en": "Singapore & Malaysia",
-      "es": "Singapur y Malasia"
-    },
-    "code": "SGMY-2",
-    "type": "region",
-    "aliases": ["Singapore & Malaysia"],
-    "planCount": 3,
-    "dataMinGb": 1,
-    "dataMaxGb": 3
   },
   {
     "slug": "singapore-and-malaysia-and-thailand",
@@ -2634,22 +2608,9 @@
     "code": "SGMYTH-3",
     "type": "region",
     "aliases": ["Singapore & Malaysia & Thailand"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
-    "dataMaxGb": 20
-  },
-  {
-    "slug": "singapore-and-malaysia-and-vietnam-and-thailand-and-indonesia",
-    "name": {
-      "en": "Singapore & Malaysia & Vietnam & Thailand & Indonesia",
-      "es": "Singapur y Malasia y Vietnam y Tailandia y Indonesia"
-    },
-    "code": "SGMYVNTHID-5",
-    "type": "region",
-    "aliases": ["Singapore & Malaysia & Vietnam & Thailand & Indonesia"],
-    "planCount": 3,
+    "planCount": 6,
     "dataMinGb": 1,
-    "dataMaxGb": 10
+    "dataMaxGb": 20
   },
   {
     "slug": "slovakia",
@@ -2660,7 +2621,7 @@
     "code": "SK",
     "type": "country",
     "aliases": ["Slovakia"],
-    "planCount": 12,
+    "planCount": 7,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -2673,8 +2634,8 @@
     "code": "SI",
     "type": "country",
     "aliases": ["Slovenia"],
-    "planCount": 15,
-    "dataMinGb": 0.5,
+    "planCount": 7,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2686,7 +2647,7 @@
     "code": "ZA",
     "type": "country",
     "aliases": ["South Africa"],
-    "planCount": 16,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2699,7 +2660,7 @@
     "code": "SA-18",
     "type": "region",
     "aliases": ["South America"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2712,7 +2673,7 @@
     "code": "SA-6",
     "type": "region",
     "aliases": ["South America (6 areas)"],
-    "planCount": 14,
+    "planCount": 8,
     "dataMinGb": 1,
     "dataMaxGb": 50
   },
@@ -2725,7 +2686,7 @@
     "code": "SAS-6",
     "type": "region",
     "aliases": ["South Asia (6 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2738,7 +2699,7 @@
     "code": "SEA-8",
     "type": "region",
     "aliases": ["South East Asia (8 areas)"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2751,7 +2712,7 @@
     "code": "KR",
     "type": "country",
     "aliases": ["South Korea"],
-    "planCount": 33,
+    "planCount": 15,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2764,7 +2725,7 @@
     "code": "SS",
     "type": "country",
     "aliases": ["South Sudan"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2777,8 +2738,8 @@
     "code": "ES",
     "type": "country",
     "aliases": ["Spain"],
-    "planCount": 16,
-    "dataMinGb": 0.5,
+    "planCount": 8,
+    "dataMinGb": 1,
     "dataMaxGb": 50
   },
   {
@@ -2790,7 +2751,7 @@
     "code": "LK",
     "type": "country",
     "aliases": ["Sri Lanka"],
-    "planCount": 17,
+    "planCount": 10,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2816,8 +2777,8 @@
     "code": "SR",
     "type": "country",
     "aliases": ["Suriname"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2829,8 +2790,8 @@
     "code": "SE",
     "type": "country",
     "aliases": ["Sweden"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2842,7 +2803,7 @@
     "code": "CH",
     "type": "country",
     "aliases": ["Switzerland"],
-    "planCount": 19,
+    "planCount": 10,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2855,8 +2816,8 @@
     "code": "TJ",
     "type": "country",
     "aliases": ["Tajikistan"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2868,7 +2829,7 @@
     "code": "TZ",
     "type": "country",
     "aliases": ["Tanzania"],
-    "planCount": 11,
+    "planCount": 7,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2881,7 +2842,7 @@
     "code": "TH",
     "type": "country",
     "aliases": ["Thailand", "thai", "bangkok", "phuket"],
-    "planCount": 34,
+    "planCount": 18,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2894,7 +2855,7 @@
     "code": "TG",
     "type": "country",
     "aliases": ["Togo"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2907,7 +2868,7 @@
     "code": "TO",
     "type": "country",
     "aliases": ["Tonga"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -2920,8 +2881,8 @@
     "code": "TT",
     "type": "country",
     "aliases": ["Trinidad and Tobago"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2933,7 +2894,7 @@
     "code": "TN",
     "type": "country",
     "aliases": ["Tunisia"],
-    "planCount": 15,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -2946,7 +2907,7 @@
     "code": "TR",
     "type": "country",
     "aliases": ["Turkey"],
-    "planCount": 30,
+    "planCount": 17,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -2959,8 +2920,8 @@
     "code": "TC",
     "type": "country",
     "aliases": ["Turks and Caicos Islands"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2972,8 +2933,8 @@
     "code": "UG",
     "type": "country",
     "aliases": ["Uganda"],
-    "planCount": 11,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2985,8 +2946,8 @@
     "code": "UA",
     "type": "country",
     "aliases": ["Ukraine"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -2998,7 +2959,7 @@
     "code": "AE",
     "type": "country",
     "aliases": ["United Arab Emirates"],
-    "planCount": 19,
+    "planCount": 10,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -3020,7 +2981,7 @@
       "london",
       "londres"
     ],
-    "planCount": 18,
+    "planCount": 10,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -3043,7 +3004,7 @@
       "new york",
       "nueva york"
     ],
-    "planCount": 37,
+    "planCount": 20,
     "dataMinGb": 0.1,
     "dataMaxGb": 100
   },
@@ -3056,7 +3017,7 @@
     "code": "UY",
     "type": "country",
     "aliases": ["Uruguay"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -3069,8 +3030,8 @@
     "code": "USCA-2",
     "type": "region",
     "aliases": ["USA & Canada"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -3082,7 +3043,7 @@
     "code": "UZ",
     "type": "country",
     "aliases": ["Uzbekistan"],
-    "planCount": 13,
+    "planCount": 8,
     "dataMinGb": 0.1,
     "dataMaxGb": 20
   },
@@ -3095,7 +3056,7 @@
     "code": "VU",
     "type": "country",
     "aliases": ["Vanuatu"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -3108,7 +3069,7 @@
     "code": "VA",
     "type": "country",
     "aliases": ["Vatican City"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -3121,7 +3082,7 @@
     "code": "VE",
     "type": "country",
     "aliases": ["Venezuela"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -3134,7 +3095,7 @@
     "code": "VN",
     "type": "country",
     "aliases": ["Vietnam"],
-    "planCount": 31,
+    "planCount": 15,
     "dataMinGb": 0.1,
     "dataMaxGb": 50
   },
@@ -3147,8 +3108,8 @@
     "code": "VG",
     "type": "country",
     "aliases": ["Virgin Islands- British"],
-    "planCount": 9,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -3160,7 +3121,7 @@
     "code": "YE",
     "type": "country",
     "aliases": ["Yemen"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   },
@@ -3173,8 +3134,8 @@
     "code": "ZM",
     "type": "country",
     "aliases": ["Zambia"],
-    "planCount": 14,
-    "dataMinGb": 0.5,
+    "planCount": 6,
+    "dataMinGb": 1,
     "dataMaxGb": 20
   },
   {
@@ -3186,7 +3147,7 @@
     "code": "ZW",
     "type": "country",
     "aliases": ["Zimbabwe"],
-    "planCount": 11,
+    "planCount": 6,
     "dataMinGb": 1,
     "dataMaxGb": 20
   }

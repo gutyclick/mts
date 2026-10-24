@@ -15,9 +15,7 @@ export const experienceCopy = {
     duration: "Duration",
     days: "days",
     day: "day",
-    daily: "Daily data",
     fixed: "Fixed data",
-    perDay: "/ day",
     pending: "To be confirmed",
     noPrice: "Price not published",
     coverage: "Coverage",
@@ -35,7 +33,6 @@ export const experienceCopy = {
     calls: "Calls & SMS",
     callsBody:
       "Treat the plan as data-only unless calls or SMS are explicitly included in its terms.",
-    fup: "Daily allowance with a fair use policy; this is not unrestricted high-speed data.",
     installation: "Get ready to connect",
     installationBody:
       "A compatible, carrier-unlocked phone and an internet connection for installation are needed.",
@@ -207,9 +204,7 @@ export const experienceCopy = {
     duration: "Duración",
     days: "días",
     day: "día",
-    daily: "Datos diarios",
     fixed: "Datos fijos",
-    perDay: "/ día",
     pending: "Por confirmar",
     noPrice: "Precio no publicado",
     coverage: "Cobertura",
@@ -227,7 +222,6 @@ export const experienceCopy = {
     calls: "Llamadas y SMS",
     callsBody:
       "Considera el plan como solo de datos, salvo que sus condiciones incluyan expresamente llamadas o SMS.",
-    fup: "Datos diarios con política de uso justo; no equivale a datos a máxima velocidad sin restricciones.",
     installation: "Prepara tu conexión",
     installationBody:
       "Necesitas un teléfono compatible y liberado, y conexión a internet para instalar el perfil.",

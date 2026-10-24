@@ -69,7 +69,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "similar-plan-names",
             question: "Why do some plans have similar names?",
             answer:
-              "The catalog retains the original plan names and all available variants. Compare the data allowance, duration and plan type; similar names may represent different products.",
+              "The catalog retains the original names of the fixed data plans we offer. Compare the total data allowance and duration; similar names may represent different products.",
           },
           {
             id: "phone-number-sms",
@@ -170,7 +170,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
       {
         id: "data",
         title: "Data & plan types",
-        description: "Understand allowances, validity and daily data.",
+        description: "Understand total data allowances and validity.",
         questions: [
           {
             id: "fixed-data",
@@ -180,9 +180,9 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
           },
           {
             id: "daily-fup",
-            question: "What do daily data and FUP mean?",
+            question: "Do you offer daily data plans?",
             answer:
-              "These plans come from the source’s Unlimited FUP category and state a daily allowance. FUP means fair usage policy: speed or usage restrictions may apply. Do not interpret the name as unrestricted high-speed data.",
+              "No. Our catalog only includes fixed data plans: a total allowance for the stated duration, without a daily data reset. Daily data packages are not available in our catalog.",
           },
           {
             id: "mb-or-gb",
@@ -364,7 +364,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "similar-plan-names",
             question: "¿Por qué hay planes con nombres parecidos?",
             answer:
-              "Conservamos los nombres originales y todas las variantes disponibles. Compara los datos, la duración y el tipo de plan; nombres similares pueden corresponder a productos diferentes.",
+              "Conservamos los nombres originales de los planes de datos fijos que ofrecemos. Compara los datos totales y la duración; nombres similares pueden corresponder a productos diferentes.",
           },
           {
             id: "phone-number-sms",
@@ -477,9 +477,9 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
           },
           {
             id: "daily-fup",
-            question: "¿Qué significan datos diarios y FUP?",
+            question: "¿Ofrecen planes de datos diarios?",
             answer:
-              "Estos planes provienen de la categoría Unlimited FUP del listado e indican una cantidad diaria. FUP es una política de uso justo: pueden aplicarse límites de uso o velocidad. El nombre no significa datos a máxima velocidad sin restricciones.",
+              "No. Nuestro catálogo solo incluye planes de datos fijos: una cantidad total para la duración indicada, sin renovación diaria de datos. Los paquetes de datos diarios no están disponibles en nuestro catálogo.",
           },
           {
             id: "mb-or-gb",

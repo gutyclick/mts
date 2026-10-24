@@ -12,6 +12,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { searchDestinations } from "@/lib/catalog";
+import summary from "@/data/catalog-summary.json";
 import { experienceCopy } from "@/lib/experience-copy";
 import { helpContent } from "@/lib/help-content";
 import { pathFor, type Locale } from "@/lib/i18n";
@@ -72,16 +73,16 @@ export function AdminPreview({
           <div className="studio-stats">
             <div>
               <span>{c.destinations}</span>
-              <strong>244</strong>
+              <strong>{summary.destinations.toLocaleString(locale)}</strong>
               <small>
                 {locale === "es"
-                  ? "202 países · 42 regiones"
-                  : "202 countries · 42 regions"}
+                  ? `${summary.countries} países · ${summary.regions} regiones`
+                  : `${summary.countries} countries · ${summary.regions} regions`}
               </small>
             </div>
             <div>
               <span>{c.planCount}</span>
-              <strong>3.186</strong>
+              <strong>{summary.importedPlans.toLocaleString(locale)}</strong>
               <small>
                 {locale === "es"
                   ? "Catálogo sin precios"

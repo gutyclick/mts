@@ -4,7 +4,7 @@
 
 La portada presenta la búsqueda y destinos destacados. Las guías de funcionamiento, compatibilidad, ayuda y FAQ tienen rutas propias en inglés y español. El FAQ contiene 29 preguntas en seis temas, búsqueda por pregunta/respuesta, filtros de tema y enlaces oficiales de Apple y Google.
 
-El directorio contiene 244 destinos: 202 países/territorios y 42 regiones. Presenta 24 tarjetas a la vez con botón para cargar más, búsqueda localizada y categorías. Cada página de destino muestra todos sus planes, agrupados en datos fijos y datos diarios, con filtros acumulables por cantidad, días y tipo. Las opciones se obtienen de los planes reales de cada destino.
+El directorio contiene 241 destinos: 202 países/territorios y 39 regiones. Presenta 24 tarjetas a la vez con botón para cargar más, búsqueda localizada y categorías. Cada página de destino muestra todos sus planes fijos, con filtros acumulables por cantidad de datos y días. Las opciones se obtienen de los planes reales de cada destino.
 
 ## Importación
 
@@ -20,11 +20,11 @@ El CSV original se mantiene fuera del repositorio. `.gitignore` excluye `esim-pr
 - `allowance` y `dataGb`: unidad original y valor para filtros.
 - `days`, `kind` y `coverageCode`: duración, clasificación y código original.
 
-No se exportan precios, tarifas, historial ni otros campos operativos. Tampoco hay precios en las tarjetas, detalle o datos estructurados. Los 3.186 planes originales se conservan, incluso variantes con nombres similares. El módulo `plans.ts` se importa únicamente desde rutas servidor; los componentes cliente reciben los planes del destino consultado.
+No se exportan precios, tarifas, historial ni otros campos operativos. Tampoco hay precios en las tarjetas, detalle o datos estructurados. Se conservan 1.730 planes fijos (`Full Speed`) y se excluyen los 1.456 diarios (`Unlimited FUP`). El módulo `plans.ts` se importa únicamente desde rutas servidor; los componentes cliente reciben los planes del destino consultado.
 
 Los países se agrupan por código ISO para reunir nombres truncados o con errores (United/United States, Philippine/Philippines y Cayman lslands/Cayman Islands). Se utiliza el nombre más frecuente y se conservan las variantes como alias de búsqueda. Las regiones se agrupan por código y nombre canónico, uniendo variantes del mismo nombre sin eliminar sus planes.
 
-La lista no establece todos los países incluidos en cada producto regional, redes, hotspot ni condiciones de activación. No se inventan esas características ni se adjuntan regionales a países sin cobertura verificada. Los planes de origen `Unlimited FUP` se presentan como datos diarios con aviso de uso justo; no como datos a máxima velocidad sin límites.
+La lista no establece todos los países incluidos en cada producto regional, redes, hotspot ni condiciones de activación. No se inventan esas características ni se adjuntan regionales a países sin cobertura verificada. La política de importación `fixed-only` impide volver a publicar planes diarios. Las duraciones de un día se conservan si el producto es fijo. Se excluyen los tres paquetes regionales que solo tenían planes diarios: `china-mainland-and-hk`, `singapore-and-malaysia` y `singapore-and-malaysia-and-vietnam-and-thailand-and-indonesia`.
 
 ## Imágenes y banderas
 
@@ -36,4 +36,4 @@ Las banderas son SVG redondas de [Circle Flags](https://hatscripts.github.io/cir
 
 ## Validación
 
-Los tests comprueban los 244 destinos, 3.186 identificadores únicos, ausencia de campos ajenos a la lista permitida, correspondencia de códigos de país, imágenes existentes, variantes de búsqueda, filtros reales y 29 preguntas por idioma. Playwright verifica escritorio/móvil, páginas independientes, ausencia de importes en planes, navegación y detalle accesible. La auditoría visual incluye FAQ y ayuda además del catálogo.
+Los tests comprueban los 241 destinos, 1.730 identificadores únicos, ausencia de planes diarios y de campos ajenos a la lista permitida, correspondencia de códigos de país, imágenes existentes, variantes de búsqueda, filtros reales y 29 preguntas por idioma. Una importación de prueba aislada confirma que se omiten paquetes diarios y regiones vacías y se conservan los fijos de un día. Playwright verifica escritorio/móvil, páginas independientes, ausencia de importes en planes, navegación y detalle accesible.

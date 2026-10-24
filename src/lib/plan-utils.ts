@@ -4,19 +4,13 @@ export interface Plan {
   allowance: string;
   dataGb: number;
   days: number;
-  kind: "fixed" | "daily";
+  kind: "fixed";
   coverageCode: string;
 }
-export function filterPlans(
-  plans: Plan[],
-  data: string,
-  days: string,
-  kind = "all",
-) {
+export function filterPlans(plans: Plan[], data: string, days: string) {
   return plans.filter(
     (plan) =>
       (!data || plan.dataGb === Number(data)) &&
-      (!days || plan.days === Number(days)) &&
-      (kind === "all" || plan.kind === kind),
+      (!days || plan.days === Number(days)),
   );
 }

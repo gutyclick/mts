@@ -2,7 +2,7 @@
 
 Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento previsto: **Vercel**. Persistencia prevista: **Supabase/PostgreSQL**. Consulta la [guía de despliegue y credenciales](docs/deployment.md).
 
-Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 3.186 planes en inglés y español, sin precios, pagos ni aprovisionamiento de eSIM.
+Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 1.730 planes de datos fijos en inglés y español, sin precios, pagos ni aprovisionamiento de eSIM.
 
 ## Ejecutar
 
@@ -31,8 +31,8 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 - Identidad azul/naranja, Plus Jakarta Sans e Inter mediante `next/font`, sistema de tokens, gato viajero SVG original y miniaturas ilustradas reemplazables mediante `next/image`.
 - Diccionarios centralizados, rutas traducidas y cambio de idioma que conserva la página equivalente. El cambio de idioma realiza navegación de documento para actualizar correctamente `<html lang>`; el resto utiliza navegación de Next.js.
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
-- Directorio buscable con categorías y carga progresiva: 202 países/territorios y 42 regiones. Cada destino tiene todos sus planes.
-- Filtros combinables de datos, duración y tipo (fijos/diarios), detalle en diálogo accesible y hoja inferior móvil. La duración de la portada se conserva como filtro inicial. No se muestran precios ni se ofrece checkout.
+- Directorio buscable con categorías y carga progresiva: 202 países/territorios y 39 regiones. Cada destino tiene todos sus planes fijos.
+- Filtros combinables de datos y duración, detalle en diálogo accesible y hoja inferior móvil. La duración de la portada se conserva como filtro inicial. No se muestran precios ni se ofrece checkout real.
 - Guías de funcionamiento, compatibilidad, centro de ayuda por temas y FAQ con 29 preguntas buscables por idioma. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
 - Metadata localizada, canonical, hreflang, Open Graph, imagen social, sitemap, robots y datos estructurados veraces de la organización. Sin reseñas ni ofertas estructuradas ficticias.
 - Diseño adaptable, menú móvil, foco visible, enlace para saltar al contenido, FAQ nativa y respeto a movimiento reducido.
@@ -55,7 +55,7 @@ El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM
 | Privacidad       | `/en/privacy`       | `/es/privacidad`           |
 | Reembolsos       | `/en/refunds`       | `/es/reembolsos`           |
 
-Los 244 slugs se encuentran en `src/data/destinations.json` y se comparten entre idiomas. Idiomas, páginas y destinos desconocidos devuelven 404.
+Los 241 slugs se encuentran en `src/data/destinations.json` y se comparten entre idiomas. Idiomas, páginas y destinos desconocidos devuelven 404.
 
 ## Arquitectura
 
@@ -113,7 +113,7 @@ npm run capture
 
 La auditoría usa axe-core, comprueba reglas WCAG A/AA seleccionadas en 360 y 1440 px, y busca desbordamiento horizontal en 320, 360, 390, 430, 768, 1024 y 1440 px. Los recorridos móviles también cubren orientación horizontal, una altura reducida con campo enfocado para simular teclado, navegación activa, hoja inferior y recuperación de foco. No sustituye una auditoría manual completa ni pruebas en teclados y dispositivos físicos o mediciones de Core Web Vitals en usuarios reales. Las capturas se guardan en `docs/previews/`, con vistas de pantalla móvil, tablet y detalle de plan.
 
-La búsqueda, los 3.186 identificadores únicos, los campos permitidos, los filtros y las rutas equivalentes tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, búsqueda del FAQ, filtros vacíos, detalle sin precios, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
+La importación exclusiva de planes fijos, los 1.730 identificadores únicos, los campos permitidos, los filtros y las rutas equivalentes tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, búsqueda del FAQ, filtros vacíos, detalle sin precios, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
 
 ## Assets
 

@@ -1,0 +1,139 @@
+import { expect, test } from "@playwright/test";
+
+test("search supports keyboard, localized destination and trip duration", async ({
+  page,
+}) => {
+  await page.goto("/es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es");
+  const input = page.getByRole("combobox", {
+    name: "¿Cuál es tu próximo destino?",
+  });
+  await input.fill("japón");
+  await page.getByLabel("Duración del viaje").selectOption("15");
+  await input.focus();
+  await input.press("ArrowDown");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/es\/esim\/japan\?days=15/);
+  await expect(
+    page.getByRole("heading", { name: "Japón eSIM", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".plan-card")).toHaveCount(1);
+  await page
+    .getByRole("link", { name: "Cambiar idioma: English" })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/en\/esim\/japan/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+});
+test("plan details never complete a purchase and restore focus", async ({
+  page,
+}) => {
+  await page.goto("/en/esim/japan");
+  await page.getByLabel("Data allowance").selectOption("1");
+  await page.getByLabel("Validity", { exact: true }).selectOption("30");
+  await expect(page.locator(".empty-state")).toBeVisible();
+  await page.getByRole("button", { name: "Reset filters" }).first().click();
+  const trigger = page.getByRole("button", { name: "View plan" }).first();
+  await trigger.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("button", { name: "Checkout is not active" }).click();
+  await expect(page.getByRole("status")).toContainText(
+    "No order has been created",
+  );
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+});
+test("empty search, FAQ, and equivalent informational routes work", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  const input = page.getByRole("combobox", { name: "Where are you headed?" });
+  await input.fill("no-such-place");
+  await expect(page.getByRole("status")).toContainText("No destinations found");
+  await input.press("Escape");
+  await expect(input).toHaveAttribute("aria-expanded", "false");
+  await page.getByText("What is an eSIM?", { exact: true }).click();
+  await expect(page.locator("details[open]")).toContainText(
+    "digital SIM profile",
+  );
+  await page.goto("/en/how-it-works");
+  await page
+    .getByRole("link", { name: "Change language: Español" })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/es\/como-funciona/);
+});
+test("all public pages respond, invalid routes are 404 and SEO is localized", async ({
+  request,
+}) => {
+  for (const route of [
+    "/en",
+    "/es",
+    "/en/destinations",
+    "/es/destinos",
+    "/en/how-it-works",
+    "/es/como-funciona",
+    "/en/compatibility",
+    "/es/compatibilidad",
+    "/en/help",
+    "/es/ayuda",
+    "/en/terms",
+    "/es/privacidad",
+    "/en/refunds",
+    "/en/esim/europe",
+    "/es/esim/australia",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/opengraph-image",
+  ]) {
+    expect((await request.get(route)).status(), route).toBe(200);
+  }
+  expect((await request.get("/fr")).status()).toBe(404);
+  expect((await request.get("/en/esim/unknown")).status()).toBe(404);
+  const html = await (await request.get("/es/esim/japan")).text();
+  expect(html).toContain('href="https://mytripsim.com/es/esim/japan"');
+  expect(html).toContain('hrefLang="en"');
+});
+test("responsive layouts have no overflow, assets load and mobile navigation works", async ({
+  page,
+  isMobile,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  for (const route of [
+    "/en",
+    "/es",
+    "/es/destinos",
+    "/es/esim/united-states",
+    "/es/compatibilidad",
+  ]) {
+    await page.goto(route);
+    await expect(page.locator("h1")).toBeVisible();
+    const widths = await page.evaluate(() => ({
+      page: document.documentElement.scrollWidth,
+      viewport: window.innerWidth,
+    }));
+    expect(widths.page, route).toBeLessThanOrEqual(widths.viewport);
+    for (const image of await page.locator("main img").all()) {
+      await image.scrollIntoViewIfNeeded();
+      await expect(image).toBeVisible();
+      await expect
+        .poll(() =>
+          image.evaluate(
+            (element) => (element as HTMLImageElement).naturalWidth,
+          ),
+        )
+        .toBeGreaterThan(0);
+    }
+  }
+  if (isMobile) {
+    await page.getByRole("button", { name: "Abrir navegación" }).click();
+    await page
+      .locator("#mobile-navigation")
+      .getByRole("link", { name: "Destinos", exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/es\/destinos/);
+  }
+  expect(errors).toEqual([]);
+});

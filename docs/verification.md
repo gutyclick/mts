@@ -1,5 +1,13 @@
 # Verification — 2026-10-23
 
+## Provider plan metadata without commercial fields — 2026-10-24
+
+The additional CSV enriches all 1,730 existing fixed products through exact identifiers, with no new/daily products or commercial values. Operators, plan/operator technology, explicit regional country coverage, activation trigger, top-up policy, APN and the supplied fair-use limitation are projected into a separate server-side detail registry. Original quantities/durations are preserved, including 120 sub-GB products rounded to zero in the new file's numeric column. The UI flags 229 plan/operator technology differences and preserves the provider's legacy AN label for confirmation instead of silently converting it to Curaçao. Ambiguous validity and supplier internal IDs/IPs are excluded. See [field mapping and source limitations](plan-enrichment.md).
+
+Build, lint, TypeScript, formatting and all fifteen unit tests passed. All 52 desktop/mobile browser scenarios passed. Six focused network scenarios were repeated after adding explicit legacy-region coverage and passed, checking exact per-variant operators/APN, activation, regional lists/flags, commercial-field absence, technology qualifications and fixed 75 GB fair-use wording. The responsive audit returned no findings across fourteen routes at seven widths. Scoped axe checks at 360/1440px now include expanded regional country/operator lists with keyboard-focusable scroll areas, alongside the existing catalog/checkout/FAQ/wallet/checker states.
+
+Reviewed the updated [selected plan](previews/plan-detail-desktop.png), [regional coverage on mobile](previews/regional-networks-mobile-expanded.png) and [regional operators on desktop](previews/regional-networks-desktop-expanded.png). No payment, activation or real top-up integration was added. The provider CSV stays outside the repository; generated data has an explicit field allowlist and monetary-content checks.
+
 ## One-screen plan selection and cleaner onboarding — 2026-10-24
 
 Destination pages and existing plan links now share a compact radio selector and a complete, initially visible plan sheet. GB/day ordering is numeric with deterministic tie-breaks; filters, selected data/duration, conditions and purchase-preview links update together. Selection survives reload and locale changes through the URL. Distinct products with equal data/duration remain selectable and are labelled with stable variant numbers. Empty filters remove the purchase-preview link. Intermediate plan dialogs and plan-information tabs were removed. The supplied Germany banner was synchronized, bringing mapped banners to nineteen.

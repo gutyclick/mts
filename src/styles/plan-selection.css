@@ -308,11 +308,137 @@
   color: #56677e;
 }
 .selected-plan-facts dd {
+  color: #233c5c;
+  text-align: right;
+  max-width: 65%;
+}
+.selected-plan-facts dd.is-pending {
   color: #6b532c;
   background: #fff6e9;
   padding: 2px 7px;
   border-radius: 6px;
   text-align: right;
+}
+.plan-operator-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.plan-network-caution {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #6b532c;
+  padding: 12px;
+  background: #fff6e9;
+  border-radius: 10px;
+  margin-top: 13px;
+}
+.plan-operator-list li {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  line-height: 1.7;
+  padding: 7px 10px;
+  background: #f5f9ff;
+  border: 1px solid #dbe5ef;
+  border-radius: 9px;
+}
+.plan-operator-list small {
+  color: #175ca6;
+  font-size: 10px;
+  font-weight: 600;
+}
+.plan-network-disclosure {
+  margin-top: 15px;
+  border: 1px solid #dbe5ef;
+  border-radius: 12px;
+  padding: 0 13px;
+}
+.plan-network-disclosure > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 45px;
+  padding-block: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #175ca6;
+}
+.plan-network-disclosure > summary::after {
+  content: "+";
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: auto;
+}
+.plan-network-disclosure[open] > summary::after {
+  content: "−";
+}
+.plan-network-disclosure > summary > span {
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: #edf5ff;
+  font-size: 11px;
+}
+.plan-coverage-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-height: 275px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0 0 13px;
+  padding: 5px;
+  gap: 10px;
+}
+.plan-coverage-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.8;
+  min-width: 0;
+}
+.plan-coverage-list img {
+  flex-shrink: 0;
+}
+.plan-regional-networks {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 5px;
+  margin-bottom: 12px;
+}
+.plan-regional-networks h4 {
+  font-size: 12px;
+  margin: 8px 0;
+}
+.plan-regional-networks .plan-operator-list {
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+.plan-apn-details {
+  padding-bottom: 4px;
+}
+.plan-apn-details code {
+  display: block;
+  padding: 10px;
+  border-radius: 7px;
+  background: #f5f9ff;
+  color: #233c5c;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.plan-apn-details p {
+  margin-block: 10px;
+}
+@media (max-width: 380px) {
+  .plan-coverage-list {
+    grid-template-columns: 1fr;
+  }
 }
 .selected-plan-conditions {
   list-style: none;

@@ -29,7 +29,7 @@ La administración visual es una muestra pública, claramente identificada como 
 - No se generan códigos de activación, credenciales, ICCID, QR funcionales, pedidos ni información personal real.
 - Los estados de consumo y fechas de la cartera son ejemplos visibles, sin conexión a servicios externos.
 - Los nuevos banners de México, Paraguay y Uruguay se vinculan mediante la sincronización de imágenes existente.
-- También se vincularon las imágenes añadidas después de Australia, Canadá, China, Egipto, Noruega, Puerto Rico y Alemania. Hay 19 banners vinculados.
+- Los banners adicionales entregados por el usuario se vinculan mediante la sincronización automática previa al build. El mapa actualizado se conserva en `src/data/destination-images.json`.
 
 ## Verificación prevista
 

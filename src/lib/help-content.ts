@@ -310,13 +310,13 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "apn-settings",
             question: "Which APN should I use for internet and hotspot?",
             answer:
-              "An APN is the network setting used for mobile data. Our provider says iPhone APNs are normally preconfigured, with a Japan exception that uses vmobile.jp. On Android, use the APN and any credentials supplied with your exact eSIM.",
+              "An APN is the network setting used for mobile data. Use the APN listed for your exact plan and its installation instructions. APNs differ even between plans for the same destination: Japan IIJ plans list vmobile.jp, while other Japan variants use different APNs.",
             steps: [
               "Open the mobile data or access point settings for the travel eSIM, if your phone allows editing.",
-              "For the provider's Japan iPhone configuration, enter vmobile.jp where its installation instructions specify.",
+              "Check the APN settings in your selected plan's full details. For Japan IIJ plans, use vmobile.jp only when the installation instructions request it.",
               "On Android, copy the APN, username and password only from your eSIM instructions. Leave fields unchanged unless instructed.",
             ],
-            note: "Do not use vmobile.jp for other destinations or guess credentials. Follow your exact product's instructions if they differ, and never share activation details publicly.",
+            note: "Do not use vmobile.jp for other destinations or other Japan variants unless their instructions specify it. Do not guess credentials or share activation details publicly.",
             related: ["hotspot", "no-internet"],
           },
         ],
@@ -608,13 +608,13 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "apn-settings",
             question: "¿Qué APN utilizo para internet y para compartir datos?",
             answer:
-              "El APN es un ajuste de red para la conexión de datos. Nuestro proveedor indica que en iPhone suele venir preconfigurado, con una excepción para Japón que utiliza vmobile.jp. En Android, utiliza el APN y las credenciales entregadas con tu eSIM concreta.",
+              "El APN es un ajuste de red para la conexión de datos. Utiliza el APN de tu plan concreto y sus instrucciones de instalación. Puede variar entre planes del mismo destino: los planes IIJ de Japón indican vmobile.jp, mientras que otras variantes de Japón utilizan APN diferentes.",
             steps: [
               "Abre los ajustes de datos o puntos de acceso de la eSIM de viaje, si el teléfono permite editarlos.",
-              "Para la configuración de Japón en iPhone de este proveedor, escribe vmobile.jp donde lo indiquen las instrucciones de instalación.",
+              "Consulta la configuración APN en la ficha de tu plan. En los planes IIJ de Japón, utiliza vmobile.jp solo cuando lo pidan las instrucciones de instalación.",
               "En Android, copia APN, usuario y contraseña únicamente de las instrucciones de tu eSIM. No cambies otros campos sin indicación.",
             ],
-            note: "No uses vmobile.jp para otros destinos ni inventes credenciales. Si las instrucciones de tu producto difieren, sigue esas instrucciones. Nunca compartas datos de activación públicamente.",
+            note: "No uses vmobile.jp para otros destinos ni para otras variantes de Japón salvo que sus instrucciones lo indiquen. No inventes credenciales ni compartas datos de activación públicamente.",
             related: ["hotspot", "no-internet"],
           },
         ],

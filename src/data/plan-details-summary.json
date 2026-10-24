@@ -1,0 +1,8 @@
+{
+  "matchedPlans": 1730,
+  "ignoredRows": 1457,
+  "roundedSubGbRows": 120,
+  "networkTechnologyDifferences": 229,
+  "legacyCoverageCodes": ["AN"],
+  "activationRules": { "network": 1663, "installation": 64, "purchase": 3 }
+}

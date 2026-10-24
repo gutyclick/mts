@@ -20,4 +20,5 @@ coverage/
 .DS_Store
 Thumbs.db
 esim-prices-*.csv
+Price.csv
 private-data/

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "import:catalog": "node scripts/import-catalog.mjs",
+    "import:details": "node scripts/import-plan-details.mjs",
     "sync:images": "node scripts/sync-destination-images.mjs",
     "prebuild": "npm run sync:images",
     "predev": "npm run sync:images",
@@ -15,7 +16,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --experimental-strip-types --test tests/catalog.test.ts tests/device-compatibility.test.ts",
+    "test": "node --experimental-strip-types --test tests/catalog.test.ts tests/device-compatibility.test.ts tests/plan-details.test.mjs",
     "test:e2e": "playwright test",
     "audit:ui": "node scripts/audit.mjs",
     "capture": "node scripts/capture.mjs",

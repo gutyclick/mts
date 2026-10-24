@@ -17,6 +17,7 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es",
     "/es/destinos",
     "/en/esim/japan",
+    "/es/esim/europe",
     "/es/compatibilidad",
     "/es/preguntas-frecuentes",
     "/es/ayuda",
@@ -59,6 +60,13 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
           });
       }
       await auditState("initial");
+      if (path === "/es/esim/europe") {
+        await page
+          .getByText("Países y territorios incluidos", { exact: false })
+          .click();
+        await page.getByText("Operadores por destino", { exact: true }).click();
+        await auditState("regional-coverage-and-networks-expanded");
+      }
       if (path === "/en/esim/japan") {
         await page.getByLabel("Sort by", { exact: true }).selectOption("days");
         await page.locator(".plan-option input").last().check();

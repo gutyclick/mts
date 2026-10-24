@@ -12,7 +12,7 @@ El catálogo ofrece únicamente datos fijos. La respuesta con ID estable `daily-
 
 Las políticas sobre datos sin llamadas/SMS salvo indicación expresa, roaming obligatorio en la eSIM de viaje, QR vinculado a un solo dispositivo y soporte de hotspot proceden de las respuestas entregadas por el usuario. No se atribuyen esas políticas a todos los proveedores de eSIM.
 
-La configuración APN `vmobile.jp` se explica dentro de la excepción de Japón para iPhone indicada por este proveedor; no como APN universal. En Android se remite a las instrucciones y credenciales del producto concreto. No se incluyen contraseñas reales ni códigos de activación.
+La configuración APN se revisó con el segundo CSV: `vmobile.jp` corresponde a variantes IIJ de Japón; otras variantes del mismo destino utilizan APN diferentes. Se remite a la ficha y las instrucciones del producto concreto en lugar de aplicar una configuración universal por país. No se incluyen contraseñas reales ni códigos de activación.
 
 La capacidad de almacenar perfiles se describe según modelo y software, evitando cifras universales. Wi-Fi Calling queda condicionado al equipo y operador habitual, incluyendo posibles restricciones y cargos. Referencias oficiales consultadas:
 

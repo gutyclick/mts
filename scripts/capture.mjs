@@ -13,6 +13,8 @@ for (const [name, width, height, path, fullPage = true] of [
   ["home-desktop", 1440, 1000, "/en"],
   ["home-mobile", 390, 844, "/es"],
   ["plans-desktop", 1440, 1000, "/en/esim/japan", false],
+  ["regional-networks-desktop", 1440, 1000, "/es/esim/europe", false],
+  ["regional-networks-mobile", 390, 844, "/es/esim/europe", false],
   ["faq-desktop", 1440, 1000, "/en/faq", false],
   ["faq-mobile", 390, 844, "/es/preguntas-frecuentes", false],
   ["directory-mobile", 390, 844, "/es/destinos", false],
@@ -43,6 +45,17 @@ for (const [name, width, height, path, fullPage = true] of [
     Array.from(document.images).every((image) => image.complete),
   );
   await page.screenshot({ path: `docs/previews/${name}.png`, fullPage });
+  if (name.startsWith("regional-networks")) {
+    await page
+      .getByText("Países y territorios incluidos", { exact: false })
+      .click();
+    await page.getByText("Operadores por destino", { exact: true }).click();
+    await page
+      .locator(".plan-network-disclosure")
+      .first()
+      .scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `docs/previews/${name}-expanded.png` });
+  }
   if (name === "plan-detail-desktop" || name === "plan-detail-mobile") {
     await page
       .getByRole("button", {

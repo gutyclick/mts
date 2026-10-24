@@ -10,6 +10,8 @@ La selección usa filas compactas con GB/días y radios nativos. Se ordena por G
 
 ## Importación
 
+La ficha también incorpora operadores, tecnologías, cobertura explícita, inicio de vigencia, recarga y APN del segundo CSV mediante un importador separado. Consulta [datos técnicos, cruce y exclusiones](plan-enrichment.md). La selección base continúa teniendo 1.730 planes fijos y ningún precio; la nueva información no reemplaza las cantidades/duraciones del catálogo original.
+
 ```sh
 npm run import:catalog -- /ruta/privada/al/archivo.csv
 npm run sync:images

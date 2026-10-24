@@ -29,6 +29,13 @@ export function equivalentPath(path: string, locale: Locale) {
 }
 export const dictionaries = {
   en: {
+    mobile: {
+      navigation: "Main navigation",
+      home: "Home",
+      destinations: "Destinations",
+      guide: "Guide",
+      help: "Help",
+    },
     nav: {
       destinations: "Destinations",
       how: "How it works",
@@ -255,6 +262,13 @@ export const dictionaries = {
     home: "Back to home",
   },
   es: {
+    mobile: {
+      navigation: "Navegación principal",
+      home: "Inicio",
+      destinations: "Destinos",
+      guide: "Guía",
+      help: "Ayuda",
+    },
     nav: {
       destinations: "Destinos",
       how: "Cómo funciona",
@@ -278,7 +292,7 @@ export const dictionaries = {
     destination: "¿Cuál es tu próximo destino?",
     searchPlaceholder: "Busca un país o región",
     duration: "Duración del viaje",
-    optional: "Cualquier duración",
+    optional: "Opcional",
     days: "días",
     day: "día",
     searchEmpty: "No encontramos destinos. Prueba otro país o región.",

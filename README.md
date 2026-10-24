@@ -37,6 +37,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 - Guías de funcionamiento, compatibilidad y ayuda. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
 - Metadata localizada, canonical, hreflang, Open Graph, imagen social, sitemap, robots y datos estructurados veraces de la organización. Sin reseñas ni ofertas estructuradas ficticias.
 - Diseño adaptable, menú móvil, foco visible, enlace para saltar al contenido, FAQ nativa y respeto a movimiento reducido.
+- Experiencia móvil con navegación inferior localizada, controles táctiles amplios, buscador adaptado al teclado, áreas seguras de pantalla y detalle de plan en hoja inferior. La barra inferior responde a cambios del viewport al abrir/cerrar el teclado. Ver [diseño móvil](docs/mobile-experience.md).
 
 ## Rutas
 
@@ -69,6 +70,7 @@ src/
     plan-browser.tsx         Filtros y diálogo de detalle
     faq.tsx                  Accordion nativo, sin JavaScript
     site-navigation.tsx      Menú e idioma
+    mobile-navigation.tsx    Navegación inferior y respuesta al teclado
     footer.tsx
     ui.tsx                   Marca, botones y encabezados compartidos
   lib/
@@ -105,7 +107,7 @@ npm run audit:ui
 npm run capture
 ```
 
-La auditoría usa axe-core, comprueba reglas WCAG A/AA seleccionadas en 360 y 1440 px, y busca desbordamiento horizontal en 360, 768, 1024 y 1440 px. No sustituye una auditoría manual completa ni mediciones de Core Web Vitals en usuarios reales. Las capturas se guardan en `docs/previews/`.
+La auditoría usa axe-core, comprueba reglas WCAG A/AA seleccionadas en 360 y 1440 px, y busca desbordamiento horizontal en 320, 360, 390, 430, 768, 1024 y 1440 px. Los recorridos móviles también cubren orientación horizontal, una altura reducida con campo enfocado para simular teclado, navegación activa, hoja inferior y recuperación de foco. No sustituye una auditoría manual completa ni pruebas en teclados y dispositivos físicos o mediciones de Core Web Vitals en usuarios reales. Las capturas se guardan en `docs/previews/`, con vistas de pantalla móvil, tablet y detalle de plan.
 
 La búsqueda por alias, rutas equivalentes, precios de prueba y filtros tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, FAQ, filtros vacíos, detalle y checkout desactivado, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
 

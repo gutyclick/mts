@@ -53,6 +53,7 @@ test("empty search, FAQ, and equivalent informational routes work", async ({
   await expect(page.getByRole("status")).toContainText("No destinations found");
   await input.press("Escape");
   await expect(input).toHaveAttribute("aria-expanded", "false");
+  await expect(input).toHaveValue("no-such-place");
   await page.getByText("What is an eSIM?", { exact: true }).click();
   await expect(page.locator("details[open]")).toContainText(
     "digital SIM profile",

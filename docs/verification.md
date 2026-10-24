@@ -32,3 +32,11 @@ The refined production build passed lint, TypeScript, Prettier, 4 catalog tests 
 The repeated UI audit returned no findings for its scoped contrast/accessibility rules at 360 and 1440 px or overflow checks at 360, 768, 1024 and 1440 px. The preview images above were regenerated from the production server after the update. The reusable destination and hero image slots use original provisional illustrations; the six destination SVG assets share one visual direction and the hero retains the original traveler-cat asset.
 
 The brand blue remains `#1677FF`; buttons with small white labels use `#126DE8` to meet text contrast in the audited states. No external services, credentials, payments or database access were introduced by this refinement.
+
+## Mobile browser verification
+
+The mobile shell production build passed lint, TypeScript, formatting, 4 catalog tests and 18 browser scenarios. Added coverage verifies active localized bottom tabs, 44px minimum tab targets, footer clearance, navigation hidden on desktop, search with a short viewport, dock recovery with the input still focused, and a bottom-aligned plan sheet with background scroll locking and focus restoration.
+
+Overflow checks now cover 320, 360, 390, 430, 768, 1024 and 1440px; browser flows also cover 844×390 landscape. The scoped axe audit returned no findings. Physical iOS/Android keyboard behavior remains a device-testing step; reduced-viewport emulation verifies the implemented layout and viewport response without claiming a full device certification.
+
+Updated previews: [phone home](previews/mobile-app.png), [phone plans](previews/plans-mobile.png), [tablet](previews/tablet-home.png) and [plan sheet](previews/mobile-plan-sheet.png). The original desktop composition remains unchanged.

@@ -4,7 +4,7 @@ const require = createRequire(import.meta.url);
 const browser = await chromium.launch({ channel: "msedge", headless: true });
 const failures = [];
 const baseURL = process.env.BASE_URL ?? "http://localhost:3000";
-for (const width of [360, 768, 1024, 1440]) {
+for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
   const page = await browser.newPage({ viewport: { width, height: 950 } });
   for (const path of [
     "/en",

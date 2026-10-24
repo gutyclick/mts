@@ -17,6 +17,11 @@ export function DestinationDirectory({ locale }: { locale: Locale }) {
         <Search size={21} />
         <input
           id="directory-query"
+          type="search"
+          enterKeyHint="search"
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.currentTarget.blur();
+          }}
           value={query}
           placeholder={t.searchPlaceholder}
           onChange={(event) => setQuery(event.target.value)}

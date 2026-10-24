@@ -46,6 +46,7 @@ export function DestinationSearch({
           : -1,
       );
     } else if (event.key === "Escape") {
+      event.preventDefault(); // Keep native search clearing from reopening the combobox.
       setOpen(false);
       setActive(-1);
     } else if (
@@ -87,6 +88,8 @@ export function DestinationSearch({
             <input
               ref={input}
               id={`${id}-input`}
+              type="search"
+              enterKeyHint="search"
               value={query}
               placeholder={t.searchPlaceholder}
               role="combobox"
@@ -97,7 +100,14 @@ export function DestinationSearch({
                 open && active >= 0 ? `${id}-${active}` : undefined
               }
               autoComplete="off"
-              onFocus={() => setOpen(true)}
+              onFocus={(event) => {
+                setOpen(true);
+                if (window.matchMedia("(max-width: 900px)").matches) {
+                  event.currentTarget
+                    .closest("form")
+                    ?.scrollIntoView({ block: "start", behavior: "instant" });
+                }
+              }}
               onChange={(event) => {
                 setQuery(event.target.value);
                 setActive(-1);

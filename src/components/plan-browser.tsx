@@ -40,7 +40,13 @@ export function PlanBrowser({
   const checkoutNotice = useRef<HTMLDivElement>(null);
   const plans = filterPlans(getPlans(destination), data, days);
   useEffect(() => {
-    if (selected) dialog.current?.showModal();
+    if (!selected) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialog.current?.showModal();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [selected]);
   useEffect(() => {
     if (checkoutMessage) checkoutNotice.current?.focus();

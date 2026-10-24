@@ -2,7 +2,7 @@
 
 Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento previsto: **Vercel**. Persistencia prevista: **Supabase/PostgreSQL**. Consulta la [guía de despliegue y credenciales](docs/deployment.md).
 
-Primera versión del sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo local ilustrativo, inglés y español, sin pagos ni aprovisionamiento real de eSIM.
+Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 3.186 planes en inglés y español, sin precios, pagos ni aprovisionamiento de eSIM.
 
 ## Ejecutar
 
@@ -27,33 +27,33 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 ## Implementado
 
 - Next.js App Router, TypeScript estricto, Tailwind CSS 4, Lucide, ESLint y Prettier. Componentes nativos accesibles en lugar de agregar una biblioteca de UI sin necesidad.
-- Portada con héroe, búsqueda, duración opcional, beneficios, seis destinos, pasos, ventajas, FAQ y pie de página.
+- Portada breve con búsqueda, duración opcional, seis destinos destacados y enlaces a páginas independientes de guías y FAQ.
 - Identidad azul/naranja, Plus Jakarta Sans e Inter mediante `next/font`, sistema de tokens, gato viajero SVG original y miniaturas ilustradas reemplazables mediante `next/image`.
 - Diccionarios centralizados, rutas traducidas y cambio de idioma que conserva la página equivalente. El cambio de idioma realiza navegación de documento para actualizar correctamente `<html lang>`; el resto utiliza navegación de Next.js.
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
-- Directorio filtrable; páginas de Japón, Estados Unidos, Europa, Tailandia, Reino Unido y Australia.
-- Cuatro planes de prueba por destino, filtros combinables de datos y vigencia, diálogo nativo con contención de foco y detalle de precio, red, activación, recarga y cobertura. La duración de la portada se conserva como filtro inicial.
-- Acción de checkout que explica que no está activa y no crea pedidos ni simula cobros.
-- Guías de funcionamiento, compatibilidad y ayuda. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
+- Directorio buscable con categorías y carga progresiva: 202 países/territorios y 42 regiones. Cada destino tiene todos sus planes.
+- Filtros combinables de datos, duración y tipo (fijos/diarios), detalle en diálogo accesible y hoja inferior móvil. La duración de la portada se conserva como filtro inicial. No se muestran precios ni se ofrece checkout.
+- Guías de funcionamiento, compatibilidad, centro de ayuda por temas y FAQ con 24 preguntas buscables por idioma. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
 - Metadata localizada, canonical, hreflang, Open Graph, imagen social, sitemap, robots y datos estructurados veraces de la organización. Sin reseñas ni ofertas estructuradas ficticias.
 - Diseño adaptable, menú móvil, foco visible, enlace para saltar al contenido, FAQ nativa y respeto a movimiento reducido.
 - Experiencia móvil con navegación inferior localizada, controles táctiles amplios, buscador adaptado al teclado, áreas seguras de pantalla y detalle de plan en hoja inferior. La barra inferior responde a cambios del viewport al abrir/cerrar el teclado. Ver [diseño móvil](docs/mobile-experience.md).
 
 ## Rutas
 
-| Página           | Inglés              | Español              |
-| ---------------- | ------------------- | -------------------- |
-| Inicio           | `/en`               | `/es`                |
-| Destinos         | `/en/destinations`  | `/es/destinos`       |
-| Destino y planes | `/en/esim/[slug]`   | `/es/esim/[slug]`    |
-| Funcionamiento   | `/en/how-it-works`  | `/es/como-funciona`  |
-| Compatibilidad   | `/en/compatibility` | `/es/compatibilidad` |
-| Ayuda            | `/en/help`          | `/es/ayuda`          |
-| Términos         | `/en/terms`         | `/es/terminos`       |
-| Privacidad       | `/en/privacy`       | `/es/privacidad`     |
-| Reembolsos       | `/en/refunds`       | `/es/reembolsos`     |
+| Página           | Inglés              | Español                    |
+| ---------------- | ------------------- | -------------------------- |
+| Inicio           | `/en`               | `/es`                      |
+| Destinos         | `/en/destinations`  | `/es/destinos`             |
+| Destino y planes | `/en/esim/[slug]`   | `/es/esim/[slug]`          |
+| Funcionamiento   | `/en/how-it-works`  | `/es/como-funciona`        |
+| Compatibilidad   | `/en/compatibility` | `/es/compatibilidad`       |
+| Ayuda            | `/en/help`          | `/es/ayuda`                |
+| FAQ              | `/en/faq`           | `/es/preguntas-frecuentes` |
+| Términos         | `/en/terms`         | `/es/terminos`             |
+| Privacidad       | `/en/privacy`       | `/es/privacidad`           |
+| Reembolsos       | `/en/refunds`       | `/es/reembolsos`           |
 
-Slugs compartidos: `japan`, `united-states`, `europe`, `thailand`, `united-kingdom`, `australia`. Idiomas, páginas y destinos desconocidos devuelven 404.
+Los 244 slugs se encuentran en `src/data/destinations.json` y se comparten entre idiomas. Idiomas, páginas y destinos desconocidos devuelven 404.
 
 ## Arquitectura
 
@@ -68,13 +68,15 @@ src/
     destination-search.tsx   Combobox y navegación del catálogo
     destination-directory.tsx
     plan-browser.tsx         Filtros y diálogo de detalle
-    faq.tsx                  Accordion nativo, sin JavaScript
+    faq-center.tsx           Búsqueda por tema y acordeones nativos
     site-navigation.tsx      Menú e idioma
     mobile-navigation.tsx    Navegación inferior y respuesta al teclado
     footer.tsx
     ui.tsx                   Marca, botones y encabezados compartidos
   lib/
-    catalog.ts               Tipos, catálogo, búsqueda, filtros y moneda
+    catalog.ts               Destinos, imágenes y búsqueda
+    plans.ts                 Catálogo completo, importado en rutas servidor
+    plan-utils.ts            Tipos y filtros sin datos del catálogo
     i18n.ts                  Diccionarios y equivalencias de rutas
     seo.ts                   URLs y constructor de metadata
     integrations/contracts.ts Contratos futuros, sin implementaciones
@@ -86,7 +88,7 @@ scripts/                     Capturas y auditoría de UI
 
 Las páginas de contenido son Server Components. Búsqueda, filtros, diálogo y menú son islas cliente. El idioma de documento se obtiene de una cabecera interna sobrescrita por el proxy; las páginas públicas se renderizan en servidor por solicitud. Sitemap, robots e imagen social son estáticos. No se depende de servicios externos durante la navegación. `next/font` descarga fuentes durante la compilación; el entorno de build necesita acceso a Google Fonts.
 
-El catálogo de prueba tiene `source: "mock"`; los datos no verificados del proveedor permanecen en `null`. Las interfaces futuras separan el catálogo mayorista de las ofertas de venta. Las credenciales, validación de precios y aprovisionamiento pertenecerán exclusivamente al servidor.
+El importador usa una lista explícita de campos permitidos: identificador, nombre original, datos, duración, tipo y código de cobertura. No conserva precios, historial, IP ni campos operativos. Los planes completos se leen en las rutas servidor; cada navegador recibe solamente los planes del destino abierto. No se infiere la cobertura exacta de un plan regional por su nombre. Ver [catálogo e imágenes](docs/catalog-architecture.md).
 
 ## Comprobaciones
 
@@ -109,7 +111,7 @@ npm run capture
 
 La auditoría usa axe-core, comprueba reglas WCAG A/AA seleccionadas en 360 y 1440 px, y busca desbordamiento horizontal en 320, 360, 390, 430, 768, 1024 y 1440 px. Los recorridos móviles también cubren orientación horizontal, una altura reducida con campo enfocado para simular teclado, navegación activa, hoja inferior y recuperación de foco. No sustituye una auditoría manual completa ni pruebas en teclados y dispositivos físicos o mediciones de Core Web Vitals en usuarios reales. Las capturas se guardan en `docs/previews/`, con vistas de pantalla móvil, tablet y detalle de plan.
 
-La búsqueda por alias, rutas equivalentes, precios de prueba y filtros tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, FAQ, filtros vacíos, detalle y checkout desactivado, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
+La búsqueda, los 3.186 identificadores únicos, los campos permitidos, los filtros y las rutas equivalentes tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, búsqueda del FAQ, filtros vacíos, detalle sin precios, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
 
 ## Assets
 
@@ -144,6 +146,6 @@ Fotografías originales conservadas como alternativas locales. Procedencia:
 6. Incorporar administración privada y controles de acceso en una fase posterior.
 7. Medir rendimiento en despliegue real, revisar accesibilidad con dispositivos y lectores de pantalla y configurar monitorización.
 
-Compatible con Vercel mediante el preset Next.js. Este trabajo no despliega ni publica el sitio. El dominio canónico configurado es `https://mytripsim.com`.
+Compatible con Vercel mediante el preset Next.js; los cambios en `main` se despliegan mediante la integración de GitHub. El dominio canónico configurado es `https://mytripsim.com`.
 
 Documentación oficial consultada: [instalación de Next.js](https://nextjs.org/docs/app/getting-started/installation) y [Tailwind con Next.js](https://tailwindcss.com/docs/installation/framework-guides/nextjs).

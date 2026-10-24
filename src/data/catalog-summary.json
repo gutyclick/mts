@@ -1,0 +1,18 @@
+{
+  "sourceRows": 3186,
+  "importedPlans": 3186,
+  "destinations": 244,
+  "countries": 202,
+  "regions": 42,
+  "normalizedLocations": 6,
+  "excludedFields": [
+    "Price",
+    "$/GB",
+    "History",
+    "Size",
+    "SMS",
+    "Top",
+    "Act",
+    "IP"
+  ]
+}

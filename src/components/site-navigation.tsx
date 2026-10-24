@@ -33,7 +33,13 @@ export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const t = dictionaries[locale];
   const pathname = usePathname();
-  const pages: PageKey[] = ["destinations", "how", "compatibility", "help"];
+  const pages: PageKey[] = [
+    "destinations",
+    "how",
+    "compatibility",
+    "faq",
+    "help",
+  ];
   return (
     <header className="site-header">
       <div className="container header-inner">

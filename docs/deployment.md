@@ -7,9 +7,9 @@ Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). La aplicación u
 1. Importar `gutyclick/mts` como proyecto de Vercel.
 2. Seleccionar el preset **Next.js**, directorio raíz `.` y Node.js **24.x**. Se incluye `.nvmrc` para desarrollo local.
 3. Conservar instalación `npm ci`, compilación `npm run build` y salida automática de Next.js. La rama de producción será `main`.
-4. El catálogo de prueba funciona sin variables de entorno. No añadir claves de pago ni del proveedor de eSIM para esta fase.
+4. El catálogo importado y saneado funciona sin variables de entorno. No añadir claves de pago ni del proveedor de eSIM para esta fase.
 5. Cuando se integre Supabase, añadir las variables desde **Project Settings → Environment Variables**, separando Development, Preview y Production. Los cambios de variables requieren un nuevo despliegue.
-6. Verificar `/en`, `/es`, `/sitemap.xml`, cambio de idioma y consulta de planes. El checkout debe seguir indicando que no está activo.
+6. Verificar `/en`, `/es`, `/sitemap.xml`, cambio de idioma, FAQ y consulta de planes sin precios. No hay checkout habilitado.
 7. Configurar `mytripsim.com` en Domains cuando corresponda; las URLs canónicas ya usan ese dominio.
 
 `vercel.json` declara el framework y no contiene IDs de cuentas, tokens ni credenciales. `.vercel/` está excluido de Git.

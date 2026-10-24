@@ -1,8 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Check, Info, MapPin, Smartphone } from "lucide-react";
+import { ArrowRight, Check, Info } from "lucide-react";
 import { DestinationDirectory } from "@/components/destination-directory";
-import { FAQ } from "@/components/faq";
+import { FAQCenter } from "@/components/faq-center";
+import { HelpHub } from "@/components/help-hub";
+import { helpContent } from "@/lib/help-content";
+import { catalogCopy } from "@/lib/catalog-copy";
 import { Steps } from "@/components/home/sections";
 import {
   dictionaries,
@@ -23,7 +26,8 @@ function pageKey(locale: Locale, page: string) {
 function heading(locale: Locale, key: PageKey) {
   const t = dictionaries[locale];
   const content = {
-    destinations: [t.destinationsTitle, t.destinationsDescription],
+    destinations: [catalogCopy[locale].title, catalogCopy[locale].description],
+    faq: [helpContent[locale].title, helpContent[locale].description],
     how: [t.howTitle, t.howDescription],
     compatibility: [t.compatibilityTitle, t.compatibilityDescription],
     help: [t.helpTitle, t.helpDescription],
@@ -124,19 +128,7 @@ export default async function ContentPage({
       )}
       {key === "help" && (
         <section className="container guide-section">
-          <div className="help-grid">
-            {t.helpCards.map((card, index) => (
-              <Link
-                href={pathFor(locale, index === 0 ? "how" : "compatibility")}
-                key={card.title}
-              >
-                {index === 0 ? <MapPin size={28} /> : <Smartphone size={28} />}
-                <h2>{card.title}</h2>
-                <p>{card.body}</p>
-                <ArrowRight size={20} />
-              </Link>
-            ))}
-          </div>
+          <HelpHub locale={locale} />
           <p className="information-note">
             <Info size={21} />
             {t.helpNote}
@@ -152,9 +144,16 @@ export default async function ContentPage({
           <p>{t.legalContent[key]}</p>
         </section>
       )}
-      {(key === "help" || key === "how" || key === "compatibility") && (
-        <div className="container">
-          <FAQ locale={locale} />
+      {key === "faq" && <FAQCenter locale={locale} />}
+      {(key === "how" || key === "compatibility") && (
+        <div className="container guide-support-link">
+          <Link
+            className="button button-secondary"
+            href={pathFor(locale, "faq")}
+          >
+            {catalogCopy[locale].faq}
+            <ArrowRight size={18} />
+          </Link>
         </div>
       )}
     </>

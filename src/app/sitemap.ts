@@ -5,9 +5,9 @@ import { siteUrl } from "@/lib/seo";
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: { page?: PageKey; slug?: string }[] = [
     {},
-    ...(["destinations", "how", "compatibility", "help"] as PageKey[]).map(
-      (page) => ({ page }),
-    ),
+    ...(
+      ["destinations", "how", "compatibility", "help", "faq"] as PageKey[]
+    ).map((page) => ({ page })),
     ...destinations.map(({ slug }) => ({ slug })),
   ];
   return entries.flatMap(({ page, slug }) =>

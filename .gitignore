@@ -19,3 +19,5 @@ coverage/
 *.sql.gz
 .DS_Store
 Thumbs.db
+esim-prices-*.csv
+private-data/

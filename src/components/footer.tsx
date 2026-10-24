@@ -8,7 +8,7 @@ export function Footer({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
   const columns: { title: string; pages: PageKey[] }[] = [
     { title: t.explore, pages: ["destinations", "how"] },
-    { title: t.useful, pages: ["compatibility", "help"] },
+    { title: t.useful, pages: ["compatibility", "faq", "help"] },
     { title: t.legal, pages: ["terms", "privacy", "refunds"] },
   ];
   return (

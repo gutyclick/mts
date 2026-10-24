@@ -6,7 +6,10 @@ const baseURL = process.env.BASE_URL ?? "http://localhost:3000";
 for (const [name, width, height, path, fullPage = true] of [
   ["home-desktop", 1440, 1000, "/en"],
   ["home-mobile", 390, 844, "/es"],
-  ["plans-desktop", 1440, 1000, "/en/esim/japan"],
+  ["plans-desktop", 1440, 1000, "/en/esim/japan", false],
+  ["faq-desktop", 1440, 1000, "/en/faq", false],
+  ["faq-mobile", 390, 844, "/es/preguntas-frecuentes", false],
+  ["directory-mobile", 390, 844, "/es/destinos", false],
   ["mobile-app", 390, 844, "/es", false],
   ["plans-mobile", 390, 844, "/es/esim/japan", false],
   ["tablet-home", 768, 1024, "/es", false],

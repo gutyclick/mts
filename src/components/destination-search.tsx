@@ -10,7 +10,8 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin, Search, X } from "lucide-react";
-import { searchDestinations } from "@/lib/catalog";
+import { popularDestinations, searchDestinations } from "@/lib/catalog";
+import { DestinationFlag } from "./destination-flag";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 
 export function DestinationSearch({
@@ -28,7 +29,9 @@ export function DestinationSearch({
   const [duration, setDuration] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
-  const results = searchDestinations(query);
+  const results = (
+    query.trim() ? searchDestinations(query) : popularDestinations
+  ).slice(0, 8);
   function navigate(slug: string) {
     setOpen(false);
     router.push(
@@ -143,7 +146,7 @@ export function DestinationSearch({
                     onMouseMove={() => setActive(index)}
                     onClick={() => navigate(destination.slug)}
                   >
-                    <MapPin size={17} />
+                    <DestinationFlag destination={destination} />
                     <span>{destination.name[locale]}</span>
                     <ArrowRight size={15} />
                   </li>

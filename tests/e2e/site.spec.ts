@@ -17,7 +17,9 @@ test("search supports keyboard, localized destination and trip duration", async 
   await expect(
     page.getByRole("heading", { name: "Japón eSIM", exact: true }),
   ).toBeVisible();
-  await expect(page.locator(".plan-card")).toHaveCount(1);
+  await expect(page.locator(".plan-card").first()).toBeVisible();
+  for (const validity of await page.locator(".plan-card .plan-validity").all())
+    await expect(validity).toHaveText("15 días");
   await page
     .getByRole("link", { name: "Cambiar idioma: English" })
     .first()
@@ -29,17 +31,21 @@ test("plan details never complete a purchase and restore focus", async ({
   page,
 }) => {
   await page.goto("/en/esim/japan");
-  await page.getByLabel("Data allowance").selectOption("1");
-  await page.getByLabel("Validity", { exact: true }).selectOption("30");
+  await expect(page.locator(".plan-card")).toHaveCount(43);
+  await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
+  await page.getByLabel("Data allowance").selectOption("50");
+  await page.getByLabel("Duration", { exact: true }).selectOption("1");
   await expect(page.locator(".empty-state")).toBeVisible();
   await page.getByRole("button", { name: "Reset filters" }).first().click();
   const trigger = page.getByRole("button", { name: "View plan" }).first();
   await trigger.click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await page.getByRole("button", { name: "Checkout is not active" }).click();
-  await expect(page.getByRole("status")).toContainText(
-    "No order has been created",
+  await expect(page.getByRole("dialog").locator(".plan-specs")).toContainText(
+    "Japan",
   );
+  await expect(
+    page.getByRole("dialog").getByRole("button", { name: "Back to plans" }),
+  ).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).not.toBeVisible();
   await expect(trigger).toBeFocused();
@@ -54,10 +60,13 @@ test("empty search, FAQ, and equivalent informational routes work", async ({
   await input.press("Escape");
   await expect(input).toHaveAttribute("aria-expanded", "false");
   await expect(input).toHaveValue("no-such-place");
+  await page.goto("/en/faq");
   await page.getByText("What is an eSIM?", { exact: true }).click();
   await expect(page.locator("details[open]")).toContainText(
     "digital SIM profile",
   );
+  await page.getByLabel("Search questions").fill("hotspot");
+  await expect(page.locator(".faq-list details")).toHaveCount(1);
   await page.goto("/en/how-it-works");
   await page
     .getByRole("link", { name: "Change language: Español" })
@@ -79,6 +88,8 @@ test("all public pages respond, invalid routes are 404 and SEO is localized", as
     "/es/compatibilidad",
     "/en/help",
     "/es/ayuda",
+    "/en/faq",
+    "/es/preguntas-frecuentes",
     "/en/terms",
     "/es/privacidad",
     "/en/refunds",
@@ -108,6 +119,7 @@ test("responsive layouts have no overflow, assets load and mobile navigation wor
     "/es/destinos",
     "/es/esim/united-states",
     "/es/compatibilidad",
+    "/es/preguntas-frecuentes",
   ]) {
     await page.goto(route);
     await expect(page.locator("h1")).toBeVisible();

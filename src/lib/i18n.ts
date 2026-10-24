@@ -7,6 +7,7 @@ export const routeSegments = {
   how: { en: "how-it-works", es: "como-funciona" },
   compatibility: { en: "compatibility", es: "compatibilidad" },
   help: { en: "help", es: "ayuda" },
+  faq: { en: "faq", es: "preguntas-frecuentes" },
   terms: { en: "terms", es: "terminos" },
   privacy: { en: "privacy", es: "privacidad" },
   refunds: { en: "refunds", es: "reembolsos" },
@@ -35,8 +36,10 @@ export const dictionaries = {
       destinations: "Destinations",
       guide: "Guide",
       help: "Help",
+      faq: "FAQ",
     },
     nav: {
+      faq: "FAQ",
       destinations: "Destinations",
       how: "How it works",
       compatibility: "Compatibility",
@@ -72,15 +75,20 @@ export const dictionaries = {
     visualLabel: "A little data. A world of possibilities.",
     trust: [
       {
-        title: "Instant digital delivery",
-        body: "No physical SIM. No waiting.",
+        title: "Digital eSIM",
+        body: "Travel without replacing your SIM.",
       },
-      { title: "Secure checkout", body: "Built for peace of mind." },
-      { title: "Easy installation", body: "A few taps and you're ready." },
-      { title: "Clear pricing", body: "The details, before you decide." },
+      {
+        title: "Device compatibility",
+        body: "Check your phone before traveling.",
+      },
+      {
+        title: "Countries & regions",
+        body: "Find a plan for your destination.",
+      },
+      { title: "Clear plan details", body: "The details, before you decide." },
     ],
-    previewNotice:
-      "You're exploring our preview catalog. Prices and plans are illustrative; checkout is not yet available.",
+    previewNotice: "Explore our plan catalog. Purchases are not available yet.",
     popularTitle: "Explore popular destinations",
     popularDescription: "A city break or a bigger adventure. Start here.",
     allDestinations: "All destinations",
@@ -98,8 +106,8 @@ export const dictionaries = {
         body: "Pick your destination and a plan that fits your trip.",
       },
       {
-        title: "Buy your eSIM",
-        body: "Once checkout launches, pay online and receive your setup guide.",
+        title: "Compare your plans",
+        body: "Review data, duration and plan type. Purchases will come later.",
       },
       {
         title: "Scan and connect",
@@ -268,9 +276,11 @@ export const dictionaries = {
       destinations: "Destinos",
       guide: "Guía",
       help: "Ayuda",
+      faq: "FAQ",
     },
     nav: {
       destinations: "Destinos",
+      faq: "FAQ",
       how: "Cómo funciona",
       compatibility: "Compatibilidad",
       help: "Ayuda",
@@ -305,15 +315,18 @@ export const dictionaries = {
     visualLabel: "Un poco de datos. Un mundo de posibilidades.",
     trust: [
       {
-        title: "Entrega digital inmediata",
-        body: "Sin tarjeta física ni esperas.",
+        title: "eSIM digital",
+        body: "Viaja sin reemplazar tu SIM.",
       },
-      { title: "Pago seguro", body: "Diseñado para tu tranquilidad." },
-      { title: "Instalación sencilla", body: "Unos pasos y a explorar." },
-      { title: "Precios claros", body: "Los detalles, antes de elegir." },
+      {
+        title: "Equipo compatible",
+        body: "Revisa tu teléfono antes de viajar.",
+      },
+      { title: "Países y regiones", body: "Encuentra planes para tu destino." },
+      { title: "Planes claros", body: "Los detalles, antes de elegir." },
     ],
     previewNotice:
-      "Estás explorando nuestro catálogo de prueba. Los precios y planes son ilustrativos; el pago aún no está disponible.",
+      "Consulta nuestro catálogo de planes. Las compras todavía no están disponibles.",
     popularTitle: "Explora los destinos favoritos",
     popularDescription:
       "Una escapada o una gran aventura. Tu viaje empieza aquí.",
@@ -332,8 +345,8 @@ export const dictionaries = {
         body: "Elige tu destino y un plan que se ajuste a tu viaje.",
       },
       {
-        title: "Compra tu eSIM",
-        body: "Cuando habilitemos el pago, compra en línea y recibe tu guía.",
+        title: "Compara tus planes",
+        body: "Consulta datos, duración y tipo de plan. Las compras llegarán después.",
       },
       {
         title: "Escanea y conéctate",

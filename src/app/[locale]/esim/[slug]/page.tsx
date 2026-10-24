@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Globe2, Smartphone } from "lucide-react";
-import { FAQ } from "@/components/faq";
+import { ArrowLeft, ArrowRight, Smartphone } from "lucide-react";
+import { DestinationFlag } from "@/components/destination-flag";
+import { getPlans } from "@/lib/plans";
+import { catalogCopy, destinationIntro } from "@/lib/catalog-copy";
 import { PlanBrowser } from "@/components/plan-browser";
 import { DestinationArtwork } from "@/components/illustrations";
 import { destinations } from "@/lib/catalog";
@@ -23,7 +25,12 @@ export async function generateMetadata({
   return metadata(
     locale,
     `${destination.name[locale]} eSIM`,
-    destination.intro[locale],
+    destinationIntro(
+      locale,
+      destination.name[locale],
+      destination.planCount,
+      destination.type === "region",
+    ),
     undefined,
     slug,
   );
@@ -39,6 +46,7 @@ export default async function DestinationPage({
   const destination = destinations.find((item) => item.slug === slug);
   if (!isLocale(locale) || !destination) notFound();
   const t = dictionaries[locale];
+  const c = catalogCopy[locale];
   const { days } = await searchParams;
   return (
     <div className="container destination-page">
@@ -49,14 +57,21 @@ export default async function DestinationPage({
       <section className="destination-banner">
         <div>
           <p className="eyebrow">
-            <Globe2 size={15} />
+            <DestinationFlag destination={destination} />
             {destination.type === "region" ? t.region : t.country}
           </p>
           <h1>
             {destination.name[locale]}
             <span> eSIM</span>
           </h1>
-          <p>{destination.intro[locale]}</p>
+          <p>
+            {destinationIntro(
+              locale,
+              destination.name[locale],
+              destination.planCount,
+              destination.type === "region",
+            )}
+          </p>
         </div>
         <div className="banner-photo">
           <DestinationArtwork
@@ -70,6 +85,7 @@ export default async function DestinationPage({
       <PlanBrowser
         locale={locale}
         destination={destination}
+        availablePlans={getPlans(destination)}
         initialDays={days}
       />
       <section className="compatibility-reminder">
@@ -85,10 +101,13 @@ export default async function DestinationPage({
       </section>
       <section className="coverage-section">
         <h2>{t.coverage}</h2>
-        <p>{destination.coverage[locale]}</p>
-        <p>{t.coverageSample}</p>
+        <p>{destination.name[locale]}</p>
+        {destination.type === "region" && <p>{c.coverageNote}</p>}
+        <Link href={pathFor(locale, "faq")}>
+          {c.faq}
+          <ArrowRight size={17} />
+        </Link>
       </section>
-      <FAQ locale={locale} title={t.planFaq} compact />
     </div>
   );
 }

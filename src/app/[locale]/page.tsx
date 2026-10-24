@@ -1,12 +1,7 @@
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/home/hero";
-import {
-  PopularDestinations,
-  Steps,
-  TrustStrip,
-  WhyUs,
-} from "@/components/home/sections";
-import { FAQ } from "@/components/faq";
+import { PopularDestinations, TrustStrip } from "@/components/home/sections";
+import { LearningLinks } from "@/components/learning-links";
 import { dictionaries, isLocale } from "@/lib/i18n";
 import { metadata, siteUrl } from "@/lib/seo";
 export async function generateMetadata({
@@ -50,11 +45,7 @@ export default async function Home({
       <Hero locale={locale} />
       <TrustStrip locale={locale} />
       <PopularDestinations locale={locale} />
-      <Steps locale={locale} />
-      <WhyUs locale={locale} />
-      <div className="container">
-        <FAQ locale={locale} />
-      </div>
+      <LearningLinks locale={locale} />
     </>
   );
 }

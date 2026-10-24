@@ -1,0 +1,3193 @@
+[
+  {
+    "slug": "afghanistan",
+    "name": {
+      "en": "Afghanistan",
+      "es": "Afganistán"
+    },
+    "code": "AF",
+    "type": "country",
+    "aliases": ["Afghanistan"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "africa",
+    "name": {
+      "en": "Africa",
+      "es": "África"
+    },
+    "code": "AF-29",
+    "type": "region",
+    "aliases": ["Africa"],
+    "planCount": 3,
+    "dataMinGb": 1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "africa-21-areas",
+    "name": {
+      "en": "Africa (21 areas)",
+      "es": "África (21 zonas)"
+    },
+    "code": "AF-21",
+    "type": "region",
+    "aliases": ["Africa (21 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "aland-islands",
+    "name": {
+      "en": "Aland Islands",
+      "es": "Islas Aland"
+    },
+    "code": "AX",
+    "type": "country",
+    "aliases": ["Aland Islands"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "albania",
+    "name": {
+      "en": "Albania",
+      "es": "Albania"
+    },
+    "code": "AL",
+    "type": "country",
+    "aliases": ["Albania"],
+    "planCount": 14,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "algeria",
+    "name": {
+      "en": "Algeria",
+      "es": "Argelia"
+    },
+    "code": "DZ",
+    "type": "country",
+    "aliases": ["Algeria"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "andorra",
+    "name": {
+      "en": "Andorra",
+      "es": "Andorra"
+    },
+    "code": "AD",
+    "type": "country",
+    "aliases": ["Andorra"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "angola",
+    "name": {
+      "en": "Angola",
+      "es": "Angola"
+    },
+    "code": "AO",
+    "type": "country",
+    "aliases": ["Angola"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 10
+  },
+  {
+    "slug": "anguilla",
+    "name": {
+      "en": "Anguilla",
+      "es": "Anguila"
+    },
+    "code": "AI",
+    "type": "country",
+    "aliases": ["Anguilla"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "antigua-and-barbuda",
+    "name": {
+      "en": "Antigua and Barbuda",
+      "es": "Antigua y Barbuda"
+    },
+    "code": "AG",
+    "type": "country",
+    "aliases": ["Antigua and Barbuda"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "argentina",
+    "name": {
+      "en": "Argentina",
+      "es": "Argentina"
+    },
+    "code": "AR",
+    "type": "country",
+    "aliases": ["Argentina"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "armenia",
+    "name": {
+      "en": "Armenia",
+      "es": "Armenia"
+    },
+    "code": "AM",
+    "type": "country",
+    "aliases": ["Armenia"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "aruba",
+    "name": {
+      "en": "Aruba",
+      "es": "Aruba"
+    },
+    "code": "AW",
+    "type": "country",
+    "aliases": ["Aruba"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "asia-12-areas",
+    "name": {
+      "en": "Asia (12 areas)",
+      "es": "Asia (12 zonas)"
+    },
+    "code": "AS-12",
+    "type": "region",
+    "aliases": ["Asia (12 areas)"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "asia-14-areas",
+    "name": {
+      "en": "Asia (14 areas)",
+      "es": "Asia (14 zonas)"
+    },
+    "code": "AS-14",
+    "type": "region",
+    "aliases": ["Asia (14 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "asia-20-areas",
+    "name": {
+      "en": "Asia (20 areas)",
+      "es": "Asia (20 zonas)"
+    },
+    "code": "AS-21",
+    "type": "region",
+    "aliases": ["Asia (20 areas)"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "asia-7-areas",
+    "name": {
+      "en": "Asia (7 areas)",
+      "es": "Asia (7 zonas)"
+    },
+    "code": "AS-7",
+    "type": "region",
+    "aliases": ["Asia (7 areas)"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "asia-20",
+    "name": {
+      "en": "Asia-20",
+      "es": "Asia-20"
+    },
+    "code": "AS-20",
+    "type": "region",
+    "aliases": ["Asia-20"],
+    "planCount": 9,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "aukus-3-countries",
+    "name": {
+      "en": "AUKUS(3 countries)",
+      "es": "AReino UnidoUS(3 países)"
+    },
+    "code": "AUKUS-3",
+    "type": "region",
+    "aliases": ["AUKUS(3 countries)"],
+    "planCount": 2,
+    "dataMinGb": 1,
+    "dataMaxGb": 3
+  },
+  {
+    "slug": "australia",
+    "name": {
+      "en": "Australia",
+      "es": "Australia"
+    },
+    "code": "AU",
+    "type": "country",
+    "aliases": ["Australia", "sydney", "sidney", "melbourne"],
+    "planCount": 34,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "australia-and-new-zealand",
+    "name": {
+      "en": "Australia & New Zealand",
+      "es": "Australia y Nueva Zelanda"
+    },
+    "code": "AUNZ-2",
+    "type": "region",
+    "aliases": ["Australia & New Zealand"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "austria",
+    "name": {
+      "en": "Austria",
+      "es": "Austria"
+    },
+    "code": "AT",
+    "type": "country",
+    "aliases": ["Austria"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "azerbaijan",
+    "name": {
+      "en": "Azerbaijan",
+      "es": "Azerbaiyán"
+    },
+    "code": "AZ",
+    "type": "country",
+    "aliases": ["Azerbaijan"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bahamas",
+    "name": {
+      "en": "Bahamas",
+      "es": "Bahamas"
+    },
+    "code": "BS",
+    "type": "country",
+    "aliases": ["Bahamas"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bahrain",
+    "name": {
+      "en": "Bahrain",
+      "es": "Baréin"
+    },
+    "code": "BH",
+    "type": "country",
+    "aliases": ["Bahrain"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "balkans-5-areas",
+    "name": {
+      "en": "Balkans (5+ areas)",
+      "es": "Balcanes (5+ zonas)"
+    },
+    "code": "EU-7",
+    "type": "region",
+    "aliases": ["Balkans (5+ areas)"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bangladesh",
+    "name": {
+      "en": "Bangladesh",
+      "es": "Bangladés"
+    },
+    "code": "BD",
+    "type": "country",
+    "aliases": ["Bangladesh"],
+    "planCount": 12,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "barbados",
+    "name": {
+      "en": "Barbados",
+      "es": "Barbados"
+    },
+    "code": "BB",
+    "type": "country",
+    "aliases": ["Barbados"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "belarus",
+    "name": {
+      "en": "Belarus",
+      "es": "Bielorrusia"
+    },
+    "code": "BY",
+    "type": "country",
+    "aliases": ["Belarus"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "belgium",
+    "name": {
+      "en": "Belgium",
+      "es": "Bélgica"
+    },
+    "code": "BE",
+    "type": "country",
+    "aliases": ["Belgium"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "belize",
+    "name": {
+      "en": "Belize",
+      "es": "Belice"
+    },
+    "code": "BZ",
+    "type": "country",
+    "aliases": ["Belize"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "benin",
+    "name": {
+      "en": "Benin",
+      "es": "Benín"
+    },
+    "code": "BJ",
+    "type": "country",
+    "aliases": ["Benin"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bermuda",
+    "name": {
+      "en": "Bermuda",
+      "es": "Bermudas"
+    },
+    "code": "BM",
+    "type": "country",
+    "aliases": ["Bermuda"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bhutan",
+    "name": {
+      "en": "Bhutan",
+      "es": "Bután"
+    },
+    "code": "BT",
+    "type": "country",
+    "aliases": ["Bhutan"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bolivia",
+    "name": {
+      "en": "Bolivia",
+      "es": "Bolivia"
+    },
+    "code": "BO",
+    "type": "country",
+    "aliases": ["Bolivia"],
+    "planCount": 8,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bonaire",
+    "name": {
+      "en": "Bonaire",
+      "es": "Bonaire"
+    },
+    "code": "BQ",
+    "type": "country",
+    "aliases": ["Bonaire"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bosnia-and-herzegovina",
+    "name": {
+      "en": "Bosnia and Herzegovina",
+      "es": "Bosnia y Herzegovina"
+    },
+    "code": "BA",
+    "type": "country",
+    "aliases": ["Bosnia and Herzegovina"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "botswana",
+    "name": {
+      "en": "Botswana",
+      "es": "Botsuana"
+    },
+    "code": "BW",
+    "type": "country",
+    "aliases": ["Botswana"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "brazil",
+    "name": {
+      "en": "Brazil",
+      "es": "Brasil"
+    },
+    "code": "BR",
+    "type": "country",
+    "aliases": ["Brazil"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "brunei-darussalam",
+    "name": {
+      "en": "Brunei Darussalam",
+      "es": "Brunéi"
+    },
+    "code": "BN",
+    "type": "country",
+    "aliases": ["Brunei Darussalam"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "bulgaria",
+    "name": {
+      "en": "Bulgaria",
+      "es": "Bulgaria"
+    },
+    "code": "BG",
+    "type": "country",
+    "aliases": ["Bulgaria"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "burkina-faso",
+    "name": {
+      "en": "Burkina Faso",
+      "es": "Burkina Faso"
+    },
+    "code": "BF",
+    "type": "country",
+    "aliases": ["Burkina Faso"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "cambodia",
+    "name": {
+      "en": "Cambodia",
+      "es": "Camboya"
+    },
+    "code": "KH",
+    "type": "country",
+    "aliases": ["Cambodia"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "cameroon",
+    "name": {
+      "en": "Cameroon",
+      "es": "Camerún"
+    },
+    "code": "CM",
+    "type": "country",
+    "aliases": ["Cameroon"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "canada",
+    "name": {
+      "en": "Canada",
+      "es": "Canadá"
+    },
+    "code": "CA",
+    "type": "country",
+    "aliases": ["Canada"],
+    "planCount": 33,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 75
+  },
+  {
+    "slug": "cape-verde",
+    "name": {
+      "en": "Cape Verde",
+      "es": "Cabo Verde"
+    },
+    "code": "CV",
+    "type": "country",
+    "aliases": ["Cape Verde"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "caribbean-20-areas",
+    "name": {
+      "en": "Caribbean (20+ areas)",
+      "es": "Caribe (20+ zonas)"
+    },
+    "code": "CB-25",
+    "type": "region",
+    "aliases": ["Caribbean (20+ areas)"],
+    "planCount": 7,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 10
+  },
+  {
+    "slug": "cayman-islands",
+    "name": {
+      "en": "Cayman Islands",
+      "es": "Islas Caimán"
+    },
+    "code": "KY",
+    "type": "country",
+    "aliases": ["Cayman Islands", "Cayman lslands"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "central-african-republic",
+    "name": {
+      "en": "Central African Republic",
+      "es": "República Centroafricana"
+    },
+    "code": "CF",
+    "type": "country",
+    "aliases": ["Central African Republic"],
+    "planCount": 3,
+    "dataMinGb": 1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "central-asia",
+    "name": {
+      "en": "Central Asia",
+      "es": "Asia Central"
+    },
+    "code": "AS-5",
+    "type": "region",
+    "aliases": ["Central Asia"],
+    "planCount": 13,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "central-asia-4-areas",
+    "name": {
+      "en": "Central Asia (4 areas)",
+      "es": "Asia Central (4 zonas)"
+    },
+    "code": "CA-4",
+    "type": "region",
+    "aliases": ["Central Asia (4 areas)"],
+    "planCount": 13,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "chad",
+    "name": {
+      "en": "Chad",
+      "es": "Chad"
+    },
+    "code": "TD",
+    "type": "country",
+    "aliases": ["Chad"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "chile",
+    "name": {
+      "en": "Chile",
+      "es": "Chile"
+    },
+    "code": "CL",
+    "type": "country",
+    "aliases": ["Chile"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "china",
+    "name": {
+      "en": "China",
+      "es": "China"
+    },
+    "code": "CN",
+    "type": "country",
+    "aliases": ["China"],
+    "planCount": 34,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "china-mainland-and-hk",
+    "name": {
+      "en": "China (mainland & HK)",
+      "es": "China (continental y HK)"
+    },
+    "code": "CNHK-2",
+    "type": "region",
+    "aliases": ["China (mainland & HK)"],
+    "planCount": 1,
+    "dataMinGb": 3,
+    "dataMaxGb": 3
+  },
+  {
+    "slug": "china-mainland-hk-macao",
+    "name": {
+      "en": "China (mainland HK Macao)",
+      "es": "China (continental HK Macao)"
+    },
+    "code": "CN-3",
+    "type": "region",
+    "aliases": ["China (mainland HK Macao)"],
+    "planCount": 17,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "china-mainland-and-japan-and-south-korea",
+    "name": {
+      "en": "China mainland & Japan & South Korea",
+      "es": "China continental y Japón y Corea del Sur"
+    },
+    "code": "CNJPKR-3",
+    "type": "region",
+    "aliases": ["China mainland & Japan & South Korea"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "colombia",
+    "name": {
+      "en": "Colombia",
+      "es": "Colombia"
+    },
+    "code": "CO",
+    "type": "country",
+    "aliases": ["Colombia"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "costa-rica",
+    "name": {
+      "en": "Costa Rica",
+      "es": "Costa Rica"
+    },
+    "code": "CR",
+    "type": "country",
+    "aliases": ["Costa Rica"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "cote-d-ivoire",
+    "name": {
+      "en": "Cote d'Ivoire",
+      "es": "Côte d’Ivoire"
+    },
+    "code": "CI",
+    "type": "country",
+    "aliases": ["Cote d'Ivoire"],
+    "planCount": 7,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "croatia",
+    "name": {
+      "en": "Croatia",
+      "es": "Croacia"
+    },
+    "code": "HR",
+    "type": "country",
+    "aliases": ["Croatia"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "curacao",
+    "name": {
+      "en": "Curaçao",
+      "es": "Curazao"
+    },
+    "code": "CW",
+    "type": "country",
+    "aliases": ["Curaçao"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "cyprus",
+    "name": {
+      "en": "Cyprus",
+      "es": "Chipre"
+    },
+    "code": "CY",
+    "type": "country",
+    "aliases": ["Cyprus"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "czech-republic",
+    "name": {
+      "en": "Czech Republic",
+      "es": "Chequia"
+    },
+    "code": "CZ",
+    "type": "country",
+    "aliases": ["Czech Republic"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "democratic-republic-of-the-congo",
+    "name": {
+      "en": "Democratic Republic of the Congo",
+      "es": "República Democrática del Congo"
+    },
+    "code": "CD",
+    "type": "country",
+    "aliases": ["Democratic Republic of the Congo"],
+    "planCount": 13,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "denmark",
+    "name": {
+      "en": "Denmark",
+      "es": "Dinamarca"
+    },
+    "code": "DK",
+    "type": "country",
+    "aliases": ["Denmark"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "dominica",
+    "name": {
+      "en": "Dominica",
+      "es": "Dominica"
+    },
+    "code": "DM",
+    "type": "country",
+    "aliases": ["Dominica"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "dominican-republic",
+    "name": {
+      "en": "Dominican Republic",
+      "es": "República Dominicana"
+    },
+    "code": "DO",
+    "type": "country",
+    "aliases": ["Dominican Republic"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "ecuador",
+    "name": {
+      "en": "Ecuador",
+      "es": "Ecuador"
+    },
+    "code": "EC",
+    "type": "country",
+    "aliases": ["Ecuador"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "egypt",
+    "name": {
+      "en": "Egypt",
+      "es": "Egipto"
+    },
+    "code": "EG",
+    "type": "country",
+    "aliases": ["Egypt"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "el-salvador",
+    "name": {
+      "en": "El Salvador",
+      "es": "El Salvador"
+    },
+    "code": "SV",
+    "type": "country",
+    "aliases": ["El Salvador"],
+    "planCount": 7,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "estonia",
+    "name": {
+      "en": "Estonia",
+      "es": "Estonia"
+    },
+    "code": "EE",
+    "type": "country",
+    "aliases": ["Estonia"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "eswatini",
+    "name": {
+      "en": "Eswatini",
+      "es": "Esuatini"
+    },
+    "code": "SZ",
+    "type": "country",
+    "aliases": ["Eswatini"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "ethiopia",
+    "name": {
+      "en": "Ethiopia",
+      "es": "Etiopía"
+    },
+    "code": "ET",
+    "type": "country",
+    "aliases": ["Ethiopia"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "europe",
+    "name": {
+      "en": "Europe",
+      "es": "Europa"
+    },
+    "code": "EU-42",
+    "type": "region",
+    "aliases": ["Europe"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "europe-31-areas",
+    "name": {
+      "en": "Europe (31 areas)",
+      "es": "Europa (31 zonas)"
+    },
+    "code": "EU-31",
+    "type": "region",
+    "aliases": ["Europe (31 areas)"],
+    "planCount": 3,
+    "dataMinGb": 10,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "europe-33-areas",
+    "name": {
+      "en": "Europe (33 areas)",
+      "es": "Europa (33 zonas)"
+    },
+    "code": "EU-33",
+    "type": "region",
+    "aliases": ["Europe (33 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "europe-35-areas",
+    "name": {
+      "en": "Europe (35 areas)",
+      "es": "Europa (35 zonas)"
+    },
+    "code": "EU-35",
+    "type": "region",
+    "aliases": ["Europe (35 areas)"],
+    "planCount": 13,
+    "dataMinGb": 1,
+    "dataMaxGb": 100
+  },
+  {
+    "slug": "europe-40-areas-and-morocco",
+    "name": {
+      "en": "Europe (40+ areas) & Morocco",
+      "es": "Europa (40+ zonas) y Marruecos"
+    },
+    "code": "EU-43",
+    "type": "region",
+    "aliases": ["Europe (40+ areas) & Morocco"],
+    "planCount": 7,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "europe-30-areas",
+    "name": {
+      "en": "Europe(30+ areas)",
+      "es": "Europa(30+ zonas)"
+    },
+    "code": "EU-30",
+    "type": "region",
+    "aliases": ["Europe(30+", "Europe(30+ areas)"],
+    "planCount": 16,
+    "dataMinGb": 0.3,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "faroe-islands",
+    "name": {
+      "en": "Faroe Islands",
+      "es": "Islas Feroe"
+    },
+    "code": "FO",
+    "type": "country",
+    "aliases": ["Faroe Islands"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "fiji",
+    "name": {
+      "en": "Fiji",
+      "es": "Fiyi"
+    },
+    "code": "FJ",
+    "type": "country",
+    "aliases": ["Fiji"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "finland",
+    "name": {
+      "en": "Finland",
+      "es": "Finlandia"
+    },
+    "code": "FI",
+    "type": "country",
+    "aliases": ["Finland"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "france",
+    "name": {
+      "en": "France",
+      "es": "Francia"
+    },
+    "code": "FR",
+    "type": "country",
+    "aliases": ["France"],
+    "planCount": 18,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "french-guiana",
+    "name": {
+      "en": "French Guiana",
+      "es": "Guayana Francesa"
+    },
+    "code": "GF",
+    "type": "country",
+    "aliases": ["French Guiana"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "french-polynesia",
+    "name": {
+      "en": "French Polynesia",
+      "es": "Polinesia Francesa"
+    },
+    "code": "PF",
+    "type": "country",
+    "aliases": ["French Polynesia"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "gabon",
+    "name": {
+      "en": "Gabon",
+      "es": "Gabón"
+    },
+    "code": "GA",
+    "type": "country",
+    "aliases": ["Gabon"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "gambia",
+    "name": {
+      "en": "Gambia",
+      "es": "Gambia"
+    },
+    "code": "GM",
+    "type": "country",
+    "aliases": ["Gambia"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "gcc",
+    "name": {
+      "en": "GCC",
+      "es": "GCC"
+    },
+    "code": "SAAEQAKWOMBH-6",
+    "type": "region",
+    "aliases": ["GCC"],
+    "planCount": 5,
+    "dataMinGb": 1,
+    "dataMaxGb": 10
+  },
+  {
+    "slug": "georgia",
+    "name": {
+      "en": "Georgia",
+      "es": "Georgia"
+    },
+    "code": "GE",
+    "type": "country",
+    "aliases": ["Georgia"],
+    "planCount": 13,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "germany",
+    "name": {
+      "en": "Germany",
+      "es": "Alemania"
+    },
+    "code": "DE",
+    "type": "country",
+    "aliases": ["Germany"],
+    "planCount": 17,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "ghana",
+    "name": {
+      "en": "Ghana",
+      "es": "Ghana"
+    },
+    "code": "GH",
+    "type": "country",
+    "aliases": ["Ghana"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "gibraltar",
+    "name": {
+      "en": "Gibraltar",
+      "es": "Gibraltar"
+    },
+    "code": "GI",
+    "type": "country",
+    "aliases": ["Gibraltar"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "global-120-areas",
+    "name": {
+      "en": "Global (120+ areas)",
+      "es": "Global (120+ zonas)"
+    },
+    "code": "GL-120",
+    "type": "region",
+    "aliases": ["Global (120+ areas)"],
+    "planCount": 9,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "global139",
+    "name": {
+      "en": "Global139",
+      "es": "Global139"
+    },
+    "code": "GL-139",
+    "type": "region",
+    "aliases": ["Global139"],
+    "planCount": 6,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "greece",
+    "name": {
+      "en": "Greece",
+      "es": "Grecia"
+    },
+    "code": "GR",
+    "type": "country",
+    "aliases": ["Greece"],
+    "planCount": 19,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "greenland",
+    "name": {
+      "en": "Greenland",
+      "es": "Groenlandia"
+    },
+    "code": "GL",
+    "type": "country",
+    "aliases": ["Greenland"],
+    "planCount": 8,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "grenada",
+    "name": {
+      "en": "Grenada",
+      "es": "Granada"
+    },
+    "code": "GD",
+    "type": "country",
+    "aliases": ["Grenada"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "guadeloupe",
+    "name": {
+      "en": "Guadeloupe",
+      "es": "Guadalupe"
+    },
+    "code": "GP",
+    "type": "country",
+    "aliases": ["Guadeloupe"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "guam",
+    "name": {
+      "en": "Guam",
+      "es": "Guam"
+    },
+    "code": "GU",
+    "type": "country",
+    "aliases": ["Guam"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "guatemala",
+    "name": {
+      "en": "Guatemala",
+      "es": "Guatemala"
+    },
+    "code": "GT",
+    "type": "country",
+    "aliases": ["Guatemala"],
+    "planCount": 15,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "guernsey",
+    "name": {
+      "en": "Guernsey",
+      "es": "Guernesey"
+    },
+    "code": "GG",
+    "type": "country",
+    "aliases": ["Guernsey"],
+    "planCount": 5,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "guinea",
+    "name": {
+      "en": "Guinea",
+      "es": "Guinea"
+    },
+    "code": "GN",
+    "type": "country",
+    "aliases": ["Guinea"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "guinea-bissau",
+    "name": {
+      "en": "Guinea-Bissau",
+      "es": "Guinea-Bisáu"
+    },
+    "code": "GW",
+    "type": "country",
+    "aliases": ["Guinea-Bissau"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "gulf-region",
+    "name": {
+      "en": "Gulf Region",
+      "es": "Gulf Region"
+    },
+    "code": "ME-6",
+    "type": "region",
+    "aliases": ["Gulf Region"],
+    "planCount": 8,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 10
+  },
+  {
+    "slug": "guyana",
+    "name": {
+      "en": "Guyana",
+      "es": "Guyana"
+    },
+    "code": "GY",
+    "type": "country",
+    "aliases": ["Guyana"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "haiti",
+    "name": {
+      "en": "Haiti",
+      "es": "Haití"
+    },
+    "code": "HT",
+    "type": "country",
+    "aliases": ["Haiti"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "honduras",
+    "name": {
+      "en": "Honduras",
+      "es": "Honduras"
+    },
+    "code": "HN",
+    "type": "country",
+    "aliases": ["Honduras"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "hong-kong",
+    "name": {
+      "en": "Hong Kong",
+      "es": "RAE de Hong Kong (China)"
+    },
+    "code": "HK",
+    "type": "country",
+    "aliases": ["Hong Kong"],
+    "planCount": 30,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "hungary",
+    "name": {
+      "en": "Hungary",
+      "es": "Hungría"
+    },
+    "code": "HU",
+    "type": "country",
+    "aliases": ["Hungary"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "iceland",
+    "name": {
+      "en": "Iceland",
+      "es": "Islandia"
+    },
+    "code": "IS",
+    "type": "country",
+    "aliases": ["Iceland"],
+    "planCount": 15,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "india",
+    "name": {
+      "en": "India",
+      "es": "India"
+    },
+    "code": "IN",
+    "type": "country",
+    "aliases": ["India"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "indonesia",
+    "name": {
+      "en": "Indonesia",
+      "es": "Indonesia"
+    },
+    "code": "ID",
+    "type": "country",
+    "aliases": ["Indonesia"],
+    "planCount": 32,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "iraq",
+    "name": {
+      "en": "Iraq",
+      "es": "Irak"
+    },
+    "code": "IQ",
+    "type": "country",
+    "aliases": ["Iraq"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "ireland",
+    "name": {
+      "en": "Ireland",
+      "es": "Irlanda"
+    },
+    "code": "IE",
+    "type": "country",
+    "aliases": ["Ireland"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "ireland-and-slovenia",
+    "name": {
+      "en": "Ireland & Slovenia",
+      "es": "Irlanda y Eslovenia"
+    },
+    "code": "IESI-2",
+    "type": "region",
+    "aliases": ["Ireland & Slovenia"],
+    "planCount": 7,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "ireland-and-uk",
+    "name": {
+      "en": "Ireland & UK",
+      "es": "Irlanda y Reino Unido"
+    },
+    "code": "BI-2",
+    "type": "region",
+    "aliases": ["Ireland & UK"],
+    "planCount": 5,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "isle-of-man",
+    "name": {
+      "en": "Isle of Man",
+      "es": "Isla de Man"
+    },
+    "code": "IM",
+    "type": "country",
+    "aliases": ["Isle of Man"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "israel",
+    "name": {
+      "en": "Israel",
+      "es": "Israel"
+    },
+    "code": "IL",
+    "type": "country",
+    "aliases": ["Israel"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "italy",
+    "name": {
+      "en": "Italy",
+      "es": "Italia"
+    },
+    "code": "IT",
+    "type": "country",
+    "aliases": ["Italy"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "jamaica",
+    "name": {
+      "en": "Jamaica",
+      "es": "Jamaica"
+    },
+    "code": "JM",
+    "type": "country",
+    "aliases": ["Jamaica"],
+    "planCount": 8,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "japan",
+    "name": {
+      "en": "Japan",
+      "es": "Japón"
+    },
+    "code": "JP",
+    "type": "country",
+    "aliases": ["Japan", "japon", "tokio", "tokyo", "kyoto"],
+    "planCount": 43,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "japan-and-south-korea",
+    "name": {
+      "en": "Japan & South Korea",
+      "es": "Japón y Corea del Sur"
+    },
+    "code": "JPKR-2",
+    "type": "region",
+    "aliases": ["Japan & South Korea"],
+    "planCount": 12,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "jersey",
+    "name": {
+      "en": "Jersey",
+      "es": "Jersey"
+    },
+    "code": "JE",
+    "type": "country",
+    "aliases": ["Jersey"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "jordan",
+    "name": {
+      "en": "Jordan",
+      "es": "Jordania"
+    },
+    "code": "JO",
+    "type": "country",
+    "aliases": ["Jordan"],
+    "planCount": 15,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "kazakhstan",
+    "name": {
+      "en": "Kazakhstan",
+      "es": "Kazajistán"
+    },
+    "code": "KZ",
+    "type": "country",
+    "aliases": ["Kazakhstan"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "kenya",
+    "name": {
+      "en": "Kenya",
+      "es": "Kenia"
+    },
+    "code": "KE",
+    "type": "country",
+    "aliases": ["Kenya"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "kosovo",
+    "name": {
+      "en": "Kosovo",
+      "es": "Kosovo"
+    },
+    "code": "XK",
+    "type": "country",
+    "aliases": ["kosovo", "Kosovo"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "kuwait",
+    "name": {
+      "en": "Kuwait",
+      "es": "Kuwait"
+    },
+    "code": "KW",
+    "type": "country",
+    "aliases": ["Kuwait"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "kyrgyzstan",
+    "name": {
+      "en": "Kyrgyzstan",
+      "es": "Kirguistán"
+    },
+    "code": "KG",
+    "type": "country",
+    "aliases": ["Kyrgyzstan"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "laos",
+    "name": {
+      "en": "Laos",
+      "es": "Laos"
+    },
+    "code": "LA",
+    "type": "country",
+    "aliases": ["Laos"],
+    "planCount": 26,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "latvia",
+    "name": {
+      "en": "Latvia",
+      "es": "Letonia"
+    },
+    "code": "LV",
+    "type": "country",
+    "aliases": ["Latvia"],
+    "planCount": 13,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "lesotho",
+    "name": {
+      "en": "Lesotho",
+      "es": "Lesoto"
+    },
+    "code": "LS",
+    "type": "country",
+    "aliases": ["Lesotho"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "liberia",
+    "name": {
+      "en": "Liberia",
+      "es": "Liberia"
+    },
+    "code": "LR",
+    "type": "country",
+    "aliases": ["Liberia"],
+    "planCount": 4,
+    "dataMinGb": 1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "libya",
+    "name": {
+      "en": "Libya",
+      "es": "Libia"
+    },
+    "code": "LY",
+    "type": "country",
+    "aliases": ["Libya"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "liechtenstein",
+    "name": {
+      "en": "Liechtenstein",
+      "es": "Liechtenstein"
+    },
+    "code": "LI",
+    "type": "country",
+    "aliases": ["Liechtenstein"],
+    "planCount": 12,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "lithuania",
+    "name": {
+      "en": "Lithuania",
+      "es": "Lituania"
+    },
+    "code": "LT",
+    "type": "country",
+    "aliases": ["Lithuania"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "luxembourg",
+    "name": {
+      "en": "Luxembourg",
+      "es": "Luxemburgo"
+    },
+    "code": "LU",
+    "type": "country",
+    "aliases": ["Luxembourg"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "macao",
+    "name": {
+      "en": "Macao",
+      "es": "RAE de Macao (China)"
+    },
+    "code": "MO",
+    "type": "country",
+    "aliases": ["Macao"],
+    "planCount": 28,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "madagascar",
+    "name": {
+      "en": "Madagascar",
+      "es": "Madagascar"
+    },
+    "code": "MG",
+    "type": "country",
+    "aliases": ["Madagascar"],
+    "planCount": 4,
+    "dataMinGb": 1,
+    "dataMaxGb": 10
+  },
+  {
+    "slug": "malawi",
+    "name": {
+      "en": "Malawi",
+      "es": "Malaui"
+    },
+    "code": "MW",
+    "type": "country",
+    "aliases": ["Malawi"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "malaysia",
+    "name": {
+      "en": "Malaysia",
+      "es": "Malasia"
+    },
+    "code": "MY",
+    "type": "country",
+    "aliases": ["Malaysia"],
+    "planCount": 35,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "maldives",
+    "name": {
+      "en": "Maldives",
+      "es": "Maldivas"
+    },
+    "code": "MV",
+    "type": "country",
+    "aliases": ["Maldives"],
+    "planCount": 9,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "mali",
+    "name": {
+      "en": "Mali",
+      "es": "Mali"
+    },
+    "code": "ML",
+    "type": "country",
+    "aliases": ["Mali"],
+    "planCount": 2,
+    "dataMinGb": 1,
+    "dataMaxGb": 3
+  },
+  {
+    "slug": "malta",
+    "name": {
+      "en": "Malta",
+      "es": "Malta"
+    },
+    "code": "MT",
+    "type": "country",
+    "aliases": ["Malta"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "martinique",
+    "name": {
+      "en": "Martinique",
+      "es": "Martinica"
+    },
+    "code": "MQ",
+    "type": "country",
+    "aliases": ["Martinique"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "mauritania",
+    "name": {
+      "en": "Mauritania",
+      "es": "Mauritania"
+    },
+    "code": "MR",
+    "type": "country",
+    "aliases": ["Mauritania"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "mauritius",
+    "name": {
+      "en": "Mauritius",
+      "es": "Mauricio"
+    },
+    "code": "MU",
+    "type": "country",
+    "aliases": ["Mauritius"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "mayotte",
+    "name": {
+      "en": "Mayotte",
+      "es": "Mayotte"
+    },
+    "code": "YT",
+    "type": "country",
+    "aliases": ["Mayotte"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "mexico",
+    "name": {
+      "en": "Mexico",
+      "es": "México"
+    },
+    "code": "MX",
+    "type": "country",
+    "aliases": ["Mexico"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "middle-east",
+    "name": {
+      "en": "Middle East",
+      "es": "Oriente Medio"
+    },
+    "code": "ME-13",
+    "type": "region",
+    "aliases": ["Middle East"],
+    "planCount": 3,
+    "dataMinGb": 1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "middle-east-5-areas",
+    "name": {
+      "en": "Middle East (5 areas)",
+      "es": "Oriente Medio (5 zonas)"
+    },
+    "code": "ME-5",
+    "type": "region",
+    "aliases": ["Middle East (5 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "middle-east-and-north-africa",
+    "name": {
+      "en": "Middle East & North Africa",
+      "es": "Oriente Medio y Norte de África"
+    },
+    "code": "ME-12",
+    "type": "region",
+    "aliases": ["Middle East & North Africa"],
+    "planCount": 6,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "moldova",
+    "name": {
+      "en": "Moldova",
+      "es": "Moldavia"
+    },
+    "code": "MD",
+    "type": "country",
+    "aliases": ["Moldova"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "monaco",
+    "name": {
+      "en": "Monaco",
+      "es": "Mónaco"
+    },
+    "code": "MC",
+    "type": "country",
+    "aliases": ["Monaco"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "mongolia",
+    "name": {
+      "en": "Mongolia",
+      "es": "Mongolia"
+    },
+    "code": "MN",
+    "type": "country",
+    "aliases": ["Mongolia"],
+    "planCount": 13,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "montenegro",
+    "name": {
+      "en": "Montenegro",
+      "es": "Montenegro"
+    },
+    "code": "ME",
+    "type": "country",
+    "aliases": ["Montenegro"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "montserrat",
+    "name": {
+      "en": "Montserrat",
+      "es": "Montserrat"
+    },
+    "code": "MS",
+    "type": "country",
+    "aliases": ["Montserrat"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "morocco",
+    "name": {
+      "en": "Morocco",
+      "es": "Marruecos"
+    },
+    "code": "MA",
+    "type": "country",
+    "aliases": ["Morocco"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "mozambique",
+    "name": {
+      "en": "Mozambique",
+      "es": "Mozambique"
+    },
+    "code": "MZ",
+    "type": "country",
+    "aliases": ["Mozambique"],
+    "planCount": 6,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "nauru",
+    "name": {
+      "en": "Nauru",
+      "es": "Nauru"
+    },
+    "code": "NR",
+    "type": "country",
+    "aliases": ["Nauru"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "nepal",
+    "name": {
+      "en": "Nepal",
+      "es": "Nepal"
+    },
+    "code": "NP",
+    "type": "country",
+    "aliases": ["Nepal"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "netherlands",
+    "name": {
+      "en": "Netherlands",
+      "es": "Países Bajos"
+    },
+    "code": "NL",
+    "type": "country",
+    "aliases": ["Netherlands"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "new-caledonia",
+    "name": {
+      "en": "New Caledonia",
+      "es": "Nueva Caledonia"
+    },
+    "code": "NC",
+    "type": "country",
+    "aliases": ["New Caledonia"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "new-zealand",
+    "name": {
+      "en": "New Zealand",
+      "es": "Nueva Zelanda"
+    },
+    "code": "NZ",
+    "type": "country",
+    "aliases": ["New Zealand"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "nicaragua",
+    "name": {
+      "en": "Nicaragua",
+      "es": "Nicaragua"
+    },
+    "code": "NI",
+    "type": "country",
+    "aliases": ["Nicaragua"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "niger",
+    "name": {
+      "en": "Niger",
+      "es": "Níger"
+    },
+    "code": "NE",
+    "type": "country",
+    "aliases": ["Niger"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "nigeria",
+    "name": {
+      "en": "Nigeria",
+      "es": "Nigeria"
+    },
+    "code": "NG",
+    "type": "country",
+    "aliases": ["Nigeria"],
+    "planCount": 12,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "north-america",
+    "name": {
+      "en": "North America",
+      "es": "América del Norte"
+    },
+    "code": "NA-3",
+    "type": "region",
+    "aliases": ["North", "North America"],
+    "planCount": 19,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "north-macedonia",
+    "name": {
+      "en": "North Macedonia",
+      "es": "Macedonia del Norte"
+    },
+    "code": "MK",
+    "type": "country",
+    "aliases": ["North Macedonia"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "norway",
+    "name": {
+      "en": "Norway",
+      "es": "Noruega"
+    },
+    "code": "NO",
+    "type": "country",
+    "aliases": ["Norway"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "oceania-8-areas",
+    "name": {
+      "en": "Oceania (8 areas)",
+      "es": "Oceanía (8 zonas)"
+    },
+    "code": "OCE-8",
+    "type": "region",
+    "aliases": ["Oceania (8 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "oman",
+    "name": {
+      "en": "Oman",
+      "es": "Omán"
+    },
+    "code": "OM",
+    "type": "country",
+    "aliases": ["Oman"],
+    "planCount": 12,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "pakistan",
+    "name": {
+      "en": "Pakistan",
+      "es": "Pakistán"
+    },
+    "code": "PK",
+    "type": "country",
+    "aliases": ["Pakistan"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "panama",
+    "name": {
+      "en": "Panama",
+      "es": "Panamá"
+    },
+    "code": "PA",
+    "type": "country",
+    "aliases": ["Panama"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "papua-new-guinea",
+    "name": {
+      "en": "Papua New Guinea",
+      "es": "Papúa Nueva Guinea"
+    },
+    "code": "PG",
+    "type": "country",
+    "aliases": ["Papua New Guinea"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "paraguay",
+    "name": {
+      "en": "Paraguay",
+      "es": "Paraguay"
+    },
+    "code": "PY",
+    "type": "country",
+    "aliases": ["Paraguay"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "peru",
+    "name": {
+      "en": "Peru",
+      "es": "Perú"
+    },
+    "code": "PE",
+    "type": "country",
+    "aliases": ["Peru"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "philippines",
+    "name": {
+      "en": "Philippines",
+      "es": "Filipinas"
+    },
+    "code": "PH",
+    "type": "country",
+    "aliases": ["Philippine", "Philippines"],
+    "planCount": 18,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "poland",
+    "name": {
+      "en": "Poland",
+      "es": "Polonia"
+    },
+    "code": "PL",
+    "type": "country",
+    "aliases": ["Poland"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "portugal",
+    "name": {
+      "en": "Portugal",
+      "es": "Portugal"
+    },
+    "code": "PT",
+    "type": "country",
+    "aliases": ["Portugal"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "puerto-rico",
+    "name": {
+      "en": "Puerto Rico",
+      "es": "Puerto Rico"
+    },
+    "code": "PR",
+    "type": "country",
+    "aliases": ["Puerto Rico"],
+    "planCount": 4,
+    "dataMinGb": 1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "qatar",
+    "name": {
+      "en": "Qatar",
+      "es": "Catar"
+    },
+    "code": "QA",
+    "type": "country",
+    "aliases": ["Qatar"],
+    "planCount": 15,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "republic-of-the-congo",
+    "name": {
+      "en": "Republic of the Congo",
+      "es": "Congo"
+    },
+    "code": "CG",
+    "type": "country",
+    "aliases": ["Republic of the Congo"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "reunion",
+    "name": {
+      "en": "Reunion",
+      "es": "Reunión"
+    },
+    "code": "RE",
+    "type": "country",
+    "aliases": ["Reunion"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "romania",
+    "name": {
+      "en": "Romania",
+      "es": "Rumanía"
+    },
+    "code": "RO",
+    "type": "country",
+    "aliases": ["Romania"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "russia",
+    "name": {
+      "en": "Russia",
+      "es": "Rusia"
+    },
+    "code": "RU",
+    "type": "country",
+    "aliases": ["Russia"],
+    "planCount": 12,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "rwanda",
+    "name": {
+      "en": "Rwanda",
+      "es": "Ruanda"
+    },
+    "code": "RW",
+    "type": "country",
+    "aliases": ["Rwanda"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "saint-barthelemy",
+    "name": {
+      "en": "Saint Barthelemy",
+      "es": "San Bartolomé"
+    },
+    "code": "BL",
+    "type": "country",
+    "aliases": ["Saint Barthelemy"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "saint-kitts-and-nevis",
+    "name": {
+      "en": "Saint Kitts and Nevis",
+      "es": "San Cristóbal y Nieves"
+    },
+    "code": "KN",
+    "type": "country",
+    "aliases": ["Saint Kitts and Nevis"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "saint-lucia",
+    "name": {
+      "en": "Saint Lucia",
+      "es": "Santa Lucía"
+    },
+    "code": "LC",
+    "type": "country",
+    "aliases": ["Saint Lucia"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "saint-martin",
+    "name": {
+      "en": "Saint Martin",
+      "es": "San Martín"
+    },
+    "code": "MF",
+    "type": "country",
+    "aliases": ["Saint Martin"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "saint-vincent-and-the-grenadines",
+    "name": {
+      "en": "Saint Vincent and the Grenadines",
+      "es": "San Vicente y las Granadinas"
+    },
+    "code": "VC",
+    "type": "country",
+    "aliases": ["Saint Vincent and the Grenadines"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "samoa",
+    "name": {
+      "en": "Samoa",
+      "es": "Samoa"
+    },
+    "code": "WS",
+    "type": "country",
+    "aliases": ["Samoa"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "san-marino",
+    "name": {
+      "en": "San Marino",
+      "es": "San Marino"
+    },
+    "code": "SM",
+    "type": "country",
+    "aliases": ["San Marino"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "saudi-arabia",
+    "name": {
+      "en": "Saudi Arabia",
+      "es": "Arabia Saudí"
+    },
+    "code": "SA",
+    "type": "country",
+    "aliases": ["Saudi Arabia"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "senegal",
+    "name": {
+      "en": "Senegal",
+      "es": "Senegal"
+    },
+    "code": "SN",
+    "type": "country",
+    "aliases": ["Senegal"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "serbia",
+    "name": {
+      "en": "Serbia",
+      "es": "Serbia"
+    },
+    "code": "RS",
+    "type": "country",
+    "aliases": ["Serbia"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "seychelles",
+    "name": {
+      "en": "Seychelles",
+      "es": "Seychelles"
+    },
+    "code": "SC",
+    "type": "country",
+    "aliases": ["Seychelles"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "sierra-leone",
+    "name": {
+      "en": "Sierra Leone",
+      "es": "Sierra Leona"
+    },
+    "code": "SL",
+    "type": "country",
+    "aliases": ["Sierra Leone"],
+    "planCount": 10,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "singapore",
+    "name": {
+      "en": "Singapore",
+      "es": "Singapur"
+    },
+    "code": "SG",
+    "type": "country",
+    "aliases": ["Singapore"],
+    "planCount": 31,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "singapore-and-malaysia",
+    "name": {
+      "en": "Singapore & Malaysia",
+      "es": "Singapur y Malasia"
+    },
+    "code": "SGMY-2",
+    "type": "region",
+    "aliases": ["Singapore & Malaysia"],
+    "planCount": 3,
+    "dataMinGb": 1,
+    "dataMaxGb": 3
+  },
+  {
+    "slug": "singapore-and-malaysia-and-thailand",
+    "name": {
+      "en": "Singapore & Malaysia & Thailand",
+      "es": "Singapur y Malasia y Tailandia"
+    },
+    "code": "SGMYTH-3",
+    "type": "region",
+    "aliases": ["Singapore & Malaysia & Thailand"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "singapore-and-malaysia-and-vietnam-and-thailand-and-indonesia",
+    "name": {
+      "en": "Singapore & Malaysia & Vietnam & Thailand & Indonesia",
+      "es": "Singapur y Malasia y Vietnam y Tailandia y Indonesia"
+    },
+    "code": "SGMYVNTHID-5",
+    "type": "region",
+    "aliases": ["Singapore & Malaysia & Vietnam & Thailand & Indonesia"],
+    "planCount": 3,
+    "dataMinGb": 1,
+    "dataMaxGb": 10
+  },
+  {
+    "slug": "slovakia",
+    "name": {
+      "en": "Slovakia",
+      "es": "Eslovaquia"
+    },
+    "code": "SK",
+    "type": "country",
+    "aliases": ["Slovakia"],
+    "planCount": 12,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "slovenia",
+    "name": {
+      "en": "Slovenia",
+      "es": "Eslovenia"
+    },
+    "code": "SI",
+    "type": "country",
+    "aliases": ["Slovenia"],
+    "planCount": 15,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "south-africa",
+    "name": {
+      "en": "South Africa",
+      "es": "Sudáfrica"
+    },
+    "code": "ZA",
+    "type": "country",
+    "aliases": ["South Africa"],
+    "planCount": 16,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "south-america",
+    "name": {
+      "en": "South America",
+      "es": "América del Sur"
+    },
+    "code": "SA-18",
+    "type": "region",
+    "aliases": ["South America"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "south-america-6-areas",
+    "name": {
+      "en": "South America (6 areas)",
+      "es": "América del Sur (6 zonas)"
+    },
+    "code": "SA-6",
+    "type": "region",
+    "aliases": ["South America (6 areas)"],
+    "planCount": 14,
+    "dataMinGb": 1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "south-asia-6-areas",
+    "name": {
+      "en": "South Asia (6 areas)",
+      "es": "Asia del Sur (6 zonas)"
+    },
+    "code": "SAS-6",
+    "type": "region",
+    "aliases": ["South Asia (6 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "south-east-asia-8-areas",
+    "name": {
+      "en": "South East Asia (8 areas)",
+      "es": "Sudeste Asiático (8 zonas)"
+    },
+    "code": "SEA-8",
+    "type": "region",
+    "aliases": ["South East Asia (8 areas)"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "south-korea",
+    "name": {
+      "en": "South Korea",
+      "es": "Corea del Sur"
+    },
+    "code": "KR",
+    "type": "country",
+    "aliases": ["South Korea"],
+    "planCount": 33,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "south-sudan",
+    "name": {
+      "en": "South Sudan",
+      "es": "Sudán del Sur"
+    },
+    "code": "SS",
+    "type": "country",
+    "aliases": ["South Sudan"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "spain",
+    "name": {
+      "en": "Spain",
+      "es": "España"
+    },
+    "code": "ES",
+    "type": "country",
+    "aliases": ["Spain"],
+    "planCount": 16,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "sri-lanka",
+    "name": {
+      "en": "Sri Lanka",
+      "es": "Sri Lanka"
+    },
+    "code": "LK",
+    "type": "country",
+    "aliases": ["Sri Lanka"],
+    "planCount": 17,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "sudan",
+    "name": {
+      "en": "Sudan",
+      "es": "Sudán"
+    },
+    "code": "SD",
+    "type": "country",
+    "aliases": ["Sudan"],
+    "planCount": 3,
+    "dataMinGb": 1,
+    "dataMaxGb": 5
+  },
+  {
+    "slug": "suriname",
+    "name": {
+      "en": "Suriname",
+      "es": "Surinam"
+    },
+    "code": "SR",
+    "type": "country",
+    "aliases": ["Suriname"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "sweden",
+    "name": {
+      "en": "Sweden",
+      "es": "Suecia"
+    },
+    "code": "SE",
+    "type": "country",
+    "aliases": ["Sweden"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "switzerland",
+    "name": {
+      "en": "Switzerland",
+      "es": "Suiza"
+    },
+    "code": "CH",
+    "type": "country",
+    "aliases": ["Switzerland"],
+    "planCount": 19,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "tajikistan",
+    "name": {
+      "en": "Tajikistan",
+      "es": "Tayikistán"
+    },
+    "code": "TJ",
+    "type": "country",
+    "aliases": ["Tajikistan"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "tanzania",
+    "name": {
+      "en": "Tanzania",
+      "es": "Tanzania"
+    },
+    "code": "TZ",
+    "type": "country",
+    "aliases": ["Tanzania"],
+    "planCount": 11,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "thailand",
+    "name": {
+      "en": "Thailand",
+      "es": "Tailandia"
+    },
+    "code": "TH",
+    "type": "country",
+    "aliases": ["Thailand", "thai", "bangkok", "phuket"],
+    "planCount": 34,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "togo",
+    "name": {
+      "en": "Togo",
+      "es": "Togo"
+    },
+    "code": "TG",
+    "type": "country",
+    "aliases": ["Togo"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "tonga",
+    "name": {
+      "en": "Tonga",
+      "es": "Tonga"
+    },
+    "code": "TO",
+    "type": "country",
+    "aliases": ["Tonga"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "trinidad-and-tobago",
+    "name": {
+      "en": "Trinidad and Tobago",
+      "es": "Trinidad y Tobago"
+    },
+    "code": "TT",
+    "type": "country",
+    "aliases": ["Trinidad and Tobago"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "tunisia",
+    "name": {
+      "en": "Tunisia",
+      "es": "Túnez"
+    },
+    "code": "TN",
+    "type": "country",
+    "aliases": ["Tunisia"],
+    "planCount": 15,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "turkey",
+    "name": {
+      "en": "Turkey",
+      "es": "Turquía"
+    },
+    "code": "TR",
+    "type": "country",
+    "aliases": ["Turkey"],
+    "planCount": 30,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "turks-and-caicos-islands",
+    "name": {
+      "en": "Turks and Caicos Islands",
+      "es": "Islas Turcas y Caicos"
+    },
+    "code": "TC",
+    "type": "country",
+    "aliases": ["Turks and Caicos Islands"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "uganda",
+    "name": {
+      "en": "Uganda",
+      "es": "Uganda"
+    },
+    "code": "UG",
+    "type": "country",
+    "aliases": ["Uganda"],
+    "planCount": 11,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "ukraine",
+    "name": {
+      "en": "Ukraine",
+      "es": "Ucrania"
+    },
+    "code": "UA",
+    "type": "country",
+    "aliases": ["Ukraine"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "united-arab-emirates",
+    "name": {
+      "en": "United Arab Emirates",
+      "es": "Emiratos Árabes Unidos"
+    },
+    "code": "AE",
+    "type": "country",
+    "aliases": ["United Arab Emirates"],
+    "planCount": 19,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "united-kingdom",
+    "name": {
+      "en": "United Kingdom",
+      "es": "Reino Unido"
+    },
+    "code": "GB",
+    "type": "country",
+    "aliases": [
+      "United Kingdom",
+      "uk",
+      "great britain",
+      "england",
+      "inglaterra",
+      "gran bretana",
+      "london",
+      "londres"
+    ],
+    "planCount": 18,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "united-states",
+    "name": {
+      "en": "United States",
+      "es": "Estados Unidos"
+    },
+    "code": "US",
+    "type": "country",
+    "aliases": [
+      "United",
+      "United States",
+      "usa",
+      "us",
+      "eeuu",
+      "ee. uu.",
+      "america",
+      "new york",
+      "nueva york"
+    ],
+    "planCount": 37,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 100
+  },
+  {
+    "slug": "uruguay",
+    "name": {
+      "en": "Uruguay",
+      "es": "Uruguay"
+    },
+    "code": "UY",
+    "type": "country",
+    "aliases": ["Uruguay"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "usa-and-canada",
+    "name": {
+      "en": "USA & Canada",
+      "es": "Estados Unidos y Canada"
+    },
+    "code": "USCA-2",
+    "type": "region",
+    "aliases": ["USA & Canada"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "uzbekistan",
+    "name": {
+      "en": "Uzbekistan",
+      "es": "Uzbekistán"
+    },
+    "code": "UZ",
+    "type": "country",
+    "aliases": ["Uzbekistan"],
+    "planCount": 13,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "vanuatu",
+    "name": {
+      "en": "Vanuatu",
+      "es": "Vanuatu"
+    },
+    "code": "VU",
+    "type": "country",
+    "aliases": ["Vanuatu"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "vatican-city",
+    "name": {
+      "en": "Vatican City",
+      "es": "Ciudad del Vaticano"
+    },
+    "code": "VA",
+    "type": "country",
+    "aliases": ["Vatican City"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "venezuela",
+    "name": {
+      "en": "Venezuela",
+      "es": "Venezuela"
+    },
+    "code": "VE",
+    "type": "country",
+    "aliases": ["Venezuela"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "vietnam",
+    "name": {
+      "en": "Vietnam",
+      "es": "Vietnam"
+    },
+    "code": "VN",
+    "type": "country",
+    "aliases": ["Vietnam"],
+    "planCount": 31,
+    "dataMinGb": 0.1,
+    "dataMaxGb": 50
+  },
+  {
+    "slug": "virgin-islands-british",
+    "name": {
+      "en": "Virgin Islands- British",
+      "es": "Islas Vírgenes Británicas"
+    },
+    "code": "VG",
+    "type": "country",
+    "aliases": ["Virgin Islands- British"],
+    "planCount": 9,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "yemen",
+    "name": {
+      "en": "Yemen",
+      "es": "Yemen"
+    },
+    "code": "YE",
+    "type": "country",
+    "aliases": ["Yemen"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "zambia",
+    "name": {
+      "en": "Zambia",
+      "es": "Zambia"
+    },
+    "code": "ZM",
+    "type": "country",
+    "aliases": ["Zambia"],
+    "planCount": 14,
+    "dataMinGb": 0.5,
+    "dataMaxGb": 20
+  },
+  {
+    "slug": "zimbabwe",
+    "name": {
+      "en": "Zimbabwe",
+      "es": "Zimbabue"
+    },
+    "code": "ZW",
+    "type": "country",
+    "aliases": ["Zimbabwe"],
+    "planCount": 11,
+    "dataMinGb": 1,
+    "dataMaxGb": 20
+  }
+]

@@ -12,6 +12,8 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/destinos",
     "/en/esim/japan",
     "/es/compatibilidad",
+    "/es/preguntas-frecuentes",
+    "/es/ayuda",
   ]) {
     await page.goto(`${baseURL}${path}`, {
       waitUntil: "networkidle",

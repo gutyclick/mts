@@ -18,6 +18,7 @@ test("app navigation reflects localized routes and stays clear of footer", async
   }
   await nav.getByRole("link", { name: "Destinos" }).click();
   await expect(page).toHaveURL(/\/es\/destinos/);
+  await page.getByLabel("¿Cuál es tu próximo destino?").fill("japón");
   await page.locator('.destination-card[href="/es/esim/japan"]').click();
   await expect(nav.getByRole("link", { name: "Destinos" })).toHaveAttribute(
     "aria-current",
@@ -89,10 +90,8 @@ test("phone plan details behave as a scrollable bottom sheet", async ({
   const box = await dialog.boundingBox();
   expect(box!.width).toBe(390);
   expect(Math.round(box!.y + box!.height)).toBe(844);
-  await page.getByRole("button", { name: "Checkout is not active" }).click();
-  await expect(page.getByRole("status")).toContainText(
-    "No order has been created",
-  );
+  await expect(dialog.locator(".plan-specs")).toContainText("Japan");
+  await expect(dialog).not.toContainText(/\$|€|USD\s*\d/);
   await page.getByRole("button", { name: "Back to plans" }).click();
   await expect(dialog).not.toBeVisible();
   await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
@@ -110,7 +109,13 @@ test("small phones, tablets and landscape layouts do not overflow", async ({
     [844, 390],
   ]) {
     await page.setViewportSize({ width, height });
-    for (const path of ["/es", "/es/destinos", "/es/esim/united-states"]) {
+    for (const path of [
+      "/es",
+      "/es/destinos",
+      "/es/esim/united-states",
+      "/es/preguntas-frecuentes",
+      "/es/ayuda",
+    ]) {
       await page.goto(path);
       const dimensions = await page.evaluate(() => ({
         content: document.documentElement.scrollWidth,

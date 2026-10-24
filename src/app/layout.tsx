@@ -4,6 +4,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "@/styles/marketing.css";
 import "@/styles/mobile.css";
+import "@/styles/catalog.css";
 
 export const viewport: Viewport = {
   width: "device-width",

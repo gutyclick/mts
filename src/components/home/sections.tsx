@@ -1,22 +1,20 @@
 import {
   ArrowRight,
-  CreditCard,
   Globe2,
   MapPin,
   QrCode,
-  ShieldCheck,
   SlidersHorizontal,
   Smartphone,
   Sparkles,
   Tags,
-  Zap,
 } from "lucide-react";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 import { DestinationGrid } from "../destination-grid";
+import { popularDestinations } from "@/lib/catalog";
 import { ArrowLink, IconBadge, SectionHeading } from "../ui";
 
 export function TrustStrip({ locale }: { locale: Locale }) {
-  const icons = [Zap, ShieldCheck, QrCode, Tags];
+  const icons = [QrCode, Smartphone, Globe2, Tags];
   return (
     <div className="container">
       <div className="trust-strip">
@@ -46,7 +44,7 @@ export function PopularDestinations({ locale }: { locale: Locale }) {
           {t.allDestinations}
         </ArrowLink>
       </SectionHeading>
-      <DestinationGrid locale={locale} />
+      <DestinationGrid locale={locale} items={popularDestinations} />
     </section>
   );
 }
@@ -58,7 +56,7 @@ export function Steps({
   standalone?: boolean;
 }) {
   const t = dictionaries[locale];
-  const icons = [MapPin, CreditCard, QrCode];
+  const icons = [MapPin, SlidersHorizontal, QrCode];
   return (
     <section
       className={`steps-section ${standalone ? "standalone-steps" : ""}`}

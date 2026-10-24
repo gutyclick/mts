@@ -40,3 +40,11 @@ The mobile shell production build passed lint, TypeScript, formatting, 4 catalog
 Overflow checks now cover 320, 360, 390, 430, 768, 1024 and 1440px; browser flows also cover 844×390 landscape. The scoped axe audit returned no findings. Physical iOS/Android keyboard behavior remains a device-testing step; reduced-viewport emulation verifies the implemented layout and viewport response without claiming a full device certification.
 
 Updated previews: [phone home](previews/mobile-app.png), [phone plans](previews/plans-mobile.png), [tablet](previews/tablet-home.png) and [plan sheet](previews/mobile-plan-sheet.png). The original desktop composition remains unchanged.
+
+## Imported catalog and independent FAQ
+
+The catalog update passed a production build, ESLint, TypeScript, four updated catalog tests and all 18 desktop/mobile browser scenarios. Catalog checks assert 244 destinations (202 countries/territories and 42 regions), all 3,186 unique source plans, an explicit field allowlist without prices, existing images, real filters and 24 FAQ questions per language. Browser checks verify all 43 Japan plans, no currency amounts in their page or detail, intersecting filters, FAQ search, route localization and responsive navigation.
+
+The updated audit covered seven representative routes at 320, 360, 390, 430, 768, 1024 and 1440px, including FAQ and help. It returned no horizontal overflow or selected axe WCAG A/AA findings. Screenshots were generated from this production build and visually reviewed: [desktop FAQ](previews/faq-desktop.png), [mobile FAQ](previews/faq-mobile.png), [mobile directory](previews/directory-mobile.png), [destination banner](previews/plans-desktop.png) and [mobile detail](previews/mobile-plan-sheet.png).
+
+The CSV itself remains outside the repository. The imported data contains plan identifiers, original names, allowance, duration, type and coverage code only. There are no payment or provider API calls and no Supabase credentials in this change. Image synchronization matched the four supplied destination banners; local MIT-licensed Circle Flags cover the 202 country/territory entries.

@@ -1,192 +1,210 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import {
-  ArrowRight,
-  CalendarDays,
-  Check,
-  Info,
-  Signal,
-  Wifi,
-  X,
-} from "lucide-react";
-import {
-  filterPlans,
-  getPlans,
-  money,
-  type Destination,
-  type Plan,
-} from "@/lib/catalog";
+import { ArrowRight, CalendarDays, Info, Repeat2, Wifi, X } from "lucide-react";
+import type { Destination } from "@/lib/catalog";
+import { filterPlans, type Plan } from "@/lib/plan-utils";
 import { dictionaries, type Locale } from "@/lib/i18n";
+import { catalogCopy } from "@/lib/catalog-copy";
+import { DestinationFlag } from "./destination-flag";
 
 export function PlanBrowser({
   locale,
   destination,
+  availablePlans,
   initialDays = "",
 }: {
   locale: Locale;
   destination: Destination;
+  availablePlans: Plan[];
   initialDays?: string;
 }) {
   const t = dictionaries[locale];
+  const c = catalogCopy[locale];
   const id = useId();
+  const durations = [...new Set(availablePlans.map((plan) => plan.days))].sort(
+    (a, b) => a - b,
+  );
+  const allowances = [
+    ...new Map(
+      availablePlans.map((plan) => [plan.dataGb, plan.allowance]),
+    ).entries(),
+  ].sort((a, b) => a[0] - b[0]);
   const [data, setData] = useState("");
   const [days, setDays] = useState(
-    ["7", "15", "30"].includes(initialDays) ? initialDays : "",
+    durations.includes(Number(initialDays)) ? initialDays : "",
   );
+  const [kind, setKind] = useState("all");
   const [selected, setSelected] = useState<Plan | null>(null);
-  const [checkoutMessage, setCheckoutMessage] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
-  const checkoutNotice = useRef<HTMLDivElement>(null);
-  const plans = filterPlans(getPlans(destination), data, days);
+  const plans = filterPlans(availablePlans, data, days, kind);
   useEffect(() => {
     if (!selected) return;
-    const previousOverflow = document.body.style.overflow;
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     dialog.current?.showModal();
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previous;
     };
   }, [selected]);
-  useEffect(() => {
-    if (checkoutMessage) checkoutNotice.current?.focus();
-  }, [checkoutMessage]);
   const close = () => {
     dialog.current?.close();
     setSelected(null);
-    setCheckoutMessage(false);
+  };
+  const reset = () => {
+    setData("");
+    setDays("");
+    setKind("all");
   };
   return (
-    <section className="plans-section">
+    <section className="plans-section catalog-browser">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">{t.demo}</p>
+          <p className="eyebrow">{destination.name[locale]}</p>
           <h2>{t.plans}</h2>
           <p className="section-description">{t.plansDescription}</p>
         </div>
         <span className="plan-result-count" aria-live="polite">
-          {plans.length} {t.planCount}
+          {plans.length} {plans.length === 1 ? c.plan : c.plans}
         </span>
+      </div>
+      <div className="catalog-tabs" role="group" aria-label={c.planType}>
+        {[
+          ["all", c.all],
+          ["fixed", c.fixed],
+          ["daily", c.daily],
+        ].map(([value, label]) => (
+          <button
+            key={value}
+            aria-pressed={kind === value}
+            onClick={() => setKind(value)}
+          >
+            {label}
+            <span>
+              {value === "all"
+                ? availablePlans.length
+                : availablePlans.filter((plan) => plan.kind === value).length}
+            </span>
+          </button>
+        ))}
       </div>
       <div className="plan-filters">
         <div className="filter-field">
-          <label htmlFor={`${id}-data`}>{t.data}</label>
+          <label htmlFor={`${id}-data`}>{c.data}</label>
           <select
             id={`${id}-data`}
             value={data}
             onChange={(event) => setData(event.target.value)}
           >
-            <option value="">{t.allData}</option>
-            {[1, 3, 5, 10].map((gb) => (
+            <option value="">{c.allData}</option>
+            {allowances.map(([gb, label]) => (
               <option key={gb} value={gb}>
-                {gb} GB
+                {label}
               </option>
             ))}
           </select>
         </div>
         <div className="filter-field">
-          <label htmlFor={`${id}-days`}>{t.validity}</label>
+          <label htmlFor={`${id}-days`}>{c.duration}</label>
           <select
             id={`${id}-days`}
             value={days}
             onChange={(event) => setDays(event.target.value)}
           >
-            <option value="">{t.allDurations}</option>
-            {[7, 15, 30].map((value) => (
-              <option key={value} value={value}>
-                {value} {t.days}
+            <option value="">{c.allDurations}</option>
+            {durations.map((duration) => (
+              <option key={duration} value={duration}>
+                {duration} {duration === 1 ? c.day : c.days}
               </option>
             ))}
           </select>
         </div>
-        {(data || days) && (
-          <button
-            className="reset-button"
-            onClick={() => {
-              setData("");
-              setDays("");
-            }}
-          >
-            {t.reset}
+        {(data || days || kind !== "all") && (
+          <button className="reset-button" onClick={reset}>
+            {c.reset}
           </button>
         )}
       </div>
-      <p className="catalog-disclaimer">
-        <Info size={16} />
-        {t.demoDetails}
-      </p>
-      <div className="plans-grid">
-        {plans.map((plan) => (
-          <article className="plan-card" key={plan.id}>
-            <div className="plan-card-top">
-              <span className="plan-icon">
-                <Wifi size={23} />
-              </span>
-              <span className="plan-type">{t.demo}</span>
+      {(["fixed", "daily"] as const).map((group) => {
+        const items = plans.filter((plan) => plan.kind === group);
+        if (!items.length) return null;
+        return (
+          <div className="plan-group" key={group}>
+            <div className="plan-group-heading">
+              <h3>
+                {c[group]} <span>{items.length}</span>
+              </h3>
+              <p>
+                {c[group === "fixed" ? "fixedDescription" : "dailyDescription"]}
+              </p>
             </div>
-            <h3>
-              {plan.dataGb} <span>GB</span>
-            </h3>
-            <p className="plan-validity">
-              <CalendarDays size={16} />
-              {plan.days} {t.days}
-            </p>
-            <dl className="plan-specs">
-              {[
-                [t.network, t.unconfirmed],
-                [t.activation, t.unconfirmed],
-                [t.topup, t.unconfirmed],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <dt>{label}</dt>
-                  <dd>{value}</dd>
-                </div>
+            <div className="plans-grid">
+              {items.map((plan) => (
+                <article
+                  className="plan-card"
+                  key={plan.id}
+                  data-plan-id={plan.id}
+                >
+                  <div className="plan-card-top">
+                    <span className="plan-icon">
+                      {group === "daily" ? (
+                        <Repeat2 size={22} />
+                      ) : (
+                        <Wifi size={23} />
+                      )}
+                    </span>
+                    <span className={`plan-type plan-type-${group}`}>
+                      {c[group]}
+                    </span>
+                  </div>
+                  <p className="plan-name">{plan.name}</p>
+                  <h3>
+                    {plan.allowance}
+                    <small>{group === "daily" ? c.perDay : ""}</small>
+                  </h3>
+                  <p className="plan-validity">
+                    <CalendarDays size={16} />
+                    {plan.days} {plan.days === 1 ? c.day : c.days}
+                  </p>
+                  <div className="plan-destination">
+                    <DestinationFlag destination={destination} />
+                    <span>{destination.name[locale]}</span>
+                  </div>
+                  <button
+                    className="button button-secondary"
+                    onClick={() => setSelected(plan)}
+                  >
+                    {c.details}
+                    <ArrowRight size={17} />
+                  </button>
+                </article>
               ))}
-            </dl>
-            <div className="plan-price">
-              <strong>{money(plan.priceUsd, locale)}</strong>
-              <span>USD · {t.samplePrice}</span>
             </div>
-            <button
-              className="button button-secondary"
-              onClick={() => {
-                setSelected(plan);
-                setCheckoutMessage(false);
-              }}
-            >
-              {t.viewPlan}
-              <ArrowRight size={17} />
-            </button>
-          </article>
-        ))}
-      </div>
+          </div>
+        );
+      })}
       {!plans.length && (
         <div className="empty-state">
-          <Signal size={32} />
-          <p>{t.planEmpty}</p>
-          <button
-            className="button button-secondary"
-            onClick={() => {
-              setData("");
-              setDays("");
-            }}
-          >
-            {t.reset}
+          <Wifi size={28} />
+          <p>{c.empty}</p>
+          <button className="button button-secondary" onClick={reset}>
+            {c.reset}
           </button>
         </div>
       )}
+      <p className="catalog-disclaimer">
+        <Info size={16} />
+        {c.sourceNote}
+      </p>
       <dialog
         ref={dialog}
-        className="plan-dialog"
+        className="plan-dialog catalog-dialog"
         aria-labelledby="plan-dialog-title"
         onCancel={close}
         onClick={(event) => {
           if (event.target === dialog.current) close();
         }}
-        onClose={() => {
-          setSelected(null);
-          setCheckoutMessage(false);
-        }}
+        onClose={() => setSelected(null)}
       >
         {selected && (
           <>
@@ -197,32 +215,28 @@ export function PlanBrowser({
             >
               <X size={21} />
             </button>
-            <span className="plan-icon">
-              <Wifi size={28} />
-            </span>
-            <p className="eyebrow">
-              {t.details} · {t.demo}
-            </p>
-            <h2 id="plan-dialog-title">
-              {destination.name[locale]} · {selected.dataGb} GB
-            </h2>
-            <p>{t.dataOnly}</p>
+            <DestinationFlag destination={destination} />
+            <p className="eyebrow">{t.details}</p>
+            <h2 id="plan-dialog-title">{selected.name}</h2>
             <div className="dialog-data">
               <span>
-                <Check size={17} />
-                {selected.dataGb} GB
+                <Wifi size={17} />
+                {selected.allowance} {selected.kind === "daily" ? c.perDay : ""}
               </span>
               <span>
                 <CalendarDays size={17} />
-                {selected.days} {t.days}
+                {selected.days} {selected.days === 1 ? c.day : c.days}
               </span>
             </div>
             <dl className="plan-specs">
               {[
-                [t.network, t.unconfirmed],
-                [t.activation, t.unconfirmed],
-                [t.topup, t.unconfirmed],
-                [t.coverage, destination.coverage[locale]],
+                [c.destination, destination.name[locale]],
+                [
+                  c.coverageType,
+                  destination.type === "region" ? c.region : c.country,
+                ],
+                [c.planType, c[selected.kind]],
+                [c.planName, selected.name],
               ].map(([label, value]) => (
                 <div key={label}>
                   <dt>{label}</dt>
@@ -230,35 +244,21 @@ export function PlanBrowser({
                 </div>
               ))}
             </dl>
-            <p className="dialog-price">
-              {money(selected.priceUsd, locale)}{" "}
-              <span>USD · {t.samplePrice}</span>
-            </p>
-            <p className="dialog-disclaimer">{t.demoDetails}</p>
-            {checkoutMessage ? (
-              <div
-                ref={checkoutNotice}
-                tabIndex={-1}
-                className="checkout-notice"
-                role="status"
-              >
+            {selected.kind === "daily" && (
+              <div className="information-note">
                 <Info size={20} />
                 <div>
-                  <strong>{t.checkout}</strong>
-                  <p>{t.checkoutBody}</p>
+                  <strong>{c.fup}</strong>
+                  <p>{c.fupNote}</p>
                 </div>
               </div>
-            ) : (
-              <button
-                className="button button-primary full-width"
-                onClick={() => setCheckoutMessage(true)}
-              >
-                {t.checkout}
-                <Info size={17} />
-              </button>
             )}
-            <button className="dialog-back" onClick={close}>
-              {t.gotIt}
+            <p className="dialog-disclaimer">{c.sourceNote}</p>
+            <button
+              className="button button-primary full-width"
+              onClick={close}
+            >
+              {c.back}
             </button>
           </>
         )}

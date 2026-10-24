@@ -29,12 +29,8 @@ export function DestinationArtwork({
 }) {
   return (
     <Image
-      className={
-        destination.illustration
-          ? "destination-artwork is-illustration"
-          : "destination-artwork is-photograph"
-      }
-      src={destination.illustration ?? destination.image}
+      className={`destination-artwork is-${destination.artworkKind}`}
+      src={destination.image}
       alt={destination.name[locale]}
       fill
       sizes={sizes}

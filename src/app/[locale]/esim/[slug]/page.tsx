@@ -9,6 +9,7 @@ import { DestinationArtwork } from "@/components/illustrations";
 import { destinations } from "@/lib/catalog";
 import { dictionaries, isLocale, locales, pathFor } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
+import { DestinationOverview } from "@/components/experience/destination-overview";
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
     destinations.map(({ slug }) => ({ locale, slug })),
@@ -82,13 +83,20 @@ export default async function DestinationPage({
           />
         </div>
       </section>
-      <PlanBrowser
+      <DestinationOverview
         locale={locale}
         destination={destination}
-        availablePlans={getPlans(destination)}
-        initialDays={days}
+        plans={getPlans(destination)}
       />
-      <section className="compatibility-reminder">
+      <div id="destination-plans">
+        <PlanBrowser
+          locale={locale}
+          destination={destination}
+          availablePlans={getPlans(destination)}
+          initialDays={days}
+        />
+      </div>
+      <section className="compatibility-reminder" id="destination-setup">
         <Smartphone size={28} />
         <div>
           <h2>{t.compatibleReminder}</h2>
@@ -99,7 +107,7 @@ export default async function DestinationPage({
           <ArrowRight size={17} />
         </Link>
       </section>
-      <section className="coverage-section">
+      <section className="coverage-section" id="destination-coverage">
         <h2>{t.coverage}</h2>
         <p>{destination.name[locale]}</p>
         {destination.type === "region" && <p>{c.coverageNote}</p>}

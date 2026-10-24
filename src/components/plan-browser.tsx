@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import Link from "next/link";
+import { planPath } from "@/lib/experience-routes";
+import { experienceCopy } from "@/lib/experience-copy";
 import { ArrowRight, CalendarDays, Info, Repeat2, Wifi, X } from "lucide-react";
 import type { Destination } from "@/lib/catalog";
 import { filterPlans, type Plan } from "@/lib/plan-utils";
@@ -254,6 +257,13 @@ export function PlanBrowser({
               </div>
             )}
             <p className="dialog-disclaimer">{c.sourceNote}</p>
+            <Link
+              className="button button-primary full-width plan-full-details"
+              href={planPath(locale, destination.slug, selected.id)}
+            >
+              {experienceCopy[locale].fullDetails}
+              <ArrowRight size={17} />
+            </Link>
             <button
               className="button button-primary full-width"
               onClick={close}

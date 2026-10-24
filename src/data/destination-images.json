@@ -5,7 +5,10 @@
   "france": "/images/destinations/france.png",
   "italy": "/images/destinations/italy.png",
   "japan": "/images/destinations/japon.png",
+  "mexico": "/images/destinations/mexico.png",
   "panama": "/images/destinations/panama.png",
+  "paraguay": "/images/destinations/paraguay.png",
   "peru": "/images/destinations/peru.png",
-  "united-states": "/images/destinations/usa.png"
+  "united-states": "/images/destinations/usa.png",
+  "uruguay": "/images/destinations/uruguay.png"
 }

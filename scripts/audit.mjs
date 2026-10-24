@@ -1,5 +1,11 @@
 import { chromium } from "@playwright/test";
 import { createRequire } from "node:module";
+import { readFile } from "node:fs/promises";
+const catalog = JSON.parse(await readFile("src/data/plans.json", "utf8"));
+const examplePlan =
+  catalog.japan.find((plan) => plan.kind === "fixed" && plan.dataGb === 5) ??
+  catalog.japan[0];
+const checkoutPath = `/en/checkout?destination=japan&plan=${encodeURIComponent(examplePlan.id)}`;
 const require = createRequire(import.meta.url);
 const browser = await chromium.launch({ channel: "msedge", headless: true });
 const failures = [];
@@ -14,6 +20,12 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/compatibilidad",
     "/es/preguntas-frecuentes",
     "/es/ayuda",
+    `/en/plan/japan/${encodeURIComponent(examplePlan.id)}`,
+    checkoutPath,
+    "/en/my-esims",
+    "/es/mis-esim?esim=trip-japan",
+    "/es/instalar",
+    "/es/estudio",
   ]) {
     await page.goto(`${baseURL}${path}`, {
       waitUntil: "networkidle",
@@ -47,6 +59,23 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
           });
       }
       await auditState("initial");
+      if (path === checkoutPath) {
+        await page
+          .getByRole("button", { name: "Continue to payment preview" })
+          .click();
+        await auditState("payment-preview");
+        await page
+          .getByRole("button", { name: "Preview confirmation" })
+          .click();
+        await auditState("confirmation-preview");
+      }
+      if (path === "/en/my-esims") {
+        await page.locator(".preview-controls summary").click();
+        for (const state of ["empty", "loading", "error"]) {
+          await page.getByLabel("Example state").selectOption(state);
+          await auditState(state);
+        }
+      }
       if (path === "/es/preguntas-frecuentes") {
         await page.locator("#faq-hotspot summary").click();
         await page.evaluate(() =>

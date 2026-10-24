@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BookOpen, Compass, House, LifeBuoy } from "lucide-react";
+import { BookOpen, Compass, House, LifeBuoy, WalletCards } from "lucide-react";
+import { experiencePath } from "@/lib/experience-routes";
+import { experienceCopy } from "@/lib/experience-copy";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 
 export function MobileNavigation({ locale }: { locale: Locale }) {
@@ -52,7 +54,9 @@ export function MobileNavigation({ locale }: { locale: Locale }) {
       icon: Compass,
       active:
         pathname === pathFor(locale, "destinations") ||
-        pathname.startsWith(`/${locale}/esim/`),
+        pathname.startsWith(`/${locale}/esim/`) ||
+        pathname.startsWith(`/${locale}/plan/`) ||
+        pathname === experiencePath(locale, "checkout"),
     },
     {
       label: t.guide,
@@ -61,7 +65,14 @@ export function MobileNavigation({ locale }: { locale: Locale }) {
       active: [
         pathFor(locale, "how"),
         pathFor(locale, "compatibility"),
+        experiencePath(locale, "install"),
       ].includes(pathname),
+    },
+    {
+      label: experienceCopy[locale].wallet,
+      href: experiencePath(locale, "wallet"),
+      icon: WalletCards,
+      active: pathname === experiencePath(locale, "wallet"),
     },
     {
       label: t.help,

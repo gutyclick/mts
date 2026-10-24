@@ -1,5 +1,11 @@
 import { chromium } from "@playwright/test";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
+const catalog = JSON.parse(await readFile("src/data/plans.json", "utf8"));
+const examplePlan =
+  catalog.japan.find((plan) => plan.kind === "fixed" && plan.dataGb === 5) ??
+  catalog.japan[0];
+const planPath = `/plan/japan/${encodeURIComponent(examplePlan.id)}`;
+const checkoutQuery = `?destination=japan&plan=${encodeURIComponent(examplePlan.id)}`;
 await mkdir("docs/previews", { recursive: true });
 const browser = await chromium.launch({ channel: "msedge", headless: true });
 const baseURL = process.env.BASE_URL ?? "http://localhost:3000";
@@ -13,6 +19,16 @@ for (const [name, width, height, path, fullPage = true] of [
   ["mobile-app", 390, 844, "/es", false],
   ["plans-mobile", 390, 844, "/es/esim/japan", false],
   ["tablet-home", 768, 1024, "/es", false],
+  ["plan-detail-desktop", 1440, 1000, `/en${planPath}`, false],
+  ["plan-detail-mobile", 390, 844, `/es${planPath}`, false],
+  ["checkout-desktop", 1440, 1000, `/en/checkout${checkoutQuery}`, false],
+  ["checkout-mobile", 390, 844, `/es/compra${checkoutQuery}`, false],
+  ["wallet-desktop", 1440, 1000, "/en/my-esims", false],
+  ["wallet-mobile", 390, 844, "/es/mis-esim", false],
+  ["esim-detail-mobile", 390, 844, "/es/mis-esim?esim=trip-japan", false],
+  ["install-mobile", 390, 844, "/es/instalar", false],
+  ["studio-desktop", 1440, 1000, "/en/studio", false],
+  ["studio-mobile", 390, 844, "/es/estudio", false],
 ]) {
   const page = await browser.newPage({
     viewport: { width, height },
@@ -30,6 +46,26 @@ for (const [name, width, height, path, fullPage = true] of [
   if (name === "plans-mobile") {
     await page.getByRole("button", { name: "Ver plan" }).first().click();
     await page.screenshot({ path: "docs/previews/mobile-plan-sheet.png" });
+  }
+  if (name === "checkout-mobile" || name === "checkout-desktop") {
+    await page
+      .getByRole("button", {
+        name:
+          name === "checkout-mobile"
+            ? "Continuar al pago de ejemplo"
+            : "Continue to payment preview",
+      })
+      .click();
+    await page.screenshot({ path: `docs/previews/${name}-payment.png` });
+    await page
+      .getByRole("button", {
+        name:
+          name === "checkout-mobile"
+            ? "Ver confirmación de ejemplo"
+            : "Preview confirmation",
+      })
+      .click();
+    await page.screenshot({ path: `docs/previews/${name}-confirmation.png` });
   }
   if (name === "faq-mobile" || name === "faq-desktop") {
     await page.goto(`${baseURL}${path}#faq-hotspot`, {

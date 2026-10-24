@@ -37,6 +37,17 @@ export function Footer({ locale }: { locale: Locale }) {
             </div>
           ))}
         </div>
+        <div className="footer-experience-links">
+          <Link href={experiencePath(locale, "wallet")}>
+            {experienceCopy[locale].wallet}
+          </Link>
+          <Link href={experiencePath(locale, "install")}>
+            {experienceCopy[locale].install}
+          </Link>
+          <Link href={experiencePath(locale, "studio")}>
+            {experienceCopy[locale].studio}
+          </Link>
+        </div>
         <div className="footer-bottom">
           <p>
             © {new Date().getUTCFullYear()} MyTripSim. {t.rights}
@@ -48,3 +59,5 @@ export function Footer({ locale }: { locale: Locale }) {
     </footer>
   );
 }
+import { experiencePath } from "@/lib/experience-routes";
+import { experienceCopy } from "@/lib/experience-copy";

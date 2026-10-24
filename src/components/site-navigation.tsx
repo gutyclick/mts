@@ -12,6 +12,8 @@ import {
   type PageKey,
 } from "@/lib/i18n";
 import { Brand } from "./ui";
+import { experiencePath } from "@/lib/experience-routes";
+import { experienceCopy } from "@/lib/experience-copy";
 
 export function LanguageSwitcher({ locale }: { locale: Locale }) {
   const pathname = usePathname();
@@ -20,6 +22,12 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
     <a
       className="language-switch"
       href={equivalentPath(pathname, target)}
+      onClick={(event) => {
+        event.currentTarget.href = `${equivalentPath(pathname, target)}${window.location.search}${window.location.hash}`;
+      }}
+      onAuxClick={(event) => {
+        event.currentTarget.href = `${equivalentPath(pathname, target)}${window.location.search}${window.location.hash}`;
+      }}
       hrefLang={target}
       aria-label={`${locale.toUpperCase()} / ${target.toUpperCase()} — ${dictionaries[locale].language}: ${target === "es" ? "Español" : "English"}`}
     >
@@ -51,17 +59,27 @@ export function Header({ locale }: { locale: Locale }) {
           <Brand />
         </Link>
         <nav className="desktop-nav" aria-label={t.explore}>
-          {pages.map((page) => (
-            <Link
-              key={page}
-              href={pathFor(locale, page)}
-              aria-current={
-                pathname === pathFor(locale, page) ? "page" : undefined
-              }
-            >
-              {t.nav[page]}
-            </Link>
-          ))}
+          {pages
+            .filter((page) => page !== "compatibility")
+            .map((page) => (
+              <Link
+                key={page}
+                href={pathFor(locale, page)}
+                aria-current={
+                  pathname === pathFor(locale, page) ? "page" : undefined
+                }
+              >
+                {t.nav[page]}
+              </Link>
+            ))}
+          <Link
+            href={experiencePath(locale, "wallet")}
+            aria-current={
+              pathname === experiencePath(locale, "wallet") ? "page" : undefined
+            }
+          >
+            {experienceCopy[locale].wallet}
+          </Link>
         </nav>
         <div className="header-actions">
           <LanguageSwitcher locale={locale} />
@@ -106,6 +124,13 @@ export function Header({ locale }: { locale: Locale }) {
                 <ArrowRight size={17} />
               </Link>
             ))}
+            <Link
+              href={experiencePath(locale, "wallet")}
+              onClick={() => setOpen(false)}
+            >
+              {experienceCopy[locale].wallet}
+              <ArrowRight size={17} />
+            </Link>
             <Link
               className="button button-primary"
               href={pathFor(locale, "destinations")}

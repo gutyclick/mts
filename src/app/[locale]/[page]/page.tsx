@@ -17,6 +17,16 @@ import {
   type PageKey,
 } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
+import {
+  experienceKey,
+  experiencePath,
+  experienceSegments,
+} from "@/lib/experience-routes";
+import { experienceCopy } from "@/lib/experience-copy";
+import {
+  ExperiencePage,
+  type ExperienceQuery,
+} from "@/components/experience/experience-page";
 
 function pageKey(locale: Locale, page: string) {
   return (Object.keys(routeSegments) as PageKey[]).find(
@@ -39,10 +49,12 @@ function heading(locale: Locale, key: PageKey) {
 }
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
-    Object.values(routeSegments).map((segments) => ({
-      locale,
-      page: segments[locale],
-    })),
+    [...Object.values(routeSegments), ...Object.values(experienceSegments)].map(
+      (segments) => ({
+        locale,
+        page: segments[locale],
+      }),
+    ),
   );
 }
 export async function generateMetadata({
@@ -52,6 +64,19 @@ export async function generateMetadata({
 }) {
   const { locale, page } = await params;
   if (!isLocale(locale)) return {};
+  const experience = experienceKey(locale, page);
+  if (experience)
+    return {
+      title: experienceCopy[locale][experience],
+      robots: { index: false, follow: false },
+      alternates: {
+        canonical: experiencePath(locale, experience),
+        languages: {
+          en: experiencePath("en", experience),
+          es: experiencePath("es", experience),
+        },
+      },
+    };
   const key = pageKey(locale, page);
   if (!key) return {};
   const [title, description] = heading(locale, key);
@@ -64,11 +89,22 @@ export async function generateMetadata({
 }
 export default async function ContentPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; page: string }>;
+  searchParams: Promise<ExperienceQuery>;
 }) {
   const { locale, page } = await params;
   if (!isLocale(locale)) notFound();
+  const experience = experienceKey(locale, page);
+  if (experience)
+    return (
+      <ExperiencePage
+        locale={locale}
+        page={experience}
+        query={await searchParams}
+      />
+    );
   const key = pageKey(locale, page);
   if (!key) notFound();
   const t = dictionaries[locale];

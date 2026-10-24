@@ -1,0 +1,386 @@
+export const experienceCopy = {
+  en: {
+    preview: "Visual preview",
+    previewBody:
+      "Explore the experience with example data. Purchases, accounts and eSIM activation are not available yet.",
+    fullDetails: "Full plan details",
+    previewPurchase: "Preview purchase",
+    wallet: "My eSIMs",
+    studio: "Administration preview",
+    install: "Installation guide",
+    back: "Back",
+    catalog: "Explore destinations",
+    plan: "Your selected plan",
+    data: "Data allowance",
+    duration: "Duration",
+    days: "days",
+    day: "day",
+    daily: "Daily data",
+    fixed: "Fixed data",
+    perDay: "/ day",
+    pending: "To be confirmed",
+    noPrice: "Price not published",
+    coverage: "Coverage",
+    countryCoverage: "Destination listed for this package",
+    regionalCoverage:
+      "The complete list of included countries has not been confirmed for this package.",
+    networks: "Supported networks",
+    activation: "When validity starts",
+    conditions: "Plan conditions",
+    conditionsBody:
+      "Check the exact coverage, network and activation terms before purchasing. These details are not inferred from the plan name.",
+    hotspot: "Hotspot & data sharing",
+    hotspotBody:
+      "Our provider permits data sharing on compatible devices. Shared data uses the same plan allowance.",
+    calls: "Calls & SMS",
+    callsBody:
+      "Treat the plan as data-only unless calls or SMS are explicitly included in its terms.",
+    fup: "Daily allowance with a fair use policy; this is not unrestricted high-speed data.",
+    installation: "Get ready to connect",
+    installationBody:
+      "A compatible, carrier-unlocked phone and an internet connection for installation are needed.",
+    compatibility: "Check compatibility",
+    faq: "Find an answer",
+    allPlans: "Browse plans",
+    overview: "At a glance",
+    options: "available plans",
+    coverageBody:
+      "Find your destination, compare the data you need and check your phone before you travel.",
+    checkout: "Let’s get your trip connected",
+    checkoutDescription:
+      "Walk through the purchase layout with the plan you selected.",
+    review: "Review",
+    payment: "Payment preview",
+    confirmation: "Confirmation preview",
+    traveler: "Traveler details",
+    exampleOnly: "Example information — not submitted",
+    name: "Name",
+    email: "Delivery email",
+    orderSummary: "Trip summary",
+    compatible:
+      "I have checked that my phone supports eSIM and is carrier unlocked.",
+    terms: "I understand this is a preview and no purchase will be made.",
+    continuePayment: "Continue to payment preview",
+    paymentBody:
+      "The secure payment form will appear here when purchasing is available. No card information is requested in this preview.",
+    paymentPlaceholder: "Future secure payment form",
+    previewConfirmation: "Preview confirmation",
+    confirmationTitle: "This is how your confirmation will look",
+    confirmationBody:
+      "No payment was made and no eSIM was issued. Your real installation instructions will arrive here and by email when purchases are available.",
+    exploreWallet: "Explore My eSIMs",
+    whatNext: "Your next steps",
+    nextSteps: [
+      "Receive your eSIM and installation instructions.",
+      "Install on the phone you will travel with.",
+      "Activate according to your plan’s terms.",
+    ],
+    noSelection: "Choose a plan to preview your trip",
+    noSelectionBody:
+      "Start with a destination, open a plan and follow the preview purchase link.",
+    walletTitle: "Your trips, all in one place",
+    walletDescription:
+      "A preview of where you will find your eSIMs, installation guides and data usage.",
+    all: "All",
+    ready: "To install",
+    active: "Active",
+    ended: "Ended",
+    example: "Example eSIM",
+    viewEsim: "View eSIM for",
+    noTrips: "Your next trip starts here",
+    noTripsBody:
+      "Your eSIMs will appear here when purchases are available. Explore the catalog to plan your next destination.",
+    noFilter: "No example eSIMs in this category",
+    installGuide: "View installation guide",
+    usage: "Data usage",
+    remaining: "remaining",
+    exampleUsage: "Example usage, not a live balance",
+    validity: "Validity",
+    exampleValidity: "Example dates",
+    installationStatus: "Installation status",
+    readyBody:
+      "Your example profile is ready for the installation walkthrough.",
+    activeBody: "An installed eSIM would show its usage and validity here.",
+    endedBody:
+      "This example trip has ended. Explore a plan for your next destination.",
+    sampleCode: "Sample code",
+    sampleCodeBody: "Decorative illustration — cannot be scanned or activated.",
+    manual: "Manual installation",
+    manualBody:
+      "The SM-DP+ address and activation code will be supplied with your purchased eSIM.",
+    topUp: "Top-up availability",
+    topUpBody:
+      "Depends on the exact plan. No top-up is available in this preview.",
+    help: "Need a hand?",
+    helpBody:
+      "Find guidance on roaming, APN settings and keeping your home number.",
+    installTitle: "A few steps before your next adventure",
+    installDescription:
+      "Choose your phone and follow the installation walkthrough. Use the instructions supplied with your exact eSIM when purchasing becomes available.",
+    before: "Before you start",
+    beforeItems: [
+      "Check that your phone is compatible and carrier unlocked.",
+      "Connect to reliable Wi-Fi or another internet connection.",
+      "Install on the phone you will use: the provider’s QR is tied to one device.",
+    ],
+    iphoneSteps: [
+      {
+        title: "Open your mobile settings",
+        body: "Go to Settings → Cellular / Mobile Data → Add eSIM.",
+      },
+      {
+        title: "Add your travel eSIM",
+        body: "Use the QR code or manual details supplied with your eSIM. The sample code shown here cannot be installed.",
+      },
+      {
+        title: "Name your lines",
+        body: "Label the travel line MyTripSim and choose it for mobile data. Keep your preferred home line for calls.",
+      },
+      {
+        title: "Review roaming and activation",
+        body: "Turn data roaming on for the travel eSIM and off for your home line. Check when your exact plan’s validity starts before connecting.",
+      },
+    ],
+    androidSteps: [
+      {
+        title: "Open SIM settings",
+        body: "Go to Settings → Network & internet / Connections → SIMs / SIM manager. Menu names vary by manufacturer.",
+      },
+      {
+        title: "Add an eSIM",
+        body: "Choose Add eSIM or Download SIM and follow your product’s QR or manual instructions.",
+      },
+      {
+        title: "Select the data line",
+        body: "Name your profile MyTripSim and select it for mobile data. Review your default calling line.",
+      },
+      {
+        title: "Check roaming and APN",
+        body: "Enable roaming on the travel eSIM, disable it on your home line and use the APN supplied with your exact product.",
+      },
+    ],
+    installTiming:
+      "Installation and activation are different steps. Your plan’s activation rules determine when the days begin.",
+    stateLabel: "Example state",
+    normal: "Normal view",
+    empty: "Empty",
+    loading: "Loading",
+    error: "Error",
+    errorTitle: "An example connection interruption",
+    errorBody:
+      "This demonstrates how recovery will look. No account or purchase is affected.",
+    retry: "Back to the example",
+    loadingLabel: "Loading example trips",
+    designTools: "Preview controls",
+    demoOrders: "Orders",
+    destinations: "Destinations",
+    content: "Content & FAQ",
+    workspace: "Design workspace",
+    workspaceBody:
+      "Explore the future management screens. This is a public visual sample, not an authenticated administration system.",
+    searchDestinations: "Search destinations",
+    planCount: "Plans",
+    reviewPlan: "Review plans",
+    status: "Status",
+    image: "Banner",
+    supplied: "Available",
+    fallback: "Illustration / flag",
+    exampleOrders: "Fictional orders",
+    noOrders:
+      "Order management will be connected later. These rows are examples only.",
+    editContent: "Preview article",
+    saved: "Content is read-only in this preview.",
+  },
+  es: {
+    preview: "Vista de demostración",
+    previewBody:
+      "Explora la experiencia con datos de ejemplo. Las compras, las cuentas y la activación de eSIM todavía no están disponibles.",
+    fullDetails: "Ver ficha completa",
+    previewPurchase: "Ver compra de ejemplo",
+    wallet: "Mis eSIM",
+    studio: "Administración de muestra",
+    install: "Guía de instalación",
+    back: "Volver",
+    catalog: "Explorar destinos",
+    plan: "Tu plan seleccionado",
+    data: "Cantidad de datos",
+    duration: "Duración",
+    days: "días",
+    day: "día",
+    daily: "Datos diarios",
+    fixed: "Datos fijos",
+    perDay: "/ día",
+    pending: "Por confirmar",
+    noPrice: "Precio no publicado",
+    coverage: "Cobertura",
+    countryCoverage: "Destino indicado para este paquete",
+    regionalCoverage:
+      "La lista completa de países incluidos no está confirmada para este paquete.",
+    networks: "Redes disponibles",
+    activation: "Inicio de la vigencia",
+    conditions: "Condiciones del plan",
+    conditionsBody:
+      "Revisa la cobertura, las redes y las reglas de activación antes de comprar. Estos datos no se deducen del nombre del plan.",
+    hotspot: "Compartir internet",
+    hotspotBody:
+      "Nuestro proveedor permite compartir datos en equipos compatibles. El consumo de los otros dispositivos se descuenta del mismo plan.",
+    calls: "Llamadas y SMS",
+    callsBody:
+      "Considera el plan como solo de datos, salvo que sus condiciones incluyan expresamente llamadas o SMS.",
+    fup: "Datos diarios con política de uso justo; no equivale a datos a máxima velocidad sin restricciones.",
+    installation: "Prepara tu conexión",
+    installationBody:
+      "Necesitas un teléfono compatible y liberado, y conexión a internet para instalar el perfil.",
+    compatibility: "Revisar compatibilidad",
+    faq: "Resolver una duda",
+    allPlans: "Ver planes",
+    overview: "De un vistazo",
+    options: "planes disponibles",
+    coverageBody:
+      "Encuentra tu destino, compara los datos que necesitas y revisa tu teléfono antes de viajar.",
+    checkout: "Preparemos la conexión de tu viaje",
+    checkoutDescription:
+      "Recorre el diseño de compra con el plan que seleccionaste.",
+    review: "Resumen",
+    payment: "Pago de ejemplo",
+    confirmation: "Confirmación de ejemplo",
+    traveler: "Datos del viajero",
+    exampleOnly: "Información de ejemplo: no se envía",
+    name: "Nombre",
+    email: "Correo de entrega",
+    orderSummary: "Resumen de tu viaje",
+    compatible: "He revisado que mi teléfono admite eSIM y está liberado.",
+    terms: "Entiendo que es una demostración y no se realizará una compra.",
+    continuePayment: "Continuar al pago de ejemplo",
+    paymentBody:
+      "El formulario de pago seguro aparecerá aquí cuando habilitemos las compras. Esta demostración no solicita datos de tarjeta.",
+    paymentPlaceholder: "Futuro formulario de pago seguro",
+    previewConfirmation: "Ver confirmación de ejemplo",
+    confirmationTitle: "Así se verá tu confirmación",
+    confirmationBody:
+      "No se realizó ningún pago ni se emitió una eSIM. Cuando habilitemos las compras, recibirás aquí y por correo tus instrucciones de instalación reales.",
+    exploreWallet: "Explorar Mis eSIM",
+    whatNext: "Tus siguientes pasos",
+    nextSteps: [
+      "Recibe tu eSIM y las instrucciones de instalación.",
+      "Instálala en el teléfono con el que viajarás.",
+      "Actívala según las condiciones de tu plan.",
+    ],
+    noSelection: "Elige un plan para preparar tu viaje",
+    noSelectionBody:
+      "Empieza por un destino, abre un plan y sigue el enlace de compra de ejemplo.",
+    walletTitle: "Tus viajes, en un solo lugar",
+    walletDescription:
+      "Una muestra de dónde encontrarás tus eSIM, instrucciones de instalación y consumo de datos.",
+    all: "Todas",
+    ready: "Por instalar",
+    active: "Activas",
+    ended: "Finalizadas",
+    example: "eSIM de ejemplo",
+    viewEsim: "Ver eSIM de",
+    noTrips: "Tu próximo viaje empieza aquí",
+    noTripsBody:
+      "Tus eSIM aparecerán aquí cuando habilitemos las compras. Explora el catálogo para preparar tu próximo destino.",
+    noFilter: "No hay eSIM de ejemplo en esta categoría",
+    installGuide: "Ver guía de instalación",
+    usage: "Consumo de datos",
+    remaining: "disponibles",
+    exampleUsage: "Consumo de ejemplo, no es un saldo real",
+    validity: "Vigencia",
+    exampleValidity: "Fechas de ejemplo",
+    installationStatus: "Estado de instalación",
+    readyBody:
+      "El perfil de ejemplo está preparado para recorrer la guía de instalación.",
+    activeBody:
+      "Una eSIM instalada mostraría aquí sus datos disponibles y vigencia.",
+    endedBody:
+      "Este viaje de ejemplo ha finalizado. Explora un plan para tu próximo destino.",
+    sampleCode: "Código de muestra",
+    sampleCodeBody: "Ilustración decorativa: no puede escanearse ni activarse.",
+    manual: "Instalación manual",
+    manualBody:
+      "La dirección SM-DP+ y el código de activación se entregarán con la eSIM que compres.",
+    topUp: "Disponibilidad de recarga",
+    topUpBody:
+      "Depende del plan concreto. Esta demostración no permite recargas.",
+    help: "¿Necesitas una mano?",
+    helpBody:
+      "Consulta cómo configurar el roaming, el APN y tu número habitual.",
+    installTitle: "Unos pasos antes de tu próxima aventura",
+    installDescription:
+      "Elige tu teléfono y recorre la guía. Cuando habilitemos las compras, utiliza las instrucciones de tu eSIM concreta.",
+    before: "Antes de empezar",
+    beforeItems: [
+      "Comprueba que tu teléfono sea compatible y esté liberado.",
+      "Conéctate a una red Wi-Fi estable o a otra conexión de internet.",
+      "Instala en el teléfono que usarás: el QR del proveedor queda vinculado a un solo equipo.",
+    ],
+    iphoneSteps: [
+      {
+        title: "Abre los ajustes de datos",
+        body: "Ve a Ajustes → Datos móviles / Red celular → Añadir eSIM.",
+      },
+      {
+        title: "Añade tu eSIM de viaje",
+        body: "Utiliza el QR o los datos manuales entregados con tu eSIM. El código de muestra de esta página no se puede instalar.",
+      },
+      {
+        title: "Pon nombre a tus líneas",
+        body: "Llama MyTripSim a la línea de viaje y selecciónala para datos móviles. Mantén tu línea preferida para llamadas.",
+      },
+      {
+        title: "Revisa roaming y activación",
+        body: "Activa el roaming de datos en la eSIM de viaje y desactívalo en la habitual. Comprueba cuándo empieza la vigencia de tu plan antes de conectarte.",
+      },
+    ],
+    androidSteps: [
+      {
+        title: "Abre los ajustes de SIM",
+        body: "Ve a Ajustes → Redes e internet / Conexiones → SIM / Administrador de SIM. Los menús varían según el fabricante.",
+      },
+      {
+        title: "Añade una eSIM",
+        body: "Elige Añadir eSIM o Descargar SIM y sigue las instrucciones de QR o instalación manual de tu producto.",
+      },
+      {
+        title: "Selecciona la línea de datos",
+        body: "Pon MyTripSim como nombre del perfil y selecciónalo para datos móviles. Revisa la línea predeterminada de llamadas.",
+      },
+      {
+        title: "Comprueba roaming y APN",
+        body: "Activa el roaming de la eSIM de viaje, desactívalo en tu línea habitual y usa el APN indicado para tu producto concreto.",
+      },
+    ],
+    installTiming:
+      "Instalar y activar son pasos diferentes. Las reglas de activación de tu plan determinan cuándo empiezan a contar los días.",
+    stateLabel: "Estado de ejemplo",
+    normal: "Vista normal",
+    empty: "Vacío",
+    loading: "Cargando",
+    error: "Error",
+    errorTitle: "Una interrupción de conexión de ejemplo",
+    errorBody:
+      "Así se verá la recuperación de un error. No hay ninguna cuenta ni compra afectada.",
+    retry: "Volver a la muestra",
+    loadingLabel: "Cargando viajes de ejemplo",
+    designTools: "Controles de demostración",
+    demoOrders: "Pedidos",
+    destinations: "Destinos",
+    content: "Contenido y FAQ",
+    workspace: "Espacio de diseño",
+    workspaceBody:
+      "Explora las futuras pantallas de gestión. Es una muestra visual pública, no un sistema de administración con acceso autenticado.",
+    searchDestinations: "Buscar en destinos",
+    planCount: "Planes",
+    reviewPlan: "Revisar planes",
+    status: "Estado",
+    image: "Banner",
+    supplied: "Disponible",
+    fallback: "Ilustración / bandera",
+    exampleOrders: "Pedidos ficticios",
+    noOrders:
+      "La gestión de pedidos se conectará después. Estas filas son solo ejemplos.",
+    editContent: "Ver artículo",
+    saved: "El contenido es de solo lectura en esta demostración.",
+  },
+};

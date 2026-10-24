@@ -40,6 +40,8 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 ## Rutas
 
+El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM, instalación y administración de muestra. Consulta [pantallas, rutas y límites](docs/visual-journey.md). Las pantallas de demostración usan datos ficticios y no realizan compras, pagos ni activaciones.
+
 | Página           | Inglés              | Español                    |
 | ---------------- | ------------------- | -------------------------- |
 | Inicio           | `/en`               | `/es`                      |

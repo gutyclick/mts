@@ -12,6 +12,7 @@ import {
 } from "../src/lib/i18n.ts";
 import { helpContent } from "../src/lib/help-content.ts";
 import { parseFAQVote } from "../src/lib/faq-feedback.ts";
+import { experiencePath, planPath } from "../src/lib/experience-routes.ts";
 const plansByDestination = catalog as Record<string, Plan[]>;
 test("search accepts localized names, aliases, corrected source names and codes", () => {
   for (const query of ["JAPÓN", " japon ", "Japan", "Tokio", "JP"])
@@ -129,4 +130,29 @@ test("FAQ IDs survive translation and related articles reference existing questi
     assert.equal(parseFAQVote(value), null);
   assert.equal(parseFAQVote("helpful"), "helpful");
   assert.equal(parseFAQVote("more-help"), "more-help");
+});
+
+test("visual journey routes preserve translated pages and selected plan identity", () => {
+  for (const [en, es] of [
+    ["/en/my-esims", "/es/mis-esim"],
+    ["/en/checkout", "/es/compra"],
+    ["/en/install", "/es/instalar"],
+    ["/en/studio", "/es/estudio"],
+  ]) {
+    assert.equal(equivalentPath(en, "es"), es);
+    assert.equal(equivalentPath(es, "en"), en);
+  }
+  const plan = plansByDestination.japan[0];
+  assert.equal(
+    equivalentPath(planPath("en", "japan", plan.id), "es"),
+    planPath("es", "japan", plan.id),
+  );
+  const path = experiencePath("es", "checkout", {
+    destination: "japan",
+    plan: plan.id,
+  });
+  const url = new URL(path, "https://example.com");
+  assert.equal(url.searchParams.get("plan"), plan.id);
+  assert.equal(url.searchParams.get("destination"), "japan");
+  assert.ok(planPath("en", "japan", "a/b ?").endsWith("a%2Fb%20%3F"));
 });

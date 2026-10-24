@@ -21,7 +21,14 @@ export function pathFor(locale: Locale, page?: PageKey, slug?: string) {
       : `/${locale}`;
 }
 export function equivalentPath(path: string, locale: Locale) {
-  const [, , section, slug] = path.split("/");
+  const [, , section, slug, planId] = path.split("/");
+  if (section === "plan" && slug && planId)
+    return `/${locale}/plan/${slug}/${planId}`;
+  const experience = (Object.keys(experienceSegments) as ExperienceKey[]).find(
+    (key) =>
+      Object.values(experienceSegments[key]).some((value) => value === section),
+  );
+  if (experience) return experiencePath(locale, experience);
   if (section === "esim" && slug) return pathFor(locale, undefined, slug);
   const key = (Object.keys(routeSegments) as PageKey[]).find((key) =>
     Object.values(routeSegments[key]).some((value) => value === section),
@@ -512,3 +519,8 @@ export const dictionaries = {
   },
 };
 export type Dictionary = (typeof dictionaries)[Locale];
+import {
+  experienceSegments,
+  experiencePath,
+  type ExperienceKey,
+} from "./experience-routes.ts";

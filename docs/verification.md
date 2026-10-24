@@ -1,5 +1,11 @@
 # Verification — 2026-10-23
 
+## SIM mascot illustrations — 2026-10-24
+
+The supplied transparent PNG illustrations are now mapped through a shared `SimMascot` image component: Traveler replaces the old hero character, Help accompanies the FAQ directory heading, and Adventurer sits in the centered How it works heading. The source file `sim_adeventurer.png` retains its existing spelling. Original images are unmodified; `next/image` supplies responsive sources with intrinsic dimensions and localized alternative text. The home hero uses a simple backdrop and compact status label instead of duplicating the illustration's own travel symbols. On phones, its compact image/status row keeps destination search first. FAQ topic pages retain their independent question layout.
+
+Production build including TypeScript, lint and formatting passed. All twenty existing site/FAQ desktop/mobile browser scenarios passed. A focused audit of the six localized home, FAQ-directory and How it works pages returned no findings across seven widths (320–1440px), with axe WCAG A/AA checks at 360/1440px including FAQ search results. Reviewed the [Traveler hero](previews/home-desktop.png), [compact mobile hero](previews/mobile-app.png), [Help FAQ heading](previews/faq-desktop.png) and [Adventurer heading](previews/how-mobile.png). No additional services or credentials were introduced.
+
 ## Organized How it works page — 2026-10-24
 
 The localized How it works page now has a dedicated server-rendered layout and scoped styles. A centered introduction, a numbered three-card sequence and a preparation panel share one bounded reading grid. Preparation groups the checklist with compatibility/installation links, and the destination/FAQ actions sit together in one footer row (stacked at phone widths). Long checklist and card text stay left-aligned for reading. The home page's shared Steps component and the existing metadata/routes remain in place.

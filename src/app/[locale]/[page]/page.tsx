@@ -8,6 +8,7 @@ import { HelpHub } from "@/components/help-hub";
 import { helpContent } from "@/lib/help-content";
 import { catalogCopy } from "@/lib/catalog-copy";
 import { HowItWorksPage } from "@/components/how-it-works-page";
+import { SimMascot } from "@/components/sim-mascot";
 import {
   dictionaries,
   isLocale,
@@ -113,11 +114,28 @@ export default async function ContentPage({
   const [title, description] = heading(locale, key);
   return (
     <>
-      <section className="page-heading container">
-        <p className="eyebrow">MYTRIPSIM / {t.nav[key]}</p>
-        <h1>{title}</h1>
-        <p>{description}</p>
-      </section>
+      {key === "faq" ? (
+        <header className="container sim-faq-heading">
+          <div className="sim-faq-copy">
+            <p className="eyebrow">MYTRIPSIM / {t.nav.faq}</p>
+            <h1>{title}</h1>
+            <p>{description}</p>
+          </div>
+          <SimMascot
+            variant="help"
+            locale={locale}
+            className="faq-sim-mascot"
+            sizes="(max-width: 650px) 136px, (max-width: 900px) 220px, 280px"
+            eager
+          />
+        </header>
+      ) : (
+        <section className="page-heading container">
+          <p className="eyebrow">MYTRIPSIM / {t.nav[key]}</p>
+          <h1>{title}</h1>
+          <p>{description}</p>
+        </section>
+      )}
       {key === "destinations" && (
         <section className="container directory-section">
           <DestinationDirectory locale={locale} />

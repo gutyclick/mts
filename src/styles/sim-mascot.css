@@ -1,0 +1,182 @@
+.sim-mascot {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.sim-hero-visual {
+  min-width: 0;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  width: 100%;
+  max-width: 490px;
+  margin-inline: auto;
+  isolation: isolate;
+}
+.sim-hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 7% 6% 17%;
+  border-radius: 50%;
+  background: #edf5ff;
+  z-index: -1;
+}
+.sim-hero-mascot {
+  width: 440px;
+}
+.sim-hero-status {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 17px;
+  background: #fff;
+  border: 1px solid #dbe5ef;
+  border-radius: 15px;
+  box-shadow: 0 4px 0 #edf2f8;
+  margin-top: -8px;
+  position: relative;
+}
+.sim-hero-status > svg {
+  flex-shrink: 0;
+  color: #175ca6;
+}
+.sim-hero-status strong {
+  display: block;
+  color: #233c5c;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.sim-hero-status span {
+  display: block;
+  color: #56677e;
+  font-size: 11px;
+  margin-top: 2px;
+}
+.sim-hero-caption {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #56677e;
+  text-align: center;
+  margin-top: 15px;
+}
+.sim-faq-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  align-items: center;
+  gap: 45px;
+  padding-block: 42px 32px;
+}
+.sim-faq-copy .eyebrow {
+  margin-bottom: 17px;
+}
+.sim-faq-copy h1 {
+  font-size: clamp(34px, 4.5vw, 51px);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.sim-faq-copy > p:last-child {
+  color: #56677e;
+  font-size: 14px;
+  line-height: 1.9;
+  margin-top: 21px;
+  max-width: 650px;
+}
+.faq-sim-mascot {
+  width: 280px;
+  justify-self: center;
+}
+.how-heading:has(.how-sim-mascot) {
+  padding-top: 24px;
+}
+.how-sim-mascot {
+  width: 208px;
+  margin: 0 auto 15px;
+}
+@media (max-width: 900px) {
+  .sim-faq-heading {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 25px;
+  }
+  .faq-sim-mascot {
+    width: 220px;
+  }
+}
+@media (max-width: 650px) {
+  .sim-hero-visual {
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 7px;
+    max-width: none;
+    background: #edf5ff;
+    border: 1px solid #dceafb;
+    border-radius: 20px;
+    padding: 5px 12px 5px 2px;
+  }
+  .sim-hero-visual::before {
+    display: none;
+  }
+  .sim-hero-mascot {
+    width: 132px;
+  }
+  .sim-hero-status {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    margin: 0;
+    gap: 7px;
+  }
+  .sim-hero-status strong {
+    font-size: 11px;
+  }
+  .sim-hero-status span {
+    font-size: 10px;
+  }
+  .sim-hero-caption {
+    display: none;
+  }
+  .sim-faq-heading {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    padding-block: 22px 27px;
+    text-align: center;
+  }
+  .faq-sim-mascot {
+    grid-row: 1;
+    width: 136px;
+  }
+  .sim-faq-copy h1 {
+    font-size: 34px;
+  }
+  .sim-faq-copy .eyebrow {
+    justify-content: center;
+    margin-bottom: 13px;
+  }
+  .sim-faq-copy > p:last-child {
+    font-size: 13px;
+    margin-top: 16px;
+  }
+  .how-sim-mascot {
+    width: 144px;
+    margin-bottom: 13px;
+  }
+  .how-heading:has(.how-sim-mascot) {
+    padding-top: 20px;
+  }
+}
+@media (max-width: 360px) {
+  .sim-hero-visual {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 4px;
+    padding-right: 9px;
+  }
+  .sim-hero-mascot {
+    width: 110px;
+  }
+  .sim-hero-status > svg {
+    display: none;
+  }
+}

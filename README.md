@@ -28,7 +28,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 - Next.js App Router, TypeScript estricto, Tailwind CSS 4, Lucide, ESLint y Prettier. Componentes nativos accesibles en lugar de agregar una biblioteca de UI sin necesidad.
 - Portada breve con búsqueda, duración opcional, seis destinos destacados y enlaces a páginas independientes de guías y FAQ.
-- Identidad azul/naranja, Plus Jakarta Sans e Inter mediante `next/font`, sistema de tokens, gato viajero SVG original y miniaturas ilustradas reemplazables mediante `next/image`.
+- Identidad azul/naranja, Plus Jakarta Sans e Inter mediante `next/font`, sistema de tokens y mascota SIM: Traveler en la portada, Help en el índice FAQ y Adventurer en Cómo funciona. Las imágenes originales de `public/images/sim/` conservan su transparencia y se sirven mediante `next/image` con tamaños adaptables.
 - Diccionarios centralizados, rutas traducidas y cambio de idioma que conserva la página equivalente. El cambio de idioma realiza navegación de documento para actualizar correctamente `<html lang>`; el resto utiliza navegación de Next.js.
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
 - Directorio buscable con categorías y carga progresiva: 202 países/territorios y 39 regiones. Cada destino tiene todos sus planes fijos.

@@ -12,6 +12,7 @@ import {
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
 import { catalogCopy } from "@/lib/catalog-copy";
+import { SimMascot } from "./sim-mascot";
 
 export function HowItWorksPage({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
@@ -20,6 +21,13 @@ export function HowItWorksPage({ locale }: { locale: Locale }) {
   return (
     <div className="container how-page">
       <header className="how-heading">
+        <SimMascot
+          variant="adventurer"
+          locale={locale}
+          className="how-sim-mascot"
+          sizes="(max-width: 650px) 144px, 208px"
+          eager
+        />
         <p className="eyebrow">MYTRIPSIM / {t.nav.how}</p>
         <h1>{t.howTitle}</h1>
         <p>{t.howDescription}</p>

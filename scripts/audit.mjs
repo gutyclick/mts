@@ -22,6 +22,7 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/esim/europe",
     "/es/compatibilidad",
     "/es/preguntas-frecuentes",
+    "/en/faq",
     "/es/preguntas-frecuentes/datos-y-planes",
     "/en/faq/installation-and-activation",
     "/es/ayuda",
@@ -32,6 +33,18 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/instalar",
     "/es/estudio",
   ]) {
+    if (
+      process.env.AUDIT_SCOPE === "mascots" &&
+      ![
+        "/en",
+        "/es",
+        "/en/how-it-works",
+        "/es/como-funciona",
+        "/en/faq",
+        "/es/preguntas-frecuentes",
+      ].includes(path)
+    )
+      continue;
     if (
       process.env.AUDIT_SCOPE === "how" &&
       !["/en", "/es", "/en/how-it-works", "/es/como-funciona"].includes(path)

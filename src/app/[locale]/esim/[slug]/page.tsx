@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { destinationIntro } from "@/lib/catalog-copy";
+import { destinationContent } from "@/lib/destination-content";
+import { getPlans } from "@/lib/plans";
 import { destinations } from "@/lib/catalog";
 import { isLocale, locales } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
@@ -20,12 +21,7 @@ export async function generateMetadata({
   return metadata(
     locale,
     `${destination.name[locale]} eSIM`,
-    destinationIntro(
-      locale,
-      destination.name[locale],
-      destination.planCount,
-      destination.type === "region",
-    ),
+    destinationContent(locale, destination, getPlans(destination)).description,
     undefined,
     slug,
   );

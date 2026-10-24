@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ChevronRight, Home } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/i18n";
 import type { Destination } from "@/lib/catalog";
 import { getPlans } from "@/lib/plans";
 import { PlanBrowser } from "@/components/plan-browser";
 import { DestinationArtwork } from "@/components/illustrations";
 import { DestinationFlag } from "@/components/destination-flag";
+import { DestinationGuide } from "./destination-guide";
 
 export function DestinationPlanPage({
   locale,
@@ -19,12 +20,32 @@ export function DestinationPlanPage({
   initialPlanId?: string;
 }) {
   const es = locale === "es";
+  const plans = getPlans(destination);
   return (
     <div className="container destination-page destination-product-page">
-      <Link className="back-link" href={pathFor(locale, "destinations")}>
-        <ArrowLeft size={16} />
-        {es ? "Todos los destinos" : "All destinations"}
-      </Link>
+      <nav
+        className="destination-breadcrumb"
+        aria-label={es ? "Ruta de navegación" : "Breadcrumb"}
+      >
+        <ol>
+          <li>
+            <Link href={pathFor(locale)}>
+              <Home size={14} aria-hidden="true" />
+              {es ? "Inicio" : "Home"}
+            </Link>
+          </li>
+          <li>
+            <ChevronRight size={13} aria-hidden="true" />
+            <Link href={pathFor(locale, "destinations")}>
+              {es ? "Destinos" : "Destinations"}
+            </Link>
+          </li>
+          <li>
+            <ChevronRight size={13} aria-hidden="true" />
+            <span aria-current="page">{destination.name[locale]}</span>
+          </li>
+        </ol>
+      </nav>
       <header className="destination-product-header">
         <div className="destination-product-image">
           <DestinationArtwork
@@ -51,9 +72,14 @@ export function DestinationPlanPage({
       <PlanBrowser
         locale={locale}
         destination={destination}
-        availablePlans={getPlans(destination)}
+        availablePlans={plans}
         initialDays={initialDays}
         initialPlanId={initialPlanId}
+      />
+      <DestinationGuide
+        locale={locale}
+        destination={destination}
+        plans={plans}
       />
     </div>
   );

@@ -42,6 +42,8 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 Los planes incluyen operadores, redes, países cubiertos, inicio de vigencia, recarga y APN extraídos del segundo CSV, con exclusión de precios y campos comerciales. Consulta [importación de datos técnicos](docs/plan-enrichment.md).
 
+Las páginas de destino incluyen un resumen de compra compacto, tablas de cobertura, condiciones con iconos y una guía con datos reales y FAQ por país o región. Consulta la [estructura y criterios de contenido](docs/destination-experience.md).
+
 La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
 El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM, instalación y administración de muestra. Consulta [pantallas, rutas y límites](docs/visual-journey.md). Las pantallas de demostración usan datos ficticios y no realizan compras, pagos ni activaciones.

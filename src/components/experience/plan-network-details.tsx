@@ -24,17 +24,48 @@ export function PlanNetworkDetails({
         ? "Antillas Neerlandesas (AN): por confirmar"
         : "Netherlands Antilles (AN): needs confirmation"
       : (display.of(code) ?? code);
-  const operators = (group: PlanDetails["networks"][number]) => (
-    <ul className="plan-operator-list">
-      {group.operators.map((operator, index) => (
-        <li key={`${operator.name}-${index}`}>
-          <span>{operator.name}</span>
-          {operator.technologies.length > 0 && (
-            <small>{operator.technologies.join(" / ")}</small>
-          )}
-        </li>
+  const networkTable = (groups: PlanDetails["networks"]) => (
+    <table className="plan-network-table">
+      <caption className="sr-only">
+        {es ? "Redes indicadas por el proveedor" : "Provider-listed networks"}
+      </caption>
+      <thead>
+        <tr>
+          {regional && <th scope="col">{es ? "Destino" : "Destination"}</th>}
+          <th scope="col">{es ? "Operador" : "Operator"}</th>
+          <th scope="col">{es ? "Red" : "Network"}</th>
+        </tr>
+      </thead>
+      {groups.map((group, index) => (
+        <tbody key={index}>
+          {group.operators.map((operator, operatorIndex) => (
+            <tr key={`${operator.name}-${operatorIndex}`}>
+              {regional && operatorIndex === 0 && (
+                <th scope="rowgroup" rowSpan={group.operators.length}>
+                  {group.countryCode
+                    ? countryName(group.countryCode)
+                    : group.countryName}
+                  {!group.countryCode && (
+                    <small>
+                      {es
+                        ? "Correspondencia por confirmar"
+                        : "Mapping needs confirmation"}
+                    </small>
+                  )}
+                </th>
+              )}
+              <td>{operator.name}</td>
+              <td>
+                <span className="network-generation">
+                  {operator.technologies.join(" / ") ||
+                    (es ? "Por confirmar" : "To confirm")}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       ))}
-    </ul>
+    </table>
   );
   return (
     <>
@@ -76,29 +107,11 @@ export function PlanNetworkDetails({
             role="region"
             aria-label={es ? "Redes por país" : "Networks by country"}
           >
-            {details.networks.map((group, index) => (
-              <div key={index}>
-                <h4>
-                  {group.countryCode
-                    ? countryName(group.countryCode)
-                    : group.countryName}
-                </h4>
-                {operators(group)}
-                {!group.countryCode && (
-                  <p className="selected-plan-note">
-                    {es
-                      ? "Etiqueta regional del proveedor; correspondencia con la cobertura pendiente de confirmar."
-                      : "Provider region label; mapping to the included coverage still needs confirmation."}
-                  </p>
-                )}
-              </div>
-            ))}
+            {networkTable(details.networks)}
           </div>
         </details>
       ) : (
-        details.networks.map((group, index) => (
-          <div key={index}>{operators(group)}</div>
-        ))
+        networkTable(details.networks)
       )}
       {technologyDifference && (
         <p className="plan-network-caution">

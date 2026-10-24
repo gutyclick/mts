@@ -62,12 +62,15 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
       await auditState("initial");
       if (path === "/es/esim/europe") {
         await page
-          .getByText("Países y territorios incluidos", { exact: false })
+          .locator("summary")
+          .filter({ hasText: "Países y territorios incluidos" })
           .click();
         await page.getByText("Operadores por destino", { exact: true }).click();
         await auditState("regional-coverage-and-networks-expanded");
       }
       if (path === "/en/esim/japan") {
+        await page.locator(".destination-faq summary").first().click();
+        await auditState("country-guide-faq-expanded");
         await page.getByLabel("Sort by", { exact: true }).selectOption("days");
         await page.locator(".plan-option input").last().check();
         await auditState("inline-plan-selected");

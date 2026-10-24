@@ -9,15 +9,17 @@ test("plan variants switch operators, activation and APN without leaking commerc
     exact: true,
   });
   await expect(sheet).toContainText("On the first network connection");
-  await expect(sheet.locator(".plan-operator-list")).toContainText("SoftBank");
-  await expect(sheet.locator(".plan-operator-list")).toContainText(
+  await expect(sheet.locator(".plan-network-table")).toContainText("SoftBank");
+  await expect(sheet.locator(".plan-network-table")).toContainText(
     "Rakuten Mobile",
   );
   await sheet.getByText("APN settings", { exact: true }).click();
   await expect(sheet.locator("code")).toHaveText("mobile.three.com.hk");
   await page.locator('input[type="radio"][value="JP_1_7_IIJ"]').check();
-  await expect(sheet.locator(".plan-operator-list li")).toHaveCount(1);
-  await expect(sheet.locator(".plan-operator-list")).toHaveText("NTT docomo5G");
+  await expect(sheet.locator(".plan-network-table tbody tr")).toHaveCount(1);
+  await expect(sheet.locator(".plan-network-table tbody")).toHaveText(
+    "NTT docomo5G",
+  );
   await expect(sheet.locator("code")).toHaveText("vmobile.jp");
   await page.locator('input[type="radio"][value="JP_0.1_7"]').check();
   await expect(sheet).toContainText("When the eSIM is installed");
@@ -36,7 +38,8 @@ test("regional sheets expose actual included destinations and grouped local oper
     exact: true,
   });
   await sheet
-    .getByText("Países y territorios incluidos", { exact: false })
+    .locator("summary")
+    .filter({ hasText: "Países y territorios incluidos" })
     .click();
   await expect(sheet.locator(".plan-coverage-list li").first()).toBeVisible();
   expect(await sheet.locator(".plan-coverage-list li").count()).toBeGreaterThan(
@@ -44,7 +47,7 @@ test("regional sheets expose actual included destinations and grouped local oper
   );
   await sheet.getByText("Operadores por destino", { exact: true }).click();
   await expect(
-    sheet.locator(".plan-regional-networks h4").first(),
+    sheet.locator('.plan-regional-networks th[scope="rowgroup"]').first(),
   ).toBeVisible();
   for (const image of await sheet.locator(".plan-coverage-list img").all()) {
     await image.scrollIntoViewIfNeeded();
@@ -60,7 +63,8 @@ test("regional sheets expose actual included destinations and grouped local oper
   await expect(sheet).not.toContainText(/[$€£]|\bUSD\b/);
   await page.goto("/en/esim/caribbean-20-areas?plan=CB-25_1_7");
   await page
-    .getByText("Included countries and territories", { exact: false })
+    .locator("summary")
+    .filter({ hasText: "Included countries and territories" })
     .click();
   const legacy = page
     .locator(".plan-coverage-list li")

@@ -45,9 +45,31 @@ for (const [name, width, height, path, fullPage = true] of [
     Array.from(document.images).every((image) => image.complete),
   );
   await page.screenshot({ path: `docs/previews/${name}.png`, fullPage });
+  if (name === "plans-desktop" || name === "plans-mobile") {
+    await page
+      .locator(".plan-information")
+      .evaluate((el) =>
+        window.scrollTo(
+          0,
+          window.scrollY + el.getBoundingClientRect().top - 90,
+        ),
+      );
+    await page.screenshot({ path: `docs/previews/${name}-information.png` });
+    await page
+      .locator(".destination-guide")
+      .evaluate((el) =>
+        window.scrollTo(
+          0,
+          window.scrollY + el.getBoundingClientRect().top - 90,
+        ),
+      );
+    await page.screenshot({ path: `docs/previews/${name}-guide.png` });
+    await page.evaluate(() => window.scrollTo(0, 0));
+  }
   if (name.startsWith("regional-networks")) {
     await page
-      .getByText("Países y territorios incluidos", { exact: false })
+      .locator("summary")
+      .filter({ hasText: "Países y territorios incluidos" })
       .click();
     await page.getByText("Operadores por destino", { exact: true }).click();
     await page
@@ -55,6 +77,15 @@ for (const [name, width, height, path, fullPage = true] of [
       .first()
       .scrollIntoViewIfNeeded();
     await page.screenshot({ path: `docs/previews/${name}-expanded.png` });
+    await page
+      .locator(".plan-regional-networks")
+      .evaluate((el) =>
+        window.scrollTo(
+          0,
+          window.scrollY + el.getBoundingClientRect().top - 110,
+        ),
+      );
+    await page.screenshot({ path: `docs/previews/${name}-table.png` });
   }
   if (name === "plan-detail-desktop" || name === "plan-detail-mobile") {
     await page

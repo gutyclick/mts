@@ -2,9 +2,20 @@
 
 ## Diseño
 
-El centro de ayuda conserva Plus Jakarta Sans para títulos, Inter para texto, el azul de marca `#1677FF`, azul accesible `#175CA6`, fondo celeste `#EDF5FF`, tinta `#14213D` y notas cálidas `#FFF5E9`. Seis tarjetas con iconos de viaje permiten elegir tema; el buscador consulta preguntas, respuestas, pasos y notas. Un segundo toque sobre el tema activo vuelve a todos los temas. Las respuestas mantienen acordeones nativos y convierten procedimientos en pasos numerados. La sección de valoración se integra al final de cada respuesta.
+El centro de ayuda conserva Plus Jakarta Sans para títulos, Inter para texto, el azul de marca `#1677FF`, azul accesible `#175CA6`, fondo celeste `#EDF5FF`, tinta `#14213D` y notas cálidas `#FFF5E9`. La portada FAQ es un índice de seis tarjetas con iconos, descripción y número de respuestas. Cada tarjeta enlaza a una página independiente de su tema; no filtra preguntas dentro de la portada. La búsqueda global consulta preguntas, respuestas, pasos y notas y ofrece enlaces a las respuestas en su página correspondiente.
 
-Las 29 respuestas por idioma se organizan en primeros pasos, compatibilidad, instalación, datos, viaje y conexión. Los IDs son estables y compartidos entre idiomas. Los enlaces `#faq-hotspot`, `#faq-data-roaming` y equivalentes abren y enfocan una respuesta concreta. Los enlaces relacionados limpian filtros para no ocultar el destino y mantienen el foco de teclado en su encabezado.
+Las 29 respuestas por idioma se organizan en primeros pasos, compatibilidad, instalación, datos, viaje y conexión. Cada página tiene encabezado y breadcrumb propios, búsqueda dentro del tema, enlace «Todos los temas» y navegación entre categorías (lateral en escritorio, horizontal en teléfono). Las respuestas mantienen acordeones nativos, pasos numerados y valoraciones. El título, canonical, hreflang, Open Graph y sitemap identifican cada página de tema.
+
+Los IDs de preguntas son estables y compartidos entre idiomas. Los enlaces nuevos apuntan directamente a la página del tema y su fragmento `#faq-ID`. Los enlaces antiguos de la portada, tanto `#faq-hotspot` como `#installation`, se resuelven en el navegador hacia el tema correspondiente mediante reemplazo de la entrada del historial. Un fragmento de pregunta abre su respuesta y enfoca el encabezado. Los artículos relacionados, el resumen copiable, Ayuda, la guía de instalación y el verificador utilizan las rutas nuevas. Los enlaces relacionados funcionan entre categorías y conservan sus `href` reales para abrir en otra pestaña.
+
+| Tema           | Español (bajo `/es/preguntas-frecuentes/`) | Inglés (bajo `/en/faq/`)         |
+| -------------- | ------------------------------------------ | -------------------------------- |
+| Primeros pasos | `primeros-pasos`                           | `getting-started`                |
+| Compatibilidad | `telefonos-y-compatibilidad`               | `phones-and-compatibility`       |
+| Instalación    | `instalacion-y-activacion`                 | `installation-and-activation`    |
+| Datos          | `datos-y-planes`                           | `data-and-plans`                 |
+| Viaje          | `durante-tu-viaje`                         | `during-your-trip`               |
+| Conexión       | `conexion-y-soluciones`                    | `connection-and-troubleshooting` |
 
 El catálogo ofrece únicamente datos fijos. La respuesta con ID estable `daily-fup` ahora aclara que no se ofrecen paquetes diarios; se conserva el ID para mantener los enlaces existentes.
 

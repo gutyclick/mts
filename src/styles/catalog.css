@@ -303,7 +303,7 @@
   gap: 12px;
   margin-block: 22px;
 }
-.faq-topic-selector > button {
+.faq-topic-selector > a {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -317,18 +317,13 @@
   cursor: pointer;
   transition: border-color 0.15s;
 }
-.faq-topic-selector > button:hover {
+.faq-topic-selector > a:hover {
   border-color: #7baee5;
-}
-.faq-topic-selector > button[aria-pressed="true"] {
-  background: #edf5ff;
-  border-color: #7baee5;
-  box-shadow: 0 3px 0 #c3daf4;
 }
 .faq-topic-selector .learning-icon {
   flex-shrink: 0;
 }
-.faq-topic-selector > button > svg {
+.faq-topic-selector > a > svg {
   margin-left: auto;
   flex-shrink: 0;
   color: #2662aa;
@@ -346,6 +341,168 @@
   font-size: 11px;
   color: #52657f;
 }
+.faq-topic-text > span {
+  font-size: 12px;
+  color: #52657f;
+  line-height: 1.8;
+}
+.faq-results-bar > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.faq-topic-heading {
+  padding-top: 28px;
+  padding-bottom: 30px;
+}
+.faq-topic-heading > .eyebrow {
+  margin-block: 25px 16px;
+}
+.faq-topic-heading > div {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+.faq-topic-heading .learning-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 17px;
+}
+.faq-topic-heading h1 {
+  font-size: clamp(28px, 4vw, 45px);
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+.faq-topic-heading > p:last-child {
+  color: #56677e;
+  font-size: 14px;
+  line-height: 1.9;
+  margin-top: 15px;
+}
+.faq-topic-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.6fr);
+  gap: 35px;
+  align-items: start;
+  margin-top: 20px;
+}
+.faq-topic-navigation {
+  padding: 15px;
+  border: 1px solid #dbe5ef;
+  border-radius: 18px;
+  background: #fff;
+}
+.faq-topic-navigation > p {
+  font-size: 11px;
+  font-weight: 700;
+  color: #56677e;
+  margin: 6px 10px 14px;
+}
+.faq-topic-navigation a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 10px;
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: #47617b;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.faq-topic-navigation a > svg {
+  flex-shrink: 0;
+  color: #175ca6;
+}
+.faq-topic-navigation a > svg:last-child {
+  margin-left: auto;
+}
+.faq-topic-navigation a:hover {
+  background: #f5f9ff;
+}
+.faq-topic-navigation a[aria-current="page"] {
+  background: #edf5ff;
+  color: #175ca6;
+  border-color: #c3daf4;
+  font-weight: 600;
+}
+.faq-explorer .faq-topic-answers {
+  border: 0;
+}
+.faq-topic-answers .faq-list > details:first-child {
+  margin-top: 0;
+}
+.faq-search-results {
+  display: grid;
+  gap: 25px;
+  margin-top: 25px;
+}
+.faq-search-results h2 {
+  font-size: 17px;
+  margin-bottom: 13px;
+}
+.faq-search-results a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #dbe5ef;
+  border-radius: 12px;
+  padding: 17px;
+  color: #175ca6;
+  background: #fff;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 9px;
+}
+.faq-search-results a > svg {
+  flex-shrink: 0;
+}
+.faq-topic-layout + .faq-sources {
+  margin-top: 40px;
+}
+@media (max-width: 750px) {
+  .faq-topic-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .faq-topic-navigation {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 6px;
+    min-width: 0;
+  }
+  .faq-topic-navigation > p {
+    display: none;
+  }
+  .faq-topic-navigation a {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-inline: 12px;
+  }
+  .faq-topic-navigation a > svg:last-child {
+    display: none;
+  }
+  .faq-topic-heading {
+    padding-top: 15px;
+    padding-bottom: 23px;
+  }
+  .faq-topic-heading > div {
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .faq-topic-heading .learning-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+  }
+  .faq-topic-heading .learning-icon svg {
+    width: 23px;
+  }
+}
 .faq-results-bar {
   display: flex;
   justify-content: space-between;
@@ -353,7 +510,7 @@
   gap: 14px;
   margin-bottom: 12px;
 }
-.faq-results-bar > button {
+.faq-results-bar > a {
   color: #175ca6;
   font-size: 12px;
   font-weight: 600;
@@ -622,7 +779,7 @@
   .faq-topic-selector {
     gap: 10px;
   }
-  .faq-topic-selector > button {
+  .faq-topic-selector > a {
     padding: 14px;
     gap: 10px;
     align-items: flex-start;
@@ -638,7 +795,7 @@
   .faq-topic-selector .learning-icon > svg {
     width: 20px;
   }
-  .faq-topic-selector > button > svg {
+  .faq-topic-selector > a > svg {
     position: absolute;
     right: 12px;
     top: 21px;

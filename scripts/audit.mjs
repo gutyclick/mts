@@ -20,6 +20,8 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/esim/europe",
     "/es/compatibilidad",
     "/es/preguntas-frecuentes",
+    "/es/preguntas-frecuentes/datos-y-planes",
+    "/en/faq/installation-and-activation",
     "/es/ayuda",
     `/en/plan/japan/${encodeURIComponent(examplePlan.id)}`,
     checkoutPath,
@@ -28,6 +30,11 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/instalar",
     "/es/estudio",
   ]) {
+    if (
+      process.env.AUDIT_SCOPE === "faq" &&
+      !/faq|preguntas-frecuentes/.test(path)
+    )
+      continue;
     await page.goto(`${baseURL}${path}`, {
       waitUntil: "networkidle",
     });
@@ -134,6 +141,10 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
         }
       }
       if (path === "/es/preguntas-frecuentes") {
+        await page.getByLabel("Buscar preguntas").fill("roaming");
+        await auditState("faq-index-search-results");
+      }
+      if (path === "/es/preguntas-frecuentes/datos-y-planes") {
         await page.locator("#faq-hotspot summary").click();
         await page.evaluate(() =>
           Promise.allSettled(

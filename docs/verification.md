@@ -1,5 +1,13 @@
 # Verification — 2026-10-23
 
+## Separate FAQ topic pages — 2026-10-24
+
+The FAQ home is now a six-topic directory instead of an inline category filter. Each topic has an independent localized URL, heading, breadcrumb, scoped search and native answer disclosures. The desktop sidebar becomes a horizontal topic navigator on phones, with the current topic brought into view without moving the page vertically. Global search returns links to answers on their topic pages. Feedback, copyable summaries and related answers preserve stable question IDs. Help, installation and compatibility links now target the new routes directly; old FAQ home category/question fragments resolve to their appropriate topic page. Localized canonical/hreflang/Open Graph entries and sitemap URLs cover all twelve topic pages.
+
+The final production build (including TypeScript), lint, formatting and sixteen data tests passed. All 56 desktop/mobile browser scenarios passed, including all twelve topic routes, cross-language navigation, legacy category/question links, global/scoped search, cross-topic related answers, feedback persistence, clipboard fallback, independent page contents/metadata, sitemap entries and invalid-route 404s. The responsive audit returned no findings across sixteen routes and seven widths (320–1440px); axe checks at 360/1440px include FAQ index search results, expanded topic answers and more-help states. Reviewed the [FAQ directory](previews/faq-desktop.png), [desktop topic page](previews/faq-topic-desktop.png) and [mobile topic page](previews/faq-topic-mobile.png).
+
+The six additional destination banners present at build time were synchronized (32 mapped banners total). Other unreferenced user assets remain untouched. No prices, credentials or backend services were added.
+
 ## Compact country pages, coverage tables and destination guides — 2026-10-24
 
 The plan selector and purchase-preview summary now sit together above full coverage/conditions cards. Both parts follow the selected variant without tab navigation. Coverage uses compact shaded facts and semantic operator/network tables; regional tables retain exact destination grouping, qualified source differences and focusable scrolling. Conditions have consistent decorative icons. Localized server-rendered guides add catalog ranges/counts, preparation steps and destination-specific FAQs, plus original metadata derived from the same catalog. See [content and layout criteria](destination-experience.md).

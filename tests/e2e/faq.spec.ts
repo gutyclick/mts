@@ -1,4 +1,66 @@
 import { expect, test } from "@playwright/test";
+import { faqTopicSegments, type FAQTopic } from "../../src/lib/faq-topics";
+import { faqTopicPath } from "../../src/lib/i18n";
+import { helpContent } from "../../src/lib/help-content";
+
+test("each FAQ topic is an independent localized page with its own metadata and questions", async ({
+  page,
+  request,
+}) => {
+  for (const locale of ["en", "es"] as const) {
+    for (const topic of Object.keys(faqTopicSegments) as FAQTopic[]) {
+      const path = faqTopicPath(locale, topic);
+      const response = await request.get(path);
+      expect(response.status()).toBe(200);
+      const html = await response.text();
+      const category = helpContent[locale].categories.find(
+        (category) => category.id === topic,
+      )!;
+      expect(html).toContain(`https://mytripsim.com${path}`);
+      expect(html).toContain(`id="faq-${category.questions[0].id}"`);
+      const other = helpContent[locale].categories.find(
+        (category) => category.id !== topic,
+      )!;
+      expect(html).not.toContain(`id="faq-${other.questions[0].id}"`);
+    }
+  }
+  for (const invalid of [
+    "/en/faq/unknown",
+    "/es/faq/primeros-pasos",
+    "/en/help/getting-started",
+    "/en/faq/primeros-pasos",
+  ])
+    expect((await request.get(invalid)).status()).toBe(404);
+  await page.goto("/es/preguntas-frecuentes/instalacion-y-activacion");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Instalación y activación",
+  );
+  await page
+    .getByRole("link", { name: "Cambiar idioma: English" })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/en\/faq\/installation-and-activation$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Installation & activation",
+  );
+  await expect(
+    page.locator('.desktop-nav a[aria-current="location"]'),
+  ).toHaveText("FAQ");
+  await page.goto("/es/preguntas-frecuentes#installation");
+  await expect(page).toHaveURL(
+    /\/es\/preguntas-frecuentes\/instalacion-y-activacion$/,
+  );
+  await page
+    .getByRole("link", { name: "Todos los temas", exact: true })
+    .click();
+  await expect(page.locator(".faq-topic-selector > a")).toHaveCount(6);
+  await expect(page.locator(".faq-list details")).toHaveCount(0);
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  expect(sitemap).toContain(
+    "/es/preguntas-frecuentes/instalacion-y-activacion",
+  );
+  expect(sitemap).toContain("/en/faq/installation-and-activation");
+});
 
 test("FAQ topics, provider instructions and deep links are easy to find", async ({
   page,
@@ -14,20 +76,30 @@ test("FAQ topics, provider instructions and deep links are easy to find", async 
     "href",
     "https://support.google.com/android/answer/9059108?hl=en",
   );
-  await expect(page.locator(".faq-list details")).toHaveCount(29);
-  await page.getByRole("button", { name: /^Data & plan types/ }).click();
+  await expect(page).toHaveURL(/\/en\/faq\/data-and-plans#faq-hotspot$/);
+  await expect(page.locator(".faq-list details")).toHaveCount(4);
+  await page.getByRole("link", { name: "All topics", exact: true }).click();
+  await expect(page.locator(".faq-list details")).toHaveCount(0);
+  await expect(page.locator(".faq-topic-selector > a")).toHaveCount(6);
+  await page.getByRole("link", { name: /^Data & plan types/ }).click();
   await expect(page.locator(".faq-category")).toHaveCount(1);
   await expect(page.locator(".faq-list details")).toHaveCount(4);
-  await page.getByRole("button", { name: "All topics", exact: true }).click();
+  await page.getByRole("link", { name: "All topics", exact: true }).click();
+  await expect(page.locator(".faq-topic-selector > a")).toHaveCount(6);
   await page.getByLabel("Search questions").fill("vmobile.jp");
-  await expect(page.locator(".faq-list details")).toHaveCount(1);
-  await page.locator("#faq-apn-settings summary").click();
+  await expect(page.locator(".faq-search-results a")).toHaveCount(1);
+  await page.locator(".faq-search-results a").click();
+  await expect(page).toHaveURL(
+    /\/en\/faq\/connection-and-troubleshooting#faq-apn-settings$/,
+  );
   await expect(page.locator("#faq-apn-settings")).toContainText(
     "Do not use vmobile.jp for other destinations",
   );
+  await page.getByLabel("Search questions").fill("vmobile.jp");
+  await expect(page.locator(".faq-list details")).toHaveCount(1);
   await page.getByRole("button", { name: "Clear search", exact: true }).click();
   await expect(page.getByLabel("Search questions")).toBeFocused();
-  await expect(page.locator(".faq-list details")).toHaveCount(29);
+  await expect(page.locator(".faq-list details")).toHaveCount(5);
 });
 
 test("FAQ choices persist across reload and language, with useful next steps", async ({
@@ -48,14 +120,16 @@ test("FAQ choices persist across reload and language, with useful next steps", a
   await expect(
     article.getByRole("button", { name: "Yes, it helped" }),
   ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: /^Phones & compatibility/ }).click();
   await article.getByRole("button", { name: "I need more help" }).click();
   await expect(
     article.getByRole("heading", { name: "Let’s find your next step" }),
   ).toBeVisible();
   await expect(article).toContainText("this does not send a support request");
-  await article.locator('.faq-related a[href="#faq-data-roaming"]').click();
-  await expect(page.locator(".faq-list details")).toHaveCount(29);
+  await article.locator('.faq-related a[href$="#faq-data-roaming"]').click();
+  await expect(page).toHaveURL(
+    /\/en\/faq\/connection-and-troubleshooting#faq-data-roaming$/,
+  );
+  await expect(page.locator(".faq-list details")).toHaveCount(5);
   await expect(page.locator("#faq-data-roaming")).toHaveAttribute("open", "");
   await expect(page.locator("#faq-data-roaming summary")).toBeFocused();
   await expect(page.locator("#faq-data-roaming")).toContainText(
@@ -112,7 +186,7 @@ test("more help offers a copyable question and a manual fallback", async ({
     await page.evaluate(
       () => (window as Window & { copiedQuestion?: string }).copiedQuestion,
     ),
-  ).toContain("/es/preguntas-frecuentes#faq-hotspot");
+  ).toContain("/es/preguntas-frecuentes/datos-y-planes#faq-hotspot");
   await page.evaluate(() => {
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,

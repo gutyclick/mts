@@ -15,7 +15,8 @@ import {
   type FAQVote,
 } from "@/lib/faq-feedback";
 import type { FAQQuestion } from "@/lib/help-content";
-import { pathFor, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
+import { faqQuestionPath } from "@/lib/faq-links";
 
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
@@ -36,12 +37,10 @@ export function FAQFeedback({
   locale,
   question,
   related,
-  onNavigate,
 }: {
   locale: Locale;
   question: FAQQuestion;
   related: FAQQuestion[];
-  onNavigate: (id: string) => void;
 }) {
   const c = feedbackCopy[locale];
   const id = useId();
@@ -55,7 +54,7 @@ export function FAQFeedback({
     null,
   );
   const choice = temporary ?? stored;
-  const summary = `${question.question}\n\n${c.device}: \n${c.destination}: \n${c.issue}: \n\n${c.reference}: ${pathFor(locale, "faq")}#faq-${question.id}`;
+  const summary = `${question.question}\n\n${c.device}: \n${c.destination}: \n${c.issue}: \n\n${c.reference}: ${faqQuestionPath(locale, question.id)}`;
   function vote(value: FAQVote) {
     try {
       window.localStorage.setItem(feedbackKey(question.id), value);
@@ -127,14 +126,7 @@ export function FAQFeedback({
         <h4>{c.related}</h4>
         <div className="faq-related">
           {related.map((item) => (
-            <a
-              key={item.id}
-              href={`#faq-${item.id}`}
-              onClick={(event) => {
-                event.preventDefault();
-                onNavigate(item.id);
-              }}
-            >
+            <a key={item.id} href={faqQuestionPath(locale, item.id)}>
               {item.question}
               <ArrowUpRight size={17} />
             </a>

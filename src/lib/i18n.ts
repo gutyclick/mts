@@ -1,3 +1,4 @@
+import { faqTopicSegments, type FAQTopic } from "./faq-topics.ts";
 export const locales = ["en", "es"] as const;
 export type Locale = (typeof locales)[number];
 export const isLocale = (value: string): value is Locale =>
@@ -33,7 +34,16 @@ export function equivalentPath(path: string, locale: Locale) {
   const key = (Object.keys(routeSegments) as PageKey[]).find((key) =>
     Object.values(routeSegments[key]).some((value) => value === section),
   );
+  if (key === "faq" && slug) {
+    const topic = (Object.keys(faqTopicSegments) as FAQTopic[]).find((topic) =>
+      Object.values(faqTopicSegments[topic]).some((value) => value === slug),
+    );
+    if (topic) return faqTopicPath(locale, topic);
+  }
   return pathFor(locale, key);
+}
+export function faqTopicPath(locale: Locale, topic: FAQTopic) {
+  return `${pathFor(locale, "faq")}/${faqTopicSegments[topic][locale]}`;
 }
 export const dictionaries = {
   en: {

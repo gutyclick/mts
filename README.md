@@ -44,6 +44,8 @@ Los planes incluyen operadores, redes, países cubiertos, inicio de vigencia, re
 
 Las páginas de destino incluyen un resumen de compra compacto, tablas de cobertura, condiciones con iconos y una guía con datos reales y FAQ por país o región. Consulta la [estructura y criterios de contenido](docs/destination-experience.md).
 
+La FAQ principal es un índice de seis temas, cada uno con página propia y rutas traducidas, buscador y valoraciones por respuesta. Los enlaces antiguos siguen dirigiendo al tema y respuesta correspondientes. Consulta las [rutas y estructura de FAQ](docs/faq-experience.md).
+
 La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
 El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM, instalación y administración de muestra. Consulta [pantallas, rutas y límites](docs/visual-journey.md). Las pantallas de demostración usan datos ficticios y no realizan compras, pagos ni activaciones.

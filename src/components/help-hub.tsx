@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { helpTopicIcons } from "./help-topic-icons";
 import { helpContent } from "@/lib/help-content";
-import { pathFor, type Locale } from "@/lib/i18n";
+import { faqTopicPath, type Locale } from "@/lib/i18n";
+import type { FAQTopic } from "@/lib/faq-topics";
 export function HelpHub({ locale }: { locale: Locale }) {
   return (
     <div className="help-topic-grid">
@@ -11,7 +12,7 @@ export function HelpHub({ locale }: { locale: Locale }) {
         return (
           <Link
             key={category.id}
-            href={`${pathFor(locale, "faq")}#${category.id}`}
+            href={faqTopicPath(locale, category.id as FAQTopic)}
           >
             <span className="learning-icon">
               <Icon size={25} />

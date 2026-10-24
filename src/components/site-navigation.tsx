@@ -67,7 +67,11 @@ export function Header({ locale }: { locale: Locale }) {
                 key={page}
                 href={pathFor(locale, page)}
                 aria-current={
-                  pathname === pathFor(locale, page) ? "page" : undefined
+                  pathname === pathFor(locale, page)
+                    ? "page"
+                    : pathname.startsWith(`${pathFor(locale, page)}/`)
+                      ? "location"
+                      : undefined
                 }
               >
                 {t.nav[page]}

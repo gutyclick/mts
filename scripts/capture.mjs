@@ -17,6 +17,20 @@ for (const [name, width, height, path, fullPage = true] of [
   ["regional-networks-mobile", 390, 844, "/es/esim/europe", false],
   ["faq-desktop", 1440, 1000, "/en/faq", false],
   ["faq-mobile", 390, 844, "/es/preguntas-frecuentes", false],
+  [
+    "faq-topic-desktop",
+    1440,
+    1000,
+    "/es/preguntas-frecuentes/instalacion-y-activacion",
+    false,
+  ],
+  [
+    "faq-topic-mobile",
+    390,
+    844,
+    "/es/preguntas-frecuentes/instalacion-y-activacion",
+    false,
+  ],
   ["directory-mobile", 390, 844, "/es/destinos", false],
   ["mobile-app", 390, 844, "/es", false],
   ["plans-mobile", 390, 844, "/es/esim/japan", false],
@@ -32,6 +46,8 @@ for (const [name, width, height, path, fullPage = true] of [
   ["studio-desktop", 1440, 1000, "/en/studio", false],
   ["studio-mobile", 390, 844, "/es/estudio", false],
 ]) {
+  if (process.env.CAPTURE_SCOPE && !name.startsWith(process.env.CAPTURE_SCOPE))
+    continue;
   const page = await browser.newPage({
     viewport: { width, height },
     deviceScaleFactor: 1,

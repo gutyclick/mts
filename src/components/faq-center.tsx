@@ -1,21 +1,40 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Info, Plus, Search, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Info, Plus, Search, X } from "lucide-react";
 import { helpContent, type FAQQuestion } from "@/lib/help-content";
 import { normalize } from "@/lib/text";
-import type { Locale } from "@/lib/i18n";
+import { faqTopicPath, pathFor, type Locale } from "@/lib/i18n";
+import { isFAQTopic, type FAQTopic } from "@/lib/faq-topics";
+import { faqQuestionPath } from "@/lib/faq-links";
 import { FAQFeedback } from "./faq-feedback";
 import { helpTopicIcons } from "./help-topic-icons";
 
-export function FAQCenter({ locale }: { locale: Locale }) {
+export function FAQCenter({
+  locale,
+  topicId,
+}: {
+  locale: Locale;
+  topicId?: FAQTopic;
+}) {
   const c = helpContent[locale];
   const [query, setQuery] = useState("");
-  const [topic, setTopic] = useState("all");
   const [target, setTarget] = useState<{ id: string } | null>(null);
   const search = useRef<HTMLInputElement>(null);
+  const topicNavigation = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const nav = topicNavigation.current;
+    const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (nav && active && nav.scrollWidth > nav.clientWidth) {
+      nav.scrollLeft +=
+        active.getBoundingClientRect().left -
+        nav.getBoundingClientRect().left -
+        (nav.clientWidth - active.clientWidth) / 2;
+    }
+  }, [topicId]);
   const allQuestions = c.categories.flatMap((category) => category.questions);
   const categories = c.categories
-    .filter((category) => topic === "all" || category.id === topic)
+    .filter((category) => !topicId || category.id === topicId)
     .map((category) => ({
       ...category,
       questions: category.questions.filter((item) =>
@@ -30,28 +49,30 @@ export function FAQCenter({ locale }: { locale: Locale }) {
       ),
     }))
     .filter((category) => category.questions.length);
-  function navigate(id: string) {
-    setQuery("");
-    setTopic("all");
-    setTarget({ id });
-  }
   useEffect(() => {
     const openHash = () => {
       const hash = window.location.hash.slice(1);
-      if (hash.startsWith("faq-")) {
-        const id = hash.slice(4);
-        if (
-          helpContent[locale].categories.some((category) =>
-            category.questions.some((q) => q.id === id),
-          )
-        )
-          navigate(id);
+      const category = c.categories.find(
+        (category) =>
+          hash === category.id ||
+          category.questions.some((q) => hash === `faq-${q.id}`),
+      );
+      if (!category || !isFAQTopic(category.id)) return;
+      if (category.id !== topicId) {
+        window.location.replace(
+          hash.startsWith("faq-")
+            ? faqQuestionPath(locale, hash.slice(4))
+            : faqTopicPath(locale, category.id),
+        );
+      } else if (hash.startsWith("faq-")) {
+        setQuery("");
+        setTarget({ id: hash.slice(4) });
       }
     };
     openHash();
     window.addEventListener("hashchange", openHash);
     return () => window.removeEventListener("hashchange", openHash);
-  }, [locale]);
+  }, [locale, topicId, c.categories]);
   useEffect(() => {
     if (!target) return;
     const article = document.getElementById(
@@ -109,128 +130,156 @@ export function FAQCenter({ locale }: { locale: Locale }) {
           )}
         </div>
         <p>
-          {locale === "es"
-            ? "Por ejemplo: roaming, QR, hotspot o llamadas."
-            : "Try roaming, QR, hotspot or calls."}
+          {topicId
+            ? locale === "es"
+              ? "Busca dentro de este tema. Puedes volver a Todos los temas para otra consulta."
+              : "Search within this topic. Return to All topics for a different question."
+            : locale === "es"
+              ? "Por ejemplo: roaming, QR, hotspot o llamadas."
+              : "Try roaming, QR, hotspot or calls."}
         </p>
       </div>
-      <div className="faq-topic-selector" role="group" aria-label={c.all}>
-        {c.categories.map((category) => {
-          const Icon =
-            helpTopicIcons[category.id as keyof typeof helpTopicIcons];
-          return (
-            <button
-              key={category.id}
-              type="button"
-              aria-pressed={topic === category.id}
-              onClick={() => {
-                setTopic(topic === category.id ? "all" : category.id);
-                setTarget(null);
-              }}
-            >
-              <span className="learning-icon">
-                <Icon size={23} />
-              </span>
-              <span className="faq-topic-text">
-                <strong>{category.title}</strong>
-                <small>
-                  {category.questions.length} {c.questions}
-                </small>
-              </span>
-              {topic === category.id ? (
-                <Check size={17} />
-              ) : (
-                <ArrowRight size={17} />
-              )}
-            </button>
-          );
-        })}
-      </div>
-      <div className="faq-results-bar">
-        <p className="directory-count" role="status">
-          {categories.reduce(
-            (sum, category) => sum + category.questions.length,
-            0,
-          )}{" "}
-          {c.questions}
-          {topic !== "all" &&
-            ` · ${c.categories.find((category) => category.id === topic)?.title}`}
-        </p>
-        <button
-          type="button"
-          aria-pressed={topic === "all" && !query}
-          onClick={() => {
-            setQuery("");
-            setTopic("all");
-            setTarget(null);
-          }}
-        >
-          {c.all}
-        </button>
-      </div>
-      {categories.map((category) => {
-        const Icon = helpTopicIcons[category.id as keyof typeof helpTopicIcons];
-        return (
-          <section
-            className="faq-section faq-category"
-            key={category.id}
-            id={category.id}
-          >
-            <div className="faq-intro">
-              <span className="learning-icon">
-                <Icon size={24} />
-              </span>
+      {!topicId && (
+        <nav className="faq-topic-selector" aria-label={c.all}>
+          {c.categories.map((category) => {
+            const Icon =
+              helpTopicIcons[category.id as keyof typeof helpTopicIcons];
+            return (
+              <Link
+                key={category.id}
+                href={faqTopicPath(locale, category.id as FAQTopic)}
+              >
+                <span className="learning-icon">
+                  <Icon size={23} aria-hidden="true" />
+                </span>
+                <span className="faq-topic-text">
+                  <strong>{category.title}</strong>
+                  <span>{category.description}</span>
+                  <small>
+                    {category.questions.length} {c.questions}
+                  </small>
+                </span>
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            );
+          })}
+        </nav>
+      )}
+      {(topicId || query) && (
+        <div className="faq-results-bar">
+          <p className="directory-count" role="status">
+            {categories.reduce(
+              (sum, category) => sum + category.questions.length,
+              0,
+            )}{" "}
+            {c.questions}
+          </p>
+          <Link href={pathFor(locale, "faq")} onClick={() => setQuery("")}>
+            <ArrowLeft size={14} aria-hidden="true" />
+            {c.all}
+          </Link>
+        </div>
+      )}
+      {!topicId && query && (
+        <div className="faq-search-results">
+          {categories.map((category) => (
+            <section key={category.id}>
               <h2>{category.title}</h2>
-              <p>{category.description}</p>
-            </div>
-            <div className="faq-list">
               {category.questions.map((question) => (
-                <details key={question.id} id={`faq-${question.id}`}>
-                  <summary>
-                    {question.question}
-                    <span className="faq-expand">
-                      <Plus size={17} />
-                    </span>
-                  </summary>
-                  <div className="faq-answer faq-rich-answer">
-                    <p>{question.answer}</p>
-                    {question.steps && (
-                      <ol className="faq-steps">
-                        {question.steps.map((step) => (
-                          <li key={step}>{step}</li>
-                        ))}
-                      </ol>
-                    )}
-                    {question.note && (
-                      <div className="faq-answer-note">
-                        <Info size={18} />
-                        <p>{question.note}</p>
-                      </div>
-                    )}
-                    {question.links && (
-                      <div className="faq-guide-links">
-                        {question.links.map((link) => (
-                          <a key={link.href} href={link.href}>
-                            {link.label}
-                            <ArrowRight size={16} />
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                    <FAQFeedback
-                      locale={locale}
-                      question={question}
-                      related={relatedFor(question)}
-                      onNavigate={navigate}
-                    />
-                  </div>
-                </details>
+                <Link
+                  href={faqQuestionPath(locale, question.id)}
+                  key={question.id}
+                >
+                  {question.question}
+                  <ArrowRight size={17} aria-hidden="true" />
+                </Link>
               ))}
-            </div>
-          </section>
-        );
-      })}
-      {!categories.length && (
+            </section>
+          ))}
+        </div>
+      )}
+      {topicId && (
+        <div className="faq-topic-layout">
+          <nav
+            ref={topicNavigation}
+            className="faq-topic-navigation"
+            aria-label={c.all}
+          >
+            <p>{locale === "es" ? "Explora los temas" : "Explore topics"}</p>
+            {c.categories.map((category) => {
+              const Icon =
+                helpTopicIcons[category.id as keyof typeof helpTopicIcons];
+              return (
+                <Link
+                  key={category.id}
+                  href={faqTopicPath(locale, category.id as FAQTopic)}
+                  aria-current={category.id === topicId ? "page" : undefined}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                  {category.title}
+                  <ArrowRight size={15} aria-hidden="true" />
+                </Link>
+              );
+            })}
+          </nav>
+          <div>
+            {categories.map((category) => {
+              return (
+                <section
+                  className="faq-category faq-topic-answers"
+                  key={category.id}
+                  id={category.id}
+                >
+                  <div className="faq-list">
+                    {category.questions.map((question) => (
+                      <details key={question.id} id={`faq-${question.id}`}>
+                        <summary>
+                          {question.question}
+                          <span className="faq-expand">
+                            <Plus size={17} />
+                          </span>
+                        </summary>
+                        <div className="faq-answer faq-rich-answer">
+                          <p>{question.answer}</p>
+                          {question.steps && (
+                            <ol className="faq-steps">
+                              {question.steps.map((step) => (
+                                <li key={step}>{step}</li>
+                              ))}
+                            </ol>
+                          )}
+                          {question.note && (
+                            <div className="faq-answer-note">
+                              <Info size={18} />
+                              <p>{question.note}</p>
+                            </div>
+                          )}
+                          {question.links && (
+                            <div className="faq-guide-links">
+                              {question.links.map((link) => (
+                                <a key={link.href} href={link.href}>
+                                  {link.label}
+                                  <ArrowRight size={16} />
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                          <FAQFeedback
+                            locale={locale}
+                            question={question}
+                            related={relatedFor(question)}
+                          />
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      {(topicId || query) && !categories.length && (
         <div className="empty-state">
           <Search size={28} />
           <p>{c.empty}</p>
@@ -238,21 +287,22 @@ export function FAQCenter({ locale }: { locale: Locale }) {
             className="button button-secondary"
             onClick={() => {
               setQuery("");
-              setTopic("all");
             }}
           >
             {c.reset}
           </button>
         </div>
       )}
-      <aside className="faq-sources">
-        <h2>{c.sources}</h2>
-        <p>{c.sourceDescription}</p>
-        <a href="https://support.apple.com/en-us/118669">Apple · eSIM</a>
-        <a href="https://support.google.com/pixelphone/answer/9449293">
-          Google Pixel · eSIM
-        </a>
-      </aside>
+      {topicId && (
+        <aside className="faq-sources">
+          <h2>{c.sources}</h2>
+          <p>{c.sourceDescription}</p>
+          <a href="https://support.apple.com/en-us/118669">Apple · eSIM</a>
+          <a href="https://support.google.com/pixelphone/answer/9449293">
+            Google Pixel · eSIM
+          </a>
+        </aside>
+      )}
     </section>
   );
 }

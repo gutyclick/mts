@@ -78,9 +78,9 @@ export function MobileNavigation({ locale }: { locale: Locale }) {
       label: t.help,
       href: pathFor(locale, "help"),
       icon: LifeBuoy,
-      active: [pathFor(locale, "help"), pathFor(locale, "faq")].includes(
-        pathname,
-      ),
+      active:
+        pathname.startsWith(`${pathFor(locale, "faq")}/`) ||
+        [pathFor(locale, "help"), pathFor(locale, "faq")].includes(pathname),
     },
   ];
   return (

@@ -1,4 +1,5 @@
 "use client";
+import { faqQuestionPath } from "@/lib/faq-links";
 
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
@@ -15,7 +16,7 @@ import {
   Smartphone,
   X,
 } from "lucide-react";
-import { pathFor, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 import {
   assessDevice,
   deviceBrands,
@@ -558,7 +559,7 @@ export function CompatibilityChecker({ locale }: { locale: Locale }) {
                 )}
                 <Link
                   className="compat-help"
-                  href={`${pathFor(locale, "faq")}#faq-device-compatibility`}
+                  href={faqQuestionPath(locale, "device-compatibility")}
                 >
                   {c.help}
                   <ArrowRight size={16} />

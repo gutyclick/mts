@@ -1,4 +1,5 @@
 "use client";
+import { faqQuestionPath } from "@/lib/faq-links";
 import { useState } from "react";
 import { Check, Info, QrCode, Smartphone } from "lucide-react";
 import { experienceCopy } from "@/lib/experience-copy";
@@ -90,7 +91,7 @@ export function InstallGuide({
             <Info size={20} />
             {c.installTiming}
           </p>
-          <ActionLink href={`${pathFor(locale, "faq")}#faq-data-roaming`}>
+          <ActionLink href={faqQuestionPath(locale, "data-roaming")}>
             {c.faq}
           </ActionLink>
         </div>
@@ -104,7 +105,7 @@ export function InstallGuide({
           <section className="experience-card">
             <h2>{c.manual}</h2>
             <p>{c.manualBody}</p>
-            <ActionLink href={`${pathFor(locale, "faq")}#faq-install-esim`}>
+            <ActionLink href={faqQuestionPath(locale, "install-esim")}>
               {c.faq}
             </ActionLink>
           </section>

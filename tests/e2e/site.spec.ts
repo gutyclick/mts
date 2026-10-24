@@ -61,6 +61,7 @@ test("empty search, FAQ, and equivalent informational routes work", async ({
   await expect(input).toHaveAttribute("aria-expanded", "false");
   await expect(input).toHaveValue("no-such-place");
   await page.goto("/en/faq");
+  await page.getByRole("link", { name: /^Getting started/ }).click();
   await page.getByText("What is an eSIM?", { exact: true }).click();
   await expect(page.locator("details[open]")).toContainText(
     "digital SIM profile",
@@ -68,7 +69,13 @@ test("empty search, FAQ, and equivalent informational routes work", async ({
   await page
     .getByLabel("Search questions")
     .fill("Can I share data with a hotspot?");
-  await expect(page.locator(".faq-list details")).toHaveCount(1);
+  await expect(page.locator(".faq-list details")).toHaveCount(0);
+  await page.getByRole("link", { name: "All topics", exact: true }).click();
+  await expect(page.locator(".faq-topic-selector > a")).toHaveCount(6);
+  await page
+    .getByLabel("Search questions")
+    .fill("Can I share data with a hotspot?");
+  await expect(page.locator(".faq-search-results a")).toHaveCount(1);
   await page.goto("/en/how-it-works");
   await page
     .getByRole("link", { name: "Change language: Español" })

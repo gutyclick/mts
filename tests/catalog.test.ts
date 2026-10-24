@@ -22,8 +22,32 @@ import {
 } from "../src/lib/i18n.ts";
 import { helpContent } from "../src/lib/help-content.ts";
 import { parseFAQVote } from "../src/lib/faq-feedback.ts";
+import { faqTopicSegments, type FAQTopic } from "../src/lib/faq-topics.ts";
+import { faqQuestionPath } from "../src/lib/faq-links.ts";
+import { faqTopicPath } from "../src/lib/i18n.ts";
 import { experiencePath, planPath } from "../src/lib/experience-routes.ts";
 const plansByDestination = catalog as Record<string, Plan[]>;
+
+test("every FAQ topic and question has a stable localized route", () => {
+  for (const topic of Object.keys(faqTopicSegments) as FAQTopic[]) {
+    const en = faqTopicPath("en", topic);
+    const es = faqTopicPath("es", topic);
+    assert.equal(equivalentPath(en, "es"), es);
+    assert.equal(equivalentPath(es, "en"), en);
+    for (const locale of locales) {
+      const category = helpContent[locale].categories.find(
+        (category) => category.id === topic,
+      );
+      assert.ok(category);
+      for (const question of category.questions)
+        assert.equal(
+          faqQuestionPath(locale, question.id),
+          `${faqTopicPath(locale, topic)}#faq-${question.id}`,
+        );
+    }
+  }
+  assert.equal(faqQuestionPath("es", "unknown"), pathFor("es", "faq"));
+});
 
 test("importer excludes daily packages, retains one-day fixed plans and omits empty regions", () => {
   const root = resolve(tmpdir());

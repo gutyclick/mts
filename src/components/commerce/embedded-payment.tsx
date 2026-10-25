@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { formatUSD } from "@/lib/retail-prices";
 import type { Locale } from "@/lib/i18n";
+import { HoldCountdown, usePaymentPresence } from "./payment-hold";
 import {
   expressWalletOptions,
   hasExpressWallet,
@@ -30,6 +31,7 @@ export function EmbeddedPayment({
   buyer,
   recipient,
   onBack,
+  orderId,
 }: {
   clientSecret: string;
   publishableKey: string;
@@ -38,7 +40,10 @@ export function EmbeddedPayment({
   buyer: string;
   recipient: string;
   onBack: () => void;
+  orderId: string;
 }) {
+  const root = useRef<HTMLElement>(null);
+  const presence = usePaymentPresence(orderId, root);
   const stripe = useMemo(
     () => loadStripe(publishableKey, { locale }),
     [publishableKey, locale],
@@ -84,18 +89,34 @@ export function EmbeddedPayment({
   );
   return (
     <section
+      ref={root}
       className="commerce-card embedded-payment-card"
       aria-labelledby="embedded-payment-title"
     >
-      <CheckoutElementsProvider stripe={stripe} options={options}>
-        <PaymentForm
+      {presence.state?.holdExpiresAt && (
+        <HoldCountdown
+          deadline={presence.state.holdExpiresAt}
+          serverTime={presence.state.serverTime}
           locale={locale}
-          total={total}
-          buyer={buyer}
-          recipient={recipient}
-          onBack={onBack}
         />
-      </CheckoutElementsProvider>
+      )}
+      {presence.elapsed ? (
+        <p role="status">
+          {locale === "es"
+            ? "El plazo ha terminado. Estamos comprobando el estado de tu pedido…"
+            : "The time is up. We’re checking your order status…"}
+        </p>
+      ) : (
+        <CheckoutElementsProvider stripe={stripe} options={options}>
+          <PaymentForm
+            locale={locale}
+            total={total}
+            buyer={buyer}
+            recipient={recipient}
+            onBack={onBack}
+          />
+        </CheckoutElementsProvider>
+      )}
     </section>
   );
 }

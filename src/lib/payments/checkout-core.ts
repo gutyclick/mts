@@ -10,6 +10,7 @@ export const checkoutRequestSchema = z
     differentRecipient: z.boolean().default(false),
     recipientEmail: z.email().max(254).optional(),
     marketingOptIn: z.boolean().default(false),
+    holdPolicy: z.literal("leave-v1").optional(),
     lines: cartSchema.refine((lines) => lines.length > 0),
     expectedTotal: z.number().int().min(1).max(99999999),
     compatible: z.literal(true),

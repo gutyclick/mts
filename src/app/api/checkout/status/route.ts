@@ -11,6 +11,7 @@ import {
   paymentHeaders,
 } from "@/lib/payments/checkout-server";
 import { authClient } from "@/lib/supabase/auth-server";
+import { holdOrder, reconcileHold } from "@/lib/payments/hold-server";
 
 export async function GET(request: NextRequest) {
   const fail = (status: number) =>
@@ -22,15 +23,16 @@ export async function GET(request: NextRequest) {
   if (!z.uuid().safeParse(id).success) return fail(404);
   try {
     const db = checkoutDatabase();
-    const { data: order, error } = await db
+    const { data: rawOrder, error } = await db
       .from("checkout_orders")
       .select(
-        "id,user_id,browser_hash,status,amount_total,currency,livemode,created_at",
+        "id,user_id,browser_hash,status,amount_total,currency,livemode,created_at,payment_hold_expires_at,payment_in_progress",
       )
       .eq("id", id)
       .maybeSingle();
     if (error) return fail(503);
-    if (!order) return fail(404);
+    if (!rawOrder) return fail(404);
+    let order = rawOrder;
     const token = request.cookies.get(browserCookie)?.value;
     let authorized =
       validBrowserToken(token) && sameHash(sha256(token), order.browser_hash);
@@ -41,6 +43,16 @@ export async function GET(request: NextRequest) {
       authorized = !!user?.email_confirmed_at && user.id === order.user_id;
     }
     if (!authorized) return fail(404);
+    const reconciled = await reconcileHold(
+      (await holdOrder(order.id))!,
+      request.nextUrl.searchParams.get("inspect") === "1",
+    );
+    order = {
+      ...order,
+      status: reconciled.status,
+      payment_hold_expires_at: reconciled.payment_hold_expires_at,
+      payment_in_progress: reconciled.payment_in_progress,
+    };
     const { data: items, error: itemsError } = await db
       .from("checkout_order_items")
       .select(
@@ -57,6 +69,9 @@ export async function GET(request: NextRequest) {
         currency: order.currency,
         test: !order.livemode,
         items,
+        holdExpiresAt: order.payment_hold_expires_at,
+        paymentInProgress: order.payment_in_progress,
+        serverTime: new Date().toISOString(),
       },
       { headers: paymentHeaders },
     );

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { authClient } from "@/lib/supabase/auth-server";
+import { holdOrder, reconcileHold } from "@/lib/payments/hold-server";
 import {
   browserCookie,
   checkoutRequestSchema,
@@ -78,6 +79,7 @@ export async function POST(request: NextRequest) {
         marketingOptIn: body.marketingOptIn,
         uiMode: "elements",
         walletVersion: "express-v1",
+        holdPolicy: body.holdPolicy ?? null,
         user: user?.id ?? null,
         locale: body.locale,
         total: body.expectedTotal,
@@ -114,6 +116,19 @@ export async function POST(request: NextRequest) {
       return fail("payments_unavailable", 503);
     }
     const order = orderSchema.parse(data);
+    if (
+      data.payment_in_progress ||
+      (data.payment_hold_expires_at &&
+        new Date(data.payment_hold_expires_at).getTime() <= Date.now())
+    ) {
+      const reconciled = await reconcileHold((await holdOrder(order.id))!);
+      if (reconciled.status === "paid" || reconciled.payment_in_progress)
+        return NextResponse.json(
+          { url: `${origin}${resultPath(body.locale, order.id)}` },
+          { headers: paymentHeaders },
+        );
+      return fail("checkout_expired", 409);
+    }
     if (order.status === "paid")
       return NextResponse.json(
         { url: `${origin}${resultPath(body.locale, order.id)}` },
@@ -135,6 +150,11 @@ export async function POST(request: NextRequest) {
         !existing.client_secret
       )
         return fail("checkout_expired", 409);
+      if (body.holdPolicy)
+        await db.rpc("touch_checkout_payment", {
+          p_id: order.id,
+          p_action: "active",
+        });
       return NextResponse.json(
         { clientSecret: existing.client_secret, orderId: order.id },
         { headers: paymentHeaders },
@@ -196,6 +216,9 @@ export async function POST(request: NextRequest) {
       .update({
         stripe_session_id: session.id,
         expires_at: new Date(session.expires_at * 1000).toISOString(),
+        ...(body.holdPolicy
+          ? { payment_last_seen_at: new Date().toISOString() }
+          : {}),
       })
       .eq("id", order.id)
       .eq("status", "pending");

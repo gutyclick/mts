@@ -71,6 +71,7 @@ test("checkout keeps email private, requires consent and handles a payment outag
     "differentRecipient",
     "email",
     "expectedTotal",
+    "holdPolicy",
     "lines",
     "locale",
     "marketingOptIn",

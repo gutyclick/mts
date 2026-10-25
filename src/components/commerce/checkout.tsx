@@ -124,6 +124,7 @@ export function Checkout({
           differentRecipient,
           ...(differentRecipient ? { recipientEmail: recipient } : {}),
           marketingOptIn,
+          holdPolicy: "leave-v1",
           lines: cart.lines,
           expectedTotal: total,
           compatible: true,
@@ -255,6 +256,7 @@ export function Checkout({
             )}
             {activePayment ? (
               <EmbeddedPayment
+                orderId={activePayment.orderId}
                 key={activePayment.orderId}
                 clientSecret={activePayment.clientSecret}
                 publishableKey={publishableKey}

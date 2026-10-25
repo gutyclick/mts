@@ -173,6 +173,126 @@
 .checkout-payment-divider span {
   white-space: nowrap;
 }
+.payment-hold-mascot {
+  display: block;
+  width: 210px;
+  height: auto;
+  margin: 0 auto 14px;
+}
+.payment-hold-clock {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1px solid #f4dbb8;
+  border-radius: 16px;
+  background: #fff6e9;
+  color: #83511b;
+  margin: 0 0 22px;
+}
+.payment-result .payment-hold-clock {
+  max-width: 390px;
+  margin: 22px auto;
+  text-align: left;
+}
+.payment-hold-clock > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.payment-hold-clock span {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.payment-hold-clock strong {
+  font-size: 25px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.payment-hold-urgent {
+  background: #fff0ec;
+  border-color: #f5c6b9;
+  color: #9b3925;
+}
+.payment-resume-wrap {
+  max-width: 780px;
+}
+.payment-resume-heading {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+.payment-resume-heading .sim-mascot {
+  width: 145px;
+  height: auto;
+}
+.payment-resume-heading h1 {
+  font:
+    800 clamp(24px, 4vw, 34px)/1.25 var(--font-jakarta),
+    sans-serif;
+  letter-spacing: -0.04em;
+  margin: 8px 0 12px;
+}
+.payment-resume-heading p:not(.eyebrow) {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #526b89;
+}
+.pending-payment-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #f4dbb8;
+  background: #fff6e9;
+  padding: 12px 18px;
+  margin-top: 16px;
+  border-radius: 14px;
+  font-size: 13px;
+  color: #83511b;
+}
+.pending-payment-notice > svg {
+  flex-shrink: 0;
+}
+.pending-payment-notice a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--blue-dark);
+}
+@media (max-width: 650px) {
+  .payment-hold-mascot {
+    width: 170px;
+  }
+  .payment-hold-clock {
+    padding: 14px;
+    gap: 10px;
+  }
+  .payment-hold-clock > div {
+    gap: 10px;
+  }
+  .payment-resume-heading {
+    gap: 14px;
+    align-items: center;
+  }
+  .payment-resume-heading .sim-mascot {
+    width: 105px;
+  }
+  .pending-payment-notice {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pending-payment-notice a {
+    width: 100%;
+    margin-left: 26px;
+  }
+}
 .payment-spinner {
   animation: payment-spin 1s linear infinite;
 }

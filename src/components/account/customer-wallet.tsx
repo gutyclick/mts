@@ -345,19 +345,29 @@ export async function CustomerWallet({
                             ? es
                               ? "Pago pendiente"
                               : "Payment pending"
-                            : item.status === "expired"
+                            : item.status === "cancelled"
                               ? es
-                                ? "Sesión vencida"
-                                : "Session expired"
-                              : es
-                                ? "Pago fallido"
-                                : "Payment failed"}
+                                ? "Pedido cancelado"
+                                : "Order cancelled"
+                              : item.status === "expired"
+                                ? es
+                                  ? "Sesión vencida"
+                                  : "Session expired"
+                                : es
+                                  ? "Pago fallido"
+                                  : "Payment failed"}
                       </span>
                       <p>{formatUSD(item.amount_total, locale)}</p>
                       <Link
                         href={`/${locale}/checkout/result?order=${item.id}`}
                       >
-                        {es ? "Ver pedido" : "View order"}{" "}
+                        {item.status === "pending"
+                          ? es
+                            ? "Completar el pago"
+                            : "Complete payment"
+                          : es
+                            ? "Ver pedido"
+                            : "View order"}{" "}
                         <ArrowRight size={14} />
                       </Link>
                     </div>

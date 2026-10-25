@@ -17,10 +17,16 @@ import { experiencePath } from "@/lib/experience-routes";
 import { formatUSD } from "@/lib/retail-prices";
 import { planVariant } from "@/lib/plan-variants";
 import { authPath } from "@/lib/auth-routes";
+import { SimMascot } from "@/components/sim-mascot";
+import { EmbeddedPayment } from "./embedded-payment";
+import { HoldCountdown, forgetPayment, markPaymentLeave } from "./payment-hold";
 
 const receiptSchema = z.object({
   id: z.uuid(),
-  status: z.enum(["pending", "paid", "expired", "failed"]),
+  status: z.enum(["pending", "paid", "expired", "failed", "cancelled"]),
+  holdExpiresAt: z.string().nullable().optional(),
+  paymentInProgress: z.boolean().optional(),
+  serverTime: z.string().optional(),
   total: z.number().int().positive(),
   currency: z.literal("usd"),
   test: z.boolean(),
@@ -55,6 +61,15 @@ export function PaymentResult({
   const [error, setError] = useState(false);
   const [waiting, setWaiting] = useState(true);
   const [retry, setRetry] = useState(0);
+  const [elapsed, setElapsed] = useState(false);
+  const [resuming, setResuming] = useState(false);
+  const [payment, setPayment] = useState<{
+    clientSecret: string;
+    publishableKey: string;
+    total: number;
+    buyer: string;
+    recipient: string;
+  } | null>(null);
   useEffect(() => {
     const controller = new AbortController();
     let timer: ReturnType<typeof setTimeout>;
@@ -63,15 +78,23 @@ export function PaymentResult({
       setError(false);
       setWaiting(true);
       try {
-        const response = await fetch(`/api/checkout/status?order=${orderId}`, {
-          cache: "no-store",
-          signal: controller.signal,
-        });
+        const response = await fetch(
+          `/api/checkout/status?order=${orderId}${attempts === 0 ? "&inspect=1" : ""}`,
+          {
+            cache: "no-store",
+            signal: controller.signal,
+          },
+        );
         if (!response.ok) throw new Error("Receipt unavailable");
         const data = receiptSchema.parse(await response.json());
         if (controller.signal.aborted) return;
         setReceipt(data);
-        if (data.status === "pending" && !cancelled && ++attempts < 20) {
+        if (data.status !== "pending") forgetPayment(orderId);
+        if (
+          data.status === "pending" &&
+          (!cancelled || data.serverTime) &&
+          ++attempts < (data.holdExpiresAt ? 120 : 20)
+        ) {
           timer = setTimeout(check, 3000);
           return;
         }
@@ -99,31 +122,114 @@ export function PaymentResult({
     );
   }, [receipt, orderId, cart]);
   const paid = receipt?.status === "paid";
+  const holding =
+    receipt?.status === "pending" &&
+    !receipt.paymentInProgress &&
+    !!receipt.holdExpiresAt;
+  const expired = receipt?.status === "cancelled";
   const stopped =
     receipt?.status === "failed" ||
     receipt?.status === "expired" ||
-    (cancelled && !paid);
+    expired ||
+    (cancelled && !paid && !holding && !receipt?.paymentInProgress);
   const Icon = paid ? CheckCircle2 : stopped ? CircleX : Clock3;
-  const title = paid
+  async function resume() {
+    setResuming(true);
+    setError(false);
+    try {
+      const response = await fetch("/api/checkout/resume", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      });
+      if (!response.ok) throw new Error("Resume failed");
+      const data = await response.json();
+      if (
+        data.status !== "pending" ||
+        data.paymentInProgress ||
+        !data.clientSecret
+      ) {
+        setRetry((value) => value + 1);
+        return;
+      }
+      setPayment({
+        clientSecret: data.clientSecret,
+        publishableKey: data.publishableKey,
+        total: data.total,
+        buyer: data.buyer,
+        recipient: data.recipient,
+      });
+    } catch {
+      setError(true);
+    } finally {
+      setResuming(false);
+    }
+  }
+  if (payment && receipt?.status === "pending" && !elapsed)
+    return (
+      <div className="container payment-result-wrap payment-resume-wrap">
+        <header className="payment-resume-heading">
+          <SimMascot variant="paymentHold" locale={locale} sizes="160px" />
+          <div>
+            <p className="eyebrow">MYTRIPSIM</p>
+            <h1>{es ? "Completar el pago" : "Complete payment"}</h1>
+            <p>
+              {es
+                ? "Tu pedido sigue aquí. Termina el pago antes de que acabe el tiempo."
+                : "Your order is still here. Finish payment before time runs out."}
+            </p>
+          </div>
+        </header>
+        <EmbeddedPayment
+          orderId={orderId}
+          locale={locale}
+          {...payment}
+          onBack={() => {
+            markPaymentLeave(orderId);
+            setPayment(null);
+            setRetry((value) => value + 1);
+          }}
+        />
+      </div>
+    );
+  const title = expired
     ? es
-      ? "Pago de prueba confirmado"
-      : "Test payment confirmed"
-    : stopped
+      ? "Pedido cancelado"
+      : "Order cancelled"
+    : holding
       ? es
-        ? "Tu pago no se ha completado"
-        : "Your payment isn’t complete"
-      : es
-        ? "Estamos comprobando tu pago"
-        : "We’re checking your payment";
+        ? "Completar el pago"
+        : "Complete payment"
+      : paid
+        ? es
+          ? "Pago de prueba confirmado"
+          : "Test payment confirmed"
+        : stopped
+          ? es
+            ? "Tu pago no se ha completado"
+            : "Your payment isn’t complete"
+          : es
+            ? "Estamos comprobando tu pago"
+            : "We’re checking your payment";
   return (
     <div className="container payment-result-wrap">
       <section
         className={`commerce-card payment-result ${paid ? "payment-result-paid" : ""}`}
         aria-labelledby="payment-result-title"
       >
-        <span className="payment-result-icon">
-          <Icon size={36} aria-hidden="true" />
-        </span>
+        {holding ? (
+          <SimMascot
+            variant="paymentHold"
+            locale={locale}
+            className="payment-hold-mascot"
+            sizes="(max-width:650px) 170px, 220px"
+            eager
+          />
+        ) : (
+          <span className="payment-result-icon">
+            <Icon size={36} aria-hidden="true" />
+          </span>
+        )}
         <p className="eyebrow">MYTRIPSIM / {es ? "TU PEDIDO" : "YOUR ORDER"}</p>
         <h1 id="payment-result-title">
           {error && !receipt
@@ -133,18 +239,38 @@ export function PaymentResult({
             : title}
         </h1>
         <p role="status" aria-live="polite">
-          {paid
+          {expired
             ? es
-              ? "El pago está registrado. Esta compra es de prueba: no se han hecho cargos ni emitido eSIM reales."
-              : "Your payment is recorded. This is a test purchase: no real charges or eSIMs were issued."
-            : stopped
+              ? "El plazo de cinco minutos terminó y este pedido ya no admite pagos. Tus planes siguen en el carrito si quieres empezar de nuevo."
+              : "The five-minute window ended and this order no longer accepts payment. Your plans are still in the cart if you want to start again."
+            : holding
               ? es
-                ? "Puedes volver a tu carrito y continuar cuando quieras. Tus planes siguen guardados."
-                : "You can return to your cart and continue when you’re ready. Your plans are saved."
-              : es
-                ? "Esperamos la confirmación del pago. No necesitas volver a pagar."
-                : "We’re waiting for payment confirmation. You don’t need to pay again."}
+                ? "Te guardamos el pedido durante cinco minutos desde que saliste del pago. Puedes retomarlo con el tiempo que queda."
+                : "We’ll keep your order for five minutes after you leave payment. You can resume with the remaining time."
+              : paid
+                ? es
+                  ? "El pago está registrado. Esta compra es de prueba: no se han hecho cargos ni emitido eSIM reales."
+                  : "Your payment is recorded. This is a test purchase: no real charges or eSIMs were issued."
+                : stopped
+                  ? es
+                    ? "Puedes volver a tu carrito y continuar cuando quieras. Tus planes siguen guardados."
+                    : "You can return to your cart and continue when you’re ready. Your plans are saved."
+                  : es
+                    ? "Esperamos la confirmación del pago. No necesitas volver a pagar."
+                    : "We’re waiting for payment confirmation. You don’t need to pay again."}
         </p>
+        {holding && (
+          <HoldCountdown
+            deadline={receipt.holdExpiresAt!}
+            serverTime={receipt.serverTime ?? new Date().toISOString()}
+            locale={locale}
+            onElapsed={() => {
+              setElapsed(true);
+              setPayment(null);
+              setRetry((value) => value + 1);
+            }}
+          />
+        )}
         {receipt && (
           <div className="payment-receipt">
             <div className="payment-receipt-heading">
@@ -188,7 +314,7 @@ export function PaymentResult({
               : "We couldn’t check the status. Open this page in the browser where you started your purchase, or sign in to your account and try again."}
           </p>
         )}
-        {!paid && (
+        {!paid && !holding && !expired && (
           <button
             className="button button-secondary"
             onClick={() => setRetry((value) => value + 1)}
@@ -212,7 +338,23 @@ export function PaymentResult({
               {es ? "Iniciar sesión" : "Sign in"}
             </Link>
           )}
-          {paid ? (
+          {holding ? (
+            <button
+              type="button"
+              className="button button-primary"
+              onClick={resume}
+              disabled={elapsed || resuming}
+            >
+              {resuming
+                ? es
+                  ? "Preparando tu pago…"
+                  : "Preparing payment…"
+                : es
+                  ? "Completar el pago"
+                  : "Complete payment"}
+              <ArrowRight size={17} />
+            </button>
+          ) : paid ? (
             <Link
               className="button button-primary"
               href={experiencePath(locale, "wallet")}

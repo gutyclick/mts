@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import { dictionaries, isLocale, locales } from "@/lib/i18n";
 import { CartProvider } from "@/components/commerce/cart-provider";
+import { PendingPaymentNotice } from "@/components/commerce/pending-payment-notice";
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -23,6 +24,7 @@ export default async function LocaleLayout({
           {dictionaries[locale].skip}
         </a>
         <Header locale={locale} />
+        <PendingPaymentNotice locale={locale} />
         <main id="main-content">{children}</main>
         <Footer locale={locale} />
         <MobileNavigation locale={locale} />

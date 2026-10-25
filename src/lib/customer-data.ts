@@ -54,7 +54,7 @@ export async function customerCheckoutOrders(
     .array(
       z.object({
         id: z.uuid(),
-        status: z.enum(["pending", "paid", "expired", "failed"]),
+        status: z.enum(["pending", "paid", "expired", "failed", "cancelled"]),
         amount_total: z.number().int(),
         livemode: z.boolean(),
         created_at: z.string(),

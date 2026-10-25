@@ -2,6 +2,11 @@ import Image from "next/image";
 import type { Locale } from "@/lib/i18n";
 
 const illustrations = {
+  paymentHold: {
+    src: "/images/sim/sim_payment_hold.png",
+    es: "SIM junto a una tarjeta y un reloj de arena, esperando que completes tu pago",
+    en: "SIM beside a card and an hourglass, waiting for you to complete payment",
+  },
   traveler: {
     src: "/images/sim/sim_traveler.png",
     es: "SIM, la mascota de MyTripSim, viajando con su maleta",

@@ -42,7 +42,10 @@
     "test:checkout": "node --experimental-strip-types --test tests/checkout-security.test.mjs",
     "stripe:deploy:test-env": "node --experimental-strip-types scripts/deploy-checkout-test-env.mjs",
     "stripe:domains:test": "node --experimental-strip-types scripts/register-payment-domains.mjs",
-    "test:wallets": "node --experimental-strip-types --test tests/wallets.test.mjs"
+    "test:wallets": "node --experimental-strip-types --test tests/wallets.test.mjs",
+    "test:holds": "node --experimental-strip-types --test tests/payment-holds.test.mjs",
+    "checkout:expiry:env": "node scripts/configure-checkout-expiry.mjs --deploy-env",
+    "checkout:expiry:start": "node scripts/configure-checkout-expiry.mjs --start"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

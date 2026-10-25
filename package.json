@@ -43,6 +43,8 @@
     "stripe:deploy:test-env": "node --experimental-strip-types scripts/deploy-checkout-test-env.mjs"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^7.0.0",
+    "@stripe/stripe-js": "^10.1.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "lucide-react": "^0.577.0",

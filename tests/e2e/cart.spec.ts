@@ -22,9 +22,11 @@ test("cart persists selection and quantity, supports guest checkout and safely r
   await expect(dialog.locator("output")).toHaveText("2");
   await dialog.getByRole("link", { name: "Continuar con mi compra" }).click();
   await expect(page).toHaveURL(/\/es\/compra$/);
-  await expect(page.getByLabel("Correo electrónico")).toBeEditable();
+  await expect(
+    page.getByLabel("Correo electrónico", { exact: true }),
+  ).toBeEditable();
   await page
-    .getByLabel("Correo electrónico")
+    .getByLabel("Correo electrónico", { exact: true })
     .fill("guest-private@example.invalid");
   await expect(
     page.getByRole("button", { name: "Continuar al pago" }),

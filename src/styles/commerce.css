@@ -22,6 +22,125 @@
   font-size: 13px;
   line-height: 1.7;
 }
+.checkout-marketing {
+  padding-top: 10px;
+}
+.checkout-beneficiary {
+  border-block: 1px solid #e0eaf7;
+  padding-block: 22px;
+  margin-block: 18px 0;
+}
+.checkout-beneficiary h2 {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+.checkout-beneficiary h2 svg {
+  color: var(--blue-dark);
+}
+.checkout-beneficiary strong {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.checkout-beneficiary .commerce-checkbox {
+  margin-bottom: 18px;
+}
+.checkout-beneficiary label[for="checkout-recipient-email"] {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.checkout-beneficiary label[for="checkout-recipient-email"] input {
+  font-weight: 400;
+}
+.embedded-payment-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.embedded-payment-heading h2 {
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 7px;
+  letter-spacing: -0.035em;
+}
+.embedded-payment-heading p {
+  font-size: 13px;
+  color: #526b89;
+  line-height: 1.7;
+  margin: 0;
+}
+.embedded-payment-contact {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #dce7f5;
+  border-radius: 14px;
+  background: #f4f8fc;
+  margin-bottom: 24px;
+}
+.embedded-payment-contact > svg {
+  color: var(--blue-dark);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.embedded-payment-contact dl {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.embedded-payment-contact dt {
+  font-size: 11px;
+  color: #526b89;
+  margin-bottom: 4px;
+}
+.embedded-payment-contact dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.embedded-payment-secure {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 12px;
+  color: #526b89;
+  line-height: 1.7;
+  margin: 18px 0;
+}
+.embedded-payment-secure svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.embedded-payment-card .checkout-pay {
+  width: 100%;
+  margin-top: 8px;
+}
+.embedded-payment-card form > .commerce-muted {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 14px;
+}
+.embedded-payment-back {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 20px auto 0;
+  border: 0;
+  background: none;
+  color: var(--blue-dark);
+  font-size: 13px;
+  cursor: pointer;
+}
 .payment-spinner {
   animation: payment-spin 1s linear infinite;
 }

@@ -8,7 +8,6 @@ import {
   sha256,
   privateHash,
   resultPath,
-  stripeCheckoutURL,
 } from "@/lib/payments/checkout-core";
 import {
   checkoutConfigured,
@@ -68,10 +67,16 @@ export async function POST(request: NextRequest) {
     if (user && (!user.email_confirmed_at || !user.email))
       return fail("verify_email", 403);
     const email = user?.email ?? body.email.trim().toLowerCase();
+    const recipient = body.differentRecipient
+      ? body.recipientEmail!.trim().toLowerCase()
+      : email;
     const secret = process.env.CHECKOUT_REQUEST_SECRET!;
     const fingerprint = sha256(
       JSON.stringify({
         email,
+        recipient,
+        marketingOptIn: body.marketingOptIn,
+        uiMode: "elements",
         user: user?.id ?? null,
         locale: body.locale,
         total: body.expectedTotal,
@@ -79,10 +84,12 @@ export async function POST(request: NextRequest) {
       }),
     );
     const db = checkoutDatabase();
-    const { data, error } = await db.rpc("create_test_checkout", {
+    const { data, error } = await db.rpc("create_test_checkout_v2", {
       p_id: body.attemptId,
       p_user_id: user?.id ?? null,
-      p_email: email,
+      p_billing_email: email,
+      p_recipient_email: recipient,
+      p_marketing_opt_in: body.marketingOptIn,
       p_browser_hash: sha256(browser),
       p_ip_hash: privateHash(
         request.headers.get("x-vercel-forwarded-for") ??
@@ -116,11 +123,22 @@ export async function POST(request: NextRequest) {
       (order.expires_at && new Date(order.expires_at).getTime() <= Date.now())
     )
       return fail("checkout_expired", 409);
-    if (order.checkout_url)
+    const stripe = checkoutStripe();
+    if (order.stripe_session_id) {
+      const existing = await stripe.checkout.sessions.retrieve(
+        order.stripe_session_id,
+      );
+      if (
+        existing.livemode ||
+        existing.ui_mode !== "elements" ||
+        !existing.client_secret
+      )
+        return fail("checkout_expired", 409);
       return NextResponse.json(
-        { url: stripeCheckoutURL(order.checkout_url) },
+        { clientSecret: existing.client_secret, orderId: order.id },
         { headers: paymentHeaders },
       );
+    }
     if (new Date(order.created_at).getTime() < Date.now() - 25 * 60 * 1000)
       return fail("checkout_expired", 409);
     const { data: rawItems, error: itemsError } = await db
@@ -130,7 +148,6 @@ export async function POST(request: NextRequest) {
       .order("plan_id");
     if (itemsError) throw new Error("Order unavailable");
     const items = z.array(itemSchema).min(1).max(20).parse(rawItems);
-    const stripe = checkoutStripe();
     // Verify prices against Stripe itself, never trust amounts or Stripe IDs from a browser.
     for (const item of items) {
       const price = await stripe.prices.retrieve(item.stripe_price_id);
@@ -147,37 +164,23 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create(
       {
         mode: "payment",
+        ui_mode: "elements",
         allowed_payment_method_types: ["card"],
         locale: body.locale,
         adaptive_pricing: { enabled: false },
-        branding_settings: {
-          display_name: "MyTripSim",
-          button_color: "#126de8",
-          background_color: "#fcfdfe",
-          border_style: "rounded",
-        },
         client_reference_id: order.id,
         customer_email: email,
         line_items: items.map((item) => ({
           price: item.stripe_price_id,
           quantity: item.quantity,
         })),
-        success_url: `${origin}${resultPath(body.locale, order.id)}`,
-        cancel_url: `${origin}${resultPath(body.locale, order.id)}&cancelled=1`,
+        return_url: `${origin}${resultPath(body.locale, order.id)}`,
         metadata: { mts_order_id: order.id },
         payment_intent_data: { metadata: { mts_order_id: order.id } },
         expires_at:
           Math.floor(new Date(order.created_at).getTime() / 1000) + 3600,
-        custom_text: {
-          submit: {
-            message:
-              body.locale === "es"
-                ? "Compra de prueba. No se emitirán eSIM ni se harán cargos reales."
-                : "Test purchase. No real charges or eSIMs will be issued.",
-          },
-        },
       },
-      { idempotencyKey: `mts_checkout_${order.id}` },
+      { idempotencyKey: `mts_elements_${order.id}` },
     );
     if (
       session.livemode ||
@@ -185,18 +188,21 @@ export async function POST(request: NextRequest) {
       session.currency !== "usd"
     )
       throw new Error("Session mismatch");
-    const url = stripeCheckoutURL(session.url);
+    if (!session.client_secret || session.ui_mode !== "elements")
+      throw new Error("Missing payment form");
     const { error: updateError } = await db
       .from("checkout_orders")
       .update({
         stripe_session_id: session.id,
-        checkout_url: url,
         expires_at: new Date(session.expires_at * 1000).toISOString(),
       })
       .eq("id", order.id)
       .eq("status", "pending");
     if (updateError) throw new Error("Session persistence failed");
-    return NextResponse.json({ url }, { headers: paymentHeaders });
+    return NextResponse.json(
+      { clientSecret: session.client_secret, orderId: order.id },
+      { headers: paymentHeaders },
+    );
   } catch {
     return fail("payments_unavailable", 503);
   }

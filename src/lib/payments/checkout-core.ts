@@ -7,12 +7,19 @@ export const checkoutRequestSchema = z
     attemptId: z.uuid(),
     locale: z.enum(["es", "en"]),
     email: z.email().max(254),
+    differentRecipient: z.boolean().default(false),
+    recipientEmail: z.email().max(254).optional(),
+    marketingOptIn: z.boolean().default(false),
     lines: cartSchema.refine((lines) => lines.length > 0),
     expectedTotal: z.number().int().min(1).max(99999999),
     compatible: z.literal(true),
     terms: z.literal(true),
   })
-  .strict();
+  .strict()
+  .refine((body) => !body.differentRecipient || !!body.recipientEmail, {
+    path: ["recipientEmail"],
+    message: "Recipient email required",
+  });
 export const sha256 = (value: string) =>
   createHash("sha256").update(value).digest("hex");
 export const privateHash = (value: string, secret: string) =>

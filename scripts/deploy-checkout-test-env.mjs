@@ -10,6 +10,9 @@ try {
   if (
     !process.env.SUPABASE_CHECKOUT_SECRET_KEY?.startsWith("sb_secret_") ||
     !process.env.STRIPE_TEST_WEBHOOK_SECRET?.startsWith("whsec_") ||
+    !/^pk_test_[a-zA-Z0-9]{16,}$/.test(
+      process.env.STRIPE_TEST_PUBLISHABLE_KEY ?? "",
+    ) ||
     (process.env.CHECKOUT_REQUEST_SECRET?.length ?? 0) < 32
   )
     throw new Error("Missing server configuration");
@@ -19,6 +22,7 @@ try {
       "SUPABASE_CHECKOUT_SECRET_KEY",
       "STRIPE_TEST_WEBHOOK_SECRET",
       "CHECKOUT_REQUEST_SECRET",
+      "STRIPE_TEST_PUBLISHABLE_KEY",
     ].map((name) => [name, process.env[name]]),
     ["CHECKOUT_SITE_URL", "https://www.mytripsim.com"],
     // Enabling this flag still rejects live keys and cannot issue a real eSIM.

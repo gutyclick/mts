@@ -12,6 +12,7 @@ import {
   Mail,
   ShoppingBag,
   UserRound,
+  Gift,
 } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 import { pathFor } from "@/lib/i18n";
@@ -21,6 +22,7 @@ import type { CartLine } from "@/lib/cart";
 import { cartTotal } from "@/lib/cart";
 import { formatUSD } from "@/lib/retail-prices";
 import { CartItems, useCart } from "./cart-provider";
+import { EmbeddedPayment } from "./embedded-payment";
 
 export function Checkout({
   locale,
@@ -35,6 +37,19 @@ export function Checkout({
   const cart = useCart();
   const initialized = useRef(false);
   const [enabled, setEnabled] = useState(false);
+  const [publishableKey, setPublishableKey] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState(email ?? "");
+  const [differentRecipient, setDifferentRecipient] = useState(false);
+  const [recipientEmail, setRecipientEmail] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
+  const [payment, setPayment] = useState<{
+    key: string;
+    clientSecret: string;
+    orderId: string;
+    total: number;
+    buyer: string;
+    recipient: string;
+  } | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [compatible, setCompatible] = useState(false);
@@ -48,7 +63,13 @@ export function Checkout({
       signal: controller.signal,
     })
       .then(async (response) => {
-        if (response.ok) setEnabled((await response.json()).enabled === true);
+        if (response.ok) {
+          const data = await response.json();
+          setEnabled(data.enabled === true);
+          setPublishableKey(
+            typeof data.publishableKey === "string" ? data.publishableKey : "",
+          );
+        }
       })
       .catch(() => {});
     return () => controller.abort();
@@ -61,6 +82,16 @@ export function Checkout({
   const count = cart.lines.reduce((sum, item) => sum + item.quantity, 0);
   const next = encodeURIComponent(experiencePath(locale, "checkout"));
   const total = cartTotal(cart.resolved);
+  const checkoutKey = JSON.stringify([
+    cart.lines,
+    buyerEmail.trim(),
+    differentRecipient,
+    recipientEmail.trim(),
+    marketingOptIn,
+    total,
+    locale,
+  ]);
+  const activePayment = payment?.key === checkoutKey ? payment : null;
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (
@@ -73,10 +104,10 @@ export function Checkout({
       !terms
     )
       return;
-    const recipient = String(
-      new FormData(event.currentTarget).get("email") ?? "",
-    ).trim();
-    const key = JSON.stringify([cart.lines, recipient, total, locale]);
+    const recipient = differentRecipient
+      ? recipientEmail.trim()
+      : buyerEmail.trim();
+    const key = checkoutKey;
     if (paymentAttempt.current?.key !== key)
       paymentAttempt.current = { key, id: crypto.randomUUID() };
     submitting.current = true;
@@ -89,7 +120,10 @@ export function Checkout({
         body: JSON.stringify({
           attemptId: paymentAttempt.current.id,
           locale,
-          email: recipient,
+          email: buyerEmail.trim(),
+          differentRecipient,
+          ...(differentRecipient ? { recipientEmail: recipient } : {}),
+          marketingOptIn,
           lines: cart.lines,
           expectedTotal: total,
           compatible: true,
@@ -139,13 +173,27 @@ export function Checkout({
         );
         return;
       }
-      const url = new URL(data.url);
-      if (
-        url.origin !== window.location.origin &&
-        (url.protocol !== "https:" || url.hostname !== "checkout.stripe.com")
-      )
-        throw new Error("Invalid redirect");
-      window.location.assign(url.href);
+      if (data.url) {
+        const url = new URL(data.url);
+        if (url.origin !== window.location.origin)
+          throw new Error("Invalid redirect");
+        window.location.assign(url.href);
+      } else {
+        if (
+          typeof data.clientSecret !== "string" ||
+          !data.clientSecret.startsWith("cs_test_") ||
+          !publishableKey.startsWith("pk_test_")
+        )
+          throw new Error("Invalid payment form");
+        setPayment({
+          key,
+          clientSecret: data.clientSecret,
+          orderId: data.orderId,
+          total,
+          buyer: buyerEmail.trim(),
+          recipient,
+        });
+      }
     } catch {
       setError(
         es
@@ -181,7 +229,7 @@ export function Checkout({
       ) : (
         <div className="commerce-checkout-grid">
           <section className="commerce-checkout-main">
-            {!email && (
+            {!email && !activePayment && (
               <div className="checkout-account-offer">
                 <span className="commerce-badge">
                   <UserRound size={22} />
@@ -205,173 +253,272 @@ export function Checkout({
                 </div>
               </div>
             )}
-            <form className="commerce-card checkout-form" onSubmit={pay}>
-              <header>
-                <span className="commerce-badge">
-                  <Mail size={22} />
-                </span>
-                <div>
-                  <h2>
-                    {es
-                      ? "¿Dónde te enviamos tu eSIM?"
-                      : "Where should we send your eSIM?"}
-                  </h2>
-                  <p>
-                    {es
-                      ? "Solo necesitamos tu correo. No hace falta una cuenta."
-                      : "Your email is all we need. No account required."}
-                  </p>
-                </div>
-              </header>
-              <label htmlFor="checkout-email">
-                {es ? "Correo electrónico" : "Email address"}
-                <span className="account-input">
-                  <Mail size={18} aria-hidden="true" />
-                  <input
-                    id="checkout-email"
-                    name="email"
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    maxLength={254}
-                    required
-                    defaultValue={email ?? ""}
-                    readOnly={!!email}
-                    aria-describedby="checkout-email-hint"
-                    placeholder={es ? "tu@correo.com" : "you@example.com"}
-                  />
-                </span>
-              </label>
-              <p id="checkout-email-hint" className="commerce-muted">
-                {email
-                  ? es
-                    ? "Estás usando el correo verificado de tu cuenta."
-                    : "You’re using your account’s verified email."
-                  : es
-                    ? "Comprueba que esté bien escrito: recibirás aquí el QR y la guía después del pago."
-                    : "Double-check the spelling: your QR and guide will arrive here after payment."}
-              </p>
-              {email && (
-                <Link
-                  href={experiencePath(locale, "wallet")}
-                  className="checkout-session"
-                >
-                  <BadgeCheck size={16} />
-                  {es
-                    ? "Sesión iniciada · Ir a Mis eSIM"
-                    : "Signed in · Go to My eSIMs"}
-                </Link>
-              )}
-              <div className="checkout-payment">
-                <span className="commerce-badge">
-                  <CreditCard size={22} />
-                </span>
-                <div>
-                  <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
-                  <p>
-                    {es
-                      ? enabled
-                        ? "Continúa a Stripe para completar el pago de prueba de forma segura."
-                        : "Tu precio final ya está disponible. Estamos preparando las opciones de pago para completar tu compra."
-                      : enabled
-                        ? "Continue to Stripe to complete a secure test payment."
-                        : "Your final price is now available. We’re preparing payment options so you can complete your purchase."}
-                  </p>
-                  <span className="checkout-pending">
-                    <LockKeyhole size={14} />
-                    {es
-                      ? enabled
-                        ? "Modo de pruebas · sin cargos reales"
-                        : "El pago aún no está habilitado"
-                      : enabled
-                        ? "Test mode · no real charges"
-                        : "Payment is not available yet"}
+            {activePayment ? (
+              <EmbeddedPayment
+                key={activePayment.orderId}
+                clientSecret={activePayment.clientSecret}
+                publishableKey={publishableKey}
+                total={activePayment.total}
+                locale={locale}
+                buyer={activePayment.buyer}
+                recipient={activePayment.recipient}
+                onBack={() => {
+                  setPayment(null);
+                  setError("");
+                }}
+              />
+            ) : (
+              <form className="commerce-card checkout-form" onSubmit={pay}>
+                <header>
+                  <span className="commerce-badge">
+                    <Mail size={22} />
                   </span>
-                </div>
-              </div>
-              <label className="commerce-checkbox">
-                <input
-                  type="checkbox"
-                  name="compatible"
-                  required
-                  checked={compatible}
-                  onChange={(e) => setCompatible(e.target.checked)}
-                />
-                <span>
-                  {es
-                    ? "Mi dispositivo es compatible con eSIM y está desbloqueado."
-                    : "My device supports eSIM and is carrier-unlocked."}{" "}
-                  <Link href={pathFor(locale, "compatibility")}>
-                    {es ? "Comprobar" : "Check"}
-                  </Link>
-                </span>
-              </label>
-              <label className="commerce-checkbox">
-                <input
-                  type="checkbox"
-                  name="terms"
-                  required
-                  checked={terms}
-                  onChange={(e) => setTerms(e.target.checked)}
-                />
-                <span>
-                  {es ? "He leído los" : "I have read the"}{" "}
-                  <Link href={pathFor(locale, "terms")}>
-                    {es ? "términos" : "terms"}
-                  </Link>{" "}
-                  {es ? "y la" : "and"}{" "}
-                  <Link href={pathFor(locale, "refunds")}>
-                    {es ? "política de reembolsos" : "refund policy"}
-                  </Link>
-                  .
-                </span>
-              </label>
-              <button
-                type="submit"
-                className="button button-primary checkout-pay"
-                disabled={
-                  !enabled ||
-                  busy ||
-                  cart.loading ||
-                  cart.error ||
-                  total == null ||
-                  !compatible ||
-                  !terms
-                }
-                aria-describedby="checkout-payment-note"
-              >
-                {busy ? (
-                  <LoaderCircle size={17} className="payment-spinner" />
-                ) : (
-                  <LockKeyhole size={17} />
-                )}
-                {busy
-                  ? es
-                    ? "Preparando tu pago…"
-                    : "Preparing payment…"
-                  : enabled
+                  <div>
+                    <h2>{es ? "Datos de tu pedido" : "Your order details"}</h2>
+                    <p>
+                      {es
+                        ? "Solo necesitamos tu correo. No hace falta una cuenta."
+                        : "Your email is all we need. No account required."}
+                    </p>
+                  </div>
+                </header>
+                <label htmlFor="checkout-email">
+                  {es ? "Correo electrónico" : "Email address"}
+                  <span className="account-input">
+                    <Mail size={18} aria-hidden="true" />
+                    <input
+                      id="checkout-email"
+                      name="email"
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      maxLength={254}
+                      required
+                      value={buyerEmail}
+                      onChange={(event) => setBuyerEmail(event.target.value)}
+                      disabled={busy}
+                      readOnly={!!email}
+                      aria-describedby="checkout-email-hint"
+                      placeholder={es ? "tu@correo.com" : "you@example.com"}
+                    />
+                  </span>
+                </label>
+                <p id="checkout-email-hint" className="commerce-muted">
+                  {email
                     ? es
-                      ? "Continuar al pago de prueba"
-                      : "Continue to test payment"
+                      ? "Estás usando el correo verificado de tu cuenta."
+                      : "You’re using your account’s verified email."
                     : es
-                      ? "Continuar al pago"
-                      : "Continue to payment"}
-              </button>
-              {error && (
-                <p className="checkout-error" role="alert">
-                  {error}
+                      ? "Comprueba que esté bien escrito: recibirás aquí el QR y la guía después del pago."
+                      : "Double-check the spelling: your QR and guide will arrive here after payment."}
                 </p>
-              )}
-              <p id="checkout-payment-note" className="commerce-muted">
-                {enabled
-                  ? es
-                    ? "Esta compra es de prueba: no se harán cargos ni se enviarán QR de eSIM reales."
-                    : "This is a test purchase: no real charges or eSIM QR codes will be sent."
-                  : es
-                    ? "No se realizará ningún cargo mientras el pago siga desactivado."
-                    : "You won’t be charged while payment remains disabled."}
-              </p>
-            </form>
+                {email && (
+                  <Link
+                    href={experiencePath(locale, "wallet")}
+                    className="checkout-session"
+                  >
+                    <BadgeCheck size={16} />
+                    {es
+                      ? "Sesión iniciada · Ir a Mis eSIM"
+                      : "Signed in · Go to My eSIMs"}
+                  </Link>
+                )}
+                <label className="commerce-checkbox checkout-marketing">
+                  <input
+                    type="checkbox"
+                    name="marketingOptIn"
+                    checked={marketingOptIn}
+                    onChange={(event) =>
+                      setMarketingOptIn(event.target.checked)
+                    }
+                    disabled={busy}
+                  />
+                  <span>
+                    {es
+                      ? "Quiero recibir novedades y ofertas de MyTripSim por correo. (Opcional)"
+                      : "I’d like to receive MyTripSim news and offers by email. (Optional)"}
+                  </span>
+                </label>
+                <section
+                  className="checkout-beneficiary"
+                  aria-labelledby="checkout-beneficiary-title"
+                >
+                  <h2 id="checkout-beneficiary-title">
+                    <Gift size={19} />
+                    {es ? "Beneficiario" : "Recipient"}
+                  </h2>
+                  <p className="commerce-muted">
+                    {es
+                      ? "Las instrucciones de la eSIM se enviarán a"
+                      : "The eSIM instructions will be sent to"}{" "}
+                    <strong>
+                      {differentRecipient
+                        ? recipientEmail ||
+                          (es
+                            ? "el correo del beneficiario"
+                            : "the recipient’s email")
+                        : buyerEmail ||
+                          (es ? "tu correo electrónico" : "your email address")}
+                    </strong>
+                    .
+                  </p>
+                  <label className="commerce-checkbox">
+                    <input
+                      type="checkbox"
+                      name="differentRecipient"
+                      checked={differentRecipient}
+                      onChange={(event) =>
+                        setDifferentRecipient(event.target.checked)
+                      }
+                      disabled={busy}
+                    />
+                    <span>
+                      {es
+                        ? "Enviar la eSIM a un correo electrónico diferente"
+                        : "Send the eSIM to a different email address"}
+                    </span>
+                  </label>
+                  {differentRecipient && (
+                    <label htmlFor="checkout-recipient-email">
+                      {es ? "Correo del beneficiario" : "Recipient email"}
+                      <span className="account-input">
+                        <Mail size={18} aria-hidden="true" />
+                        <input
+                          id="checkout-recipient-email"
+                          name="recipientEmail"
+                          type="email"
+                          inputMode="email"
+                          autoComplete="section-beneficiary email"
+                          maxLength={254}
+                          value={recipientEmail}
+                          onChange={(event) =>
+                            setRecipientEmail(event.target.value)
+                          }
+                          disabled={busy}
+                          required
+                          placeholder={
+                            es
+                              ? "beneficiario@correo.com"
+                              : "recipient@example.com"
+                          }
+                        />
+                      </span>
+                    </label>
+                  )}
+                </section>
+                <div className="checkout-payment">
+                  <span className="commerce-badge">
+                    <CreditCard size={22} />
+                  </span>
+                  <div>
+                    <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
+                    <p>
+                      {es
+                        ? enabled
+                          ? "En el siguiente paso introduces tu tarjeta aquí mismo, con la protección de Stripe."
+                          : "Tu precio final ya está disponible. Estamos preparando las opciones de pago para completar tu compra."
+                        : enabled
+                          ? "Enter your card in the next step, right here, protected by Stripe."
+                          : "Your final price is now available. We’re preparing payment options so you can complete your purchase."}
+                    </p>
+                    <span className="checkout-pending">
+                      <LockKeyhole size={14} />
+                      {es
+                        ? enabled
+                          ? "Modo de pruebas · sin cargos reales"
+                          : "El pago aún no está habilitado"
+                        : enabled
+                          ? "Test mode · no real charges"
+                          : "Payment is not available yet"}
+                    </span>
+                  </div>
+                </div>
+                <label className="commerce-checkbox">
+                  <input
+                    type="checkbox"
+                    name="compatible"
+                    required
+                    disabled={busy}
+                    checked={compatible}
+                    onChange={(e) => setCompatible(e.target.checked)}
+                  />
+                  <span>
+                    {es
+                      ? "Mi dispositivo es compatible con eSIM y está desbloqueado."
+                      : "My device supports eSIM and is carrier-unlocked."}{" "}
+                    <Link href={pathFor(locale, "compatibility")}>
+                      {es ? "Comprobar" : "Check"}
+                    </Link>
+                  </span>
+                </label>
+                <label className="commerce-checkbox">
+                  <input
+                    type="checkbox"
+                    name="terms"
+                    required
+                    disabled={busy}
+                    checked={terms}
+                    onChange={(e) => setTerms(e.target.checked)}
+                  />
+                  <span>
+                    {es ? "He leído los" : "I have read the"}{" "}
+                    <Link href={pathFor(locale, "terms")}>
+                      {es ? "términos" : "terms"}
+                    </Link>{" "}
+                    {es ? "y la" : "and"}{" "}
+                    <Link href={pathFor(locale, "refunds")}>
+                      {es ? "política de reembolsos" : "refund policy"}
+                    </Link>
+                    .
+                  </span>
+                </label>
+                <button
+                  type="submit"
+                  className="button button-primary checkout-pay"
+                  disabled={
+                    !enabled ||
+                    busy ||
+                    cart.loading ||
+                    cart.error ||
+                    total == null ||
+                    !compatible ||
+                    !terms
+                  }
+                  aria-describedby="checkout-payment-note"
+                >
+                  {busy ? (
+                    <LoaderCircle size={17} className="payment-spinner" />
+                  ) : (
+                    <LockKeyhole size={17} />
+                  )}
+                  {busy
+                    ? es
+                      ? "Preparando tu pago…"
+                      : "Preparing payment…"
+                    : enabled
+                      ? es
+                        ? "Continuar al pago de prueba"
+                        : "Continue to test payment"
+                      : es
+                        ? "Continuar al pago"
+                        : "Continue to payment"}
+                </button>
+                {error && (
+                  <p className="checkout-error" role="alert">
+                    {error}
+                  </p>
+                )}
+                <p id="checkout-payment-note" className="commerce-muted">
+                  {enabled
+                    ? es
+                      ? "Esta compra es de prueba: no se harán cargos ni se enviarán QR de eSIM reales."
+                      : "This is a test purchase: no real charges or eSIM QR codes will be sent."
+                    : es
+                      ? "No se realizará ningún cargo mientras el pago siga desactivado."
+                      : "You won’t be charged while payment remains disabled."}
+                </p>
+              </form>
+            )}
             <div className="checkout-help">
               <CircleHelp size={19} />
               <p>

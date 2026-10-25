@@ -10,6 +10,9 @@ export function checkoutConfigured() {
     /^(sk|rk)_test_[a-zA-Z0-9]{16,}$/.test(
       process.env.STRIPE_TEST_SECRET_KEY ?? "",
     ) &&
+    /^pk_test_[a-zA-Z0-9]{16,}$/.test(
+      process.env.STRIPE_TEST_PUBLISHABLE_KEY ?? "",
+    ) &&
     /^sb_secret_/.test(process.env.SUPABASE_CHECKOUT_SECRET_KEY ?? "") &&
     (process.env.CHECKOUT_REQUEST_SECRET?.length ?? 0) >= 32 &&
     /^whsec_/.test(process.env.STRIPE_TEST_WEBHOOK_SECRET ?? "")

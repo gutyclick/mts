@@ -41,6 +41,23 @@ test("checkout rejects forged prices, IDs and missing consent; origins and guest
     terms: true,
   };
   assert.ok(checkoutRequestSchema.safeParse(valid).success);
+  assert.equal(checkoutRequestSchema.parse(valid).marketingOptIn, false);
+  assert.ok(
+    !checkoutRequestSchema.safeParse({ ...valid, differentRecipient: true })
+      .success,
+  );
+  assert.ok(
+    !checkoutRequestSchema.safeParse({ ...valid, marketingOptIn: "true" })
+      .success,
+  );
+  assert.ok(
+    checkoutRequestSchema.safeParse({
+      ...valid,
+      differentRecipient: true,
+      recipientEmail: "recipient@example.invalid",
+      marketingOptIn: true,
+    }).success,
+  );
   for (const changed of [
     { ...valid, priceId: "forged" },
     { ...valid, terms: false },
@@ -145,6 +162,7 @@ test("orders are atomic, private, idempotent, rate limited and only confirmed on
       "20261024000100_catalog.sql",
       "20261025000100_retail_prices.sql",
       "20261025000300_test_checkout.sql",
+      "20261025000400_checkout_recipient_and_elements.sql",
     ])
       await db.exec(
         readFileSync(
@@ -291,6 +309,48 @@ test("orders are atomic, private, idempotent, rate limited and only confirmed on
       db.query("update checkout_orders set livemode=true where id=$1", [id]),
       /check constraint/,
     );
+    const alternateId = randomUUID();
+    const alternate = (optIn = true) =>
+      db.query(
+        "select create_test_checkout_v2($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb) as result",
+        [
+          alternateId,
+          null,
+          "buyer@example.invalid",
+          "recipient@example.invalid",
+          optIn,
+          browser,
+          "e".repeat(64),
+          fingerprint,
+          "es",
+          800,
+          lines,
+        ],
+      );
+    const first = (await alternate()).rows[0].result;
+    assert.equal(first.billing_email, "buyer@example.invalid");
+    assert.equal(first.recipient_email, "recipient@example.invalid");
+    assert.equal(first.marketing_opt_in, true);
+    assert.equal(first.marketing_consent_version, "mytripsim-news-v1");
+    assert.equal(first.checkout_ui_mode, "elements");
+    assert.ok(first.marketing_opt_in_at);
+    assert.equal(
+      (await alternate()).rows[0].result.marketing_opt_in_at,
+      first.marketing_opt_in_at,
+    );
+    await assert.rejects(alternate(false), /attempt_conflict/);
+    await db.exec("reset role; set role authenticated");
+    for (const column of [
+      "billing_email",
+      "recipient_email",
+      "marketing_opt_in",
+      "marketing_opt_in_at",
+    ])
+      await assert.rejects(
+        db.query(`select ${column} from checkout_orders`),
+        /permission denied/,
+      );
+    await assert.rejects(alternate(), /permission denied/);
   } finally {
     await db.close();
   }

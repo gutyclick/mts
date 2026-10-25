@@ -9,7 +9,11 @@ import {
 export function GET(request: NextRequest) {
   const enabled = checkoutConfigured();
   const response = NextResponse.json(
-    { enabled, mode: "test" },
+    {
+      enabled,
+      mode: "test",
+      publishableKey: enabled ? process.env.STRIPE_TEST_PUBLISHABLE_KEY : null,
+    },
     { headers: paymentHeaders },
   );
   if (enabled && !validBrowserToken(request.cookies.get(browserCookie)?.value))

@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { destinations } from "@/lib/catalog";
+import { getDestinations } from "@/lib/catalog-server";
 import { locales, pathFor, faqTopicPath, type PageKey } from "@/lib/i18n";
 import { faqTopicSegments, type FAQTopic } from "@/lib/faq-topics";
 import { siteUrl } from "@/lib/seo";
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const destinations = await getDestinations();
   const entries: { page?: PageKey; slug?: string }[] = [
     {},
     ...(

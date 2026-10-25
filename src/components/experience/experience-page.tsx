@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
-import { destinations, popularDestinations } from "@/lib/catalog";
-import { getPlans } from "@/lib/plans";
+import {
+  getDestination,
+  getPopularDestinations,
+  getPublishedPlans,
+} from "@/lib/catalog-server";
 import { demoEsims } from "@/lib/demo-esims";
 import type { Locale } from "@/lib/i18n";
 import type { ExperienceKey } from "@/lib/experience-routes";
@@ -9,7 +12,7 @@ import { EsimWallet } from "./esim-wallet";
 import { InstallGuide } from "./install-guide";
 import { AdminPreview } from "./admin-preview";
 export type ExperienceQuery = Record<string, string | string[] | undefined>;
-export function ExperiencePage({
+export async function ExperiencePage({
   locale,
   page,
   query,
@@ -19,9 +22,12 @@ export function ExperiencePage({
   query: ExperienceQuery;
 }) {
   if (page === "checkout") {
-    const destination = destinations.find((d) => d.slug === query.destination);
+    const destination =
+      typeof query.destination === "string"
+        ? await getDestination(query.destination)
+        : undefined;
     const plan = destination
-      ? getPlans(destination).find((p) => p.id === query.plan)
+      ? (await getPublishedPlans(destination)).find((p) => p.id === query.plan)
       : undefined;
     if ((query.destination || query.plan) && (!destination || !plan))
       notFound();
@@ -50,12 +56,16 @@ export function ExperiencePage({
   return (
     <AdminPreview
       locale={locale}
-      samples={popularDestinations.flatMap((d) =>
-        getPlans(d)
-          .filter((p) => p.kind === "fixed")
-          .slice(0, 2)
-          .map((plan) => ({ slug: d.slug, plan })),
-      )}
+      samples={(
+        await Promise.all(
+          (await getPopularDestinations()).map(async (d) =>
+            (await getPublishedPlans(d))
+              .filter((p) => p.kind === "fixed")
+              .slice(0, 2)
+              .map((plan) => ({ slug: d.slug, plan })),
+          ),
+        )
+      ).flat()}
     />
   );
 }

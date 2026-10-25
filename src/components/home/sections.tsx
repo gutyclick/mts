@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 import { DestinationGrid } from "../destination-grid";
-import { popularDestinations } from "@/lib/catalog";
+import { getPopularDestinations } from "@/lib/catalog-server";
 import { ArrowLink, IconBadge, SectionHeading } from "../ui";
 
 export function TrustStrip({ locale }: { locale: Locale }) {
@@ -35,7 +35,7 @@ export function TrustStrip({ locale }: { locale: Locale }) {
     </div>
   );
 }
-export function PopularDestinations({ locale }: { locale: Locale }) {
+export async function PopularDestinations({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
   return (
     <section className="section container popular-destinations">
@@ -44,7 +44,7 @@ export function PopularDestinations({ locale }: { locale: Locale }) {
           {t.allDestinations}
         </ArrowLink>
       </SectionHeading>
-      <DestinationGrid locale={locale} items={popularDestinations} />
+      <DestinationGrid locale={locale} items={await getPopularDestinations()} />
     </section>
   );
 }

@@ -2,13 +2,13 @@ import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/i18n";
 import type { Destination } from "@/lib/catalog";
-import { getPlans } from "@/lib/plans";
+import { getPublishedPlans } from "@/lib/catalog-server";
 import { PlanBrowser } from "@/components/plan-browser";
 import { DestinationArtwork } from "@/components/illustrations";
 import { DestinationFlag } from "@/components/destination-flag";
 import { DestinationGuide } from "./destination-guide";
 
-export function DestinationPlanPage({
+export async function DestinationPlanPage({
   locale,
   destination,
   initialDays = "",
@@ -20,7 +20,7 @@ export function DestinationPlanPage({
   initialPlanId?: string;
 }) {
   const es = locale === "es";
-  const plans = getPlans(destination);
+  const plans = await getPublishedPlans(destination);
   return (
     <div className="container destination-page destination-product-page">
       <nav

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { destinationContent } from "@/lib/destination-content";
-import { getPlans } from "@/lib/plans";
+import { getDestination, getPublishedPlans } from "@/lib/catalog-server";
 import { destinations } from "@/lib/catalog";
 import { isLocale, locales } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
@@ -16,12 +16,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const destination = destinations.find((item) => item.slug === slug);
+  const destination = await getDestination(slug);
   if (!isLocale(locale) || !destination) return {};
   return metadata(
     locale,
     `${destination.name[locale]} eSIM`,
-    destinationContent(locale, destination, getPlans(destination)).description,
+    destinationContent(
+      locale,
+      destination,
+      await getPublishedPlans(destination),
+    ).description,
     undefined,
     slug,
   );
@@ -34,7 +38,7 @@ export default async function DestinationPage({
   searchParams: Promise<{ days?: string; plan?: string }>;
 }) {
   const { locale, slug } = await params;
-  const destination = destinations.find((item) => item.slug === slug);
+  const destination = await getDestination(slug);
   if (!isLocale(locale) || !destination) notFound();
   const { days, plan } = await searchParams;
   return (

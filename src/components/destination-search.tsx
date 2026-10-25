@@ -10,16 +10,20 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin, Search, X } from "lucide-react";
-import { popularDestinations, searchDestinations } from "@/lib/catalog";
+import { searchDestinations, type Destination } from "@/lib/catalog";
 import { DestinationFlag } from "./destination-flag";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 
 export function DestinationSearch({
   locale,
   compact = false,
+  items,
+  popular,
 }: {
   locale: Locale;
   compact?: boolean;
+  items: Destination[];
+  popular: Destination[];
 }) {
   const t = dictionaries[locale];
   const router = useRouter();
@@ -30,7 +34,7 @@ export function DestinationSearch({
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const results = (
-    query.trim() ? searchDestinations(query) : popularDestinations
+    query.trim() ? searchDestinations(query, items) : popular
   ).slice(0, 8);
   function navigate(slug: string) {
     setOpen(false);

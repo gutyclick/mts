@@ -19,6 +19,7 @@ import {
   type PageKey,
 } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
+import { getDestinations } from "@/lib/catalog-server";
 import {
   experienceKey,
   experiencePath,
@@ -138,7 +139,10 @@ export default async function ContentPage({
       )}
       {key === "destinations" && (
         <section className="container directory-section">
-          <DestinationDirectory locale={locale} />
+          <DestinationDirectory
+            locale={locale}
+            items={await getDestinations()}
+          />
           <p className="preview-note">{t.previewNotice}</p>
         </section>
       )}

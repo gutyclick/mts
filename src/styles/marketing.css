@@ -1,4 +1,10 @@
 /* Shared marketing system: restrained color, tactile controls, illustrated travel. */
+.catalog-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
 .button {
   min-height: 46px;
   display: inline-flex;

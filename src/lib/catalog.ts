@@ -50,10 +50,13 @@ export const popularDestinations = [
   "thailand",
 ].map((slug) => destinations.find((destination) => destination.slug === slug)!);
 export { normalize };
-export function searchDestinations(query: string): Destination[] {
+export function searchDestinations(
+  query: string,
+  items = destinations,
+): Destination[] {
   const value = normalize(query);
-  if (!value) return destinations;
-  const candidates = destinations.map((destination) => ({
+  if (!value) return items;
+  const candidates = items.map((destination) => ({
     destination,
     names: [
       destination.name.en,

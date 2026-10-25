@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { destinations, type Destination } from "@/lib/catalog";
+import type { Destination } from "@/lib/catalog";
 import { dictionaries, pathFor, type Locale } from "@/lib/i18n";
 import { catalogCopy } from "@/lib/catalog-copy";
 import { DestinationArtwork } from "./illustrations";
@@ -8,10 +8,10 @@ import { DestinationFlag } from "./destination-flag";
 
 export function DestinationGrid({
   locale,
-  items = destinations,
+  items,
 }: {
   locale: Locale;
-  items?: Destination[];
+  items: Destination[];
 }) {
   const t = dictionaries[locale];
   const c = catalogCopy[locale];

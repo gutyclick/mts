@@ -1,17 +1,23 @@
 "use client";
 import { useState } from "react";
 import { Search, X } from "lucide-react";
-import { searchDestinations } from "@/lib/catalog";
+import { searchDestinations, type Destination } from "@/lib/catalog";
 import { catalogCopy } from "@/lib/catalog-copy";
 import { dictionaries, type Locale } from "@/lib/i18n";
 import { DestinationGrid } from "./destination-grid";
-export function DestinationDirectory({ locale }: { locale: Locale }) {
+export function DestinationDirectory({
+  locale,
+  items,
+}: {
+  locale: Locale;
+  items: Destination[];
+}) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState("all");
   const [limit, setLimit] = useState(24);
   const t = dictionaries[locale];
   const c = catalogCopy[locale];
-  const matches = searchDestinations(query);
+  const matches = searchDestinations(query, items);
   const results = matches
     .filter((destination) => kind === "all" || destination.type === kind)
     .sort((a, b) => a.name[locale].localeCompare(b.name[locale], locale));

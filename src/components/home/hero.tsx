@@ -2,8 +2,9 @@ import { Check } from "lucide-react";
 import { dictionaries, type Locale } from "@/lib/i18n";
 import { DestinationSearch } from "../destination-search";
 import { SimMascot } from "../sim-mascot";
+import { getDestinations, getPopularDestinations } from "@/lib/catalog-server";
 
-export function Hero({ locale }: { locale: Locale }) {
+export async function Hero({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
   return (
     <section className="hero container">
@@ -18,7 +19,11 @@ export function Hero({ locale }: { locale: Locale }) {
           <span className="hero-accent">{t.heroAccent}</span> {t.heroEnd}
         </h1>
         <p className="hero-description">{t.heroDescription}</p>
-        <DestinationSearch locale={locale} />
+        <DestinationSearch
+          locale={locale}
+          items={await getDestinations()}
+          popular={await getPopularDestinations()}
+        />
         <p className="hero-footnote">
           <Check size={15} />
           {t.heroNote}

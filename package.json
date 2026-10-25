@@ -25,7 +25,12 @@
     "supabase:check": "node --experimental-strip-types scripts/check-supabase.mjs",
     "test:supabase": "node --experimental-strip-types --test tests/supabase-catalog.test.mjs tests/customer-security.test.mjs",
     "test:supabase:web": "node --experimental-strip-types scripts/test-supabase-web.mjs",
-    "test:accounts": "node scripts/test-customer-auth.mjs"
+    "test:accounts": "node scripts/test-customer-auth.mjs",
+    "provider:configure": "node scripts/configure-esimaccess.mjs",
+    "provider:check": "node --experimental-strip-types scripts/check-esimaccess.mjs",
+    "provider:sync": "node --experimental-strip-types scripts/check-esimaccess.mjs --sync",
+    "provider:deploy-env": "node --experimental-strip-types scripts/deploy-esimaccess-env.mjs",
+    "test:provider": "node --experimental-strip-types --test tests/esimaccess.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

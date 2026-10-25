@@ -26,7 +26,7 @@ const rules = [
   ["Resend key", /\bre_[A-Za-z0-9]{24,}\b/],
   [
     "assigned credential",
-    /(?:api[_-]?key|secret[_-]?key|service[_-]?role[_-]?key|access[_-]?token|password)\s*[=:]\s*["'][A-Za-z0-9_+\/.=-]{20,}["']/i,
+    /(?:api[_-]?key|secret[_-]?key|service[_-]?role[_-]?key|access[_-]?token|access[_-]?code|esim_access_sync_secret|password)\s*[=:]\s*["'][A-Za-z0-9_+\/.=-]{20,}["']/i,
   ],
 ];
 const findings = [];

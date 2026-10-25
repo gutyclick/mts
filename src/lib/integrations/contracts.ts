@@ -1,10 +1,10 @@
-// Future server-side adapters. This release deliberately provides no implementations.
+// Payment and fulfillment contracts for the next stage. The read-only supplier
+// integration is implemented in esimaccess-api.ts; costs are never projected here.
 export interface SupplierPlan {
   providerPackageId: string;
   destinationSlug: string;
   dataGb: number;
   validityDays: number;
-  wholesalePriceUsd: number;
   coveredCountries: string[];
   networks: string[];
   activationRule: string;

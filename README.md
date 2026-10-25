@@ -69,6 +69,8 @@ Los 241 slugs se encuentran en `src/data/destinations.json` y se comparten entre
 
 La primera integración de Supabase incluye migración, catálogo inicial sin precios, permisos RLS y lectura desde el servidor. La conexión remota requiere configurar el proyecto y las variables de entorno: [instrucciones y verificación](docs/supabase-setup.md). Sin configuración se mantiene el catálogo local. La administración dentro de la web sigue siendo de muestra; la edición inicial se realiza desde el Dashboard de Supabase.
 
+La [integración de eSIM Access](docs/esimaccess.md) consulta el catálogo firmado desde el servidor y mantiene el enlace privado de los planes publicados con los códigos del proveedor. No importa precios ni emite eSIM. Incluye herramientas de configuración segura, comprobación y sincronización, más adaptadores privados de consulta de perfiles y consumo.
+
 ```text
 src/
   app/                       Rutas, layouts, metadata y CSS/tokens

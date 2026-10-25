@@ -42,6 +42,8 @@ test("named variants keep their own selling price through selection, tooltip, ca
     }).format(prices.US_1_7_usip / 100),
   );
   await page.getByRole("button", { name: "About USIP", exact: true }).click();
+  // A delayed auto-scroll event must not close a tooltip whose anchor did not move.
+  await page.evaluate(() => window.dispatchEvent(new Event("scroll")));
   await expect(page.getByRole("tooltip")).toContainText("United States IP");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("tooltip")).toHaveCount(0);

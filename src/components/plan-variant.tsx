@@ -16,6 +16,7 @@ export function PlanVariant({
   const id = useId();
   const button = useRef<HTMLButtonElement>(null);
   const tooltip = useRef<HTMLSpanElement>(null);
+  const anchor = useRef<{ top: number; left: number } | undefined>(undefined);
   const [position, setPosition] = useState<{
     left: number;
     top: number;
@@ -25,7 +26,8 @@ export function PlanVariant({
   function show() {
     clearTimeout(timer.current);
     const rect = button.current?.getBoundingClientRect();
-    if (rect)
+    if (rect) {
+      anchor.current = { top: rect.top, left: rect.left };
       setPosition({
         left: Math.max(
           12,
@@ -40,6 +42,7 @@ export function PlanVariant({
             : rect.top - 8,
         above: window.innerHeight - rect.bottom <= 160,
       });
+    }
   }
   function hideSoon() {
     timer.current = setTimeout(() => setPosition(undefined), 150);
@@ -48,6 +51,16 @@ export function PlanVariant({
   useEffect(() => {
     if (!isOpen) return;
     const close = () => setPosition(undefined);
+    const scroll = () => {
+      const rect = button.current?.getBoundingClientRect();
+      if (
+        !rect ||
+        !anchor.current ||
+        Math.abs(rect.top - anchor.current.top) > 1 ||
+        Math.abs(rect.left - anchor.current.left) > 1
+      )
+        close();
+    };
     const key = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
@@ -62,12 +75,12 @@ export function PlanVariant({
         close();
     };
     window.addEventListener("keydown", key, true);
-    window.addEventListener("scroll", close, true);
+    window.addEventListener("scroll", scroll, true);
     window.addEventListener("resize", close);
     window.addEventListener("pointerdown", outside);
     return () => {
       window.removeEventListener("keydown", key, true);
-      window.removeEventListener("scroll", close, true);
+      window.removeEventListener("scroll", scroll, true);
       window.removeEventListener("resize", close);
       window.removeEventListener("pointerdown", outside);
       clearTimeout(timer.current);

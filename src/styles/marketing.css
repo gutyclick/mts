@@ -145,16 +145,11 @@
   letter-spacing: -1.1px;
   white-space: nowrap;
 }
-.brand > svg {
-  width: 31px;
-  height: 34px;
-  color: var(--orange);
-}
-.brand-blue {
-  color: var(--blue-dark);
-}
-.brand-dot {
-  color: var(--orange);
+.brand-logo {
+  display: block;
+  width: 184px;
+  height: auto;
+  flex-shrink: 0;
 }
 .desktop-nav {
   display: flex;
@@ -1011,6 +1006,9 @@ input::placeholder {
 .footer-brand .brand {
   font-size: 22px;
 }
+.footer-brand .brand-logo {
+  width: 170px;
+}
 .footer-brand > p {
   color: var(--muted);
   font-size: 12px;
@@ -1381,8 +1379,8 @@ input::placeholder {
   .brand {
     font-size: 22px;
   }
-  .brand > svg {
-    width: 28px;
+  .brand-logo {
+    width: 164px;
   }
   .header-actions {
     gap: 9px;

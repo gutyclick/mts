@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { ArrowUpRight, type LucideIcon } from "lucide-react";
 
@@ -24,29 +25,15 @@ export function IconBadge({
 export function Brand() {
   return (
     <span className="brand">
-      <svg viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <path
-          d="M7 17 6 5l10 6h4L30 5l-1 12c4 12-3 16-11 16S3 29 7 17Z"
-          fill="currentColor"
-        />
-        <path
-          d="M12 21h1m10 0h1"
-          stroke="white"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        <path
-          d="m16 25 2 2 2-2"
-          stroke="white"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <span>
-        MyTrip<span className="brand-blue">Sim</span>
-        <span className="brand-dot">.</span>
-      </span>
+      <Image
+        src="/images/mytripsimlogo-web.svg"
+        alt="MyTripSim"
+        width={3551}
+        height={737}
+        className="brand-logo"
+        loading="eager"
+        unoptimized
+      />
     </span>
   );
 }

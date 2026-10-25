@@ -24,6 +24,8 @@ import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { CopyValue } from "./copy-value";
 import { formatUSD } from "@/lib/retail-prices";
+const dataLabel = (gb: number) =>
+  gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`;
 
 export async function CustomerWallet({
   locale,
@@ -122,7 +124,7 @@ export async function CustomerWallet({
               <div className="customer-plan-facts">
                 <span>
                   <Wifi size={19} />
-                  <strong>{order.data_gb} GB</strong>
+                  <strong>{dataLabel(order.data_gb)}</strong>
                 </span>
                 <span>
                   <CalendarDays size={19} />
@@ -274,7 +276,7 @@ export async function CustomerWallet({
                       <div className="customer-plan-facts">
                         <span>
                           <Wifi size={18} />
-                          {item.data_gb} GB
+                          {dataLabel(item.data_gb)}
                         </span>
                         <span>
                           <CalendarDays size={18} />
@@ -303,7 +305,10 @@ export async function CustomerWallet({
             <h2 className="customer-section-title" id="customer-orders-title">
               <Package size={23} />
               {es ? "Mis pedidos" : "My orders"}
-              <span>{orders.length + checkouts.length}</span>
+              <span>
+                {orders.filter((o) => !o.checkout_order_id).length +
+                  checkouts.length}
+              </span>
             </h2>
             {!orders.length && !checkouts.length ? (
               <p className="customer-card">
@@ -330,9 +335,31 @@ export async function CustomerWallet({
                       ))}
                       <small>
                         {formatDate(item.created_at)} ·{" "}
-                        {es
-                          ? "Prueba · Sin eSIM emitida"
-                          : "Test · No eSIM issued"}
+                        {item.fulfillmentStates.includes("sent")
+                          ? es
+                            ? "eSIM preparada · Correo enviado"
+                            : "eSIM ready · Email sent"
+                          : item.fulfillmentStates.includes("ready")
+                            ? es
+                              ? "eSIM lista para instalar"
+                              : "eSIM ready to install"
+                            : item.fulfillmentStates.includes("review")
+                              ? es
+                                ? "Entrega en revisión"
+                                : "Delivery under review"
+                              : item.fulfillmentStates.some((s) =>
+                                    ["queued", "provider_pending"].includes(s),
+                                  )
+                                ? es
+                                  ? "Preparando tus eSIM"
+                                  : "Preparing your eSIMs"
+                                : !item.livemode
+                                  ? es
+                                    ? "Compra de prueba"
+                                    : "Test purchase"
+                                  : es
+                                    ? "Pedido recibido"
+                                    : "Order received"}
                       </small>
                     </div>
                     <div>
@@ -373,25 +400,27 @@ export async function CustomerWallet({
                     </div>
                   </article>
                 ))}
-                {orders.map((item) => (
-                  <article
-                    className="customer-card customer-order"
-                    key={item.id}
-                  >
-                    <div>
-                      <h3>{item.destination_name[locale]}</h3>
-                      <p>{item.plan_name}</p>
-                      <small>
-                        {formatDate(item.created_at)} ·{" "}
-                        {es ? "Pedido" : "Order"}{" "}
-                        {item.id.slice(0, 8).toUpperCase()}
-                      </small>
-                    </div>
-                    <span className="customer-status">
-                      {labels[item.status]}
-                    </span>
-                  </article>
-                ))}
+                {orders
+                  .filter((o) => !o.checkout_order_id)
+                  .map((item) => (
+                    <article
+                      className="customer-card customer-order"
+                      key={item.id}
+                    >
+                      <div>
+                        <h3>{item.destination_name[locale]}</h3>
+                        <p>{item.plan_name}</p>
+                        <small>
+                          {formatDate(item.created_at)} ·{" "}
+                          {es ? "Pedido" : "Order"}{" "}
+                          {item.id.slice(0, 8).toUpperCase()}
+                        </small>
+                      </div>
+                      <span className="customer-status">
+                        {labels[item.status]}
+                      </span>
+                    </article>
+                  ))}
               </div>
             )}
           </section>

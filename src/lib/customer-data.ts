@@ -4,6 +4,7 @@ import { z } from "zod";
 import { authClient } from "./supabase/auth-server";
 import { authPath, safeAccountNext } from "./auth-routes";
 import type { Locale } from "./i18n";
+import { checkoutDatabase } from "./payments/checkout-server";
 
 const orderSchema = z.object({
   id: z.uuid(),
@@ -19,6 +20,7 @@ const orderSchema = z.object({
   plan_name: z.string(),
   data_gb: z.coerce.number().positive(),
   days: z.number().int().positive(),
+  checkout_order_id: z.uuid().nullable().optional(),
 });
 const esimSchema = z.object({
   id: z.uuid(),
@@ -50,7 +52,7 @@ export async function customerCheckoutOrders(
     .order("created_at", { ascending: false })
     .limit(100);
   if (error) throw new Error("Could not load checkout orders");
-  return z
+  const parsed = z
     .array(
       z.object({
         id: z.uuid(),
@@ -68,6 +70,21 @@ export async function customerCheckoutOrders(
       }),
     )
     .parse(data);
+  if (!parsed.length) return [];
+  const { data: units, error: unitError } = await checkoutDatabase()
+    .from("esim_fulfillments")
+    .select("order_id,state")
+    .in(
+      "order_id",
+      parsed.map((o) => o.id),
+    );
+  if (unitError) throw new Error("Could not load fulfillment status");
+  return parsed.map((o) => ({
+    ...o,
+    fulfillmentStates: (units ?? [])
+      .filter((u) => u.order_id === o.id)
+      .map((u) => String(u.state)),
+  }));
 }
 
 export async function customerSession(locale: Locale, next?: string) {
@@ -91,7 +108,9 @@ export async function customerRecords(
   const [orders, esims] = await Promise.all([
     client
       .from("customer_orders")
-      .select("id,status,created_at,destination_name,plan_name,data_gb,days")
+      .select(
+        "id,status,created_at,destination_name,plan_name,data_gb,days,checkout_order_id",
+      )
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
       .limit(500),

@@ -19,6 +19,7 @@ import { planVariant } from "@/lib/plan-variants";
 import { authPath } from "@/lib/auth-routes";
 import { SimMascot } from "@/components/sim-mascot";
 import { EmbeddedPayment } from "./embedded-payment";
+import { EsimDelivery } from "./esim-delivery";
 import { HoldCountdown, forgetPayment, markPaymentLeave } from "./payment-hold";
 
 const receiptSchema = z.object({
@@ -382,6 +383,7 @@ export function PaymentResult({
             : "Test mode · No real charges"}
         </p>
       </section>
+      {paid && <EsimDelivery locale={locale} orderId={orderId} />}
     </div>
   );
 }

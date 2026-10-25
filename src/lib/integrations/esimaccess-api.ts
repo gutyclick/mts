@@ -142,7 +142,7 @@ export function createEsimAccessAPI(
   transport: typeof fetch = fetch,
 ) {
   async function request(
-    path: "package/list" | "esim/query" | "esim/usage/query",
+    path: "package/list" | "esim/query" | "esim/usage/query" | "esim/order",
     payload: unknown,
   ) {
     const body = JSON.stringify(payload);
@@ -188,6 +188,125 @@ export function createEsimAccessAPI(
     return envelope.obj;
   }
   return {
+    async countryFixedPackages(locationCode: string) {
+      if (!/^[A-Z]{2}$/.test(locationCode))
+        throw new EsimAccessError("configuration");
+      const object = await request("package/list", {
+        type: "BASE",
+        dataType: "1",
+        locationCode,
+      });
+      if (typeof object !== "object" || !object || !("packageList" in object))
+        throw new EsimAccessError("response");
+      return projectFixedPackages(object.packageList);
+    },
+    async purchaseProfile(slug: string, transactionId: string) {
+      if (
+        !/^[A-Za-z0-9_-]{1,200}$/.test(slug) ||
+        !/^[A-Za-z0-9_-]{1,50}$/.test(transactionId)
+      )
+        throw new EsimAccessError("configuration");
+      const result = z
+        .object({
+          orderNo: z.string().regex(/^[A-Za-z0-9_-]{1,100}$/),
+          transactionId: z.string().optional(),
+        })
+        .safeParse(
+          await request("esim/order", {
+            transactionId,
+            packageInfoList: [{ packageCode: slug, count: 1 }],
+          }),
+        );
+      if (
+        !result.success ||
+        (result.data.transactionId &&
+          result.data.transactionId !== transactionId)
+      )
+        throw new EsimAccessError("response");
+      return result.data.orderNo;
+    },
+    async allocatedProfile(orderNo: string) {
+      if (!/^[A-Za-z0-9_-]{1,100}$/.test(orderNo))
+        throw new EsimAccessError("configuration");
+      const object = await request("esim/query", {
+        orderNo,
+        pager: { pageNum: 1, pageSize: 5 },
+      });
+      const pending = z
+        .object({
+          esimList: z
+            .array(z.object({ orderNo: identifier, esimStatus: z.string() }))
+            .max(1),
+        })
+        .safeParse(object);
+      if (
+        pending.success &&
+        pending.data.esimList.every(
+          (p) =>
+            p.orderNo === orderNo &&
+            ["CREATE", "PAYING", "PAID", "GETTING_RESOURCE"].includes(
+              p.esimStatus,
+            ),
+        )
+      )
+        return [];
+      const result = z
+        .object({
+          esimList: z
+            .array(
+              z.object({
+                esimTranNo: identifier,
+                orderNo: identifier,
+                iccid: z.string().regex(/^\d{15,25}$/),
+                ac: z.string().max(2000).nullish(),
+                esimStatus: z.string(),
+                smdpStatus: z.string(),
+                totalVolume: bytes,
+                orderUsage: bytes.nullish(),
+                expiredTime: z.string().max(60).nullish(),
+                apn: z.string().max(200).nullish(),
+                packageList: z
+                  .array(
+                    z.object({
+                      slug: identifier,
+                      duration: z.coerce.number().int().positive(),
+                      volume: bytes,
+                    }),
+                  )
+                  .length(1),
+              }),
+            )
+            .max(1),
+        })
+        .safeParse(object);
+      if (!result.success) throw new EsimAccessError("response");
+      return result.data.esimList.map((p) => {
+        const installation = p.ac
+          ? /^LPA:1\$([A-Za-z0-9.-]+)\$([A-Za-z0-9_-]+)$/.exec(p.ac)
+          : null;
+        if (
+          p.orderNo !== orderNo ||
+          !installation ||
+          p.totalVolume !== p.packageList[0].volume
+        )
+          throw new EsimAccessError("response");
+        return {
+          transactionId: p.esimTranNo,
+          orderNo: p.orderNo,
+          iccid: p.iccid,
+          smdpAddress: installation[1],
+          activationCode: installation[2],
+          status: p.esimStatus,
+          smdpStatus: p.smdpStatus,
+          volumeBytes: p.totalVolume,
+          usedBytes: p.orderUsage ?? null,
+          expiresAt: p.expiredTime ?? null,
+          packageSlug: p.packageList[0].slug,
+          days: p.packageList[0].duration,
+          apn: p.apn ?? null,
+        };
+      });
+    },
     async listFixedPackages() {
       const object = await request("package/list", {
         type: "BASE",

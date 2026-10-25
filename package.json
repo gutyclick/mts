@@ -45,7 +45,10 @@
     "test:wallets": "node --experimental-strip-types --test tests/wallets.test.mjs",
     "test:holds": "node --experimental-strip-types --test tests/payment-holds.test.mjs",
     "checkout:expiry:env": "node scripts/configure-checkout-expiry.mjs --deploy-env",
-    "checkout:expiry:start": "node scripts/configure-checkout-expiry.mjs --start"
+    "checkout:expiry:start": "node scripts/configure-checkout-expiry.mjs --start",
+    "fulfillment:configure": "node scripts/configure-fulfillment.mjs",
+    "fulfillment:start": "node scripts/configure-fulfillment.mjs --start",
+    "test:fulfillment": "node --experimental-strip-types --test tests/fulfillment.test.mjs tests/fulfillment-security.test.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

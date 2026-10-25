@@ -1083,3 +1083,161 @@
     animation: none;
   }
 }
+.esim-access-page {
+  max-width: 960px;
+  padding-top: 48px;
+  padding-bottom: 64px;
+}
+.esim-access-page > h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  letter-spacing: -0.045em;
+  margin: 12px 0 28px;
+}
+.esim-delivery {
+  text-align: left;
+  padding: 28px;
+  border: 1px solid var(--line, #dce7f6);
+  border-radius: 24px;
+  background: #fff;
+  margin: 24px auto;
+  max-width: 900px;
+  min-width: 0;
+}
+.esim-delivery-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.esim-delivery-icon {
+  display: grid;
+  place-items: center;
+  background: #edf5ff;
+  color: #1269ed;
+  border-radius: 15px;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+.esim-delivery h2 {
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  margin: 0 0 5px;
+}
+.esim-delivery p {
+  color: #526785;
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 8px 0 16px;
+}
+.esim-delivery-list {
+  display: grid;
+  gap: 16px;
+}
+.esim-delivery-unit {
+  border: 1px solid #dce7f6;
+  border-radius: 18px;
+  padding: 20px;
+  min-width: 0;
+}
+.esim-delivery-unit-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.esim-delivery-unit h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+.esim-delivery-unit small {
+  color: #526785;
+  font-size: 12px;
+}
+.esim-delivery-badge {
+  padding: 6px 10px;
+  background: #edf5ff;
+  color: #215a9b;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.delivery-sent,
+.delivery-ready {
+  background: #e9f8f0;
+  color: #21764c;
+}
+.delivery-review {
+  background: #fff3e5;
+  color: #945f1f;
+}
+.esim-delivery-install {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding-top: 10px;
+}
+.esim-delivery-install > div {
+  min-width: 0;
+}
+.esim-delivery-install .customer-qr {
+  width: 230px;
+  height: auto;
+  max-width: 100%;
+  margin: auto;
+}
+.esim-delivery-install h4 {
+  font-size: 17px;
+  margin: 4px 0 18px;
+}
+.esim-delivery-install .button-primary {
+  margin-top: 20px;
+}
+.esim-delivery .esim-delivery-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  margin: 18px 0 0;
+}
+.esim-delivery-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+@media (max-width: 650px) {
+  .esim-delivery {
+    padding: 18px;
+    border-radius: 20px;
+  }
+  .esim-delivery h2 {
+    font-size: 21px;
+  }
+  .esim-delivery-title {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .esim-delivery-unit {
+    padding: 16px;
+  }
+  .esim-delivery-unit-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .esim-delivery-install {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  .esim-delivery-install > div:first-child {
+    text-align: center;
+  }
+  .esim-delivery-install .button {
+    width: 100%;
+  }
+  .esim-access-page {
+    padding-top: 28px;
+    padding-bottom: 40px;
+  }
+}

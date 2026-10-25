@@ -20,6 +20,8 @@ import {
 } from "@/lib/i18n";
 import { metadata } from "@/lib/seo";
 import { getDestinations } from "@/lib/catalog-server";
+import { authMode, authSegments, authPath } from "@/lib/auth-routes";
+import { AuthPage } from "@/components/account/auth-page";
 import {
   experienceKey,
   experiencePath,
@@ -52,12 +54,14 @@ function heading(locale: Locale, key: PageKey) {
 }
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
-    [...Object.values(routeSegments), ...Object.values(experienceSegments)].map(
-      (segments) => ({
-        locale,
-        page: segments[locale],
-      }),
-    ),
+    [
+      ...Object.values(routeSegments),
+      ...Object.values(experienceSegments),
+      ...Object.values(authSegments),
+    ].map((segments) => ({
+      locale,
+      page: segments[locale],
+    })),
   );
 }
 export async function generateMetadata({
@@ -67,6 +71,19 @@ export async function generateMetadata({
 }) {
   const { locale, page } = await params;
   if (!isLocale(locale)) return {};
+  const accountMode = authMode(locale, page);
+  if (accountMode)
+    return {
+      title: locale === "es" ? "Tu cuenta" : "Your account",
+      robots: { index: false, follow: false },
+      alternates: {
+        canonical: authPath(locale, accountMode),
+        languages: {
+          en: authPath("en", accountMode),
+          es: authPath("es", accountMode),
+        },
+      },
+    };
   const experience = experienceKey(locale, page);
   if (experience)
     return {
@@ -99,6 +116,18 @@ export default async function ContentPage({
 }) {
   const { locale, page } = await params;
   if (!isLocale(locale)) notFound();
+  const accountMode = authMode(locale, page);
+  if (accountMode) {
+    const query = await searchParams;
+    return (
+      <AuthPage
+        locale={locale}
+        mode={accountMode}
+        next={query.next}
+        error={typeof query.error === "string" ? query.error : undefined}
+      />
+    );
+  }
   const experience = experienceKey(locale, page);
   if (experience)
     return (

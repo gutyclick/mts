@@ -22,7 +22,7 @@ npm run build
 npm start
 ```
 
-No se necesitan variables de entorno ni credenciales para esta fase. `.env.example` contiene únicamente variables futuras de Supabase con valores vacíos. Nunca colocar claves secretas de Stripe, eSIM Access, Supabase o Resend en variables `NEXT_PUBLIC_*`, archivos versionados o registros. `.env.local`, `.vercel/` y los metadatos locales de Supabase están excluidos de Git.
+El catálogo admite desarrollo local sin configuración remota. Las cuentas requieren `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY`; `AUTH_SITE_URL` fija el origen de autenticación (producción por defecto; usar `http://localhost:3000` para desarrollo local). Consulta `.env.example` y [cuentas y correo](docs/accounts.md). Nunca colocar claves secretas de Stripe, eSIM Access, Supabase o Resend en variables `NEXT_PUBLIC_*`, archivos versionados o registros. `.env.local`, `.vercel/` y los metadatos locales de Supabase están excluidos de Git.
 
 ## Implementado
 
@@ -48,7 +48,7 @@ La FAQ principal es un índice de seis temas, cada uno con página propia y ruta
 
 La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
-El recorrido visual incluye ficha completa del plan, compra de ejemplo, Mis eSIM, instalación y administración de muestra. Consulta [pantallas, rutas y límites](docs/visual-journey.md). Las pantallas de demostración usan datos ficticios y no realizan compras, pagos ni activaciones.
+Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). Compra y administración siguen siendo de muestra, sin pagos ni aprovisionamiento.
 
 | Página           | Inglés              | Español                    |
 | ---------------- | ------------------- | -------------------------- |
@@ -152,7 +152,7 @@ Fotografías originales conservadas como alternativas locales. Procedencia:
 
 1. Confirmar branding definitivo, contenidos comerciales, soporte y políticas legales revisadas.
 2. Integrar sincronización del catálogo eSIM Access, cobertura, operadores, activación, recargas y precios finales verificados en el servidor.
-3. Persistir catálogo y pedidos en PostgreSQL/Supabase con permisos apropiados.
+3. Conectar el flujo de compra a las tablas privadas de pedidos y eSIM ya creadas en Supabase.
 4. Implementar Stripe Checkout con validación de precios en servidor, webhooks firmados, estados de pedido e idempotencia.
 5. Aprovisionar eSIM únicamente tras confirmar el pago, gestionar reintentos y entregar instrucciones mediante Resend sin exponer secretos en el cliente.
 6. Incorporar administración privada y controles de acceso en una fase posterior.

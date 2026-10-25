@@ -10,6 +10,7 @@ import "@/styles/compatibility.css";
 import "@/styles/plan-selection.css";
 import "@/styles/how-it-works.css";
 import "@/styles/sim-mascot.css";
+import "@/styles/account.css";
 
 export const viewport: Viewport = {
   width: "device-width",

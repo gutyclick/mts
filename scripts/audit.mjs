@@ -31,10 +31,20 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     `/en/plan/japan/${encodeURIComponent(examplePlan.id)}`,
     checkoutPath,
     "/en/my-esims",
-    "/es/mis-esim?esim=trip-japan",
+    "/es/iniciar-sesion",
+    "/es/crear-cuenta",
+    "/es/recuperar-contrasena",
+    "/es/nueva-contrasena",
     "/es/instalar",
     "/es/estudio",
   ]) {
+    if (
+      process.env.AUDIT_SCOPE === "accounts" &&
+      !/my-esims|iniciar-sesion|crear-cuenta|recuperar-contrasena|nueva-contrasena/.test(
+        path,
+      )
+    )
+      continue;
     if (process.env.AUDIT_SCOPE === "plans" && !/\/esim\/|\/plan\//.test(path))
       continue;
     if (
@@ -160,13 +170,6 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
           .getByRole("button", { name: "Preview confirmation" })
           .click();
         await auditState("confirmation-preview");
-      }
-      if (path === "/en/my-esims") {
-        await page.locator(".preview-controls summary").click();
-        for (const state of ["empty", "loading", "error"]) {
-          await page.getByLabel("Example state").selectOption(state);
-          await auditState(state);
-        }
       }
       if (path === "/es/preguntas-frecuentes") {
         await page.getByLabel("Buscar preguntas").fill("roaming");

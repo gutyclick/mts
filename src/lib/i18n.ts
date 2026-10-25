@@ -1,4 +1,5 @@
 import { faqTopicSegments, type FAQTopic } from "./faq-topics.ts";
+import { authSegments, authPath, type AuthMode } from "./auth-routes.ts";
 export const locales = ["en", "es"] as const;
 export type Locale = (typeof locales)[number];
 export const isLocale = (value: string): value is Locale =>
@@ -23,6 +24,10 @@ export function pathFor(locale: Locale, page?: PageKey, slug?: string) {
 }
 export function equivalentPath(path: string, locale: Locale) {
   const [, , section, slug, planId] = path.split("/");
+  const accountMode = (Object.keys(authSegments) as AuthMode[]).find((key) =>
+    Object.values(authSegments[key]).some((value) => value === section),
+  );
+  if (accountMode) return authPath(locale, accountMode);
   if (section === "plan" && slug && planId)
     return `/${locale}/plan/${slug}/${planId}`;
   const experience = (Object.keys(experienceSegments) as ExperienceKey[]).find(

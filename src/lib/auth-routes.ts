@@ -1,0 +1,38 @@
+import type { Locale } from "./i18n";
+
+export const authSegments = {
+  login: { es: "iniciar-sesion", en: "sign-in" },
+  register: { es: "crear-cuenta", en: "sign-up" },
+  forgot: { es: "recuperar-contrasena", en: "forgot-password" },
+  reset: { es: "nueva-contrasena", en: "reset-password" },
+} as const;
+export type AuthMode = keyof typeof authSegments;
+export function authPath(locale: Locale, mode: AuthMode) {
+  return `/${locale}/${authSegments[mode][locale]}`;
+}
+export function authMode(locale: Locale, segment: string) {
+  return (Object.keys(authSegments) as AuthMode[]).find(
+    (key) => authSegments[key][locale] === segment,
+  );
+}
+export function safeAccountNext(value: unknown, locale: Locale) {
+  const fallback = `/${locale}/${locale === "es" ? "mis-esim" : "my-esims"}`;
+  if (
+    typeof value !== "string" ||
+    !value.startsWith("/") ||
+    value.startsWith("//") ||
+    /[\\\r\n]/.test(value)
+  )
+    return fallback;
+  try {
+    const url = new URL(value, "https://mytripsim.invalid");
+    if (url.origin !== "https://mytripsim.invalid" || url.pathname !== fallback)
+      return fallback;
+    const id = url.searchParams.get("esim");
+    return id && /^[0-9a-f-]{36}$/i.test(id)
+      ? `${fallback}?esim=${id}`
+      : fallback;
+  } catch {
+    return fallback;
+  }
+}

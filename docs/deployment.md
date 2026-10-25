@@ -19,7 +19,7 @@ Seguir la [guía de conexión](supabase-setup.md): identificar el proyecto, revi
 
 RLS limita las consultas a registros publicados. Ni visitantes ni cuentas normales tienen permisos de escritura. El panel dentro de la web sigue siendo una muestra; la edición inicial se realiza desde el Dashboard autenticado de Supabase.
 
-La futura implementación de pedidos, pagos y aprovisionamiento necesitará sus propias tablas, políticas y operaciones de servidor. No añadir claves del proveedor a la configuración de esta etapa.
+Las cuentas utilizan Supabase Auth y las tablas privadas `customer_orders` y `customer_esims`. La migración y la configuración de correo están en [cuentas y Mis eSIM](accounts.md). `AUTH_SITE_URL` permite fijar el origen de autenticación; el predeterminado es `https://www.mytripsim.com`. El SMTP de Resend se configura exclusivamente en Supabase Auth, nunca como clave pública ni en Vercel. Los pagos y el aprovisionamiento siguen pendientes.
 
 ## Credenciales y archivos locales
 

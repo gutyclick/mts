@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("a catalog plan connects to detail, checkout preview and example wallet", async ({
+test("a catalog plan connects to checkout preview and the real account gate", async ({
   page,
 }) => {
   const mutations: string[] = [];
@@ -38,22 +38,19 @@ test("a catalog plan connects to detail, checkout preview and example wallet", a
     "No payment was made and no eSIM was issued",
   );
   await page.getByRole("link", { name: "Explore My eSIMs" }).click();
-  await expect(page).toHaveURL(/\/en\/my-esims/);
-  await expect(page.locator(".esim-pass")).toHaveCount(3);
+  await expect(page).toHaveURL(/\/en\/sign-in/);
+  await expect(page.locator("#account-email")).toBeVisible();
+  await expect(page.locator(".esim-pass")).toHaveCount(0);
   expect(mutations).toEqual([]);
 });
 
-test("wallet, installation and administration have connected bilingual visual states", async ({
+test("private wallet requires sign in and public installation guidance remains bilingual", async ({
   page,
 }) => {
   await page.goto("/es/mis-esim");
-  await page.getByRole("button", { name: "Activas", exact: true }).click();
-  await expect(page.locator(".esim-pass")).toHaveCount(1);
-  await page.getByRole("button", { name: "Todas", exact: true }).click();
-  await page.getByRole("link", { name: "Ver eSIM de Japón" }).click();
-  await expect(page.locator("main")).toContainText("Código de muestra");
-  await page.getByRole("link", { name: "Ver guía de instalación" }).click();
-  await expect(page).toHaveURL(/\/es\/instalar/);
+  await expect(page).toHaveURL(/\/es\/iniciar-sesion/);
+  await expect(page.locator("#account-email")).toBeVisible();
+  await page.goto("/es/instalar");
   await page.getByRole("button", { name: "Android", exact: true }).click();
   await expect(page.locator(".install-steps")).toContainText("Redes");
   await page.goto("/es/estudio");
@@ -62,15 +59,8 @@ test("wallet, installation and administration have connected bilingual visual st
   await page.getByRole("button", { name: "Destinos", exact: true }).click();
   await page.getByLabel("Buscar en destinos").fill("Japón");
   await expect(page.locator(".studio-row")).toHaveCount(1);
-  await page.goto("/es/mis-esim");
-  await page.getByText("Controles de demostración", { exact: true }).click();
-  await page.getByLabel("Estado de ejemplo").selectOption("empty");
-  await expect(
-    page.getByRole("heading", { name: "Tu próximo viaje empieza aquí" }),
-  ).toBeVisible();
-  await page.getByLabel("Estado de ejemplo").selectOption("error");
-  await page.getByRole("button", { name: "Volver a la muestra" }).click();
-  await expect(page.locator(".esim-pass")).toHaveCount(3);
+  await page.goto("/es/crear-cuenta");
+  await expect(page.locator("#account-confirm")).toBeVisible();
 });
 
 test("preview pages protect plan identity, locale context and indexing", async ({
@@ -100,7 +90,8 @@ test("preview pages protect plan identity, locale context and indexing", async (
       await request.get(`/en/checkout?destination=france&plan=${encoded}`)
     ).status(),
   ).toBe(404);
-  expect((await request.get("/es/mis-esim?esim=unknown")).status()).toBe(404);
+  const gated = await request.get("/es/mis-esim?esim=unknown");
+  expect(gated.url()).toContain("/es/iniciar-sesion");
   for (const path of [
     "/en/checkout",
     "/en/my-esims",
@@ -123,12 +114,12 @@ test("preview pages protect plan identity, locale context and indexing", async (
     new RegExp(`/es/compra\\?destination=japan&plan=${encoded}`),
   );
   await expect(page.locator(".pass-plan-name")).toContainText("Japan");
-  await page.goto("/en/my-esims?esim=trip-france");
+  await page.goto("/en/sign-in");
   await page
     .getByRole("link", { name: "Change language: Español" })
     .first()
     .click();
-  await expect(page).toHaveURL(/\/es\/mis-esim\?esim=trip-france/);
+  await expect(page).toHaveURL(/\/es\/iniciar-sesion/);
 });
 
 test("visual workspace and traveler screens fit small phones through desktop", async ({

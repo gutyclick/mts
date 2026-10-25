@@ -113,7 +113,7 @@ export const experienceCopy = {
       "Find guidance on roaming, APN settings and keeping your home number.",
     installTitle: "A few steps before your next adventure",
     installDescription:
-      "Choose your phone and follow the installation walkthrough. Use the instructions supplied with your exact eSIM when purchasing becomes available.",
+      "Choose your phone and follow the installation steps. Always check the instructions supplied with your specific eSIM.",
     before: "Before you start",
     beforeItems: [
       "Check that your phone is compatible and carrier unlocked.",
@@ -127,7 +127,7 @@ export const experienceCopy = {
       },
       {
         title: "Add your travel eSIM",
-        body: "Use the QR code or manual details supplied with your eSIM. The sample code shown here cannot be installed.",
+        body: "Use the QR code or manual installation details in My eSIMs for your specific eSIM.",
       },
       {
         title: "Name your lines",
@@ -302,7 +302,7 @@ export const experienceCopy = {
       "Consulta cómo configurar el roaming, el APN y tu número habitual.",
     installTitle: "Unos pasos antes de tu próxima aventura",
     installDescription:
-      "Elige tu teléfono y recorre la guía. Cuando habilitemos las compras, utiliza las instrucciones de tu eSIM concreta.",
+      "Elige tu teléfono y sigue los pasos de instalación. Revisa siempre las instrucciones de tu eSIM concreta.",
     before: "Antes de empezar",
     beforeItems: [
       "Comprueba que tu teléfono sea compatible y esté liberado.",
@@ -316,7 +316,7 @@ export const experienceCopy = {
       },
       {
         title: "Añade tu eSIM de viaje",
-        body: "Utiliza el QR o los datos manuales entregados con tu eSIM. El código de muestra de esta página no se puede instalar.",
+        body: "Utiliza el QR o los datos de instalación manual de tu eSIM, disponibles en Mis eSIM.",
       },
       {
         title: "Pon nombre a tus líneas",

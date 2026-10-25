@@ -4,11 +4,11 @@ import {
   getPopularDestinations,
   getPublishedPlans,
 } from "@/lib/catalog-server";
-import { demoEsims } from "@/lib/demo-esims";
 import type { Locale } from "@/lib/i18n";
 import type { ExperienceKey } from "@/lib/experience-routes";
 import { CheckoutPreview } from "./checkout-preview";
-import { EsimWallet } from "./esim-wallet";
+import { CustomerWallet } from "../account/customer-wallet";
+import { customerSession, customerEsim } from "@/lib/customer-data";
 import { InstallGuide } from "./install-guide";
 import { AdminPreview } from "./admin-preview";
 export type ExperienceQuery = Record<string, string | string[] | undefined>;
@@ -40,18 +40,24 @@ export async function ExperiencePage({
       />
     );
   }
-  if (page === "wallet" || page === "install") {
-    const selected = demoEsims.find((record) => record.id === query.esim);
-    if (query.esim && !selected) notFound();
-    return page === "wallet" ? (
-      <EsimWallet
-        key={selected?.id ?? "wallet"}
+  if (page === "wallet") {
+    return (
+      <CustomerWallet
         locale={locale}
-        selected={selected}
+        selectedId={typeof query.esim === "string" ? query.esim : undefined}
       />
-    ) : (
-      <InstallGuide locale={locale} esimId={selected?.id} />
     );
+  }
+  if (page === "install") {
+    const id = typeof query.esim === "string" ? query.esim : undefined;
+    if (id) {
+      const { client, user } = await customerSession(
+        locale,
+        `/${locale}/${locale === "es" ? "mis-esim" : "my-esims"}?esim=${encodeURIComponent(id)}`,
+      );
+      if (!(await customerEsim(client, user.id, id))) notFound();
+    }
+    return <InstallGuide locale={locale} esimId={id} />;
   }
   return (
     <AdminPreview

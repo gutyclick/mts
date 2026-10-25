@@ -3,3 +3,38 @@ project_id = "mytripsim"
 [db.seed]
 enabled = true
 sql_paths = ["./seed.sql"]
+
+[auth]
+site_url = "https://www.mytripsim.com"
+additional_redirect_urls = ["https://www.mytripsim.com/es/auth/confirm", "https://www.mytripsim.com/en/auth/confirm", "https://www.mytripsim.com/es/auth/confirm?flow=signup", "https://www.mytripsim.com/en/auth/confirm?flow=signup", "https://www.mytripsim.com/es/auth/confirm?flow=recovery", "https://www.mytripsim.com/en/auth/confirm?flow=recovery", "http://localhost:3000/es/auth/confirm", "http://localhost:3000/en/auth/confirm"]
+enable_signup = true
+enable_anonymous_sign_ins = false
+minimum_password_length = 10
+
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+max_frequency = "1m"
+otp_expiry = 3600
+otp_length = 8
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.email.smtp]
+enabled = true
+host = "smtp.resend.com"
+port = 465
+user = "resend"
+pass = "env(RESEND_SMTP_KEY)"
+admin_email = "cuentas@mytripsim.com"
+sender_name = "MyTripSim"
+
+[auth.email.template.confirmation]
+subject = "Confirma tu cuenta / Confirm your account · MyTripSim"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Recupera tu contraseña / Reset your password · MyTripSim"
+content_path = "./supabase/templates/recovery.html"

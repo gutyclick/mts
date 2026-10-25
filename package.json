@@ -23,12 +23,16 @@
     "check:secrets": "node scripts/check-secrets.mjs",
     "supabase:seed": "node --experimental-strip-types scripts/generate-supabase-seed.mjs",
     "supabase:check": "node --experimental-strip-types scripts/check-supabase.mjs",
-    "test:supabase": "node --experimental-strip-types --test tests/supabase-catalog.test.mjs",
-    "test:supabase:web": "node --experimental-strip-types scripts/test-supabase-web.mjs"
+    "test:supabase": "node --experimental-strip-types --test tests/supabase-catalog.test.mjs tests/customer-security.test.mjs",
+    "test:supabase:web": "node --experimental-strip-types scripts/test-supabase-web.mjs",
+    "test:accounts": "node scripts/test-customer-auth.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
     "lucide-react": "^0.577.0",
     "next": "^16.2.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "server-only": "^0.0.1",
@@ -39,6 +43,7 @@
     "@playwright/test": "^1.58.0",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/node": "^24.0.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "axe-core": "^4.14.0",

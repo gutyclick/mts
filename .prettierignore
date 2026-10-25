@@ -5,3 +5,6 @@ playwright-report
 test-results
 public/images
 next-env.d.ts
+.supabase
+.vercel
+supabase/templates/*.html

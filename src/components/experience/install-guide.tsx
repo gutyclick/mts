@@ -5,13 +5,7 @@ import { Check, Info, QrCode, Smartphone } from "lucide-react";
 import { experienceCopy } from "@/lib/experience-copy";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
-import {
-  ActionLink,
-  BackLink,
-  ExperienceHeading,
-  PreviewNotice,
-} from "./shared";
-import { SampleCode } from "./sample-code";
+import { ActionLink, BackLink, ExperienceHeading } from "./shared";
 export function InstallGuide({
   locale,
   esimId,
@@ -32,7 +26,6 @@ export function InstallGuide({
       >
         {c.wallet}
       </BackLink>
-      <PreviewNotice locale={locale} />
       <ExperienceHeading
         eyebrow={c.install}
         title={c.installTitle}
@@ -98,9 +91,25 @@ export function InstallGuide({
         <div className="experience-summary">
           <section className="experience-card code-card">
             <QrCode size={25} />
-            <h2>{c.sampleCode}</h2>
-            <SampleCode />
-            <p>{c.sampleCodeBody}</p>
+            <h2>
+              {locale === "es"
+                ? "Tu código de instalación"
+                : "Your installation code"}
+            </h2>
+            <p>
+              {locale === "es"
+                ? "Abre el detalle de tu eSIM para consultar su QR y los datos de instalación manual."
+                : "Open your eSIM details to view its QR code and manual installation details."}
+            </p>
+            <ActionLink
+              href={experiencePath(
+                locale,
+                "wallet",
+                esimId ? { esim: esimId } : undefined,
+              )}
+            >
+              {c.wallet}
+            </ActionLink>
           </section>
           <section className="experience-card">
             <h2>{c.manual}</h2>

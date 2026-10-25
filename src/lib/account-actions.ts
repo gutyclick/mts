@@ -22,6 +22,20 @@ export async function accountAction(
       : "Check the fields and try again.",
   };
   if (!mode.success) return invalid;
+  const nameSchema = z
+    .string()
+    .trim()
+    .min(1)
+    .max(100)
+    .regex(/^[^\u0000-\u001f\u007f]+$/u);
+  const firstName = nameSchema.safeParse(form.get("firstName"));
+  const lastName = nameSchema.safeParse(form.get("lastName"));
+  if (mode.data === "register" && (!firstName.success || !lastName.success))
+    return {
+      message: es
+        ? "Introduce tu nombre y apellido (hasta 100 caracteres cada uno)."
+        : "Enter your first and last name (up to 100 characters each).",
+    };
   const email = z
     .email()
     .max(254)
@@ -60,7 +74,12 @@ export async function accountAction(
         email: email.data!,
         password,
         options: {
-          data: { locale },
+          data: {
+            locale,
+            first_name: firstName.data!,
+            last_name: lastName.data!,
+            full_name: `${firstName.data!} ${lastName.data!}`,
+          },
           emailRedirectTo: `${origin}/${locale}/auth/confirm?flow=signup`,
         },
       });

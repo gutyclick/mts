@@ -23,6 +23,8 @@ test("registration validates matching passwords without sending email and passwo
   page,
 }) => {
   await page.goto("/es/crear-cuenta");
+  await page.getByLabel("Nombre", { exact: true }).fill("María-José");
+  await page.getByLabel("Apellido", { exact: true }).fill("O’Neill García");
   await page
     .getByLabel("Correo electrónico")
     .fill("account-validation@example.invalid");
@@ -43,6 +45,19 @@ test("registration validates matching passwords without sending email and passwo
     .click();
   await expect(page.locator('.account-message[role="alert"]')).toContainText(
     "confirma la misma contraseña",
+  );
+  await page.getByLabel("Nombre", { exact: true }).fill("   ");
+  await page.getByLabel("Apellido", { exact: true }).fill("García");
+  await page
+    .getByLabel("Correo electrónico")
+    .fill("account-validation@example.invalid");
+  await page.locator("#account-password").fill("Long passphrase A123");
+  await page.locator("#account-confirm").fill("Long passphrase A123");
+  await page
+    .getByRole("button", { name: "Crear mi cuenta", exact: true })
+    .click();
+  await expect(page.locator('.account-message[role="alert"]')).toContainText(
+    "Introduce tu nombre y apellido",
   );
 });
 

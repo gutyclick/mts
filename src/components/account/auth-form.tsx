@@ -2,7 +2,15 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Eye, EyeOff, LoaderCircle, Mail } from "lucide-react";
+import {
+  ArrowRight,
+  Eye,
+  EyeOff,
+  LoaderCircle,
+  LockKeyhole,
+  Mail,
+  UserRound,
+} from "lucide-react";
 import { accountAction } from "@/lib/account-actions";
 import { authPath, type AuthMode } from "@/lib/auth-routes";
 import type { Locale } from "@/lib/i18n";
@@ -31,6 +39,38 @@ export function AuthForm({
       <input type="hidden" name="locale" value={locale} />
       <input type="hidden" name="mode" value={mode} />
       <input type="hidden" name="next" value={next} />
+      {mode === "register" && (
+        <div className="account-name-fields">
+          <label htmlFor="account-first-name">
+            {es ? "Nombre" : "First name"}
+            <span className="account-input">
+              <UserRound size={18} aria-hidden="true" />
+              <input
+                id="account-first-name"
+                name="firstName"
+                type="text"
+                autoComplete="given-name"
+                required
+                maxLength={100}
+              />
+            </span>
+          </label>
+          <label htmlFor="account-last-name">
+            {es ? "Apellido" : "Last name"}
+            <span className="account-input">
+              <UserRound size={18} aria-hidden="true" />
+              <input
+                id="account-last-name"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                required
+                maxLength={100}
+              />
+            </span>
+          </label>
+        </div>
+      )}
       {mode !== "reset" && (
         <label htmlFor="account-email">
           {es ? "Correo electrónico" : "Email address"}
@@ -60,6 +100,7 @@ export function AuthForm({
                 ? "Contraseña"
                 : "Password"}
             <span className="account-input">
+              <LockKeyhole size={18} aria-hidden="true" />
               <input
                 id="account-password"
                 type={visible ? "text" : "password"}
@@ -97,6 +138,7 @@ export function AuthForm({
               <label htmlFor="account-confirm">
                 {es ? "Confirmar contraseña" : "Confirm password"}
                 <span className="account-input">
+                  <LockKeyhole size={18} aria-hidden="true" />
                   <input
                     id="account-confirm"
                     type={visible ? "text" : "password"}

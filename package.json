@@ -33,7 +33,11 @@
     "test:provider": "node --experimental-strip-types --test tests/esimaccess.test.mjs",
     "prices:import": "node --experimental-strip-types scripts/import-retail-prices.mjs",
     "prices:sync": "node --experimental-strip-types scripts/sync-retail-prices.mjs",
-    "test:retail": "node --experimental-strip-types --test tests/retail-prices.test.mjs"
+    "test:retail": "node --experimental-strip-types --test tests/retail-prices.test.mjs",
+    "stripe:configure": "node --experimental-strip-types scripts/configure-stripe.mjs",
+    "stripe:preview": "node --experimental-strip-types scripts/stripe-catalog.mjs",
+    "stripe:sync:test": "node --experimental-strip-types scripts/stripe-catalog.mjs --apply",
+    "test:stripe": "node --experimental-strip-types --test tests/stripe-catalog.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -44,6 +48,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "server-only": "^0.0.1",
+    "stripe": "^23.0.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {

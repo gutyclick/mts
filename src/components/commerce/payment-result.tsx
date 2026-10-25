@@ -16,6 +16,7 @@ import { pathFor, type Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
 import { formatUSD } from "@/lib/retail-prices";
 import { planVariant } from "@/lib/plan-variants";
+import { authPath } from "@/lib/auth-routes";
 
 const receiptSchema = z.object({
   id: z.uuid(),
@@ -124,7 +125,13 @@ export function PaymentResult({
           <Icon size={36} aria-hidden="true" />
         </span>
         <p className="eyebrow">MYTRIPSIM / {es ? "TU PEDIDO" : "YOUR ORDER"}</p>
-        <h1 id="payment-result-title">{title}</h1>
+        <h1 id="payment-result-title">
+          {error && !receipt
+            ? es
+              ? "No podemos mostrar este pedido"
+              : "We can’t display this order"
+            : title}
+        </h1>
         <p role="status" aria-live="polite">
           {paid
             ? es
@@ -198,6 +205,13 @@ export function PaymentResult({
           </button>
         )}
         <div className="payment-result-actions">
+          {error && (
+            <Link
+              href={`${authPath(locale, "login")}?next=${encodeURIComponent(`/${locale}/checkout/result?order=${orderId}`)}`}
+            >
+              {es ? "Iniciar sesión" : "Sign in"}
+            </Link>
+          )}
           {paid ? (
             <Link
               className="button button-primary"

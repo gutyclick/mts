@@ -26,6 +26,8 @@ La confirmación limpia sólo las cantidades compradas y conserva otras adicione
 
 `npm.cmd run test:checkout` verifica validación, firmas, privacidad, aislamiento, importes, idempotencia, transacciones y límites en PostgreSQL local. `npx.cmd playwright test tests/e2e/checkout.spec.ts tests/e2e/cart.spec.ts` revisa los estados y el carrito en escritorio y móvil. Los ensayos con Stripe deben usar exclusivamente sus [datos de prueba oficiales](https://docs.stripe.com/testing).
 
+Verificado el 25 de octubre de 2026: compra de invitado con dos planes y tres eSIM, rechazo de tarjeta seguido de pago de prueba correcto, confirmación por el webhook público de Vercel, un único evento registrado y limpieza del carrito. Dos reenvíos del aviso no duplicaron la confirmación y un cuerpo alterado obtuvo HTTP 400. Un ensayo con cuenta temporal confirmó el correo verificado, la aparición del pedido en «Mis eSIM», el acceso del propietario sin cookie de invitado y el rechazo de columnas privadas. La cuenta de ensayo se eliminó sin enviar correos. Los 36 archivos estáticos del navegador se comprobaron sin encontrar las claves del servidor.
+
 ## Antes de vender
 
 Esta fase no procesa cobros reales ni compra, activa o envía eSIM. Las claves live se rechazan y la base de datos rechaza pedidos live. La siguiente fase necesita configurar precios y claves de producción por separado, habilitar una cola de emisión idempotente para pagos reales, gestionar reintentos y fallos del proveedor, y probar la entrega segura por correo. También deben decidirse los impuestos y las condiciones comerciales antes de habilitar ventas.

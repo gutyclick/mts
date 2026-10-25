@@ -4,6 +4,8 @@ import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { PGlite } from "@electric-sql/pglite";
 import Stripe from "stripe";
+import { equivalentPath } from "../src/lib/i18n.ts";
+import { safeAccountNext } from "../src/lib/auth-routes.ts";
 import {
   checkoutRequestSchema,
   verifyPaymentSnapshot,
@@ -13,6 +15,22 @@ import {
 } from "../src/lib/payments/checkout-core.ts";
 
 test("checkout rejects forged prices, IDs and missing consent; origins and guest tokens are strict", () => {
+  assert.equal(
+    equivalentPath("/es/checkout/result", "en"),
+    "/en/checkout/result",
+  );
+  const receiptId = randomUUID();
+  assert.equal(
+    safeAccountNext(
+      `/es/checkout/result?order=${receiptId}&next=https://evil.example`,
+      "es",
+    ),
+    `/es/checkout/result?order=${receiptId}`,
+  );
+  assert.equal(
+    safeAccountNext("/es/checkout/result?order=bad", "es"),
+    "/es/mis-esim",
+  );
   const valid = {
     attemptId: randomUUID(),
     locale: "es",

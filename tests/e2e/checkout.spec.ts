@@ -129,6 +129,13 @@ test("receipt waits for confirmation and consumes purchased quantities once", as
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+  await page.locator("header .language-switch").click();
+  await expect(page).toHaveURL(
+    new RegExp(`/en/checkout/result\\?order=${order}`),
+  );
+  await expect(
+    page.getByRole("heading", { name: "Test payment confirmed" }),
+  ).toBeVisible();
 });
 
 test("a cancelled payment leaves the cart intact and offers a return", async ({

@@ -24,6 +24,8 @@ export function pathFor(locale: Locale, page?: PageKey, slug?: string) {
 }
 export function equivalentPath(path: string, locale: Locale) {
   const [, , section, slug, planId] = path.split("/");
+  if (section === "checkout" && slug === "result")
+    return `/${locale}/checkout/result`;
   const accountMode = (Object.keys(authSegments) as AuthMode[]).find((key) =>
     Object.values(authSegments[key]).some((value) => value === section),
   );

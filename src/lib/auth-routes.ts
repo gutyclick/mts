@@ -27,6 +27,15 @@ export function safeAccountNext(value: unknown, locale: Locale) {
   try {
     const url = new URL(value, "https://mytripsim.invalid");
     const checkout = `/${locale}/${locale === "es" ? "compra" : "checkout"}`;
+    if (
+      url.origin === "https://mytripsim.invalid" &&
+      url.pathname === `/${locale}/checkout/result`
+    ) {
+      const id = url.searchParams.get("order");
+      return id && /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(id)
+        ? `/${locale}/checkout/result?order=${id}`
+        : fallback;
+    }
     if (url.origin === "https://mytripsim.invalid" && url.pathname === checkout)
       return checkout;
     if (url.origin !== "https://mytripsim.invalid" || url.pathname !== fallback)

@@ -2,7 +2,7 @@
 
 Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento: **Vercel**. Catálogo conectado a **Supabase/PostgreSQL**. Producción: [www.mytripsim.com](https://www.mytripsim.com/es). Consulta la [guía de despliegue y credenciales](docs/deployment.md).
 
-Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 1.730 planes de datos fijos en inglés y español, sin precios, pagos ni aprovisionamiento de eSIM.
+Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 1.730 planes de datos fijos en inglés y español, con precios finales en USD. Pagos y aprovisionamiento de eSIM siguen pendientes.
 
 ## Ejecutar
 
@@ -32,7 +32,7 @@ El catálogo admite desarrollo local sin configuración remota. Las cuentas requ
 - Diccionarios centralizados, rutas traducidas y cambio de idioma que conserva la página equivalente. El cambio de idioma realiza navegación de documento para actualizar correctamente `<html lang>`; el resto utiliza navegación de Next.js.
 - Búsqueda local insensible a mayúsculas y tildes, alias en ambos idiomas, teclado, cierre con Escape y estados vacíos.
 - Directorio buscable con categorías y carga progresiva: 202 países/territorios y 39 regiones. Cada destino tiene todos sus planes fijos.
-- Selección de planes en filas compactas de GB/días, ordenación numérica y filtros combinables. La ficha completa se actualiza en la misma pantalla, sin diálogo intermedio ni pestañas. La duración de la portada se conserva como filtro inicial; el plan seleccionado se conserva al compartir y traducir el enlace. No se muestran precios ni se ofrece checkout real.
+- Selección de planes en filas compactas de GB/días, precio final y nombre de variante, con ordenación numérica y filtros combinables. La ficha completa se actualiza en la misma pantalla, sin diálogo intermedio ni pestañas. La duración de la portada se conserva como filtro inicial; el plan seleccionado se conserva al compartir y traducir el enlace. Consulta [precios y variantes](docs/retail-prices.md).
 - Guías de funcionamiento, compatibilidad, centro de ayuda por temas y FAQ con 29 preguntas buscables por idioma. Términos, privacidad y reembolsos como borradores claramente señalados y con `noindex`.
 - Metadata localizada, canonical, hreflang, Open Graph, imagen social, sitemap, robots y datos estructurados veraces de la organización. Sin reseñas ni ofertas estructuradas ficticias.
 - Diseño adaptable, menú móvil, foco visible, enlace para saltar al contenido, FAQ nativa y respeto a movimiento reducido.
@@ -48,7 +48,7 @@ La FAQ principal es un índice de seis temas, cada uno con página propia y ruta
 
 La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
-Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). El [carrito y checkout](docs/checkout.md) conservan planes entre visitas, permiten cambiar cantidades y ofrecen correo de invitado o acceso a una cuenta. Los precios finales, cobros y aprovisionamiento se conectarán después; la administración sigue siendo de muestra.
+Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). El [carrito y checkout](docs/checkout.md) conservan planes entre visitas, permiten cambiar cantidades y ofrecen correo de invitado o acceso a una cuenta. Los precios finales ya se muestran; los cobros y el aprovisionamiento siguen pendientes; la administración sigue siendo de muestra.
 
 | Página           | Inglés              | Español                    |
 | ---------------- | ------------------- | -------------------------- |
@@ -125,7 +125,7 @@ npm run capture
 
 La auditoría usa axe-core, comprueba reglas WCAG A/AA seleccionadas en 360 y 1440 px, y busca desbordamiento horizontal en 320, 360, 390, 430, 768, 1024 y 1440 px. Los recorridos móviles también cubren orientación horizontal, una altura reducida con campo enfocado para simular teclado, navegación activa, hoja inferior y recuperación de foco. No sustituye una auditoría manual completa ni pruebas en teclados y dispositivos físicos o mediciones de Core Web Vitals en usuarios reales. Las capturas se guardan en `docs/previews/`, con vistas de pantalla móvil, tablet y detalle de plan.
 
-La importación exclusiva de planes fijos, los 1.730 identificadores únicos, los campos permitidos, los filtros y las rutas equivalentes tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, búsqueda del FAQ, filtros vacíos, detalle sin precios, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
+La importación exclusiva de planes fijos, los 1.730 identificadores únicos, los campos permitidos, los filtros y las rutas equivalentes tienen tests unitarios. Los recorridos cubren teclado, duración, cambio de idioma, búsqueda del FAQ, filtros vacíos, detalle con precios finales, recuperación de foco, respuestas HTTP, SEO, imágenes y navegación móvil.
 
 ## Assets
 

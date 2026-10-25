@@ -7,6 +7,8 @@ import { filterPlans, sortPlans, type Plan } from "@/lib/plan-utils";
 import { type Locale, pathFor } from "@/lib/i18n";
 import { catalogCopy } from "@/lib/catalog-copy";
 import { PlanPurchaseSummary } from "./experience/plan-purchase-summary";
+import { planVariant } from "@/lib/plan-variants";
+import { formatUSD } from "@/lib/retail-prices";
 
 export function PlanBrowser({
   locale,
@@ -171,8 +173,7 @@ export function PlanBrowser({
                     (item) =>
                       item.dataGb === plan.dataGb && item.days === plan.days,
                   );
-                  const variantNumber =
-                    variants.findIndex((item) => item.id === plan.id) + 1;
+                  const variant = planVariant(plan, locale);
                   return (
                     <label
                       className="plan-option"
@@ -194,14 +195,24 @@ export function PlanBrowser({
                       <Wifi size={20} aria-hidden="true" />
                       <span className="plan-option-data">
                         <strong>{plan.allowance}</strong>
-                        {variants.length > 1 && (
-                          <small>
-                            {es ? "Variante" : "Variant"} {variantNumber}
+                        {(variants.length > 1 ||
+                          !["Estándar", "Standard"].includes(
+                            variant.label,
+                          )) && (
+                          <small title={variant.description}>
+                            {variant.label}
                           </small>
                         )}
                       </span>
                       <span className="plan-validity">
-                        {plan.days} {plan.days === 1 ? c.day : c.days}
+                        {plan.retailPriceCents != null && (
+                          <strong className="plan-option-price">
+                            {formatUSD(plan.retailPriceCents, locale)}
+                          </strong>
+                        )}{" "}
+                        <span className="plan-option-duration">
+                          {plan.days} {plan.days === 1 ? c.day : c.days}
+                        </span>
                       </span>
                       <span className="plan-option-check" aria-hidden="true">
                         {selected?.id === plan.id && <Check size={14} />}

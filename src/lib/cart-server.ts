@@ -33,6 +33,8 @@ export async function resolveCart(lines: CartLine[]): Promise<ResolvedCart> {
       allowance: plan.allowance,
       days: plan.days,
       network: plan.details?.technologies.join(" / ") ?? "",
+      planName: plan.name,
+      retailPriceCents: plan.retailPriceCents,
     });
   }
   return result;

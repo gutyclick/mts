@@ -23,12 +23,15 @@ import {
   addCartLine,
   cartKey,
   readCart,
+  cartTotal,
   type CartLine,
   type ResolvedCart,
 } from "@/lib/cart";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { DestinationFlag } from "../destination-flag";
+import { planVariant } from "@/lib/plan-variants";
+import { formatUSD } from "@/lib/retail-prices";
 
 const empty: CartLine[] = [];
 let memory = empty;
@@ -258,9 +261,11 @@ export function CartProvider({
         {count > 0 && !error && !loading && (
           <div className="cart-drawer-footer">
             <p>
-              {es
-                ? "El precio estará disponible antes de pagar."
-                : "The price will be available before payment."}
+              {cartTotal(resolved) != null
+                ? `${es ? "Total" : "Total"}: ${formatUSD(cartTotal(resolved)!, locale)}`
+                : es
+                  ? "Precio pendiente de confirmar"
+                  : "Price to be confirmed"}
             </p>
             <Link
               href={experiencePath(locale, "checkout")}
@@ -371,6 +376,12 @@ export function CartItems({ locale }: { locale: Locale }) {
                 {item.allowance.replace(/(\d)(GB|MB)/, "$1 $2")} <span>·</span>{" "}
                 {item.days} {es ? "días" : "days"}
               </p>
+              <small className="cart-variant-name">
+                {
+                  planVariant({ id: item.planId, name: item.planName }, locale)
+                    .label
+                }
+              </small>
               {item.network && <small>{item.network}</small>}
             </div>
             <button
@@ -407,7 +418,11 @@ export function CartItems({ locale }: { locale: Locale }) {
               </button>
             </div>
             <span className="cart-price-pending">
-              {es ? "Precio pendiente" : "Price pending"}
+              {item.retailPriceCents != null
+                ? formatUSD(item.retailPriceCents * item.quantity, locale)
+                : es
+                  ? "Precio pendiente"
+                  : "Price pending"}
             </span>
           </div>
         </li>

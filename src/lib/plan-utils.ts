@@ -6,6 +6,7 @@ export interface Plan {
   days: number;
   kind: "fixed";
   coverageCode: string;
+  retailPriceCents?: number;
   details?: PlanDetails;
 }
 export interface PlanDetails {

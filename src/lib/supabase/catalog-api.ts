@@ -93,7 +93,8 @@ export function createCatalogAPI(
       if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug))
         throw new Error("Invalid destination slug");
       const data = await rows("catalog_plans", {
-        select: "id,name,allowance,data_gb,days,kind,coverage_code,details",
+        select:
+          "id,name,allowance,data_gb,days,kind,coverage_code,details,retail_price_cents",
         destination_slug: `eq.${slug}`,
         is_published: "eq.true",
         order: "data_gb.asc,days.asc,id.asc",

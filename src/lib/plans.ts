@@ -1,5 +1,6 @@
 import catalog from "../data/plans.json";
 import details from "../data/plan-details.json";
+import retailPrices from "../data/retail-prices.json";
 import type { Destination } from "./catalog";
 import type { Plan, PlanDetails } from "./plan-utils";
 
@@ -8,6 +9,7 @@ export function getPlans(destination: Destination): Plan[] {
   return ((catalog as Record<string, Plan[]>)[destination.slug] ?? []).map(
     (plan) => ({
       ...plan,
+      retailPriceCents: (retailPrices as Record<string, number>)[plan.id],
       details: matchingDetails(plan),
     }),
   );

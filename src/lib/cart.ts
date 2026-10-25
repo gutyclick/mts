@@ -28,8 +28,22 @@ export type CartItem = CartLine & {
   allowance: string;
   days: number;
   network: string;
+  planName: string;
+  retailPriceCents?: number;
 };
 export type ResolvedCart = { items: CartItem[]; unavailable: CartLine[] };
+export function cartTotal(cart: ResolvedCart): number | null {
+  if (
+    !cart.items.length ||
+    cart.unavailable.length ||
+    cart.items.some((item) => item.retailPriceCents == null)
+  )
+    return null;
+  return cart.items.reduce(
+    (sum, item) => sum + item.retailPriceCents! * item.quantity,
+    0,
+  );
+}
 export function cartKey(line: Pick<CartLine, "destination" | "planId">) {
   return `${line.destination}:${line.planId}`;
 }

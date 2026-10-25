@@ -92,7 +92,7 @@ test("phone plan selection keeps complete details on the same page", async ({
     exact: true,
   });
   await expect(details).toBeInViewport();
-  await expect(details).not.toContainText(/USD\s*\d/);
+  await expect(details.locator(".selected-plan-price")).toContainText(/USD/);
   await expect(page.getByRole("tab")).toHaveCount(0);
 });
 

@@ -14,6 +14,8 @@ import { AddToCart } from "../commerce/add-to-cart";
 import { CompatibilityChecker } from "@/components/compatibility-checker";
 import { PlanInformation } from "./plan-information";
 import { PlanNetworkDetails } from "./plan-network-details";
+import { PlanVariant } from "../plan-variant";
+import { formatUSD } from "@/lib/retail-prices";
 
 export function PlanPurchaseSummary({
   locale,
@@ -58,6 +60,14 @@ export function PlanPurchaseSummary({
         <h2>{es ? "Tu selección" : "Your selection"}</h2>
         <span className="selected-plan-tag">{c.fixed}</span>
       </header>
+      <div className="selected-plan-commercial">
+        <PlanVariant plan={plan} locale={locale} />
+        {plan.retailPriceCents != null && (
+          <strong className="selected-plan-price">
+            {formatUSD(plan.retailPriceCents, locale)}
+          </strong>
+        )}
+      </div>
       <div
         className="selected-plan-stats"
         role="status"

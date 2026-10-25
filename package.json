@@ -30,7 +30,10 @@
     "provider:check": "node --experimental-strip-types scripts/check-esimaccess.mjs",
     "provider:sync": "node --experimental-strip-types scripts/check-esimaccess.mjs --sync",
     "provider:deploy-env": "node --experimental-strip-types scripts/deploy-esimaccess-env.mjs",
-    "test:provider": "node --experimental-strip-types --test tests/esimaccess.test.mjs"
+    "test:provider": "node --experimental-strip-types --test tests/esimaccess.test.mjs",
+    "prices:import": "node --experimental-strip-types scripts/import-retail-prices.mjs",
+    "prices:sync": "node --experimental-strip-types scripts/sync-retail-prices.mjs",
+    "test:retail": "node --experimental-strip-types --test tests/retail-prices.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

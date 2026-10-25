@@ -17,6 +17,8 @@ import { pathFor } from "@/lib/i18n";
 import { authPath } from "@/lib/auth-routes";
 import { experiencePath } from "@/lib/experience-routes";
 import type { CartLine } from "@/lib/cart";
+import { cartTotal } from "@/lib/cart";
+import { formatUSD } from "@/lib/retail-prices";
 import { CartItems, useCart } from "./cart-provider";
 
 export function Checkout({
@@ -154,8 +156,8 @@ export function Checkout({
                   <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
                   <p>
                     {es
-                      ? "Estamos preparando los precios y las opciones de pago. Tu carrito ya está listo para cuando las habilitemos."
-                      : "We’re preparing pricing and payment options. Your cart is ready for when they’re available."}
+                      ? "Tu precio final ya está disponible. Estamos preparando las opciones de pago para completar tu compra."
+                      : "Your final price is now available. We’re preparing payment options so you can complete your purchase."}
                   </p>
                   <span className="checkout-pending">
                     <LockKeyhole size={14} />
@@ -201,8 +203,8 @@ export function Checkout({
               </button>
               <p id="checkout-payment-note" className="commerce-muted">
                 {es
-                  ? "No se realizará ningún cargo. Los precios finales se mostrarán antes de pagar."
-                  : "You won’t be charged. Final prices will be shown before payment."}
+                  ? "No se realizará ningún cargo mientras el pago siga desactivado."
+                  : "You won’t be charged while payment remains disabled."}
               </p>
             </form>
             <div className="checkout-help">
@@ -236,7 +238,15 @@ export function Checkout({
             <CartItems locale={locale} />
             <div className="checkout-total">
               <span>{es ? "Total" : "Total"}</span>
-              <strong>{es ? "Por confirmar" : "To be confirmed"}</strong>
+              <strong>
+                {!cart.loading &&
+                !cart.error &&
+                cartTotal(cart.resolved) != null
+                  ? formatUSD(cartTotal(cart.resolved)!, locale)
+                  : es
+                    ? "Por confirmar"
+                    : "To be confirmed"}
+              </strong>
             </div>
             <p className="commerce-muted">
               {es

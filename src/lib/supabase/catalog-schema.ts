@@ -19,7 +19,7 @@ const detailSchema = z.object({
   fairUse: text.optional(),
 });
 
-// Zod objects strip unlisted fields, including any accidental commercial fields.
+// Only approved retail cents are public; supplier costs and unlisted fields are stripped.
 export const planSchema = z
   .object({
     id: text.max(200),
@@ -29,6 +29,7 @@ export const planSchema = z
     days: z.number().int().positive().max(3650),
     kind: z.literal("fixed"),
     coverageCode: text.max(100),
+    retailPriceCents: z.number().int().min(1).max(100000000).optional(),
     details: detailSchema.optional(),
   })
   .refine(
@@ -73,6 +74,7 @@ export function parsePlanRow(row: Record<string, unknown>) {
     ...row,
     dataGb: numeric(row.data_gb),
     coverageCode: row.coverage_code,
+    retailPriceCents: numeric(row.retail_price_cents) ?? undefined,
     details: row.details ?? undefined,
   });
 }

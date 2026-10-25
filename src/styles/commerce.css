@@ -228,7 +228,8 @@
 }
 .cart-price-pending {
   color: #526b89;
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 750;
   text-align: right;
 }
 .cart-item-unavailable {

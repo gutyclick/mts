@@ -8,7 +8,7 @@ test("a catalog plan connects to cart, guest checkout and the account gate", asy
     page.getByRole("region", { name: "Full plan details", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Japan");
-  await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
+  await expect(page.locator(".selected-plan-price")).toContainText(/USD/);
   await page.getByRole("button", { name: "Add to cart", exact: true }).click();
   const cart = page.getByRole("dialog", { name: /Your cart/ });
   await expect(cart.locator(".cart-item")).toHaveCount(1);

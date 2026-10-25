@@ -171,7 +171,7 @@ test("receipt waits for confirmation and consumes purchased quantities once", as
     page.getByRole("heading", { name: "Pago de prueba confirmado" }),
   ).toBeVisible({ timeout: 10000 });
   await expect(
-    page.getByText(/no se han hecho cargos ni emitido eSIM reales/),
+    page.getByText(/El pago de prueba está registrado, sin cargos reales/),
   ).toBeVisible();
   await expect
     .poll(() =>

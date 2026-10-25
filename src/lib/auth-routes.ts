@@ -29,6 +29,11 @@ export function safeAccountNext(value: unknown, locale: Locale) {
     const checkout = `/${locale}/${locale === "es" ? "compra" : "checkout"}`;
     if (
       url.origin === "https://mytripsim.invalid" &&
+      url.pathname === `/${locale}/admin`
+    )
+      return `/${locale}/admin`;
+    if (
+      url.origin === "https://mytripsim.invalid" &&
       url.pathname === `/${locale}/checkout/result`
     ) {
       const id = url.searchParams.get("order");

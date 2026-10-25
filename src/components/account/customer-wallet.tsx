@@ -66,11 +66,17 @@ export async function CustomerWallet({
     customerRecords(client, user.id),
     customerCheckoutOrders(client, user.id),
   ]);
+  const { data: adminMembership } = await client
+    .from("admin_memberships")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
   const labels = es
     ? {
         ready: "Lista para instalar",
         active: "Activa",
         expired: "Finalizada",
+        suspended: "Suspendida",
         pending: "Pendiente",
         processing: "En preparación",
         completed: "Completado",
@@ -81,6 +87,7 @@ export async function CustomerWallet({
         ready: "Ready to install",
         active: "Active",
         expired: "Expired",
+        suspended: "Suspended",
         pending: "Pending",
         processing: "Preparing",
         completed: "Completed",
@@ -117,6 +124,13 @@ export async function CustomerWallet({
           </p>
           <h1>{es ? "Mis eSIM" : "My eSIMs"}</h1>
           <p>{user.email}</p>
+          {adminMembership && (
+            <Link className="account-back" href={`/${locale}/admin`}>
+              <ShieldCheck size={16} />
+              {es ? "Abrir administración" : "Open administration"}
+              <ArrowRight size={15} />
+            </Link>
+          )}
         </div>
         <form action={signOut}>
           <input type="hidden" name="locale" value={locale} />

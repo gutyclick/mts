@@ -1,9 +1,5 @@
-import { notFound } from "next/navigation";
-import {
-  getDestination,
-  getPopularDestinations,
-  getPublishedPlans,
-} from "@/lib/catalog-server";
+import { notFound, redirect } from "next/navigation";
+import { getDestination, getPublishedPlans } from "@/lib/catalog-server";
 import type { Locale } from "@/lib/i18n";
 import type { ExperienceKey } from "@/lib/experience-routes";
 import { Checkout } from "../commerce/checkout";
@@ -12,7 +8,6 @@ import { catalogConfig } from "@/lib/supabase/catalog-api";
 import { CustomerWallet } from "../account/customer-wallet";
 import { customerSession, customerEsim } from "@/lib/customer-data";
 import { InstallGuide } from "./install-guide";
-import { AdminPreview } from "./admin-preview";
 export type ExperienceQuery = Record<string, string | string[] | undefined>;
 export async function ExperiencePage({
   locale,
@@ -68,19 +63,5 @@ export async function ExperiencePage({
     }
     return <InstallGuide locale={locale} esimId={id} />;
   }
-  return (
-    <AdminPreview
-      locale={locale}
-      samples={(
-        await Promise.all(
-          (await getPopularDestinations()).map(async (d) =>
-            (await getPublishedPlans(d))
-              .filter((p) => p.kind === "fixed")
-              .slice(0, 2)
-              .map((plan) => ({ slug: d.slug, plan })),
-          ),
-        )
-      ).flat()}
-    />
-  );
+  redirect(`/${locale}/admin`);
 }

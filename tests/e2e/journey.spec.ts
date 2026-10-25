@@ -35,11 +35,9 @@ test("private wallet requires sign in and public installation guidance remains b
   await page.getByRole("button", { name: "Android", exact: true }).click();
   await expect(page.locator(".install-steps")).toContainText("Redes");
   await page.goto("/es/estudio");
-  await page.getByRole("button", { name: "Pedidos", exact: true }).click();
-  await expect(page.locator("main")).toContainText("DEMO-");
-  await page.getByRole("button", { name: "Destinos", exact: true }).click();
-  await page.getByLabel("Buscar en destinos").fill("Japón");
-  await expect(page.locator(".studio-row")).toHaveCount(1);
+  await expect(page).toHaveURL(/\/es\/iniciar-sesion\?next=/);
+  await expect(page.locator("#account-email")).toBeVisible();
+  await expect(page.locator(".admin-workspace")).toHaveCount(0);
   await page.goto("/es/crear-cuenta");
   await expect(page.locator("#account-confirm")).toBeVisible();
 });

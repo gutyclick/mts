@@ -25,7 +25,7 @@ const orderSchema = z.object({
 const esimSchema = z.object({
   id: z.uuid(),
   order_id: z.uuid(),
-  status: z.enum(["ready", "active", "expired"]),
+  status: z.enum(["ready", "active", "expired", "suspended"]),
   used_gb: z.coerce.number().nonnegative().nullable(),
   usage_updated_at: z.string().nullable(),
   expires_at: z.string().nullable(),

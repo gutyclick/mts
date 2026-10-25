@@ -48,7 +48,9 @@
     "checkout:expiry:start": "node scripts/configure-checkout-expiry.mjs --start",
     "fulfillment:configure": "node scripts/configure-fulfillment.mjs",
     "fulfillment:start": "node scripts/configure-fulfillment.mjs --start",
-    "test:fulfillment": "node --experimental-strip-types --test tests/fulfillment.test.mjs tests/fulfillment-security.test.mjs"
+    "test:fulfillment": "node --experimental-strip-types --test tests/fulfillment.test.mjs tests/fulfillment-security.test.mjs",
+    "test:admin": "node --experimental-strip-types --test tests/admin.test.mjs tests/admin-security.test.mjs",
+    "admin:grant": "node scripts/grant-admin.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

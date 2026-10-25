@@ -44,9 +44,6 @@ export function Footer({ locale }: { locale: Locale }) {
           <Link href={experiencePath(locale, "install")}>
             {experienceCopy[locale].install}
           </Link>
-          <Link href={experiencePath(locale, "studio")}>
-            {experienceCopy[locale].studio}
-          </Link>
         </div>
         <div className="footer-bottom">
           <p>

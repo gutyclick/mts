@@ -7,6 +7,7 @@ El carrito está conectado a Stripe Checkout alojado. La web conserva su diseño
 - Migración: `20261025000300_test_checkout.sql`. Crea los enlaces privados de precios, pedidos, líneas y registro de eventos. Sólo admite `livemode=false`.
 - `npm.cmd run stripe:setup:test`: verifica los enlaces exportados contra Stripe, guarda 1.730 precios en la tabla privada y registra el webhook de pruebas. Usa la autenticación existente del CLI de Supabase para configurar el acceso privado del servidor. Los valores se guardan en `.env.local`, fuera de Git, y nunca se imprimen.
 - `npm.cmd run stripe:deploy:test-env`: transmite los secretos por stdin al almacenamiento cifrado de Vercel, proyecto `mts`. Configura `CHECKOUT_SITE_URL=https://www.mytripsim.com` y mantiene `STRIPE_TEST_CHECKOUT_ENABLED=false` para las ventas públicas.
+- Para habilitar el checkout de pruebas en la web pública, ejecuta `npm.cmd run stripe:deploy:test-env -- --enable-public-test` y despliega de nuevo. Esta opción se activó para revisar la compra directamente en `www.mytripsim.com`; la UI muestra «Modo de pruebas» y sigue rechazando claves live y emisión de eSIM reales. El comando sin la opción vuelve a desactivar el checkout público.
 - En local, `CHECKOUT_SITE_URL=http://localhost:3000` y `STRIPE_TEST_CHECKOUT_ENABLED=true`. Reinicia el servidor después de cambiar variables.
 - La URL del webhook es `https://www.mytripsim.com/api/payments/stripe/webhook`. El endpoint público puede confirmar las sesiones de prueba creadas localmente porque todos los pedidos se guardan en Supabase.
 

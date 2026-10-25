@@ -14,7 +14,7 @@ Este paso prepara los productos y precios. No activa pagos, no crea sesiones de 
 
 Un producto por ID de plan, con destino, GB, días y nombre de variante. Un precio de pago único por importe en USD. Los campos se proyectan explícitamente: no se importan costes del proveedor, márgenes ni columnas arbitrarias.
 
-Los productos usan un ID determinista y los precios una clave de búsqueda por plan e importe. Se verifican las identidades existentes antes de escribir. Se pueden repetir importaciones y reanudar fallos parciales; los conflictos o elementos archivados detienen el proceso. Si cambia un precio se crea otro precio y se actualiza el predeterminado, conservando el anterior para el historial. No se borran ni archivan elementos automáticamente. No ejecutes dos sincronizaciones a la vez.
+Los productos usan un ID determinista y los precios una clave de búsqueda por plan e importe. Se verifican las identidades existentes antes de escribir. Se pueden repetir importaciones y reanudar fallos parciales; los conflictos o elementos archivados detienen el proceso. Se procesan hasta cuatro planes en paralelo; ante un fallo se detiene la programación de nuevos planes y se espera a que terminen las operaciones en curso. Si cambia un precio se crea otro precio y se actualiza el predeterminado, conservando el anterior para el historial. No se borran ni archivan elementos automáticamente. No ejecutes dos sincronizaciones a la vez.
 
 Las claves de pruebas sólo se usan en este comando local. No se suben a Vercel ni se exponen al navegador. Los archivos generados no contienen claves y se guardan fuera de Git. El comando imprime resúmenes; nunca errores completos del SDK.
 

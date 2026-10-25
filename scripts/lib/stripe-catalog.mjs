@@ -79,8 +79,11 @@ export async function syncStripeCatalog(stripe, rows, onProgress = () => {}) {
     )
       throw new Error("Price identity conflict or archived price");
   }
-  const bindings = [];
-  for (const row of rows) {
+  const bindings = new Array(rows.length);
+  let next = 0;
+  let completed = 0;
+  let failure;
+  async function syncRow(row, index) {
     let product = products.get(row.productId);
     const metadata = {
       mts_plan_id: row.planId,
@@ -116,16 +119,31 @@ export async function syncStripeCatalog(stripe, rows, onProgress = () => {}) {
     }
     if (product.default_price !== price.id)
       await stripe.products.update(product.id, { default_price: price.id });
-    bindings.push({
+    bindings[index] = {
       planId: row.planId,
       productId: product.id,
       priceId: price.id,
       unitAmount: row.unitAmount,
       currency: "usd",
-    });
-    if (bindings.length % 50 === 0 || bindings.length === rows.length)
-      onProgress(bindings.length, rows.length);
+    };
+    completed++;
+    if (completed % 50 === 0 || completed === rows.length)
+      onProgress(completed, rows.length);
   }
+  // Independent products can sync concurrently. Keep requests below sandbox rate limits.
+  // On failure, stop scheduling and await all in-flight writes before returning control.
+  async function worker() {
+    while (!failure && next < rows.length) {
+      const index = next++;
+      try {
+        await syncRow(rows[index], index);
+      } catch (error) {
+        failure ??= error;
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(4, rows.length) }, worker));
+  if (failure) throw failure;
   return bindings;
 }
 

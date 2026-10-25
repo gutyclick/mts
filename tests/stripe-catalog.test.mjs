@@ -136,3 +136,57 @@ test("conflicting price identity and live responses stop before writes", async (
   await assert.rejects(syncStripeCatalog(m.stripe, build()));
   assert.equal(m.writes(), count);
 });
+
+test("parallel imports bound concurrent writes and preserve binding order", async () => {
+  const m = mockStripe();
+  let active = 0;
+  let maximum = 0;
+  const create = m.stripe.products.create;
+  m.stripe.products.create = async (...args) => {
+    active++;
+    maximum = Math.max(maximum, active);
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    try {
+      return await create(...args);
+    } finally {
+      active--;
+    }
+  };
+  const rows = Array.from(
+    { length: 12 },
+    (_, i) => build({ ...plan, id: `US_3_30_usip_${i}` })[0],
+  );
+  const bindings = await syncStripeCatalog(m.stripe, rows);
+  assert.deepEqual(
+    bindings.map((b) => b.planId),
+    rows.map((r) => r.planId),
+  );
+  assert.equal(maximum, 4);
+  assert.equal(active, 0);
+});
+
+test("parallel failure stops new work and settles in-flight writes before rejecting", async () => {
+  const m = mockStripe();
+  let active = 0;
+  let calls = 0;
+  const create = m.stripe.prices.create;
+  m.stripe.prices.create = async (...args) => {
+    const first = calls++ === 0;
+    active++;
+    try {
+      if (first) throw new Error("Network failure");
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      return await create(...args);
+    } finally {
+      active--;
+    }
+  };
+  const rows = Array.from(
+    { length: 12 },
+    (_, i) => build({ ...plan, id: `US_3_30_usip_${i}` })[0],
+  );
+  await assert.rejects(syncStripeCatalog(m.stripe, rows));
+  assert.equal(active, 0);
+  assert.ok(calls <= 4);
+  assert.ok(m.products.size <= 4);
+});

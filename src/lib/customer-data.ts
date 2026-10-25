@@ -37,6 +37,39 @@ export type CustomerOrder = z.infer<typeof orderSchema>;
 export type CustomerEsim = z.infer<typeof esimSchema>;
 export type PrivateEsim = z.infer<typeof privateSchema>;
 
+export async function customerCheckoutOrders(
+  client: Awaited<ReturnType<typeof authClient>>,
+  userId: string,
+) {
+  const { data, error } = await client
+    .from("checkout_orders")
+    .select(
+      "id,status,amount_total,livemode,created_at,items:checkout_order_items(plan_id,plan_name,quantity)",
+    )
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) throw new Error("Could not load checkout orders");
+  return z
+    .array(
+      z.object({
+        id: z.uuid(),
+        status: z.enum(["pending", "paid", "expired", "failed"]),
+        amount_total: z.number().int(),
+        livemode: z.boolean(),
+        created_at: z.string(),
+        items: z.array(
+          z.object({
+            plan_id: z.string(),
+            plan_name: z.string(),
+            quantity: z.number().int(),
+          }),
+        ),
+      }),
+    )
+    .parse(data);
+}
+
 export async function customerSession(locale: Locale, next?: string) {
   const client = await authClient();
   const {

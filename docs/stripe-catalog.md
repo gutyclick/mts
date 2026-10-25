@@ -20,6 +20,6 @@ Las claves de pruebas sólo se usan en este comando local. No se suben a Vercel 
 
 ## Siguiente fase
 
-Tras verificar la importación real: persistir los enlaces por cuenta/entorno en una tabla privada, modelar pedidos con múltiples líneas e invitados, crear Checkout desde precios canónicos del servidor y verificar webhooks firmados e idempotentes. Sólo un pago confirmado podrá iniciar la emisión y entrega de eSIM. Los IDs de pruebas no sirven en producción; ésta necesitará una sincronización y configuración independientes.
+La importación de pruebas está verificada. Los enlaces privados, pedidos con múltiples líneas, invitados, Checkout y webhooks se describen en [Stripe Checkout](./stripe-checkout.md). Sólo un pago confirmado podrá iniciar la emisión y entrega de eSIM en una futura fase de producción. Los IDs de pruebas no sirven en producción; ésta necesitará una sincronización y configuración independientes.
 
 Referencias oficiales: [gestión del catálogo](https://docs.stripe.com/products-prices/manage-prices), [productos](https://docs.stripe.com/api/products/create), [precios](https://docs.stripe.com/api/prices/create), [idempotencia](https://docs.stripe.com/api/idempotent_requests).

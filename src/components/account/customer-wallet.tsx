@@ -17,11 +17,13 @@ import {
   customerEsim,
   customerRecords,
   customerSession,
+  customerCheckoutOrders,
 } from "@/lib/customer-data";
 import { signOut } from "@/lib/account-actions";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { CopyValue } from "./copy-value";
+import { formatUSD } from "@/lib/retail-prices";
 
 export async function CustomerWallet({
   locale,
@@ -39,7 +41,10 @@ export async function CustomerWallet({
       selectedId ? { esim: selectedId } : undefined,
     ),
   );
-  const { orders, esims } = await customerRecords(client, user.id);
+  const [{ orders, esims }, checkouts] = await Promise.all([
+    customerRecords(client, user.id),
+    customerCheckoutOrders(client, user.id),
+  ]);
   const labels = es
     ? {
         ready: "Lista para instalar",
@@ -298,9 +303,9 @@ export async function CustomerWallet({
             <h2 className="customer-section-title" id="customer-orders-title">
               <Package size={23} />
               {es ? "Mis pedidos" : "My orders"}
-              <span>{orders.length}</span>
+              <span>{orders.length + checkouts.length}</span>
             </h2>
-            {!orders.length ? (
+            {!orders.length && !checkouts.length ? (
               <p className="customer-card">
                 {es
                   ? "Todavía no tienes pedidos. Cuando hagas uno, podrás seguirlo desde aquí."
@@ -308,6 +313,56 @@ export async function CustomerWallet({
               </p>
             ) : (
               <div className="customer-order-list">
+                {checkouts.map((item) => (
+                  <article
+                    className="customer-card customer-order"
+                    key={item.id}
+                  >
+                    <div>
+                      <h3>
+                        {es ? "Pedido" : "Order"} #
+                        {item.id.slice(0, 8).toUpperCase()}
+                      </h3>
+                      {item.items.map((line) => (
+                        <p key={line.plan_id}>
+                          {line.plan_name} × {line.quantity}
+                        </p>
+                      ))}
+                      <small>
+                        {formatDate(item.created_at)} ·{" "}
+                        {es
+                          ? "Prueba · Sin eSIM emitida"
+                          : "Test · No eSIM issued"}
+                      </small>
+                    </div>
+                    <div>
+                      <span className="customer-status">
+                        {item.status === "paid"
+                          ? es
+                            ? "Pago confirmado"
+                            : "Payment confirmed"
+                          : item.status === "pending"
+                            ? es
+                              ? "Pago pendiente"
+                              : "Payment pending"
+                            : item.status === "expired"
+                              ? es
+                                ? "Sesión vencida"
+                                : "Session expired"
+                              : es
+                                ? "Pago fallido"
+                                : "Payment failed"}
+                      </span>
+                      <p>{formatUSD(item.amount_total, locale)}</p>
+                      <Link
+                        href={`/${locale}/checkout/result?order=${item.id}`}
+                      >
+                        {es ? "Ver pedido" : "View order"}{" "}
+                        <ArrowRight size={14} />
+                      </Link>
+                    </div>
+                  </article>
+                ))}
                 {orders.map((item) => (
                   <article
                     className="customer-card customer-order"

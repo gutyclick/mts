@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -8,6 +8,7 @@ import {
   CircleHelp,
   CreditCard,
   LockKeyhole,
+  LoaderCircle,
   Mail,
   ShoppingBag,
   UserRound,
@@ -33,6 +34,25 @@ export function Checkout({
   const es = locale === "es";
   const cart = useCart();
   const initialized = useRef(false);
+  const [enabled, setEnabled] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [compatible, setCompatible] = useState(false);
+  const [terms, setTerms] = useState(false);
+  const paymentAttempt = useRef<{ key: string; id: string } | null>(null);
+  const submitting = useRef(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/checkout/config", {
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (response.ok) setEnabled((await response.json()).enabled === true);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
   useEffect(() => {
     if (!initial || initialized.current) return;
     initialized.current = true;
@@ -40,6 +60,103 @@ export function Checkout({
   }, [initial, cart]);
   const count = cart.lines.reduce((sum, item) => sum + item.quantity, 0);
   const next = encodeURIComponent(experiencePath(locale, "checkout"));
+  const total = cartTotal(cart.resolved);
+  async function pay(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (
+      submitting.current ||
+      !enabled ||
+      total == null ||
+      cart.loading ||
+      cart.error ||
+      !compatible ||
+      !terms
+    )
+      return;
+    const recipient = String(
+      new FormData(event.currentTarget).get("email") ?? "",
+    ).trim();
+    const key = JSON.stringify([cart.lines, recipient, total, locale]);
+    if (paymentAttempt.current?.key !== key)
+      paymentAttempt.current = { key, id: crypto.randomUUID() };
+    submitting.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      const response = await fetch("/api/checkout/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          attemptId: paymentAttempt.current.id,
+          locale,
+          email: recipient,
+          lines: cart.lines,
+          expectedTotal: total,
+          compatible: true,
+          terms: true,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        if (
+          ["checkout_expired", "price_changed", "attempt_conflict"].includes(
+            data.error,
+          )
+        )
+          paymentAttempt.current = null;
+        if (["price_changed", "unavailable_plan"].includes(data.error))
+          cart.retry();
+        const messages: Record<string, string> = es
+          ? {
+              price_changed:
+                "El precio ha cambiado. Revisa el nuevo total antes de continuar.",
+              unavailable_plan:
+                "Un plan necesita actualizarse. Revisa tu carrito y vuelve a intentarlo.",
+              checkout_rate_limit:
+                "Has hecho varios intentos. Espera un poco antes de volver a probar.",
+              checkout_expired:
+                "La sesión ha vencido. Pulsa de nuevo para iniciar el pago.",
+              cookies_required:
+                "Permite las cookies necesarias y recarga esta página para continuar.",
+            }
+          : {
+              price_changed:
+                "The price has changed. Review the updated total before continuing.",
+              unavailable_plan:
+                "A plan needs updating. Review your cart and try again.",
+              checkout_rate_limit:
+                "You have made several attempts. Please wait before trying again.",
+              checkout_expired:
+                "This session has expired. Press again to start payment.",
+              cookies_required:
+                "Allow necessary cookies and reload this page to continue.",
+            };
+        setError(
+          messages[data.error] ??
+            (es
+              ? "No pudimos abrir el pago. Tu carrito sigue guardado. Vuelve a intentarlo."
+              : "We couldn’t open payment. Your cart is saved. Please try again."),
+        );
+        return;
+      }
+      const url = new URL(data.url);
+      if (
+        url.origin !== window.location.origin &&
+        (url.protocol !== "https:" || url.hostname !== "checkout.stripe.com")
+      )
+        throw new Error("Invalid redirect");
+      window.location.assign(url.href);
+    } catch {
+      setError(
+        es
+          ? "No pudimos conectar con el pago. Tu carrito sigue guardado. Vuelve a intentarlo."
+          : "We couldn’t connect to payment. Your cart is saved. Please try again.",
+      );
+    } finally {
+      submitting.current = false;
+      setBusy(false);
+    }
+  }
   return (
     <div className="container commerce-checkout">
       <Link className="commerce-back" href={pathFor(locale, "destinations")}>
@@ -88,10 +205,7 @@ export function Checkout({
                 </div>
               </div>
             )}
-            <form
-              className="commerce-card checkout-form"
-              onSubmit={(event) => event.preventDefault()}
-            >
+            <form className="commerce-card checkout-form" onSubmit={pay}>
               <header>
                 <span className="commerce-badge">
                   <Mail size={22} />
@@ -156,19 +270,33 @@ export function Checkout({
                   <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
                   <p>
                     {es
-                      ? "Tu precio final ya está disponible. Estamos preparando las opciones de pago para completar tu compra."
-                      : "Your final price is now available. We’re preparing payment options so you can complete your purchase."}
+                      ? enabled
+                        ? "Continúa a Stripe para completar el pago de prueba de forma segura."
+                        : "Tu precio final ya está disponible. Estamos preparando las opciones de pago para completar tu compra."
+                      : enabled
+                        ? "Continue to Stripe to complete a secure test payment."
+                        : "Your final price is now available. We’re preparing payment options so you can complete your purchase."}
                   </p>
                   <span className="checkout-pending">
                     <LockKeyhole size={14} />
                     {es
-                      ? "El pago aún no está habilitado"
-                      : "Payment is not available yet"}
+                      ? enabled
+                        ? "Modo de pruebas · sin cargos reales"
+                        : "El pago aún no está habilitado"
+                      : enabled
+                        ? "Test mode · no real charges"
+                        : "Payment is not available yet"}
                   </span>
                 </div>
               </div>
               <label className="commerce-checkbox">
-                <input type="checkbox" name="compatible" required />
+                <input
+                  type="checkbox"
+                  name="compatible"
+                  required
+                  checked={compatible}
+                  onChange={(e) => setCompatible(e.target.checked)}
+                />
                 <span>
                   {es
                     ? "Mi dispositivo es compatible con eSIM y está desbloqueado."
@@ -179,7 +307,13 @@ export function Checkout({
                 </span>
               </label>
               <label className="commerce-checkbox">
-                <input type="checkbox" name="terms" required />
+                <input
+                  type="checkbox"
+                  name="terms"
+                  required
+                  checked={terms}
+                  onChange={(e) => setTerms(e.target.checked)}
+                />
                 <span>
                   {es ? "He leído los" : "I have read the"}{" "}
                   <Link href={pathFor(locale, "terms")}>
@@ -195,16 +329,47 @@ export function Checkout({
               <button
                 type="submit"
                 className="button button-primary checkout-pay"
-                disabled
+                disabled={
+                  !enabled ||
+                  busy ||
+                  cart.loading ||
+                  cart.error ||
+                  total == null ||
+                  !compatible ||
+                  !terms
+                }
                 aria-describedby="checkout-payment-note"
               >
-                <LockKeyhole size={17} />
-                {es ? "Continuar al pago" : "Continue to payment"}
+                {busy ? (
+                  <LoaderCircle size={17} className="payment-spinner" />
+                ) : (
+                  <LockKeyhole size={17} />
+                )}
+                {busy
+                  ? es
+                    ? "Preparando tu pago…"
+                    : "Preparing payment…"
+                  : enabled
+                    ? es
+                      ? "Continuar al pago de prueba"
+                      : "Continue to test payment"
+                    : es
+                      ? "Continuar al pago"
+                      : "Continue to payment"}
               </button>
+              {error && (
+                <p className="checkout-error" role="alert">
+                  {error}
+                </p>
+              )}
               <p id="checkout-payment-note" className="commerce-muted">
-                {es
-                  ? "No se realizará ningún cargo mientras el pago siga desactivado."
-                  : "You won’t be charged while payment remains disabled."}
+                {enabled
+                  ? es
+                    ? "Esta compra es de prueba: no se harán cargos ni se enviarán QR de eSIM reales."
+                    : "This is a test purchase: no real charges or eSIM QR codes will be sent."
+                  : es
+                    ? "No se realizará ningún cargo mientras el pago siga desactivado."
+                    : "You won’t be charged while payment remains disabled."}
               </p>
             </form>
             <div className="checkout-help">

@@ -83,6 +83,7 @@ type CartContextValue = {
   open: () => void;
   close: () => void;
   retry: () => void;
+  complete: (orderId: string, purchased: CartLine[]) => void;
 };
 const Context = createContext<CartContextValue | null>(null);
 export function useCart() {
@@ -166,6 +167,36 @@ export function CartProvider({
     resolved,
     loading,
     error: !!error,
+    complete(orderId, purchased) {
+      // Keep only non-personal order references; never erase additions made during payment.
+      try {
+        const raw: unknown = JSON.parse(
+          localStorage.getItem("mytripsim.completed-carts.v1") ?? "[]",
+        );
+        const completed = Array.isArray(raw)
+          ? raw.filter((id): id is string => typeof id === "string").slice(-19)
+          : [];
+        if (completed.includes(orderId)) return;
+        localStorage.setItem(
+          "mytripsim.completed-carts.v1",
+          JSON.stringify([...completed, orderId]),
+        );
+        write(
+          snapshot().flatMap((line) => {
+            const paid = purchased.find(
+              (item) => cartKey(item) === cartKey(line),
+            );
+            return !paid
+              ? [line]
+              : line.quantity > paid.quantity
+                ? [{ ...line, quantity: line.quantity - paid.quantity }]
+                : [];
+          }),
+        );
+      } catch {
+        /* Without persistent storage, leave the cart intact to avoid repeated deductions. */
+      }
+    },
     ensure(line) {
       const current = snapshot();
       if (!current.some((item) => cartKey(item) === cartKey(line)))

@@ -1,0 +1,31 @@
+# Stripe Checkout: entorno de pruebas
+
+El carrito está conectado a Stripe Checkout alojado. La web conserva su diseño para seleccionar los planes, introducir el correo, aceptar las condiciones y consultar el resultado. Los datos de tarjeta sólo se introducen en Stripe.
+
+## Configuración y despliegue
+
+- Migración: `20261025000300_test_checkout.sql`. Crea los enlaces privados de precios, pedidos, líneas y registro de eventos. Sólo admite `livemode=false`.
+- `npm.cmd run stripe:setup:test`: verifica los enlaces exportados contra Stripe, guarda 1.730 precios en la tabla privada y registra el webhook de pruebas. Usa la autenticación existente del CLI de Supabase para configurar el acceso privado del servidor. Los valores se guardan en `.env.local`, fuera de Git, y nunca se imprimen.
+- `npm.cmd run stripe:deploy:test-env`: transmite los secretos por stdin al almacenamiento cifrado de Vercel, proyecto `mts`. Configura `CHECKOUT_SITE_URL=https://www.mytripsim.com` y mantiene `STRIPE_TEST_CHECKOUT_ENABLED=false` para las ventas públicas.
+- En local, `CHECKOUT_SITE_URL=http://localhost:3000` y `STRIPE_TEST_CHECKOUT_ENABLED=true`. Reinicia el servidor después de cambiar variables.
+- La URL del webhook es `https://www.mytripsim.com/api/payments/stripe/webhook`. El endpoint público puede confirmar las sesiones de prueba creadas localmente porque todos los pedidos se guardan en Supabase.
+
+## Seguridad y comportamiento
+
+El navegador sólo envía referencias del carrito, cantidades, correo, consentimientos, un identificador de intento y el total que vio. La función privada de la base de datos vuelve a calcular el importe con planes publicados y precios enlazados. Un precio cambiado obliga a revisar el total. El servidor comprueba además el precio real de Stripe antes de crear la sesión. No acepta IDs de precio o importes por línea del cliente.
+
+Los intentos repetidos con el mismo contenido reutilizan el pedido y la sesión. Los pedidos conservan una instantánea de los planes y precios. El límite de 15 intentos nuevos por red y hora se aplica en una transacción, entre instancias del servidor. La IP se guarda únicamente como HMAC, con una clave privada. No se guardan tarjetas.
+
+Los clientes con sesión usan el correo confirmado de su cuenta. Un invitado no necesita cuenta y sólo consulta su pedido con la cookie privada HttpOnly del navegador que inició la compra. Conocer el UUID no da acceso. La respuesta de estado no incluye correo, claves, IDs de pago ni datos de instalación. Las cuentas sólo ven sus propios pedidos mediante RLS; los campos de correo y autorización no se conceden al cliente autenticado.
+
+El webhook verifica la firma sobre el cuerpo original y su antigüedad. Consulta de nuevo la sesión y las líneas a Stripe y compara sesión, pedido, moneda, total, precios y cantidades con la instantánea almacenada. Registra cada evento una sola vez dentro de la misma transacción que actualiza el pago. Un aviso antiguo de vencimiento o fallo no rebaja un pago confirmado. Los errores de infraestructura devuelven 503 para que Stripe reintente. La página de regreso nunca marca pedidos como pagados.
+
+La confirmación limpia sólo las cantidades compradas y conserva otras adiciones al carrito. Cancelar o fallar conserva el carrito. La pantalla de resultado espera la confirmación y ofrece reintentar la consulta si tarda. Los pedidos de prueba con cuenta aparecen en «Mis eSIM», identificados como pruebas y sin inventar un QR.
+
+## Pruebas
+
+`npm.cmd run test:checkout` verifica validación, firmas, privacidad, aislamiento, importes, idempotencia, transacciones y límites en PostgreSQL local. `npx.cmd playwright test tests/e2e/checkout.spec.ts tests/e2e/cart.spec.ts` revisa los estados y el carrito en escritorio y móvil. Los ensayos con Stripe deben usar exclusivamente sus [datos de prueba oficiales](https://docs.stripe.com/testing).
+
+## Antes de vender
+
+Esta fase no procesa cobros reales ni compra, activa o envía eSIM. Las claves live se rechazan y la base de datos rechaza pedidos live. La siguiente fase necesita configurar precios y claves de producción por separado, habilitar una cola de emisión idempotente para pagos reales, gestionar reintentos y fallos del proveedor, y probar la entrega segura por correo. También deben decidirse los impuestos y las condiciones comerciales antes de habilitar ventas.

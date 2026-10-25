@@ -86,7 +86,7 @@ test("phone plan selection keeps complete details on the same page", async ({
   await radio.check();
   await expect(radio).toBeChecked();
   await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
-  await page.getByRole("link", { name: "See selected plan details" }).click();
+  await page.locator(".plan-purchase-summary").scrollIntoViewIfNeeded();
   const details = page.getByRole("region", {
     name: "Full plan details",
     exact: true,

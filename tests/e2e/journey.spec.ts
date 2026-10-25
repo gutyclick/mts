@@ -13,7 +13,7 @@ test("a catalog plan connects to detail, checkout preview and example wallet", a
   ).toBeVisible();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Japan");
   await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
-  await page.getByRole("link", { name: "Preview purchase" }).click();
+  await page.getByRole("link", { name: "Continue with this plan" }).click();
   await expect(page).toHaveURL(/\/en\/checkout\?/);
   await expect(
     page.getByText("Visual preview", { exact: true }).first(),

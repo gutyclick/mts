@@ -4,7 +4,7 @@ export const experienceCopy = {
     previewBody:
       "Explore the experience with example data. Purchases, accounts and eSIM activation are not available yet.",
     fullDetails: "Full plan details",
-    previewPurchase: "Preview purchase",
+    previewPurchase: "Continue with this plan",
     wallet: "My eSIMs",
     studio: "Administration preview",
     install: "Installation guide",
@@ -193,7 +193,7 @@ export const experienceCopy = {
     previewBody:
       "Explora la experiencia con datos de ejemplo. Las compras, las cuentas y la activación de eSIM todavía no están disponibles.",
     fullDetails: "Ver ficha completa",
-    previewPurchase: "Ver compra de ejemplo",
+    previewPurchase: "Continuar con este plan",
     wallet: "Mis eSIM",
     studio: "Administración de muestra",
     install: "Guía de instalación",

@@ -28,12 +28,17 @@ test("country guide uses catalog facts, native FAQs and a compact live purchase 
   ).toHaveText("Alemania");
   const summary = page.locator(".plan-purchase-summary");
   const details = page.locator(".plan-information");
-  expect((await details.boundingBox())!.y).toBeGreaterThan(
-    (await summary.boundingBox())!.y + (await summary.boundingBox())!.height,
+  await expect(details).not.toBeVisible();
+  await expect(summary.locator(".plan-essential-facts")).toContainText(
+    "Vodafone",
   );
-  await expect(
-    details.locator(".selected-plan-conditions strong svg"),
-  ).toHaveCount(5);
+  await expect(summary.locator(".plan-essential-facts")).toContainText("O2");
+  expect((await guide.boundingBox())!.y).toBeGreaterThan(
+    (await page.locator(".plan-workspace").boundingBox())!.y +
+      (await page.locator(".plan-workspace").boundingBox())!.height,
+  );
+  await expect(guide.locator(".destination-benefits > li")).toHaveCount(3);
+  await summary.locator(".plan-technical-details > summary").click();
   await expect(
     details.getByRole("columnheader", { name: "Operador", exact: true }),
   ).toBeVisible();
@@ -46,5 +51,8 @@ test("country guide uses catalog facts, native FAQs and a compact live purchase 
     "Vodafone",
   );
   await expect(page.locator(".plan-purchase-summary")).toContainText("1GB");
-  await expect(page.locator(".plan-information")).toContainText("NTT docomo");
+  await expect(page.locator(".plan-essential-facts")).toContainText(
+    "NTT docomo",
+  );
+  await expect(page.locator(".plan-information")).not.toBeVisible();
 });

@@ -1,12 +1,21 @@
 import Link from "next/link";
-import { ArrowRight, CalendarDays, Check, Wifi } from "lucide-react";
-import { pathFor, type Locale } from "@/lib/i18n";
+import {
+  ArrowRight,
+  CalendarDays,
+  Clock3,
+  Gauge,
+  RadioTower,
+  Settings2,
+  Wifi,
+} from "lucide-react";
+import type { Locale } from "@/lib/i18n";
 import type { Destination } from "@/lib/catalog";
 import type { Plan } from "@/lib/plan-utils";
 import { experienceCopy } from "@/lib/experience-copy";
 import { experiencePath } from "@/lib/experience-routes";
 import { CompatibilityChecker } from "@/components/compatibility-checker";
-import { DestinationFlag } from "@/components/destination-flag";
+import { PlanInformation } from "./plan-information";
+import { PlanNetworkDetails } from "./plan-network-details";
 
 export function PlanPurchaseSummary({
   locale,
@@ -19,17 +28,37 @@ export function PlanPurchaseSummary({
 }) {
   const c = experienceCopy[locale];
   const es = locale === "es";
+  const details = plan.details;
+  const operators = [
+    ...new Set(
+      details?.networks.flatMap((group) =>
+        group.operators.map((operator) => operator.name),
+      ) ?? [],
+    ),
+  ];
+  const activation = details
+    ? (es
+        ? {
+            network: "Al conectarse por primera vez a la red",
+            installation: "Al instalar la eSIM",
+            purchase: "Después de la compra",
+          }
+        : {
+            network: "On the first network connection",
+            installation: "When the eSIM is installed",
+            purchase: "After purchase",
+          })[details.activation]
+    : c.pending;
   return (
-    <section className="plan-purchase-summary">
+    <section
+      className="plan-purchase-summary"
+      aria-label={
+        es ? "Resumen del plan seleccionado" : "Selected plan summary"
+      }
+    >
       <header className="selected-plan-heading">
-        <p className="eyebrow">
-          {es ? "Tu plan seleccionado" : "Your selected plan"}
-        </p>
-        <div>
-          <DestinationFlag destination={destination} />
-          <h2>{destination.name[locale]}</h2>
-          <span className="selected-plan-tag">{c.fixed}</span>
-        </div>
+        <h2>{es ? "Tu selección" : "Your selection"}</h2>
+        <span className="selected-plan-tag">{c.fixed}</span>
       </header>
       <div
         className="selected-plan-stats"
@@ -38,31 +67,66 @@ export function PlanPurchaseSummary({
         aria-atomic="true"
       >
         <div>
-          <Wifi size={22} />
+          <Wifi size={21} aria-hidden="true" />
           <strong>{plan.allowance}</strong>
         </div>
         <div>
-          <CalendarDays size={20} />
+          <CalendarDays size={20} aria-hidden="true" />
           <strong>
             {plan.days} <span>{plan.days === 1 ? c.day : c.days}</span>
           </strong>
         </div>
       </div>
+      <dl className="plan-essential-facts">
+        <div>
+          <dt>
+            <RadioTower size={16} aria-hidden="true" />
+            {es ? "Red" : "Network"}
+          </dt>
+          <dd>{details?.technologies.join(" / ") || c.pending}</dd>
+        </div>
+        <div>
+          <dt>
+            <Wifi size={16} aria-hidden="true" />
+            {destination.type === "region"
+              ? c.coverage
+              : es
+                ? "Operadores"
+                : "Operators"}
+          </dt>
+          <dd>
+            {destination.type === "region"
+              ? details
+                ? `${details.coverage.length} ${es ? "países y territorios" : "countries and territories"}`
+                : c.pending
+              : operators.join(", ") || c.pending}
+          </dd>
+        </div>
+        <div>
+          <dt>
+            <Clock3 size={16} aria-hidden="true" />
+            {es ? "Inicio de vigencia" : "Validity starts"}
+          </dt>
+          <dd>{activation}</dd>
+        </div>
+      </dl>
+      {details && (
+        <PlanNetworkDetails
+          locale={locale}
+          details={details}
+          regional={destination.type === "region"}
+          view="summary"
+        />
+      )}
+      {details?.fairUse && (
+        <p className="plan-fair-use">
+          <Gauge size={17} aria-hidden="true" />
+          {es
+            ? `El proveedor indica ${details.fairUse}. Las condiciones de aplicación están pendientes de confirmar.`
+            : `The provider lists ${details.fairUse}. The conditions for applying it still need confirmation.`}
+        </p>
+      )}
       <CompatibilityChecker locale={locale} />
-      <ul className="purchase-highlights">
-        <li>
-          <Check size={16} aria-hidden="true" />
-          {es
-            ? "Una bolsa de datos para todo el viaje"
-            : "One data allowance for your trip"}
-        </li>
-        <li>
-          <Check size={16} aria-hidden="true" />
-          {es
-            ? "Instalación digital en un equipo compatible"
-            : "Digital installation on a compatible device"}
-        </li>
-      </ul>
       <footer className="selected-plan-footer">
         <Link
           className="button button-primary"
@@ -72,17 +136,27 @@ export function PlanPurchaseSummary({
           })}
         >
           {c.previewPurchase}
-          <ArrowRight size={17} />
+          <ArrowRight size={17} aria-hidden="true" />
         </Link>
         <p>
           {es
-            ? "Vista de ejemplo. Aún no se realizan pagos ni activaciones."
-            : "Visual preview. Payments and activation are not available yet."}
+            ? "Compra de ejemplo. Aún no se realizan pagos ni activaciones."
+            : "Purchase preview. Payments and activation are not available yet."}
         </p>
-        <Link className="selected-plan-faq" href={pathFor(locale, "faq")}>
-          {es ? "¿Tienes dudas? Consulta las FAQ" : "Questions? Visit the FAQ"}
-        </Link>
       </footer>
+      <details className="plan-technical-details">
+        <summary>
+          <Settings2 size={16} aria-hidden="true" />
+          {es
+            ? "Detalles técnicos y condiciones"
+            : "Technical details and conditions"}
+        </summary>
+        <PlanInformation
+          locale={locale}
+          destination={destination}
+          plan={plan}
+        />
+      </details>
     </section>
   );
 }

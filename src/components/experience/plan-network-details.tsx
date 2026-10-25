@@ -6,10 +6,12 @@ export function PlanNetworkDetails({
   locale,
   details,
   regional,
+  view,
 }: {
   locale: Locale;
   details: PlanDetails;
   regional: boolean;
+  view: "summary" | "technical";
 }) {
   const es = locale === "es";
   const display = new Intl.DisplayNames([locale], { type: "region" });
@@ -69,7 +71,7 @@ export function PlanNetworkDetails({
   );
   return (
     <>
-      {regional && (
+      {view === "summary" && regional && (
         <details className="plan-network-disclosure">
           <summary>
             {es
@@ -96,35 +98,38 @@ export function PlanNetworkDetails({
           </ul>
         </details>
       )}
-      {regional ? (
-        <details className="plan-network-disclosure">
-          <summary>
-            {es ? "Operadores por destino" : "Operators by destination"}
-          </summary>
-          <div
-            className="plan-regional-networks"
-            tabIndex={0}
-            role="region"
-            aria-label={es ? "Redes por país" : "Networks by country"}
-          >
-            {networkTable(details.networks)}
-          </div>
-        </details>
-      ) : (
-        networkTable(details.networks)
-      )}
-      {technologyDifference && (
+      {view === "technical" &&
+        (regional ? (
+          <details className="plan-network-disclosure">
+            <summary>
+              {es ? "Operadores por destino" : "Operators by destination"}
+            </summary>
+            <div
+              className="plan-regional-networks"
+              tabIndex={0}
+              role="region"
+              aria-label={es ? "Redes por país" : "Networks by country"}
+            >
+              {networkTable(details.networks)}
+            </div>
+          </details>
+        ) : (
+          networkTable(details.networks)
+        ))}
+      {view === "summary" && technologyDifference && (
         <p className="plan-network-caution">
           {es
-            ? "El proveedor indica tecnologías distintas para el plan y algunas redes de operadores. La disponibilidad de esas tecnologías adicionales en este plan está pendiente de confirmar."
-            : "The provider lists different technologies for the plan and some operator networks. Availability of those additional technologies on this plan still needs confirmation."}
+            ? "Algunas redes indican otra tecnología. Su disponibilidad en este plan está pendiente de confirmar."
+            : "Some networks list a different technology. Its availability on this plan still needs confirmation."}
         </p>
       )}
-      <p className="selected-plan-note">
-        {es
-          ? "Redes indicadas por el proveedor. La señal y la tecnología disponible dependen del lugar, la red y tu equipo."
-          : "Networks listed by the provider. Signal and available technology depend on your location, the network and your device."}
-      </p>
+      {view === "technical" && (
+        <p className="selected-plan-note">
+          {es
+            ? "Redes indicadas por el proveedor. La señal y la tecnología disponible dependen del lugar, la red y tu equipo."
+            : "Networks listed by the provider. Signal and available technology depend on your location, the network and your device."}
+        </p>
+      )}
     </>
   );
 }

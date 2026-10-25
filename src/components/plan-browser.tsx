@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { ArrowDown, Check, SlidersHorizontal, Wifi } from "lucide-react";
+import { Check, SlidersHorizontal, Wifi } from "lucide-react";
 import type { Destination } from "@/lib/catalog";
 import { filterPlans, sortPlans, type Plan } from "@/lib/plan-utils";
 import { type Locale, pathFor } from "@/lib/i18n";
 import { catalogCopy } from "@/lib/catalog-copy";
 import { PlanPurchaseSummary } from "./experience/plan-purchase-summary";
-import { PlanInformation } from "./experience/plan-information";
 
 export function PlanBrowser({
   locale,
@@ -119,38 +118,43 @@ export function PlanBrowser({
                   {es ? "Días: de menos a más" : "Days: low to high"}
                 </option>
               </select>
-              <div className="plan-compact-filters">
-                <div>
-                  <label htmlFor={`${id}-data`}>{c.data}</label>
-                  <select
-                    id={`${id}-data`}
-                    value={data}
-                    onChange={(event) => filter(event.target.value, days)}
-                  >
-                    <option value="">{es ? "Todos" : "Any"}</option>
-                    {allowances.map(([gb, label]) => (
-                      <option key={gb} value={gb}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
+              <details className="plan-filter-disclosure">
+                <summary>
+                  {es ? "Filtrar por GB o d\u00edas" : "Filter data or days"}
+                </summary>
+                <div className="plan-compact-filters">
+                  <div>
+                    <label htmlFor={`${id}-data`}>{c.data}</label>
+                    <select
+                      id={`${id}-data`}
+                      value={data}
+                      onChange={(event) => filter(event.target.value, days)}
+                    >
+                      <option value="">{es ? "Todos" : "Any"}</option>
+                      {allowances.map(([gb, label]) => (
+                        <option key={gb} value={gb}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor={`${id}-days`}>{c.duration}</label>
+                    <select
+                      id={`${id}-days`}
+                      value={days}
+                      onChange={(event) => filter(data, event.target.value)}
+                    >
+                      <option value="">{es ? "Todos" : "Any"}</option>
+                      {durations.map((duration) => (
+                        <option key={duration} value={duration}>
+                          {duration} {duration === 1 ? c.day : c.days}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor={`${id}-days`}>{c.duration}</label>
-                  <select
-                    id={`${id}-days`}
-                    value={days}
-                    onChange={(event) => filter(data, event.target.value)}
-                  >
-                    <option value="">{es ? "Todos" : "Any"}</option>
-                    {durations.map((duration) => (
-                      <option key={duration} value={duration}>
-                        {duration} {duration === 1 ? c.day : c.days}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+              </details>
               {(data || days) && (
                 <button className="reset-button" onClick={() => filter("", "")}>
                   {c.reset}
@@ -218,16 +222,8 @@ export function PlanBrowser({
                 </button>
               </div>
             )}
-            {selected && (
-              <a className="plan-details-jump" href={`#${id}-details`}>
-                {es
-                  ? "Ver ficha del plan seleccionado"
-                  : "See selected plan details"}
-                <ArrowDown size={15} />
-              </a>
-            )}
           </div>
-          <div className="selected-plan-panel">
+          <div id={`${id}-details`} className="selected-plan-panel">
             {selected ? (
               <PlanPurchaseSummary
                 locale={locale}
@@ -247,15 +243,6 @@ export function PlanBrowser({
             )}
           </div>
         </div>
-        {selected && (
-          <div id={`${id}-details`} className="plan-detail-anchor">
-            <PlanInformation
-              locale={locale}
-              destination={destination}
-              plan={selected}
-            />
-          </div>
-        )}
       </div>
     </section>
   );

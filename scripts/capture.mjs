@@ -16,6 +16,20 @@ for (const [name, width, height, path, fullPage = true] of [
   ["how-tablet", 768, 1024, "/en/how-it-works"],
   ["how-mobile", 390, 844, "/es/como-funciona", false],
   ["plans-desktop", 1440, 1000, "/en/esim/japan", false],
+  [
+    "plans-afghanistan-desktop",
+    1440,
+    1000,
+    "/es/esim/afghanistan?plan=AF_1_7",
+    false,
+  ],
+  [
+    "plans-afghanistan-mobile",
+    390,
+    844,
+    "/es/esim/afghanistan?plan=AF_1_7",
+    false,
+  ],
   ["regional-networks-desktop", 1440, 1000, "/es/esim/europe", false],
   ["regional-networks-mobile", 390, 844, "/es/esim/europe", false],
   ["faq-desktop", 1440, 1000, "/en/faq", false],
@@ -64,6 +78,19 @@ for (const [name, width, height, path, fullPage = true] of [
     Array.from(document.images).every((image) => image.complete),
   );
   await page.screenshot({ path: `docs/previews/${name}.png`, fullPage });
+  if (name === "plans-afghanistan-mobile") {
+    await page
+      .locator(".selected-plan-panel")
+      .evaluate((el) =>
+        window.scrollTo(
+          0,
+          window.scrollY + el.getBoundingClientRect().top - 85,
+        ),
+      );
+    await page.screenshot({
+      path: "docs/previews/plans-afghanistan-mobile-summary.png",
+    });
+  }
   if (name === "how-mobile") {
     await page
       .locator(".how-preparation")
@@ -76,6 +103,7 @@ for (const [name, width, height, path, fullPage = true] of [
     await page.screenshot({ path: "docs/previews/how-mobile-preparation.png" });
   }
   if (name === "plans-desktop" || name === "plans-mobile") {
+    await page.locator(".plan-technical-details > summary").click();
     await page
       .locator(".plan-information")
       .evaluate((el) =>
@@ -101,6 +129,7 @@ for (const [name, width, height, path, fullPage = true] of [
       .locator("summary")
       .filter({ hasText: "Países y territorios incluidos" })
       .click();
+    await page.locator(".plan-technical-details > summary").click();
     await page.getByText("Operadores por destino", { exact: true }).click();
     await page
       .locator(".plan-network-disclosure")

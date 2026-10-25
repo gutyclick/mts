@@ -37,6 +37,7 @@ test("plan selection updates inline and never completes a purchase", async ({
   await expect(page.getByRole("button", { name: /Daily data/ })).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText("Daily data");
   await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
+  await page.locator(".plan-filter-disclosure summary").click();
   await page.getByLabel("Data allowance").selectOption("50");
   await page.getByLabel("Duration", { exact: true }).selectOption("7");
   await expect(page.locator(".empty-state")).toBeVisible();

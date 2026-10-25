@@ -9,11 +9,19 @@ test("plan variants switch operators, activation and APN without leaking commerc
     exact: true,
   });
   await expect(sheet).toContainText("On the first network connection");
+  await expect(sheet.locator(".plan-essential-facts")).toBeVisible();
+  await expect(sheet.locator(".plan-information")).not.toBeVisible();
+  await expect(sheet.locator(".plan-essential-facts")).toContainText(
+    "SoftBank",
+  );
+  await expect(sheet.locator(".plan-essential-facts")).toContainText(
+    "3G / 4G / 5G",
+  );
+  await sheet.locator(".plan-technical-details > summary").click();
   await expect(sheet.locator(".plan-network-table")).toContainText("SoftBank");
   await expect(sheet.locator(".plan-network-table")).toContainText(
     "Rakuten Mobile",
   );
-  await sheet.getByText("APN settings", { exact: true }).click();
   await expect(sheet.locator("code")).toHaveText("mobile.three.com.hk");
   await page.locator('input[type="radio"][value="JP_1_7_IIJ"]').check();
   await expect(sheet.locator(".plan-network-table tbody tr")).toHaveCount(1);
@@ -45,6 +53,7 @@ test("regional sheets expose actual included destinations and grouped local oper
   expect(await sheet.locator(".plan-coverage-list li").count()).toBeGreaterThan(
     5,
   );
+  await sheet.locator(".plan-technical-details > summary").click();
   await sheet.getByText("Operadores por destino", { exact: true }).click();
   await expect(
     sheet.locator('.plan-regional-networks th[scope="rowgroup"]').first(),
@@ -82,10 +91,14 @@ test("ambiguous source technologies are qualified and fair use does not become u
   await expect(page.locator(".plan-network-caution")).toContainText(
     "pendiente de confirmar",
   );
+  await expect(page.locator(".plan-network-caution")).toBeVisible();
+  await expect(page.locator(".plan-essential-facts")).toContainText("3G");
+  await expect(page.locator(".plan-essential-facts")).not.toContainText("4G");
+  await page.locator(".plan-technical-details > summary").click();
+  await expect(page.locator(".plan-network-table")).toContainText("4G");
   await page.goto("/es/esim/canada?plan=CA_75_30");
-  await expect(page.locator(".selected-plan-conditions")).toContainText(
-    "128 Kbps",
-  );
+  await expect(page.locator(".plan-fair-use")).toContainText("128 Kbps");
+  await expect(page.locator(".plan-fair-use")).toBeVisible();
   await expect(page.locator(".selected-plan-stats")).toContainText("75GB");
   await expect(page.locator(".selected-plan-tag")).toHaveText("Datos fijos");
 });

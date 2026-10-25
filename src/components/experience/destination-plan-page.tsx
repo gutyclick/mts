@@ -64,8 +64,8 @@ export function DestinationPlanPage({
           </h1>
           <p>
             {es
-              ? "Elige tus GB y días. Tu ficha se actualiza al instante."
-              : "Pick your data and duration. Your plan details update instantly."}
+              ? "Elige tus GB y días, revisa la red y continúa."
+              : "Choose your data and days, check the network and continue."}
           </p>
         </div>
       </header>

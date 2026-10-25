@@ -19,6 +19,8 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/como-funciona",
     "/es/destinos",
     "/en/esim/japan",
+    "/es/esim/afghanistan?plan=AF_1_7",
+    "/es/esim/canada?plan=CA_75_30",
     "/es/esim/europe",
     "/es/compatibilidad",
     "/es/preguntas-frecuentes",
@@ -33,6 +35,8 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/instalar",
     "/es/estudio",
   ]) {
+    if (process.env.AUDIT_SCOPE === "plans" && !/\/esim\/|\/plan\//.test(path))
+      continue;
     if (
       process.env.AUDIT_SCOPE === "mascots" &&
       ![
@@ -92,6 +96,7 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
           .locator("summary")
           .filter({ hasText: "Países y territorios incluidos" })
           .click();
+        await page.locator(".plan-technical-details > summary").click();
         await page.getByText("Operadores por destino", { exact: true }).click();
         await auditState("regional-coverage-and-networks-expanded");
       }
@@ -101,6 +106,9 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
         await page.getByLabel("Sort by", { exact: true }).selectOption("days");
         await page.locator(".plan-option input").last().check();
         await auditState("inline-plan-selected");
+        await page.locator(".plan-technical-details > summary").click();
+        await auditState("selected-plan-technical-details");
+        await page.locator(".plan-filter-disclosure summary").click();
         await page.getByLabel("Data allowance").selectOption("50");
         await page.getByLabel("Duration", { exact: true }).selectOption("7");
         await auditState("inline-plan-empty");

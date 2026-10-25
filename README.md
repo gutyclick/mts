@@ -42,7 +42,7 @@ No se necesitan variables de entorno ni credenciales para esta fase. `.env.examp
 
 Los planes incluyen operadores, redes, países cubiertos, inicio de vigencia, recarga y APN extraídos del segundo CSV, con exclusión de precios y campos comerciales. Consulta [importación de datos técnicos](docs/plan-enrichment.md).
 
-Las páginas de destino incluyen un resumen de compra compacto, tablas de cobertura, condiciones con iconos y una guía con datos reales y FAQ por país o región. Consulta la [estructura y criterios de contenido](docs/destination-experience.md).
+Las páginas de destino reúnen selección, GB/días, red, operadores e inicio de vigencia en un único bloque para continuar. Los datos técnicos secundarios se despliegan dentro de ese bloque; debajo quedan las políticas generales, guías y FAQ por destino. Consulta la [estructura y criterios de contenido](docs/destination-experience.md).
 
 La FAQ principal es un índice de seis temas, cada uno con página propia y rutas traducidas, buscador y valoraciones por respuesta. Los enlaces antiguos siguen dirigiendo al tema y respuesta correspondientes. Consulta las [rutas y estructura de FAQ](docs/faq-experience.md).
 

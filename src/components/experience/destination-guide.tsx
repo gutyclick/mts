@@ -2,8 +2,8 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
-  CalendarDays,
   CircleHelp,
+  Phone,
   Database,
   Globe2,
   ListChecks,
@@ -14,6 +14,7 @@ import type { Destination } from "@/lib/catalog";
 import type { Plan } from "@/lib/plan-utils";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { destinationContent } from "@/lib/destination-content";
+import { experienceCopy } from "@/lib/experience-copy";
 import { experiencePath } from "@/lib/experience-routes";
 
 export function DestinationGuide({
@@ -26,6 +27,7 @@ export function DestinationGuide({
   plans: Plan[];
 }) {
   const es = locale === "es";
+  const c = experienceCopy[locale];
   const content = destinationContent(locale, destination, plans);
   return (
     <div className="destination-guide">
@@ -49,31 +51,27 @@ export function DestinationGuide({
               : `Find a data allowance for your trip to ${content.name}. Compare the catalog's combinations and check the networks and conditions of your chosen variant.`}
           </p>
         </div>
-        <dl className="destination-overview-facts">
-          <div>
-            <dt>
-              <Database aria-hidden="true" size={19} />
-              {es ? "Datos disponibles" : "Available data"}
-            </dt>
-            <dd>{content.range}</dd>
-          </div>
-          <div>
-            <dt>
-              <CalendarDays aria-hidden="true" size={19} />
-              {es ? "Duraciones" : "Durations"}
-            </dt>
-            <dd>
-              {content.duration} {es ? "días" : "days"}
-            </dd>
-          </div>
-          <div>
-            <dt>
-              <ListChecks aria-hidden="true" size={19} />
-              {es ? "Planes fijos" : "Fixed plans"}
-            </dt>
-            <dd>{plans.length}</dd>
-          </div>
-        </dl>
+        <ul className="destination-benefits">
+          <li>
+            <Database size={22} aria-hidden="true" />
+            <h3>{es ? "Datos fijos" : "Fixed data"}</h3>
+            <p>
+              {es
+                ? "Una bolsa de datos para toda la vigencia del plan, sin paquetes diarios."
+                : "One data allowance for the full validity period, with no daily packages."}
+            </p>
+          </li>
+          <li>
+            <Wifi size={22} aria-hidden="true" />
+            <h3>{c.hotspot}</h3>
+            <p>{c.hotspotBody}</p>
+          </li>
+          <li>
+            <Phone size={22} aria-hidden="true" />
+            <h3>{c.calls}</h3>
+            <p>{c.callsBody}</p>
+          </li>
+        </ul>
       </section>
       <section
         className="destination-steps"

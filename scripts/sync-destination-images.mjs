@@ -12,6 +12,10 @@ const files = (await readdir("public/images/destinations"))
   .filter((file) => /\.(png|jpe?g|webp|avif)$/i.test(file))
   .sort();
 const images = {};
+const filenameAliases = {
+  "nulgaria.png": "bulgaria",
+  "bosnia y hezergovina.png": "bosnia-and-herzegovina",
+};
 for (const destination of destinations) {
   const names = [
     destination.slug,
@@ -20,8 +24,10 @@ for (const destination of destinations) {
     destination.name.es,
     ...destination.aliases,
   ].map(normalize);
-  const file = files.find((file) =>
-    names.includes(normalize(file.replace(/\.[^.]+$/, ""))),
+  const file = files.find(
+    (file) =>
+      filenameAliases[file] === destination.slug ||
+      names.includes(normalize(file.replace(/\.[^.]+$/, ""))),
   );
   if (file) images[destination.slug] = `/images/destinations/${file}`;
 }

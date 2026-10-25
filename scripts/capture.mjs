@@ -171,24 +171,11 @@ for (const [name, width, height, path, fullPage = true] of [
     await page.screenshot({ path: "docs/previews/mobile-plan-selection.png" });
   }
   if (name === "checkout-mobile" || name === "checkout-desktop") {
-    await page
-      .getByRole("button", {
-        name:
-          name === "checkout-mobile"
-            ? "Continuar al pago de ejemplo"
-            : "Continue to payment preview",
-      })
-      .click();
-    await page.screenshot({ path: `docs/previews/${name}-payment.png` });
-    await page
-      .getByRole("button", {
-        name:
-          name === "checkout-mobile"
-            ? "Ver confirmación de ejemplo"
-            : "Preview confirmation",
-      })
-      .click();
-    await page.screenshot({ path: `docs/previews/${name}-confirmation.png` });
+    await page.locator(".checkout-summary .cart-item").first().waitFor();
+    await page.screenshot({
+      path: `docs/previews/${name}.png`,
+      fullPage: true,
+    });
   }
   if (name === "faq-mobile" || name === "faq-desktop") {
     await page.goto(`${baseURL}${path}#faq-hotspot`, {

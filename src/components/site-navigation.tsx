@@ -14,6 +14,7 @@ import {
 import { Brand } from "./ui";
 import { experiencePath } from "@/lib/experience-routes";
 import { experienceCopy } from "@/lib/experience-copy";
+import { CartTrigger } from "./commerce/cart-provider";
 
 export function LanguageSwitcher({ locale }: { locale: Locale }) {
   const pathname = usePathname();
@@ -88,6 +89,7 @@ export function Header({ locale }: { locale: Locale }) {
         </nav>
         <div className="header-actions">
           <LanguageSwitcher locale={locale} />
+          <CartTrigger locale={locale} />
           <Link
             className="button button-primary header-cta"
             href={pathFor(locale, "destinations")}

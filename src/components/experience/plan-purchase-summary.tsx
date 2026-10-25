@@ -1,6 +1,4 @@
-import Link from "next/link";
 import {
-  ArrowRight,
   CalendarDays,
   Clock3,
   Gauge,
@@ -12,7 +10,7 @@ import type { Locale } from "@/lib/i18n";
 import type { Destination } from "@/lib/catalog";
 import type { Plan } from "@/lib/plan-utils";
 import { experienceCopy } from "@/lib/experience-copy";
-import { experiencePath } from "@/lib/experience-routes";
+import { AddToCart } from "../commerce/add-to-cart";
 import { CompatibilityChecker } from "@/components/compatibility-checker";
 import { PlanInformation } from "./plan-information";
 import { PlanNetworkDetails } from "./plan-network-details";
@@ -128,20 +126,15 @@ export function PlanPurchaseSummary({
       )}
       <CompatibilityChecker locale={locale} />
       <footer className="selected-plan-footer">
-        <Link
-          className="button button-primary"
-          href={experiencePath(locale, "checkout", {
-            destination: destination.slug,
-            plan: plan.id,
-          })}
-        >
-          {c.previewPurchase}
-          <ArrowRight size={17} aria-hidden="true" />
-        </Link>
+        <AddToCart
+          locale={locale}
+          destination={destination.slug}
+          planId={plan.id}
+        />
         <p>
           {es
-            ? "Compra de ejemplo. Aún no se realizan pagos ni activaciones."
-            : "Purchase preview. Payments and activation are not available yet."}
+            ? "Una eSIM por dispositivo. Puedes añadir más en tu carrito."
+            : "One eSIM per device. You can add more in your cart."}
         </p>
       </footer>
       <details className="plan-technical-details">

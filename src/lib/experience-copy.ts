@@ -2,7 +2,7 @@ export const experienceCopy = {
   en: {
     preview: "Visual preview",
     previewBody:
-      "Explore the experience with example data. Purchases, accounts and eSIM activation are not available yet.",
+      "Explore this administration preview with example data. Payments and eSIM activation are not available yet.",
     fullDetails: "Full plan details",
     previewPurchase: "Continue with this plan",
     wallet: "My eSIMs",
@@ -45,7 +45,7 @@ export const experienceCopy = {
       "Find your destination, compare the data you need and check your phone before you travel.",
     checkout: "Let’s get your trip connected",
     checkoutDescription:
-      "Walk through the purchase layout with the plan you selected.",
+      "Review your cart and choose the email for your eSIM delivery.",
     review: "Review",
     payment: "Payment preview",
     confirmation: "Confirmation preview",
@@ -191,7 +191,7 @@ export const experienceCopy = {
   es: {
     preview: "Vista de demostración",
     previewBody:
-      "Explora la experiencia con datos de ejemplo. Las compras, las cuentas y la activación de eSIM todavía no están disponibles.",
+      "Explora la administración de muestra con datos de ejemplo. Los pagos y la activación de eSIM todavía no están disponibles.",
     fullDetails: "Ver ficha completa",
     previewPurchase: "Continuar con este plan",
     wallet: "Mis eSIM",
@@ -234,7 +234,7 @@ export const experienceCopy = {
       "Encuentra tu destino, compara los datos que necesitas y revisa tu teléfono antes de viajar.",
     checkout: "Preparemos la conexión de tu viaje",
     checkoutDescription:
-      "Recorre el diseño de compra con el plan que seleccionaste.",
+      "Revisa tu carrito y elige el correo de entrega de tus eSIM.",
     review: "Resumen",
     payment: "Pago de ejemplo",
     confirmation: "Confirmación de ejemplo",

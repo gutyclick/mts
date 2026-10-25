@@ -11,6 +11,7 @@ import "@/styles/plan-selection.css";
 import "@/styles/how-it-works.css";
 import "@/styles/sim-mascot.css";
 import "@/styles/account.css";
+import "@/styles/commerce.css";
 
 export const viewport: Viewport = {
   width: "device-width",

@@ -5,7 +5,7 @@ export function DestinationFlag({
   destination,
   className = "",
 }: {
-  destination: Destination;
+  destination: Pick<Destination, "code" | "type">;
   className?: string;
 }) {
   return (

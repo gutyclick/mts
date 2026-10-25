@@ -1,47 +1,28 @@
 import { expect, test } from "@playwright/test";
 
-test("a catalog plan connects to checkout preview and the real account gate", async ({
+test("a catalog plan connects to cart, guest checkout and the account gate", async ({
   page,
 }) => {
-  const mutations: string[] = [];
-  page.on("request", (request) => {
-    if (request.method() !== "GET") mutations.push(request.url());
-  });
   await page.goto("/en/esim/japan");
   await expect(
     page.getByRole("region", { name: "Full plan details", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Japan");
   await expect(page.locator("main")).not.toContainText(/\$|€|USD\s*\d/);
-  await page.getByRole("link", { name: "Continue with this plan" }).click();
-  await expect(page).toHaveURL(/\/en\/checkout\?/);
+  await page.getByRole("button", { name: "Add to cart", exact: true }).click();
+  const cart = page.getByRole("dialog", { name: /Your cart/ });
+  await expect(cart.locator(".cart-item")).toHaveCount(1);
+  await cart.getByRole("link", { name: "Continue to checkout" }).click();
+  await expect(page).toHaveURL(/\/en\/checkout$/);
+  await expect(page.getByLabel("Email address")).toBeEditable();
   await expect(
-    page.getByText("Visual preview", { exact: true }).first(),
-  ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Continue to payment preview" })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "Payment preview" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Payment preview" }),
-  ).toBeFocused();
+    page.getByRole("button", { name: "Continue to payment" }),
+  ).toBeDisabled();
   await expect(page.locator('input[autocomplete="cc-number"]')).toHaveCount(0);
-  await page.getByRole("button", { name: "Preview confirmation" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "This is how your confirmation will look",
-    }),
-  ).toBeVisible();
-  await expect(page.locator("main")).toContainText(
-    "No payment was made and no eSIM was issued",
-  );
-  await page.getByRole("link", { name: "Explore My eSIMs" }).click();
+  await page.getByRole("link", { name: "Sign in", exact: true }).click();
   await expect(page).toHaveURL(/\/en\/sign-in/);
   await expect(page.locator("#account-email")).toBeVisible();
   await expect(page.locator(".esim-pass")).toHaveCount(0);
-  expect(mutations).toEqual([]);
 });
 
 test("private wallet requires sign in and public installation guidance remains bilingual", async ({
@@ -113,7 +94,9 @@ test("preview pages protect plan identity, locale context and indexing", async (
   await expect(page).toHaveURL(
     new RegExp(`/es/compra\\?destination=japan&plan=${encoded}`),
   );
-  await expect(page.locator(".pass-plan-name")).toContainText("Japan");
+  await expect(page.locator(".checkout-summary .cart-item")).toContainText(
+    "Japón",
+  );
   await page.goto("/en/sign-in");
   await page
     .getByRole("link", { name: "Change language: Español" })

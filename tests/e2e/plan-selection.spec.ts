@@ -41,11 +41,8 @@ test("plans sort numerically and selection survives reload and translation witho
     `${selected.days} days`,
   );
   await expect(
-    page.getByRole("link", { name: "Continue with this plan" }),
-  ).toHaveAttribute(
-    "href",
-    `/en/checkout?destination=japan&plan=${encodeURIComponent(selected.id)}`,
-  );
+    page.getByRole("button", { name: "Add to cart", exact: true }),
+  ).toBeVisible();
   await page.reload();
   await expect(radio).toBeChecked();
   const language = page
@@ -67,16 +64,13 @@ test("filters replace a hidden selection and empty matches never keep stale purc
   await page.locator(".plan-filter-disclosure summary").click();
   await page.getByLabel("Data allowance").selectOption("5");
   await page.getByLabel("Duration", { exact: true }).selectOption("30");
-  const selectedId = await page
-    .locator(".plan-option input:checked")
-    .inputValue();
   await expect(
-    page.getByRole("link", { name: "Continue with this plan" }),
-  ).toHaveAttribute("href", new RegExp(encodeURIComponent(selectedId)));
+    page.getByRole("button", { name: "Add to cart", exact: true }),
+  ).toBeVisible();
   await page.getByLabel("Data allowance").selectOption("50");
   await page.getByLabel("Duration", { exact: true }).selectOption("7");
   await expect(
-    page.getByRole("link", { name: "Continue with this plan" }),
+    page.getByRole("button", { name: "Add to cart", exact: true }),
   ).toHaveCount(0);
   await expect(
     page.getByRole("region", { name: "Full plan details", exact: true }),

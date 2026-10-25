@@ -43,15 +43,19 @@ let stage = "setup",
 function check(error) {
   if (error) throw new Error("Backend test operation failed");
 }
-async function login(page, email, pass, locale = "es") {
+async function login(page, email, pass, locale = "es", returnPath) {
   await page.goto(
-    base + (locale === "es" ? "/es/iniciar-sesion" : "/en/sign-in"),
+    base +
+      (locale === "es" ? "/es/iniciar-sesion" : "/en/sign-in") +
+      (returnPath ? `?next=${encodeURIComponent(returnPath)}` : ""),
   );
   await page.locator("#account-email").fill(email);
   await page.locator("#account-password").fill(pass);
   await page.locator(".account-submit").click();
   await expect(page).toHaveURL(
-    new RegExp(locale === "es" ? "/es/mis-esim" : "/en/my-esims"),
+    new RegExp(
+      returnPath ?? (locale === "es" ? "/es/mis-esim" : "/en/my-esims"),
+    ),
   );
 }
 async function auditPrivatePage(page) {
@@ -148,7 +152,25 @@ try {
   stage = "anonymous gate and login";
   await page.goto(base + "/es/mis-esim");
   await expect(page).toHaveURL(/iniciar-sesion/);
-  await login(page, users[0].email, password);
+  stage = "cart and authenticated checkout";
+  await page.goto(base + "/es/esim/japan");
+  await page
+    .getByRole("button", { name: "Añadir al carrito", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("link", { name: "Continuar con mi compra" })
+    .click();
+  await page.getByRole("link", { name: "Iniciar sesión", exact: true }).click();
+  await expect(page.locator('input[name="next"]')).toHaveValue("/es/compra");
+  await login(page, users[0].email, password, "es", "/es/compra");
+  await expect(page.locator("#checkout-email")).toHaveValue(users[0].email);
+  await expect(page.locator("#checkout-email")).toHaveAttribute("readonly", "");
+  await expect(page.locator(".checkout-summary .cart-item")).toHaveCount(1);
+  await auditPrivatePage(page);
+  await page
+    .getByRole("link", { name: "Sesión iniciada · Ir a Mis eSIM" })
+    .click();
   await expect(page.locator(".customer-esim-grid article")).toHaveCount(1);
   const cookie = (await context.cookies()).find(
     (c) => c.name.startsWith("sb-") && c.name.includes("auth-token"),

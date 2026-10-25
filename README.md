@@ -48,7 +48,7 @@ La FAQ principal es un índice de seis temas, cada uno con página propia y ruta
 
 La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
-Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). Compra y administración siguen siendo de muestra, sin pagos ni aprovisionamiento.
+Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). El [carrito y checkout](docs/checkout.md) conservan planes entre visitas, permiten cambiar cantidades y ofrecen correo de invitado o acceso a una cuenta. Los precios finales, cobros y aprovisionamiento se conectarán después; la administración sigue siendo de muestra.
 
 | Página           | Inglés              | Español                    |
 | ---------------- | ------------------- | -------------------------- |

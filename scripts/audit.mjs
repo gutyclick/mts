@@ -39,6 +39,11 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     "/es/estudio",
   ]) {
     if (
+      process.env.AUDIT_SCOPE === "commerce" &&
+      !["/en", "/es", checkoutPath].includes(path)
+    )
+      continue;
+    if (
       process.env.AUDIT_SCOPE === "accounts" &&
       !/my-esims|iniciar-sesion|crear-cuenta|recuperar-contrasena|nueva-contrasena/.test(
         path,
@@ -79,6 +84,17 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     if (width === 360 || width === 1440) {
       await page.addScriptTag({ path: require.resolve("axe-core/axe.min.js") });
       async function auditState(state) {
+        await page.evaluate(() =>
+          Promise.allSettled(
+            document
+              .getAnimations()
+              .filter(
+                (animation) =>
+                  animation.effect?.getTiming().iterations !== Infinity,
+              )
+              .map((animation) => animation.finished),
+          ),
+        );
         const results = await page.evaluate(() =>
           window.axe.run(document, {
             runOnly: {
@@ -162,14 +178,11 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
         await page.keyboard.press("Escape");
       }
       if (path === checkoutPath) {
-        await page
-          .getByRole("button", { name: "Continue to payment preview" })
-          .click();
-        await auditState("payment-preview");
-        await page
-          .getByRole("button", { name: "Preview confirmation" })
-          .click();
-        await auditState("confirmation-preview");
+        await page.locator(".checkout-summary .cart-item").first().waitFor();
+        await auditState("checkout-summary");
+        await page.getByRole("button", { name: /^Open cart/ }).click();
+        await auditState("cart-open");
+        await page.keyboard.press("Escape");
       }
       if (path === "/es/preguntas-frecuentes") {
         await page.getByLabel("Buscar preguntas").fill("roaming");

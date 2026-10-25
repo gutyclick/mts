@@ -6,6 +6,11 @@ import { safeAccountNext, authPath } from "../src/lib/auth-routes.ts";
 import { equivalentPath } from "../src/lib/i18n.ts";
 
 test("account destinations reject external URLs and preserve only owned-area UUID links", () => {
+  assert.equal(
+    safeAccountNext("/es/compra?next=https://evil.example", "es"),
+    "/es/compra",
+  );
+  assert.equal(safeAccountNext("/en/checkout", "en"), "/en/checkout");
   for (const value of [
     "https://evil.example",
     "//evil.example",

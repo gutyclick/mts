@@ -1,6 +1,6 @@
 # Recorrido visual antes de Supabase
 
-La fase visual conecta el catálogo existente con la ficha completa de un plan, un recorrido de compra de ejemplo, una cartera de eSIM ficticias, instrucciones de instalación y un panel de administración de muestra. No hay integración de base de datos, pagos, cuentas, correo ni aprovisionamiento.
+Este documento describe la fase visual inicial y se conserva como referencia histórica. El catálogo ya usa Supabase, las [cuentas y Mis eSIM](accounts.md) son reales y privados, y la compra de ejemplo ha sido sustituida por el [carrito y checkout](checkout.md). No se utilizan eSIM ficticias en las cuentas de clientes. Cobros y aprovisionamiento se conectarán después.
 
 ## Pantallas y rutas
 

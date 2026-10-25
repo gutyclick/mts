@@ -8,7 +8,7 @@ export async function proxy(request: NextRequest) {
   );
   const response: NextResponse = await sessionResponse(request, headers);
   if (
-    /\/(mis-esim|my-esims|iniciar-sesion|sign-in|crear-cuenta|sign-up|recuperar-contrasena|forgot-password|nueva-contrasena|reset-password|auth)(\/|$)/.test(
+    /\/(mis-esim|my-esims|compra|checkout|iniciar-sesion|sign-in|crear-cuenta|sign-up|recuperar-contrasena|forgot-password|nueva-contrasena|reset-password|auth)(\/|$)/.test(
       request.nextUrl.pathname,
     )
   ) {

@@ -26,6 +26,9 @@ export function safeAccountNext(value: unknown, locale: Locale) {
     return fallback;
   try {
     const url = new URL(value, "https://mytripsim.invalid");
+    const checkout = `/${locale}/${locale === "es" ? "compra" : "checkout"}`;
+    if (url.origin === "https://mytripsim.invalid" && url.pathname === checkout)
+      return checkout;
     if (url.origin !== "https://mytripsim.invalid" || url.pathname !== fallback)
       return fallback;
     const id = url.searchParams.get("esim");

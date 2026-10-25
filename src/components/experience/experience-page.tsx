@@ -6,7 +6,9 @@ import {
 } from "@/lib/catalog-server";
 import type { Locale } from "@/lib/i18n";
 import type { ExperienceKey } from "@/lib/experience-routes";
-import { CheckoutPreview } from "./checkout-preview";
+import { Checkout } from "../commerce/checkout";
+import { authClient } from "@/lib/supabase/auth-server";
+import { catalogConfig } from "@/lib/supabase/catalog-api";
 import { CustomerWallet } from "../account/customer-wallet";
 import { customerSession, customerEsim } from "@/lib/customer-data";
 import { InstallGuide } from "./install-guide";
@@ -31,12 +33,19 @@ export async function ExperiencePage({
       : undefined;
     if ((query.destination || query.plan) && (!destination || !plan))
       notFound();
+    const user = catalogConfig(process.env)
+      ? (await (await authClient()).auth.getUser()).data.user
+      : null;
     return (
-      <CheckoutPreview
+      <Checkout
         key={plan?.id ?? "empty"}
         locale={locale}
-        destination={destination}
-        plan={plan}
+        email={user?.email_confirmed_at ? user.email : undefined}
+        initial={
+          destination && plan
+            ? { destination: destination.slug, planId: plan.id, quantity: 1 }
+            : undefined
+        }
       />
     );
   }

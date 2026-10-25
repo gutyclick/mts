@@ -202,7 +202,7 @@ export function createEsimAccessAPI(
     },
     async purchaseProfile(slug: string, transactionId: string) {
       if (
-        !/^[A-Za-z0-9_-]{1,200}$/.test(slug) ||
+        !/^[A-Za-z0-9_.-]{1,200}$/.test(slug) ||
         !/^[A-Za-z0-9_-]{1,50}$/.test(transactionId)
       )
         throw new EsimAccessError("configuration");

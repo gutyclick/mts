@@ -46,6 +46,24 @@ const profile = {
   days: 7,
   apn: null,
 };
+test("100 MB package aliases with decimal points are accepted without changing supplier identity", async () => {
+  const api = createEsimAccessAPI(
+    { accessCode: "access_12345678", secretKey: "secret_12345678" },
+    async (_url, options) => {
+      const body = JSON.parse(options.body);
+      assert.equal(body.packageInfoList[0].packageCode, "PA_0.1_7");
+      return Response.json({
+        success: true,
+        errorCode: "0",
+        obj: { orderNo: "B100MB", transactionId: body.transactionId },
+      });
+    },
+  );
+  assert.equal(
+    await api.purchaseProfile("PA_0.1_7", "mts_fixed_transaction"),
+    "B100MB",
+  );
+});
 test("only confirmed live payments issue; Stripe test, pending and disabled workers have no external effects", async () => {
   let calls = 0;
   const deps = {

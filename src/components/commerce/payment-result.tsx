@@ -250,8 +250,8 @@ export function PaymentResult({
                 : "We’ll keep your order for five minutes after you leave payment. You can resume with the remaining time."
               : paid
                 ? es
-                  ? "El pago está registrado. Esta compra es de prueba: no se han hecho cargos ni emitido eSIM reales."
-                  : "Your payment is recorded. This is a test purchase: no real charges or eSIMs were issued."
+                  ? "El pago de prueba está registrado, sin cargos reales. Puedes consultar el estado de tus eSIM debajo."
+                  : "Your test payment is recorded, with no real charges. Check your eSIM delivery status below."
                 : stopped
                   ? es
                     ? "Puedes volver a tu carrito y continuar cuando quieras. Tus planes siguen guardados."

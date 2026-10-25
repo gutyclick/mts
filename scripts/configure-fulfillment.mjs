@@ -3,11 +3,15 @@ import { randomBytes } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { createClient } from "@supabase/supabase-js";
 process.loadEnvFile(".env.local");
+// Keep the application's sending-only key out of administrative CLI requests.
+const operatorEnvironment = { ...process.env };
+delete operatorEnvironment.RESEND_API_KEY;
 const run = (command, input) =>
   spawnSync(process.env.ComSpec || "cmd.exe", ["/d", "/s", "/c", command], {
     input,
     encoding: "utf8",
     maxBuffer: 1024 * 1024,
+    env: operatorEnvironment,
   });
 try {
   if (process.argv.includes("--start")) {

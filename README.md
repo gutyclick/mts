@@ -1,6 +1,6 @@
 # MyTripSim
 
-Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento previsto: **Vercel**. Persistencia prevista: **Supabase/PostgreSQL**. Consulta la [guía de despliegue y credenciales](docs/deployment.md).
+Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento: **Vercel**. Catálogo conectado a **Supabase/PostgreSQL**. Producción: [www.mytripsim.com](https://www.mytripsim.com/es). Consulta la [guía de despliegue y credenciales](docs/deployment.md).
 
 Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 1.730 planes de datos fijos en inglés y español, sin precios, pagos ni aprovisionamiento de eSIM.
 

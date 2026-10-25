@@ -2,7 +2,7 @@
 
 ## Estado de esta entrega
 
-El repositorio contiene la migración, los datos iniciales y el lector servidor. No implica que un proyecto remoto ya esté creado o conectado. El modo conectado se activa solamente cuando existen las dos variables de entorno. El panel «Administración de muestra» sigue siendo una demostración y no administra la base de datos.
+El proyecto `xfdwqalkkjclburzcwlv` ya está conectado y el catálogo de producción en [www.mytripsim.com](https://www.mytripsim.com/es) utiliza Supabase. La migración y los 241 destinos/1.730 planes iniciales están aplicados. Consulta la [verificación remota](supabase-integration.md). Las instrucciones siguientes permiten reproducir la configuración en otro entorno; no hace falta volver a importar el proyecto actual. El panel «Administración de muestra» sigue siendo una demostración y no administra la base de datos.
 
 ## 1. Preparar el proyecto
 
@@ -11,10 +11,10 @@ Crear o elegir un proyecto de MyTripSim desde el Dashboard. Mantener su contrase
 Desde la raíz del repositorio, con la CLI oficial:
 
 ```sh
-npx supabase login
-npx supabase link --project-ref TU_PROJECT_REF
-npx supabase db push --dry-run
-npx supabase db push --include-seed
+npx.cmd supabase login
+npx.cmd supabase link --project-ref TU_PROJECT_REF
+npx.cmd supabase db push --linked --dry-run
+npx.cmd supabase db push --linked --include-seed
 ```
 
 Introducir la contraseña en el diálogo de la CLI, nunca como argumento del comando ni en un archivo versionado. No ejecutar `db reset --linked`: no es necesario para esta integración.

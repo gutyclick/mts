@@ -23,9 +23,11 @@ La opción elegida es PostgreSQL administrado por Supabase, migraciones versiona
 3. Conectar portada, búsqueda, directorio, destinos, enlaces de plan, compra de muestra y sitemap a la misma fuente.
 4. Ejecutar pruebas de datos, seguridad SQL, tipos, lint y build. Documentar conexión y comprobación remota. No declarar la conexión real completada hasta verificar el proyecto del usuario.
 
-## Pendiente de acceso
+## Conexión remota completada
 
-La CLI dispone de una sesión guardada, pero los proyectos visibles pertenecen a otras aplicaciones. No hay un proyecto MyTripSim identificado/enlazado ni variables locales. La aplicación remota de migraciones y la configuración de Vercel quedan pendientes de definir el proyecto de destino. Nunca pegar claves secretas en documentos, Git o chat.
+Proyecto **MyTrip Sim**, referencia `xfdwqalkkjclburzcwlv`, región `us-east-1`. La migración `20261024000100` y el seed ya están aplicados, con 241 destinos y 1.730 planes fijos enriquecidos. El historial local/remoto coincide. No se modificaron otros proyectos.
+
+Vercel `mts` tiene las dos variables en Production, Preview y Development. La clave publicable está marcada como sensible en Production/Preview y no se incluye en el código ni en el HTML público. La web de producción es [www.mytripsim.com](https://www.mytripsim.com/es). La configuración local y los metadatos de ambos servicios están excluidos de Git.
 
 ## Verificación realizada
 
@@ -33,4 +35,11 @@ La CLI dispone de una sesión guardada, pero los proyectos visibles pertenecen a
 - La migración y el seed completos se ejecutaron dos veces en PostgreSQL embebido; RLS y denegación de escrituras se comprobaron con ambos roles públicos.
 - Un servidor Next de producción conectado a una Data API local respaldada por PostgreSQL confirmó ediciones en vivo, retirada de planes/destinos, enlaces 404, búsqueda, directorio, sitemap y pantalla de error sin recuperación del catálogo local.
 - Build conectado y build sin configuración, TypeScript, ESLint, formato y 56 escenarios de navegador en escritorio/móvil pasaron.
-- Esta evidencia local no equivale a una conexión verificada contra el proyecto remoto del usuario.
+- El comprobador real recorrió los 241 destinos y validó sus 1.730 planes. Ambos roles carecen de permisos UPDATE. Una consulta con la clave publicable devolvió HTTP 200; un intento de actualizar un identificador inexistente fue rechazado con HTTP 401 y código PostgreSQL `42501`.
+- El asesor de seguridad de Supabase no encontró incidencias tras la importación.
+- El build con `.env.local` y los 56 escenarios de navegador pasaron contra la base real.
+- Producción: portada ES/EN, directorio, Japón, Afganistán, FAQ y sitemap devolvieron HTTP 200, sin la clave publicable en el HTML.
+- Un marcador temporal en el nombre de `AF_1_7` apareció en producción sin desplegar de nuevo. El nombre original se restauró en `finally`; una comprobación posterior confirmó que el marcador ya no aparece. No se cambiaron datos, duración, redes ni disponibilidad.
+- En producción móvil (390 px), Japón mostró 23 planes y Afganistán 6, con selección visible y sin desbordamiento horizontal.
+
+La administración dentro de la web, cuentas de clientes, pagos y emisión de eSIM continúan pendientes de sus etapas funcionales. El catálogo ya se administra desde el Dashboard de Supabase.

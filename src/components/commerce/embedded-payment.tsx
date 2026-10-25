@@ -1,9 +1,11 @@
 "use client";
 import { useMemo, useRef, useEffect, useState, type FormEvent } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import type { StripeExpressCheckoutElementConfirmEvent } from "@stripe/stripe-js";
 import {
   CheckoutElementsProvider,
   PaymentElement,
+  ExpressCheckoutElement,
   useCheckoutElements,
 } from "@stripe/react-stripe-js/checkout";
 import {
@@ -15,6 +17,10 @@ import {
 } from "lucide-react";
 import { formatUSD } from "@/lib/retail-prices";
 import type { Locale } from "@/lib/i18n";
+import {
+  expressWalletOptions,
+  hasExpressWallet,
+} from "@/lib/payments/wallet-options";
 
 export function EmbeddedPayment({
   clientSecret,
@@ -111,6 +117,7 @@ function PaymentForm({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
+  const [walletsAvailable, setWalletsAvailable] = useState(false);
   const submitting = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -118,15 +125,32 @@ function PaymentForm({
   }, []);
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (state.type !== "success" || submitting.current || !ready) return;
+    await confirmPayment();
+  }
+  async function confirmPayment(
+    expressEvent?: StripeExpressCheckoutElementConfirmEvent,
+  ) {
+    if (
+      state.type !== "success" ||
+      submitting.current ||
+      (!expressEvent && !ready)
+    ) {
+      expressEvent?.paymentFailed({ reason: "fail" });
+      return;
+    }
     submitting.current = true;
     setBusy(true);
     setError("");
     try {
       if (state.checkout.livemode) throw new Error("Live payments disabled");
-      const result = await state.checkout.confirm();
+      const result = await state.checkout.confirm(
+        expressEvent
+          ? { expressCheckoutConfirmEvent: expressEvent }
+          : undefined,
+      );
       if (result.type === "error") setError(result.error.message);
     } catch {
+      expressEvent?.paymentFailed({ reason: "fail" });
       setError(
         es
           ? "No pudimos confirmar el pago. Revisa tu conexión y vuelve a intentarlo."
@@ -176,6 +200,31 @@ function PaymentForm({
           </p>
         ) : (
           <>
+            <div
+              className="checkout-express"
+              data-visible={walletsAvailable}
+              aria-hidden={!walletsAvailable}
+            >
+              <h3>{es ? "Pago exprés" : "Express payment"}</h3>
+              <ExpressCheckoutElement
+                options={expressWalletOptions}
+                onReady={(event) =>
+                  setWalletsAvailable(
+                    hasExpressWallet(event.availablePaymentMethods),
+                  )
+                }
+                onAvailablePaymentMethodsChange={(event) =>
+                  setWalletsAvailable(hasExpressWallet(event.paymentMethods))
+                }
+                onLoadError={() => setWalletsAvailable(false)}
+                onConfirm={(event) => {
+                  void confirmPayment(event);
+                }}
+              />
+              <div className="checkout-payment-divider">
+                <span>{es ? "o paga con tarjeta" : "or pay by card"}</span>
+              </div>
+            </div>
             {(!ready || state.type === "loading") && (
               <p className="commerce-muted" role="status">
                 <LoaderCircle size={16} className="payment-spinner" />{" "}
@@ -186,7 +235,11 @@ function PaymentForm({
               options={{
                 layout: "tabs",
                 paymentMethodOrder: ["card"],
-                wallets: { link: "never" },
+                wallets: {
+                  applePay: "never",
+                  googlePay: "never",
+                  link: "never",
+                },
               }}
               onReady={() => setReady(true)}
               onLoadError={() =>

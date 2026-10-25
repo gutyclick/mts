@@ -141,6 +141,38 @@
   font-size: 13px;
   cursor: pointer;
 }
+.checkout-express {
+  margin-bottom: 20px;
+}
+.checkout-express h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.checkout-express[data-visible="false"] {
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  margin: 0;
+}
+.checkout-payment-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #526b89;
+  font-size: 12px;
+  margin-top: 20px;
+}
+.checkout-payment-divider::before,
+.checkout-payment-divider::after {
+  content: "";
+  height: 1px;
+  background: #e0eaf7;
+  flex: 1;
+}
+.checkout-payment-divider span {
+  white-space: nowrap;
+}
 .payment-spinner {
   animation: payment-spin 1s linear infinite;
 }

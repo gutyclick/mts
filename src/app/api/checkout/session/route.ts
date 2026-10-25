@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
         recipient,
         marketingOptIn: body.marketingOptIn,
         uiMode: "elements",
+        walletVersion: "express-v1",
         user: user?.id ?? null,
         locale: body.locale,
         total: body.expectedTotal,
@@ -165,7 +166,7 @@ export async function POST(request: NextRequest) {
       {
         mode: "payment",
         ui_mode: "elements",
-        allowed_payment_method_types: ["card"],
+        allowed_payment_method_types: ["card", "link"],
         locale: body.locale,
         adaptive_pricing: { enabled: false },
         client_reference_id: order.id,

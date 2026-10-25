@@ -61,3 +61,35 @@ test("invalid guest links expose no installation details and offer retry", async
   await expect(page.getByRole("link", { name: "Download QR" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Try again" })).toBeVisible();
 });
+test("email problems keep an already issued guest eSIM available", async ({
+  page,
+}) => {
+  const qr = await QRCode.toDataURL("DEMO-NOT-AN-ESIM");
+  await page.route("**/api/esims/access", (route) =>
+    route.fulfill({
+      json: {
+        units: [
+          {
+            id,
+            state: "review",
+            installationReady: true,
+            name: "Panamá 100 MB",
+            unitIndex: 1,
+            qr,
+            smdpAddress: "rsp.example.com",
+            activationCode: "DEMO_ONLY",
+          },
+        ],
+      },
+    }),
+  );
+  await page.goto(`/es/esim/access#${id}.${token}`);
+  await expect(
+    page.getByAltText("QR privado de instalación de tu eSIM"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Tu QR está disponible. El envío del correo necesita revisión.",
+    ),
+  ).toBeVisible();
+});

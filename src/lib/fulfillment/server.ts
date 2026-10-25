@@ -31,8 +31,10 @@ export async function publicUnit(
     planId: row.plan_id,
     unitIndex: row.unit_index,
     state: row.state,
+    installationReady:
+      !!row.smdp_address && !!row.activation_code && !!row.iccid,
   };
-  if (!details || !["ready", "sent"].includes(String(row.state))) return unit;
+  if (!details || !unit.installationReady) return unit;
   const smdp = z
       .string()
       .regex(/^[a-zA-Z0-9.-]+$/)

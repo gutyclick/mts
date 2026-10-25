@@ -10,13 +10,13 @@
 
 ## Tareas
 
-- [ ] Adaptador de compra y consulta estricta en `src/lib/integrations/esimaccess-api.ts`, pruebas `tests/fulfillment.test.mjs`.
-- [ ] Migración `20261025000900_esim_fulfillment.sql`: cola privada, trigger paid, reclamación con lease, publicación atómica, cron firmado; pruebas PostgreSQL.
-- [ ] Núcleo de fases y adaptador servidor en `src/lib/fulfillment/`, envío Resend idempotente y plantilla transaccional, pruebas de errores y efectos duplicados.
-- [ ] Worker privado y acceso de propietario/invitado en `src/app/api/`, página privada ES/EN y panel de entrega reutilizable; QR local e instrucciones.
-- [ ] Integrar panel en resultado de compra y estado en Mis eSIM sin exponer referencias privadas.
-- [ ] Configurar secretos y correo sin imprimir claves, aplicar migraciones, comprobar build, lint, seguridad y UI; publicar y comprobar endpoints.
-- [ ] Probar emisión real sólo con destinatario y gasto autorizados. Documentar claramente lo que se haya verificado y lo pendiente antes de live.
+- [x] Adaptador de compra y consulta estricta en `src/lib/integrations/esimaccess-api.ts`, pruebas `tests/fulfillment.test.mjs`.
+- [x] Migración `20261025000900_esim_fulfillment.sql`: cola privada, trigger paid, reclamación con lease, publicación atómica, cron firmado; pruebas PostgreSQL.
+- [x] Núcleo de fases y adaptador servidor en `src/lib/fulfillment/`, envío Resend idempotente y plantilla transaccional, pruebas de errores y efectos duplicados.
+- [x] Worker privado y acceso de propietario/invitado en `src/app/api/`, página privada ES/EN y panel de entrega reutilizable; QR local e instrucciones.
+- [x] Integrar panel en resultado de compra y estado en Mis eSIM sin exponer referencias privadas.
+- [x] Configurar secretos y correo sin imprimir claves, aplicar migraciones, comprobar build, lint, seguridad y UI; publicar y comprobar endpoints.
+- [x] Probar emisión real sólo con destinatario y gasto autorizados. Documentar claramente lo que se haya verificado y lo pendiente antes de live.
 
 ## Riesgos que deben quedar probados
 

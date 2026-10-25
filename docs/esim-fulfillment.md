@@ -41,3 +41,7 @@ Una única unidad puede recibir `qa_authorized=true` desde administración priva
 ## Verificaciones
 
 `test:fulfillment` comprueba pago confirmado, separación test/live, unidades únicas, reservas, reintentos con referencia fija, coincidencia de perfiles, publicación atómica, RLS, tokens privados y HTML escapado. Las pruebas Playwright de `esim-delivery.spec.ts` verifican QR, descarga, instalación manual, enlaces inválidos y ausencia de desbordamiento en móvil y escritorio.
+
+Verificado el 25 de octubre de 2026: pago real en Stripe **test**, confirmado mediante el webhook público, una sola unidad inicialmente `test_skipped` y autorización privada para emitir exclusivamente el paquete Panamá 100 MB/7 días. Supabase Cron ejecutó compra, consulta, publicación en la cuenta y envío. Resend confirmó `delivered`. Repetir la llamada con el mismo `transactionId` devolvió el mismo pedido y exactamente un perfil; no se compró una segunda eSIM. El enlace del beneficiario abrió el QR real en móvil; una cookie ajena y un token alterado recibieron 404. El registro en Mis eSIM pertenece a la cuenta confirmada del destinatario. No se hicieron cargos reales de Stripe ni se instaló la eSIM en un dispositivo.
+
+Si un correo requiere revisión después de emitir, el perfil sigue disponible en Mis eSIM y mediante los accesos privados autorizados. La revisión no oculta el QR ni solicita otra compra. Los pedidos con varias unidades reflejan primero las entregas pendientes o en revisión y sólo anuncian envío completo cuando todas las unidades están enviadas.

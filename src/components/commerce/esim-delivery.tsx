@@ -27,6 +27,7 @@ const unitSchema = z.object({
   name: z.string(),
   unitIndex: z.number().int(),
   qa: z.boolean().optional(),
+  installationReady: z.boolean().optional(),
   qr: z.string().startsWith("data:image/png;base64,").optional(),
   smdpAddress: z.string().optional(),
   activationCode: z.string().optional(),
@@ -82,7 +83,7 @@ export function EsimDelivery({
         if (
           ++attempts < 120 &&
           data.units.some((u) =>
-            ["queued", "provider_pending"].includes(u.state),
+            ["queued", "provider_pending", "ready"].includes(u.state),
           )
         )
           timer = setTimeout(load, 5000);
@@ -202,7 +203,7 @@ export function EsimDelivery({
                   ? "Esta compra de prueba no consume saldo ni emite una eSIM real."
                   : "This test purchase does not consume balance or issue a real eSIM."}
               </p>
-            ) : unit.state === "review" ? (
+            ) : unit.state === "review" && !unit.installationReady ? (
               <p>
                 {es
                   ? "Tu pedido está guardado y necesita una revisión. No vuelvas a comprar el mismo plan."
@@ -301,8 +302,12 @@ export function EsimDelivery({
                       ? "Enviada al correo del beneficiario."
                       : "Sent to the recipient’s email."
                     : es
-                      ? "Tu QR ya está disponible. Estamos preparando el correo."
-                      : "Your QR is available. We’re preparing your email."}
+                      ? unit.state === "review"
+                        ? "Tu QR está disponible. El envío del correo necesita revisión."
+                        : "Tu QR ya está disponible. Estamos preparando el correo."
+                      : unit.state === "review"
+                        ? "Your QR is available. Email delivery needs review."
+                        : "Your QR is available. We’re preparing your email."}
                 </p>
               </>
             )}

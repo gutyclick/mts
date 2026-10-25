@@ -33,7 +33,7 @@ Se solicitan productos BASE de datos fijos y también se filtra el resultado por
 
 El adaptador también puede consultar perfiles de un pedido concreto y consumo por identificador de transacción del proveedor. Rechaza perfiles o consumos que no pertenezcan a las referencias solicitadas. Interpreta el código LPA para generar nuestro QR local; no descarga QR desde URLs externas. Estas operaciones no tienen rutas públicas y el futuro trabajador debe comprobar propiedad antes de actualizar una cuenta.
 
-No se han implementado llamadas de compra, recarga, cancelación ni configuración del webhook global. El checkout sigue sin cobros. La emisión, entrega por correo y actualización automática del consumo se conectarán al pedido pagado, con idempotencia y reintentos. No se ha comprado ni emitido ninguna eSIM durante esta integración. El consumo del proveedor puede llegar con retraso y no debe presentarse como tiempo real.
+La compra idempotente, la consulta de asignación y el envío con Resend están implementados en la [cola de emisión y entrega](esim-fulfillment.md). Los pagos públicos siguen en Stripe test y no emiten productos reales automáticamente. Se verificó una única eSIM real de Panamá 100 MB/7 días con autorización privada expresa, entrega confirmada por correo y acceso en Mis eSIM. No se implementaron recargas, cancelaciones del proveedor ni cambios de su webhook global. La actualización periódica de consumo queda pendiente; el consumo del proveedor puede llegar con retraso y no debe presentarse como tiempo real.
 
 ## Pruebas
 

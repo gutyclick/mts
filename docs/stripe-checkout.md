@@ -57,4 +57,4 @@ Verificado el 25 de octubre de 2026: compra de invitado con dos planes y tres eS
 
 ## Antes de vender
 
-Esta fase no procesa cobros reales ni compra, activa o envía eSIM. Las claves live se rechazan y la base de datos rechaza pedidos live. La siguiente fase necesita configurar precios y claves de producción por separado, habilitar una cola de emisión idempotente para pagos reales, gestionar reintentos y fallos del proveedor, y probar la entrega segura por correo. También deben decidirse los impuestos y las condiciones comerciales antes de habilitar ventas.
+El checkout público no procesa cobros reales: las claves live y los pedidos live todavía se rechazan. La [cola de emisión y entrega](esim-fulfillment.md) ya está integrada, con reintentos y entrega privada; los pedidos test quedan excluidos salvo autorización administrativa específica para una unidad de ensayo. Se verificó así una eSIM real de Panamá 100 MB/7 días. Antes de habilitar ventas hay que configurar Stripe live, su catálogo y webhook y las restricciones de base de datos por separado. También deben decidirse los impuestos y las condiciones comerciales.

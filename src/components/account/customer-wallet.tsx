@@ -26,6 +26,25 @@ import { CopyValue } from "./copy-value";
 import { formatUSD } from "@/lib/retail-prices";
 const dataLabel = (gb: number) =>
   gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`;
+function fulfillmentLabel(states: string[], live: boolean, es: boolean) {
+  if (states.includes("review"))
+    return es ? "Entrega en revisión" : "Delivery under review";
+  if (states.some((s) => ["queued", "provider_pending"].includes(s)))
+    return es ? "Preparando tus eSIM" : "Preparing your eSIMs";
+  if (states.includes("ready"))
+    return es
+      ? "eSIM lista para instalar · Correo pendiente"
+      : "eSIM ready to install · Email pending";
+  if (states.length && states.every((s) => s === "sent"))
+    return es ? "eSIM preparada · Correo enviado" : "eSIM ready · Email sent";
+  return !live
+    ? es
+      ? "Compra de prueba"
+      : "Test purchase"
+    : es
+      ? "Pedido recibido"
+      : "Order received";
+}
 
 export async function CustomerWallet({
   locale,
@@ -335,31 +354,11 @@ export async function CustomerWallet({
                       ))}
                       <small>
                         {formatDate(item.created_at)} ·{" "}
-                        {item.fulfillmentStates.includes("sent")
-                          ? es
-                            ? "eSIM preparada · Correo enviado"
-                            : "eSIM ready · Email sent"
-                          : item.fulfillmentStates.includes("ready")
-                            ? es
-                              ? "eSIM lista para instalar"
-                              : "eSIM ready to install"
-                            : item.fulfillmentStates.includes("review")
-                              ? es
-                                ? "Entrega en revisión"
-                                : "Delivery under review"
-                              : item.fulfillmentStates.some((s) =>
-                                    ["queued", "provider_pending"].includes(s),
-                                  )
-                                ? es
-                                  ? "Preparando tus eSIM"
-                                  : "Preparing your eSIMs"
-                                : !item.livemode
-                                  ? es
-                                    ? "Compra de prueba"
-                                    : "Test purchase"
-                                  : es
-                                    ? "Pedido recibido"
-                                    : "Order received"}
+                        {fulfillmentLabel(
+                          item.fulfillmentStates,
+                          item.livemode,
+                          es,
+                        )}
                       </small>
                     </div>
                     <div>

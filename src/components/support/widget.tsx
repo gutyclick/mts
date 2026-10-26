@@ -235,10 +235,21 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
         <div>
           <h2 id="sim-chat-title">
             SIM {es ? "te acompaña" : "is here to help"}
+            <span
+              className={`support-online-dot${session?.ai ? " is-online" : ""}`}
+              role="img"
+              aria-label={
+                session?.ai
+                  ? es
+                    ? "SIM disponible"
+                    : "SIM available"
+                  : es
+                    ? "SIM sin conexión confirmada"
+                    : "SIM availability unconfirmed"
+              }
+            />
           </h2>
-          <p>
-            {es ? "Tu asistente de viaje · IA" : "Your travel assistant · AI"}
-          </p>
+          <p>{es ? "Tu asistente de viaje" : "Your travel assistant"}</p>
         </div>
         <button
           onClick={close}
@@ -259,14 +270,6 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
               : "I can help with your eSIM, installation and travel questions."}
           </p>
         </div>
-        <p className="support-privacy">
-          {es
-            ? "SIM usa IA y puede equivocarse. No compartas contraseñas, tarjetas ni QR."
-            : "SIM uses AI and may make mistakes. Never share passwords, cards or QR codes."}{" "}
-          <Link href={pathFor(locale, "privacy")}>
-            {es ? "Privacidad" : "Privacy"}
-          </Link>
-        </p>
         <div className="support-chat-options">
           <label>
             {es ? "Idioma de respuesta" : "Response language"}
@@ -277,12 +280,12 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
             >
               <option value="auto">{es ? "Automático" : "Automatic"}</option>
               {[
-                ["es", "Español"],
-                ["en", "English"],
-                ["pt", "Português"],
-                ["fr", "Français"],
-                ["de", "Deutsch"],
-                ["it", "Italiano"],
+                ["es", es ? "Español" : "Spanish"],
+                ["en", es ? "Inglés" : "English"],
+                ["pt", es ? "Portugués" : "Portuguese"],
+                ["fr", es ? "Francés" : "French"],
+                ["de", es ? "Alemán" : "German"],
+                ["it", es ? "Italiano" : "Italian"],
               ].map(([v, n]) => (
                 <option key={v} value={v}>
                   {n}
@@ -435,81 +438,91 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
         )}
         <div ref={tail} />
       </div>
-      {!ticket && (
-        <footer className="support-chat-footer">
-          <form
-            id="sim-chat-form"
-            onSubmit={send}
-            className={`support-composer${human ? " is-paused" : ""}`}
-          >
-            <textarea
-              aria-label={es ? "Tu mensaje" : "Your message"}
-              value={human ? "" : body}
-              onChange={(e) => {
-                setBody(e.target.value);
-                requestId.current = null;
-              }}
-              maxLength={3000}
-              rows={2}
-              required
-              minLength={1}
-              disabled={busy || human}
-              aria-describedby={human ? "sim-chat-paused" : undefined}
-              placeholder={
-                human
+      <footer className="support-chat-footer">
+        {!ticket && (
+          <>
+            <form
+              id="sim-chat-form"
+              onSubmit={send}
+              className={`support-composer${human ? " is-paused" : ""}`}
+            >
+              <textarea
+                aria-label={es ? "Tu mensaje" : "Your message"}
+                value={human ? "" : body}
+                onChange={(e) => {
+                  setBody(e.target.value);
+                  requestId.current = null;
+                }}
+                maxLength={3000}
+                rows={2}
+                required
+                minLength={1}
+                disabled={busy || human}
+                aria-describedby={human ? "sim-chat-paused" : undefined}
+                placeholder={
+                  human
+                    ? es
+                      ? "Crea tu ticket en el recuadro de arriba."
+                      : "Create your ticket in the box above."
+                    : es
+                      ? "Escribe tu consulta…"
+                      : "Write your question…"
+                }
+              />
+              <button
+                type="submit"
+                disabled={busy || human || !session || !body.trim()}
+                aria-label={es ? "Enviar mensaje" : "Send message"}
+              >
+                <ArrowUp size={21} />
+              </button>
+            </form>
+            {human && (
+              <p
+                id="sim-chat-paused"
+                className="support-paused-note"
+                role="status"
+              >
+                {es
+                  ? "El chat está en pausa mientras creas tu ticket."
+                  : "Chat is paused while you create your ticket."}
+              </p>
+            )}
+            <div className="support-footer-links">
+              <button
+                onClick={() => {
+                  if (!human) setTicketBody((previous) => previous || body);
+                  setHuman(!human);
+                  setError("");
+                  requestId.current = null;
+                }}
+                disabled={busy}
+              >
+                <Headphones size={15} />
+                {human
                   ? es
-                    ? "Crea tu ticket en el recuadro de arriba."
-                    : "Create your ticket in the box above."
+                    ? "Volver al chat"
+                    : "Back to chat"
                   : es
-                    ? "Escribe tu consulta…"
-                    : "Write your question…"
-              }
-            />
-            <button
-              type="submit"
-              disabled={busy || human || !session || !body.trim()}
-              aria-label={es ? "Enviar mensaje" : "Send message"}
-            >
-              <ArrowUp size={21} />
-            </button>
-          </form>
-          {human && (
-            <p
-              id="sim-chat-paused"
-              className="support-paused-note"
-              role="status"
-            >
-              {es
-                ? "El chat está en pausa mientras creas tu ticket."
-                : "Chat is paused while you create your ticket."}
-            </p>
-          )}
-          <div className="support-footer-links">
-            <button
-              onClick={() => {
-                if (!human) setTicketBody((previous) => previous || body);
-                setHuman(!human);
-                setError("");
-                requestId.current = null;
-              }}
-              disabled={busy}
-            >
-              <Headphones size={15} />
-              {human
-                ? es
-                  ? "Volver al chat"
-                  : "Back to chat"
-                : es
-                  ? "Necesito ayuda humana"
-                  : "I need human help"}
-            </button>
-            <Link href={`/${locale}/support`}>
-              <Ticket size={15} />
-              {es ? "Mis tickets" : "My tickets"}
-            </Link>
-          </div>
-        </footer>
-      )}
+                    ? "Necesito ayuda humana"
+                    : "I need human help"}
+              </button>
+              <Link href={`/${locale}/support`}>
+                <Ticket size={15} />
+                {es ? "Mis tickets" : "My tickets"}
+              </Link>
+            </div>
+          </>
+        )}
+        <p className="support-ai-disclosure">
+          {es
+            ? "SIM usa IA y puede equivocarse. No compartas datos privados."
+            : "SIM uses AI and may make mistakes. Don’t share private details."}{" "}
+          <Link href={pathFor(locale, "privacy")}>
+            {es ? "Privacidad" : "Privacy"}
+          </Link>
+        </p>
+      </footer>
     </>
   );
 }

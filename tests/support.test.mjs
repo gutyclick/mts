@@ -39,7 +39,8 @@ test("AI transport uses no tools or stored responses, redacts text and only reso
       assert.equal(payload.store, false);
       assert.equal(payload.tools, undefined);
       assert.equal(payload.text.format.strict, true);
-      assert.equal(payload.reasoning.effort, "none");
+      assert.equal(payload.reasoning.effort, "minimal");
+      assert.equal(payload.model, "gpt-5-nano-2025-08-07");
       assert.ok(!payload.input.includes("PRIVATE"));
       return new Response(
         JSON.stringify({
@@ -67,6 +68,26 @@ test("AI transport uses no tools or stored responses, redacts text and only reso
   assert.ok(payload.instructions.includes("pt"));
   assert.equal(answer.references.length, 1);
   assert.ok(!JSON.stringify(answer).includes("evil.invalid"));
+  await assert.rejects(
+    supportAnswer(
+      {
+        message: "hi",
+        language: "auto",
+        locale: "en",
+        history: [],
+        order: null,
+      },
+      {
+        OPENAI_API_KEY: "sk-fixture",
+        SUPPORT_AI_ENABLED: "true",
+        OPENAI_SUPPORT_MODEL: "gpt-5.4-mini-2026-03-17",
+      },
+      async () => {
+        throw new Error("must not call a higher-cost model");
+      },
+    ),
+    /AI unavailable/,
+  );
   await assert.rejects(
     supportAnswer(
       {

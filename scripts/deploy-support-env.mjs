@@ -18,7 +18,7 @@ try {
     const values = {
       SUPPORT_AI_ENABLED: String(ai),
       SUPPORT_INBOX_EMAIL: "hello@mytripsim.com",
-      OPENAI_SUPPORT_MODEL: "gpt-5.4-mini-2026-03-17",
+      OPENAI_SUPPORT_MODEL: "gpt-5-nano-2025-08-07",
       SUPPORT_DAILY_CHAT_LIMIT: "300",
       ...(ai ? { OPENAI_API_KEY: process.env.OPENAI_API_KEY } : {}),
     };

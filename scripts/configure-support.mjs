@@ -33,7 +33,7 @@ try {
     throw new Error("Invalid key");
   const values = {
     OPENAI_API_KEY: key,
-    OPENAI_SUPPORT_MODEL: "gpt-5.4-mini-2026-03-17",
+    OPENAI_SUPPORT_MODEL: "gpt-5-nano-2025-08-07",
     SUPPORT_INBOX_EMAIL: "hello@mytripsim.com",
     SUPPORT_AI_ENABLED: "true",
   };

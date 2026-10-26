@@ -39,6 +39,40 @@ for (const locale of ["en", "es"] as const) {
           : "Chat with SIM, help assistant",
       })
       .click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog.locator(".support-chat-header")).not.toContainText(
+      es ? "· IA" : "· AI",
+    );
+    await expect(dialog.locator(".support-online-dot")).toHaveClass(
+      /is-online/,
+    );
+    await expect(
+      dialog.locator(".support-chat-footer .support-ai-disclosure"),
+    ).toContainText(es ? "SIM usa IA" : "SIM uses AI");
+    const languages = dialog.getByLabel(
+      es ? "Idioma de respuesta" : "Response language",
+    );
+    await expect(languages.locator("option")).toHaveText(
+      es
+        ? [
+            "Automático",
+            "Español",
+            "Inglés",
+            "Portugués",
+            "Francés",
+            "Alemán",
+            "Italiano",
+          ]
+        : [
+            "Automatic",
+            "Spanish",
+            "English",
+            "Portuguese",
+            "French",
+            "German",
+            "Italian",
+          ],
+    );
     await page
       .getByRole("button", {
         name: es ? "Necesito ayuda humana" : "I need human help",

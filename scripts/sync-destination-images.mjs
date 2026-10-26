@@ -15,6 +15,8 @@ const images = {};
 const filenameAliases = {
   "nulgaria.png": "bulgaria",
   "bosnia y hezergovina.png": "bosnia-and-herzegovina",
+  "costa de marfil.png": "cote-d-ivoire",
+  "emiratos arabes.png": "united-arab-emirates",
 };
 for (const destination of destinations) {
   const names = [

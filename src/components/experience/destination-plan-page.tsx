@@ -6,6 +6,8 @@ import { getPublishedPlans } from "@/lib/catalog-server";
 import { PlanBrowser } from "@/components/plan-browser";
 import { DestinationArtwork } from "@/components/illustrations";
 import { DestinationFlag } from "@/components/destination-flag";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema, absoluteUrl } from "@/lib/seo";
 import { DestinationGuide } from "./destination-guide";
 
 export async function DestinationPlanPage({
@@ -23,6 +25,42 @@ export async function DestinationPlanPage({
   const plans = await getPublishedPlans(destination);
   return (
     <div className="container destination-page destination-product-page">
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: es ? "Inicio" : "Home", path: pathFor(locale) },
+          {
+            name: es ? "Destinos" : "Destinations",
+            path: pathFor(locale, "destinations"),
+          },
+          {
+            name: destination.name[locale],
+            path: pathFor(locale, undefined, destination.slug),
+          },
+        ])}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: destination.name[locale] + " eSIM",
+          url: absoluteUrl(pathFor(locale, undefined, destination.slug)),
+          inLanguage: locale,
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: plans.length,
+            itemListElement: plans.map((plan, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: plan.name,
+              url: absoluteUrl(
+                pathFor(locale, undefined, destination.slug) +
+                  "?plan=" +
+                  encodeURIComponent(plan.id),
+              ),
+            })),
+          },
+        }}
+      />
       <nav
         className="destination-breadcrumb"
         aria-label={es ? "Ruta de navegación" : "Breadcrumb"}
@@ -51,7 +89,7 @@ export async function DestinationPlanPage({
           <DestinationArtwork
             destination={destination}
             locale={locale}
-            sizes="(max-width:650px) 90vw, 320px"
+            sizes="(max-width:650px) 88px, 270px"
             eager
           />
         </div>

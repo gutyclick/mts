@@ -20,7 +20,9 @@ export async function generateMetadata({
   if (!isLocale(locale) || !destination) return {};
   return metadata(
     locale,
-    `${destination.name[locale]} eSIM`,
+    locale === "es"
+      ? `eSIM para ${destination.name[locale]}: datos y cobertura`
+      : `${destination.name[locale]} eSIM: data plans and coverage`,
     destinationContent(
       locale,
       destination,

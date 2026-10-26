@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { Hero } from "@/components/home/hero";
 import { PopularDestinations, TrustStrip } from "@/components/home/sections";
 import { LearningLinks } from "@/components/learning-links";
-import { dictionaries, isLocale } from "@/lib/i18n";
-import { metadata, siteUrl } from "@/lib/seo";
+import { isLocale } from "@/lib/i18n";
+import { metadata, siteIdentity } from "@/lib/seo";
 export async function generateMetadata({
   params,
 }: {
@@ -11,13 +11,14 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = dictionaries[locale];
   return metadata(
     locale,
     locale === "en"
-      ? "Stay connected, wherever you go"
-      : "Sigue conectado, dondequiera que vayas",
-    t.heroDescription,
+      ? "Travel eSIM: data plans for your next destination"
+      : "eSIM de viaje: planes de datos para tu destino",
+    locale === "es"
+      ? "Compara planes eSIM de datos para países y regiones. Elige tus GB y días, consulta la cobertura y verifica si tu móvil es compatible con MyTripSim."
+      : "Compare travel eSIM data plans for countries and regions. Choose data and days, review coverage and check device compatibility with MyTripSim.",
   );
 }
 export default async function Home({
@@ -32,14 +33,7 @@ export default async function Home({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "MyTripSim",
-            legalName: "YellowCat Enterprises LLC",
-            url: siteUrl,
-            logo: `${siteUrl}/icon.svg`,
-          }).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(siteIdentity).replace(/</g, "\\u003c"),
         }}
       />
       <Hero locale={locale} />

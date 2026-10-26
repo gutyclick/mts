@@ -12,12 +12,14 @@ import {
 } from "lucide-react";
 import type { Destination } from "@/lib/catalog";
 import type { Plan } from "@/lib/plan-utils";
-import { pathFor, type Locale } from "@/lib/i18n";
+import { faqTopicPath, pathFor, type Locale } from "@/lib/i18n";
 import { destinationContent } from "@/lib/destination-content";
+import { relatedCoverageDestinations } from "@/lib/destination-links";
+import { getDestinations } from "@/lib/catalog-server";
 import { experienceCopy } from "@/lib/experience-copy";
 import { experiencePath } from "@/lib/experience-routes";
 
-export function DestinationGuide({
+export async function DestinationGuide({
   locale,
   destination,
   plans,
@@ -29,6 +31,12 @@ export function DestinationGuide({
   const es = locale === "es";
   const c = experienceCopy[locale];
   const content = destinationContent(locale, destination, plans);
+  const related = relatedCoverageDestinations(
+    destination,
+    plans,
+    await getDestinations(),
+    locale,
+  );
   return (
     <div className="destination-guide">
       <section
@@ -45,11 +53,21 @@ export function DestinationGuide({
               ? `Tu eSIM para ${content.name}`
               : `Your eSIM for ${content.name}`}
           </h2>
-          <p>
-            {es
-              ? `Encuentra una bolsa de datos para tu viaje a ${content.name}. Compara las combinaciones del catálogo y revisa las redes y condiciones de la variante que elijas.`
-              : `Find a data allowance for your trip to ${content.name}. Compare the catalog's combinations and check the networks and conditions of your chosen variant.`}
-          </p>
+          <p>{content.selectionSummary}</p>
+          <div className="destination-editorial-facts">
+            <div>
+              <h3>
+                {es ? "Cobertura y operadores" : "Coverage and operators"}
+              </h3>
+              <p>{content.networkSummary}</p>
+            </div>
+            <div>
+              <h3>
+                {es ? "Cuándo comienza tu plan" : "When your plan starts"}
+              </h3>
+              <p>{content.activation}</p>
+            </div>
+          </div>
         </div>
         <ul className="destination-benefits">
           <li>
@@ -60,6 +78,12 @@ export function DestinationGuide({
                 ? "Una bolsa de datos para toda la vigencia del plan, sin paquetes diarios."
                 : "One data allowance for the full validity period, with no daily packages."}
             </p>
+            <Link href={pathFor(locale, "compatibility")}>
+              {es
+                ? "Verificar compatibilidad eSIM"
+                : "Check eSIM compatibility"}
+              <ArrowRight size={15} aria-hidden="true" />
+            </Link>
           </li>
           <li>
             <Wifi size={22} aria-hidden="true" />
@@ -91,6 +115,10 @@ export function DestinationGuide({
                 ? "Modelo compatible con eSIM, variante regional admitida y equipo liberado."
                 : "An eSIM-compatible model, supported regional variant and carrier-unlocked device."}
             </p>
+            <Link href={faqTopicPath(locale, "data")}>
+              {es ? "Entender los planes de datos" : "Understand data plans"}
+              <ArrowRight size={15} aria-hidden="true" />
+            </Link>
           </li>
           <li>
             <span>02</span>
@@ -150,6 +178,43 @@ export function DestinationGuide({
           <ArrowRight size={17} aria-hidden="true" />
         </Link>
       </section>
+      {related.length > 0 && (
+        <section
+          className="destination-related"
+          aria-labelledby="destination-related-title"
+        >
+          <h2 id="destination-related-title">
+            <Globe2 aria-hidden="true" />
+            {es ? "¿Viajas a un solo país?" : "Traveling to one country?"}
+          </h2>
+          <p>
+            {es
+              ? "Estos países aparecen en la cobertura de una o más variantes de este destino. También puedes consultar sus planes individuales; comprueba siempre la cobertura del plan que elijas."
+              : "These countries appear in the coverage of one or more variants for this destination. You can also compare their individual plans; always check the coverage of your chosen plan."}
+          </p>
+          <ul>
+            {related.map((country) => (
+              <li key={country.slug}>
+                <Link href={pathFor(locale, undefined, country.slug)}>
+                  {es
+                    ? `eSIM para ${country.name[locale]}`
+                    : `${country.name[locale]} eSIM`}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            className="destination-faq-link"
+            href={pathFor(locale, "destinations")}
+          >
+            {es
+              ? "Explorar todos los destinos eSIM"
+              : "Explore all eSIM destinations"}
+            <ArrowRight size={17} aria-hidden="true" />
+          </Link>
+        </section>
+      )}
     </div>
   );
 }

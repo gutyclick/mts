@@ -6,6 +6,8 @@ import { getDestinations, getPopularDestinations } from "@/lib/catalog-server";
 
 export async function Hero({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
+  const es = locale === "es";
+  const destinations = await getDestinations();
   return (
     <section className="hero container">
       <div className="hero-copy">
@@ -14,14 +16,21 @@ export async function Hero({ locale }: { locale: Locale }) {
           {t.eyebrow}
         </p>
         <h1>
-          {t.heroStart}
+          {es ? "Tu eSIM de viaje," : "Travel eSIMs,"}
           <br />
-          <span className="hero-accent">{t.heroAccent}</span> {t.heroEnd}
+          <span className="hero-accent">
+            {es ? "un mundo" : "wherever"}
+          </span>{" "}
+          {es ? "por descubrir." : "you go."}
         </h1>
-        <p className="hero-description">{t.heroDescription}</p>
+        <p className="hero-description">
+          {es
+            ? `Compara planes de datos para ${destinations.length} destinos. Elige los GB y días de tu viaje y comprueba la cobertura y compatibilidad de tu teléfono.`
+            : `Compare travel data plans for ${destinations.length} destinations. Choose your data and days, then check coverage and your phone’s compatibility.`}
+        </p>
         <DestinationSearch
           locale={locale}
-          items={await getDestinations()}
+          items={destinations}
           popular={await getPopularDestinations()}
         />
         <p className="hero-footnote">

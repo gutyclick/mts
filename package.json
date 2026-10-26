@@ -55,7 +55,9 @@
     "support:deploy-env": "node scripts/deploy-support-env.mjs",
     "support:start": "node scripts/deploy-support-env.mjs --start",
     "test:support": "node --experimental-strip-types --test tests/support.test.mjs tests/support-security.test.mjs",
-    "test:support:web": "node scripts/test-support-web.mjs"
+    "test:support:web": "node scripts/test-support-web.mjs",
+    "test:seo": "node --experimental-strip-types --test tests/seo.test.mjs",
+    "audit:seo": "node scripts/audit-seo.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

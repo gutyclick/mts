@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
+import { JsonLd } from "@/components/seo/json-ld";
 import { FAQCenter } from "@/components/faq-center";
 import { helpTopicIcons } from "@/components/help-topic-icons";
 import { helpContent } from "@/lib/help-content";
@@ -12,7 +13,7 @@ import {
   pathFor,
   routeSegments,
 } from "@/lib/i18n";
-import { metadata } from "@/lib/seo";
+import { localizedMetadata, breadcrumbSchema } from "@/lib/seo";
 
 function resolveTopic(locale: string, page: string, topic: string) {
   if (!isLocale(locale) || page !== routeSegments.faq[locale]) return null;
@@ -42,25 +43,12 @@ export async function generateMetadata({
   const resolved = resolveTopic(locale, page, topic);
   if (!resolved) return {};
   const { category, key } = resolved;
-  const base = metadata(
+  return localizedMetadata(
     resolved.locale,
-    `${category.title} · FAQ`,
+    `${category.title} · FAQ eSIM`,
     category.description,
-    "faq",
+    { en: faqTopicPath("en", key), es: faqTopicPath("es", key) },
   );
-  const canonical = faqTopicPath(resolved.locale, key);
-  return {
-    ...base,
-    alternates: {
-      canonical,
-      languages: {
-        en: faqTopicPath("en", key),
-        es: faqTopicPath("es", key),
-        "x-default": faqTopicPath("en", key),
-      },
-    },
-    openGraph: { ...base.openGraph, url: canonical },
-  };
 }
 export default async function FAQTopicPage({
   params,
@@ -76,6 +64,13 @@ export default async function FAQTopicPage({
   const Icon = helpTopicIcons[key];
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: es ? "Inicio" : "Home", path: pathFor(language) },
+          { name: "FAQ", path: pathFor(language, "faq") },
+          { name: category.title, path: faqTopicPath(language, key) },
+        ])}
+      />
       <header className="container faq-topic-heading">
         <nav
           className="destination-breadcrumb"

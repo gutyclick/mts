@@ -14,6 +14,8 @@ import "@/styles/account.css";
 import "@/styles/commerce.css";
 import "@/styles/admin.css";
 import "@/styles/support.css";
+import "@/styles/destination-editorial.css";
+import "@/styles/seo.css";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -33,7 +35,7 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mytripsim.com"),
+  metadataBase: new URL("https://www.mytripsim.com"),
   title: {
     default: "MyTripSim — Stay connected, wherever you go",
     template: "%s | MyTripSim",

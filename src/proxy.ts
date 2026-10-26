@@ -8,6 +8,9 @@ export async function proxy(request: NextRequest) {
   );
   const response: NextResponse = await sessionResponse(request, headers);
   if (
+    ((request.nextUrl.pathname.endsWith("/instalar") ||
+      request.nextUrl.pathname.endsWith("/install")) &&
+      request.nextUrl.searchParams.has("esim")) ||
     /\/(support|admin|mis-esim|my-esims|compra|checkout|iniciar-sesion|sign-in|crear-cuenta|sign-up|recuperar-contrasena|forgot-password|nueva-contrasena|reset-password|auth)(\/|$)/.test(
       request.nextUrl.pathname,
     )
@@ -20,6 +23,6 @@ export async function proxy(request: NextRequest) {
 }
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|icon.svg|images|flags|illustrations|robots.txt|sitemap.xml|opengraph-image).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|icons|manifest.webmanifest|images|flags|illustrations|robots.txt|sitemap.xml|opengraph-image).*)",
   ],
 };

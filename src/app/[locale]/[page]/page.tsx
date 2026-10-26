@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Info } from "lucide-react";
+import { DestinationIndex } from "@/components/seo/destination-index";
 import { DestinationDirectory } from "@/components/destination-directory";
 import { CompatibilityChecker } from "@/components/compatibility-checker";
 import { FAQCenter } from "@/components/faq-center";
@@ -18,7 +19,8 @@ import {
   type Locale,
   type PageKey,
 } from "@/lib/i18n";
-import { metadata } from "@/lib/seo";
+import { publicPageCopy } from "@/lib/seo-copy";
+import { metadata, localizedMetadata } from "@/lib/seo";
 import { getDestinations } from "@/lib/catalog-server";
 import { authMode, authSegments, authPath } from "@/lib/auth-routes";
 import { AuthPage } from "@/components/account/auth-page";
@@ -66,8 +68,10 @@ export function generateStaticParams() {
 }
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; page: string }>;
+  searchParams: Promise<ExperienceQuery>;
 }) {
   const { locale, page } = await params;
   if (!isLocale(locale)) return {};
@@ -85,6 +89,26 @@ export async function generateMetadata({
       },
     };
   const experience = experienceKey(locale, page);
+  if (experience === "install" && (await searchParams).esim)
+    return {
+      title: experienceCopy[locale].install,
+      robots: { index: false, follow: false },
+      alternates: { canonical: experiencePath(locale, "install") },
+    };
+  if (experience === "install")
+    return localizedMetadata(
+      locale,
+      locale === "es"
+        ? "Cómo instalar tu eSIM: guía para iPhone y Android"
+        : "How to install your eSIM: iPhone and Android guide",
+      locale === "es"
+        ? "Prepara tu móvil, instala tu eSIM y configura los datos y la itinerancia. Sigue la guía de MyTripSim y consulta las instrucciones específicas de tu plan."
+        : "Prepare your phone, install your eSIM and set up data and roaming. Follow the MyTripSim guide and your plan’s specific installation instructions.",
+      {
+        en: experiencePath("en", "install"),
+        es: experiencePath("es", "install"),
+      },
+    );
   if (experience)
     return {
       title: experienceCopy[locale][experience],
@@ -99,7 +123,8 @@ export async function generateMetadata({
     };
   const key = pageKey(locale, page);
   if (!key) return {};
-  const [title, description] = heading(locale, key);
+  const [title, description] =
+    publicPageCopy(locale, key) ?? heading(locale, key);
   return {
     ...metadata(locale, title, description, key),
     ...(key === "terms" || key === "privacy" || key === "refunds"
@@ -172,7 +197,7 @@ export default async function ContentPage({
             locale={locale}
             items={await getDestinations()}
           />
-          <p className="preview-note">{t.previewNotice}</p>
+          <DestinationIndex locale={locale} items={await getDestinations()} />
         </section>
       )}
       {key === "compatibility" && (

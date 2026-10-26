@@ -284,6 +284,23 @@ test("support ownership, escalation, idempotency, roles, quotas and notification
       ).rows[0].d.total,
       1,
     );
+    await db.exec(
+      readFileSync(
+        new URL(
+          "../supabase/migrations/20261025001700_support_delivery_guard.sql",
+          import.meta.url,
+        ),
+        "utf8",
+      ),
+    );
+    assert.equal(
+      (await db.query("select * from support_claim_notifications(2)")).rows
+        .length,
+      0,
+    );
+    await db.exec(
+      "update support_settings set delivery_enabled=true where id=true",
+    );
     const claim = (
       await db.query("select * from support_claim_notifications(2)")
     ).rows;

@@ -21,3 +21,5 @@
 - [x] Widget accesible y multilingüe; vista de tickets del perfil y panel administrativo.
 - [ ] Configuración privada de IA y correo, cola de avisos y pruebas de integración.
 - [ ] Verificación móvil/escritorio, publicación y documentación de límites y operación.
+
+Publicado y verificado el chat y los tickets; configuración privada de OpenAI completada. Build, seguridad, cuentas y accesibilidad aprobados. La entrega final permanece pendiente: Zoho rechaza `hello@mytripsim.com` porque la bandeja no existe. El propietario la creará. Los avisos se conservan en cola y están pausados hasta verificar la recepción. Detalle en `docs/support-integration.md`.

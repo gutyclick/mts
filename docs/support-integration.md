@@ -22,7 +22,7 @@ El trabajador procesa dos avisos por invocación, usa claves estables de idempot
 ```powershell
 npm.cmd run support:configure
 npm.cmd run support:deploy-env
-# Aplicar migraciones y desplegar antes de activar el trabajador:
+# Aplicar migraciones, desplegar y verificar que la bandeja exista antes de activar:
 npm.cmd run support:start
 ```
 
@@ -39,5 +39,13 @@ Límites: 12 consultas por hora para visitantes, 60 para cuentas, 300 globales p
 `npm.cmd run test:support:web` usa cuentas y pedidos temporales contra Supabase y un servidor local en el puerto 3008 (`SUPPORT_TEST_BASE` permite cambiarlo). Comprueba el recorrido y accesibilidad móvil/escritorio. Antes de crear fixtures verifica que el trabajador esté detenido; si está activo, rechaza la prueba y exige una base aislada. Las notificaciones de prueba se eliminan al finalizar. No se solicita ninguna eSIM ni se realiza ningún pago.
 
 No hay promesas automáticas de reembolso ni modificaciones de pedidos. La IA sólo orienta; las incidencias comerciales se escalan al equipo.
+
+## Verificación en producción — 25 de octubre de 2026
+
+- Publicados el widget, las APIs privadas y las vistas de perfil y administración. OpenAI respondió desde Vercel con referencias aprobadas. Comprobadas respuestas en español, inglés y portugués, y rechazo de solicitudes de datos ajenos o reembolsos inventados.
+- Pruebas SQL de soporte: 5 aprobadas. Administración: 3 aprobadas. Catálogo/carrito: 18 aprobadas. Prueba real de cuentas aprobada sin enviar correos. Recorrido web de soporte aprobado en escritorio/móvil, incluidas comprobaciones de accesibilidad, continuidad del chat, propietarios, cierre/reapertura y destinatarios de la cola.
+- Build de Next.js, tipos, lint de los cambios, formato y escaneo de secretos aprobados. Las cuentas y pedidos temporales se eliminaron; permanece únicamente el ticket de verificación del propietario.
+- Probados el trabajador y su invocación firmada desde Supabase. El reintento de la misma notificación conservó el mismo ID de Resend, sin generar otro correo.
+- Resend aceptó el aviso, pero Zoho respondió **550 5.1.1 User does not exist** para `hello@mytripsim.com`. El propietario eligió crear la bandeja en Zoho. Los avisos quedan pausados mediante `support_settings.delivery_enabled=false`; los tickets continúan disponibles y las notificaciones nuevas se conservan en cola. El intento de verificación figura como fallido. No ejecutar `support:start` hasta confirmar que la bandeja recibe correo y hacer la prueba final de entrega.
 
 Referencias: [Responses y datos de OpenAI](https://developers.openai.com/api/docs/guides/your-data), [salidas estructuradas](https://developers.openai.com/api/docs/guides/structured-outputs), [modelo](https://developers.openai.com/api/docs/models/gpt-5.4-mini).

@@ -6,6 +6,7 @@
 - Una cuenta confirmada puede seleccionar uno de sus pedidos. El servidor vuelve a verificar el propietario antes de leerlo; no acepta identidades ni destinatarios enviados por el navegador.
 - El modelo recibe artículos de `src/lib/help-content.ts` y un resumen del pedido: planes, estado y lecturas guardadas de consumo. No recibe QR, ICCID, códigos de instalación, credenciales de pago ni referencias internas del proveedor. El consumo puede estar desactualizado.
 - «Necesito ayuda humana» requiere enviar una consulta explícitamente. Conserva el chat, crea un ticket y detiene las respuestas automáticas de ese hilo.
+- El recuadro de ayuda humana tiene un único mensaje y su propio botón «Crear ticket». El asunto se toma de la primera línea de la consulta. Mientras se completa, el compositor del chat queda bloqueado y lo explica. Volver al chat recupera su borrador; un error de envío conserva la consulta y reutiliza la misma petición al reintentar. El enlace de confirmación lleva a la conversación del ticket.
 - Perfil: `/es/support` o `/en/support`. Administración: `/es/admin/tickets` o `/en/admin/tickets`; accesible únicamente a miembros administrativos existentes.
 - Los clientes pueden responder y marcar resuelto. Una respuesta del equipo cambia a «Respuesta del equipo»; una respuesta posterior del cliente reabre el ticket. Los mensajes anteriores se conservan.
 

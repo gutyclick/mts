@@ -266,13 +266,44 @@
   font-size: 12px;
   font-weight: 700;
 }
-.support-human-card input {
+.support-human-card textarea {
   width: 100%;
   margin-top: 7px;
   padding: 12px;
   border: 1px solid #d5e3f6;
   border-radius: 11px;
   background: white;
+  resize: vertical;
+  min-height: 110px;
+  color: #14243d;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.support-escalation-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 15px;
+}
+.support-escalation-form label {
+  display: grid;
+  gap: 0;
+}
+.support-escalation-form small,
+.support-paused-note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #526785;
+}
+.support-paused-note {
+  margin: 9px 2px 0;
+}
+.support-composer.is-paused {
+  background: #f2f5f9;
+  border-style: dashed;
+}
+.support-composer.is-paused textarea {
+  cursor: not-allowed;
 }
 .support-human-card .button {
   font-size: 12px;

@@ -198,10 +198,7 @@ try {
   await p.getByRole("button", { name: "Necesito ayuda humana" }).click();
   await p
     .getByLabel("¿Con qué necesitas ayuda?")
-    .fill("QA · Ayuda de instalación");
-  await p
-    .getByLabel("Tu mensaje", { exact: true })
-    .fill("Prueba aislada del sistema de soporte.");
+    .fill("QA · Ayuda de instalación\nPrueba aislada del sistema de soporte.");
   await p.getByRole("button", { name: "Crear ticket", exact: true }).click();
   await expect(
     p.getByRole("heading", { name: "Tu ticket está creado" }),

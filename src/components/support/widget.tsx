@@ -81,7 +81,7 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [human, setHuman] = useState(false),
-    [subject, setSubject] = useState(""),
+    [ticketBody, setTicketBody] = useState(""),
     [ticket, setTicket] = useState<string>(),
     tail = useRef<HTMLDivElement>(null),
     controller = useRef<AbortController | null>(null),
@@ -139,15 +139,29 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
   useEffect(() => {
     tail.current?.scrollIntoView({ block: "end", behavior: "instant" });
   }, [messages, busy, human, ticket]);
-  async function send(e: React.FormEvent) {
+  async function send(e: React.FormEvent, mode: "chat" | "ticket" = "chat") {
     e.preventDefault();
-    if (!body.trim() || busy || !session) return;
+    const creatingTicket = mode === "ticket",
+      text = (creatingTicket ? ticketBody : body).trim();
+    if (
+      creatingTicket !== human ||
+      text.length < (creatingTicket ? 3 : 1) ||
+      busy ||
+      !session ||
+      (creatingTicket && !session.authenticated)
+    )
+      return;
     setBusy(true);
     setError("");
     requestId.current ??= crypto.randomUUID();
-    const text = body.trim();
     try {
-      if (human) {
+      if (creatingTicket) {
+        const subject = (
+          text
+            .split(/\r?\n/)
+            .find((line) => line.trim().length >= 3)
+            ?.trim() ?? text.replace(/\s+/g, " ")
+        ).slice(0, 120);
         const d = await supportFetch("/api/support/tickets", {
           method: "POST",
           signal: controller.current?.signal,
@@ -166,6 +180,7 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
         });
         setTicket(d.id);
         setBody("");
+        setTicketBody("");
         requestId.current = null;
       } else {
         const d = await supportFetch("/api/support/chat", {
@@ -354,25 +369,45 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
                 {es ? "Iniciar sesión y pedir ayuda" : "Sign in and get help"}
               </Link>
             ) : (
-              <label>
-                {es
-                  ? "¿Con qué necesitas ayuda?"
-                  : "What do you need help with?"}
-                <input
-                  value={subject}
-                  minLength={3}
-                  maxLength={120}
-                  required
-                  form="sim-chat-form"
-                  onChange={(e) => {
-                    setSubject(e.target.value);
-                    requestId.current = null;
-                  }}
-                  placeholder={
-                    es ? "Ej. No consigo conectarme" : "e.g. I cannot connect"
-                  }
-                />
-              </label>
+              <form
+                className="support-escalation-form"
+                onSubmit={(e) => send(e, "ticket")}
+              >
+                <label>
+                  {es
+                    ? "¿Con qué necesitas ayuda?"
+                    : "What do you need help with?"}
+                  <textarea
+                    value={ticketBody}
+                    minLength={3}
+                    maxLength={4000}
+                    rows={4}
+                    required
+                    disabled={busy}
+                    autoFocus
+                    onChange={(e) => {
+                      setTicketBody(e.target.value);
+                      requestId.current = null;
+                    }}
+                    placeholder={
+                      es ? "Ej. No consigo conectarme" : "e.g. I cannot connect"
+                    }
+                  />
+                </label>
+                <button
+                  className="button button-primary"
+                  type="submit"
+                  disabled={busy || ticketBody.trim().length < 3}
+                >
+                  {busy ? <LoaderCircle size={17} /> : <Ticket size={17} />}{" "}
+                  {es ? "Crear ticket" : "Create ticket"}
+                </button>
+                <small>
+                  {es
+                    ? "Continuarás con el equipo desde Mis tickets."
+                    : "Continue with our team in My tickets."}
+                </small>
+              </form>
             )}
           </div>
         )}
@@ -402,54 +437,59 @@ function ChatPanel({ locale, close }: { locale: Locale; close: () => void }) {
       </div>
       {!ticket && (
         <footer className="support-chat-footer">
-          {(!human || session?.authenticated) && (
-            <form
-              id="sim-chat-form"
-              onSubmit={send}
-              className="support-composer"
+          <form
+            id="sim-chat-form"
+            onSubmit={send}
+            className={`support-composer${human ? " is-paused" : ""}`}
+          >
+            <textarea
+              aria-label={es ? "Tu mensaje" : "Your message"}
+              value={human ? "" : body}
+              onChange={(e) => {
+                setBody(e.target.value);
+                requestId.current = null;
+              }}
+              maxLength={3000}
+              rows={2}
+              required
+              minLength={1}
+              disabled={busy || human}
+              aria-describedby={human ? "sim-chat-paused" : undefined}
+              placeholder={
+                human
+                  ? es
+                    ? "Crea tu ticket en el recuadro de arriba."
+                    : "Create your ticket in the box above."
+                  : es
+                    ? "Escribe tu consulta…"
+                    : "Write your question…"
+              }
+            />
+            <button
+              type="submit"
+              disabled={busy || human || !session || !body.trim()}
+              aria-label={es ? "Enviar mensaje" : "Send message"}
             >
-              <textarea
-                aria-label={es ? "Tu mensaje" : "Your message"}
-                value={body}
-                onChange={(e) => {
-                  setBody(e.target.value);
-                  requestId.current = null;
-                }}
-                maxLength={human ? 4000 : 3000}
-                rows={2}
-                required
-                minLength={human ? 3 : 1}
-                disabled={busy}
-                placeholder={
-                  es ? "Escribe tu consulta…" : "Write your question…"
-                }
-              />
-              <button
-                type="submit"
-                disabled={
-                  busy ||
-                  !session ||
-                  !body.trim() ||
-                  (human && subject.trim().length < 3)
-                }
-                aria-label={
-                  human
-                    ? es
-                      ? "Crear ticket"
-                      : "Create ticket"
-                    : es
-                      ? "Enviar mensaje"
-                      : "Send message"
-                }
-              >
-                <ArrowUp size={21} />
-              </button>
-            </form>
+              <ArrowUp size={21} />
+            </button>
+          </form>
+          {human && (
+            <p
+              id="sim-chat-paused"
+              className="support-paused-note"
+              role="status"
+            >
+              {es
+                ? "El chat está en pausa mientras creas tu ticket."
+                : "Chat is paused while you create your ticket."}
+            </p>
           )}
           <div className="support-footer-links">
             <button
               onClick={() => {
+                if (!human) setTicketBody((previous) => previous || body);
                 setHuman(!human);
+                setError("");
                 requestId.current = null;
               }}
               disabled={busy}

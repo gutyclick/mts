@@ -27,6 +27,7 @@ test("AI transport uses no tools or stored responses, redacts text and only reso
   const answer = await supportAnswer(
     {
       message: "Install LPA:1$rsp.example.com$PRIVATE",
+      topic: "plans",
       language: "pt",
       locale: "es",
       history: [],
@@ -42,6 +43,13 @@ test("AI transport uses no tools or stored responses, redacts text and only reso
       assert.equal(payload.reasoning.effort, "minimal");
       assert.equal(payload.model, "gpt-5-nano-2025-08-07");
       assert.ok(!payload.input.includes("PRIVATE"));
+      const context = JSON.parse(payload.input);
+      assert.equal(context.selectedTopic.id, "plans");
+      assert.match(context.selectedTopic.openingMessage, /país o países.*días/);
+      assert.match(
+        payload.instructions,
+        /Interpret short replies in that context/,
+      );
       return new Response(
         JSON.stringify({
           status: "completed",

@@ -27,6 +27,41 @@ export const conversationTopicNames = {
     compatibility: "My phone",
   },
 };
+const conversationOpenings = {
+  es: {
+    general:
+      "Cuéntame qué necesitas resolver con MyTripSim y te ayudo paso a paso.",
+    installation:
+      "Vamos a instalar tu eSIM. ¿Qué modelo de teléfono tienes? No compartas tu QR ni tus códigos de activación.",
+    connection:
+      "Vamos a revisar tu conexión. ¿En qué país estás y qué sucede: no aparece ninguna red o tienes señal pero no internet?",
+    plans:
+      "Te ayudo a elegir tu plan. ¿A qué país o países viajas y cuántos días estarás?",
+    orders:
+      "Revisemos tu pedido. ¿Qué necesitas resolver con el pago o la entrega de tu eSIM? No compartas datos de tu tarjeta.",
+    compatibility:
+      "Comprobemos tu teléfono. ¿Cuál es la marca y el modelo exacto, y en qué país lo compraste?",
+  },
+  en: {
+    general:
+      "Tell me what you need help with at MyTripSim and we’ll work through it together.",
+    installation:
+      "Let’s install your eSIM. What phone model do you have? Please don’t share your QR or activation codes.",
+    connection:
+      "Let’s check your connection. Which country are you in, and do you see no network or have a signal but no internet?",
+    plans:
+      "Let’s find your plan. Which country or countries are you visiting, and how many days will you stay?",
+    orders:
+      "Let’s look at your order. What do you need help with: your payment or eSIM delivery? Please don’t share your card details.",
+    compatibility:
+      "Let’s check your phone. What is its exact brand and model, and which country did you buy it in?",
+  },
+} satisfies Record<"es" | "en", Record<ConversationTopic, string>>;
+export function conversationOpening(locale: "es" | "en", topic?: string) {
+  const selected =
+    conversationTopics.find((value) => value === topic) ?? "general";
+  return conversationOpenings[locale][selected];
+}
 export const conversationRequest = z.discriminatedUnion("action", [
   z
     .object({

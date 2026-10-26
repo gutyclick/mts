@@ -11,7 +11,10 @@ import {
 } from "lucide-react";
 import { MessengerHeader } from "./messenger-header";
 import { ConversationRating } from "./conversation-rating";
-import { conversationDeadline } from "@/lib/support/conversations";
+import {
+  conversationDeadline,
+  conversationOpening,
+} from "@/lib/support/conversations";
 import { supportThreadSchema } from "@/lib/support/model";
 import type { MessengerSession, ConversationDetail } from "./messenger-types";
 import { supportMessageSchema, type SupportMessage } from "@/lib/support/model";
@@ -270,20 +273,12 @@ export function ConversationChat({
             </button>
           )}
         </div>
-        {!messages.length && (
-          <div className="support-welcome">
-            <p>
-              <strong>
-                {es ? "¡Hola, viajero! 👋" : "Hello, traveler! 👋"}
-              </strong>
-            </p>
-            <p>
-              {es
-                ? "Te ayudo con tu eSIM, la instalación y las dudas de tu viaje."
-                : "I can help with your eSIM, installation and travel questions."}
-            </p>
-          </div>
-        )}
+        <div className="support-welcome" role="note">
+          <p>
+            <strong>SIM</strong>
+          </p>
+          <p>{conversationOpening(locale, current.topic)}</p>
+        </div>
         {!closed && (
           <div className="support-chat-options">
             <label>
@@ -331,33 +326,6 @@ export function ConversationChat({
                 </select>
               </label>
             )}
-          </div>
-        )}
-        {!closed && !messages.length && !human && (
-          <div className="support-suggestions">
-            {(es
-              ? [
-                  "¿Cómo instalo mi eSIM?",
-                  "¿Debo activar la itinerancia?",
-                  "¿Puedo compartir internet?",
-                ]
-              : [
-                  "How do I install my eSIM?",
-                  "Should I enable data roaming?",
-                  "Can I use a hotspot?",
-                ]
-            ).map((t) => (
-              <button
-                key={t}
-                disabled={busy}
-                onClick={() => {
-                  setBody(t);
-                  requestId.current = null;
-                }}
-              >
-                {t}
-              </button>
-            ))}
           </div>
         )}
         <SupportMessages messages={messages} es={es} />

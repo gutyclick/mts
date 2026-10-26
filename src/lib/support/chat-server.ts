@@ -82,7 +82,14 @@ export async function chatSupport(
     ai = true;
   try {
     answer = await supportAnswer(
-      { message, language: body.language, locale: body.locale, history, order },
+      {
+        message,
+        language: body.language,
+        locale: body.locale,
+        history,
+        order,
+        topic: detail.thread.topic,
+      },
       process.env,
     );
   } catch {

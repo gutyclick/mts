@@ -179,24 +179,6 @@
   font-size: 12px;
   color: #243e5f;
 }
-.support-suggestions {
-  display: grid;
-  gap: 8px;
-  margin: 12px 0;
-}
-.support-suggestions button {
-  padding: 11px 13px;
-  border: 1px solid #d5e3f6;
-  background: #fff;
-  color: #2058a1;
-  border-radius: 12px;
-  text-align: left;
-  font-size: 12px;
-  cursor: pointer;
-}
-.support-suggestions button:hover {
-  background: #edf5ff;
-}
 .support-messages {
   display: flex;
   flex-direction: column;

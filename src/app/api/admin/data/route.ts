@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
   try {
     const session = await adminSession();
     if (!session.user) return fail(401);
+    if (session.needsMfa) return fail(428);
     if (!session.admin) return fail(403);
     const filters = adminFilters.safeParse(
       Object.fromEntries(request.nextUrl.searchParams),

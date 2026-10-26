@@ -75,8 +75,8 @@ export function MobileNavigation({ locale }: { locale: Locale }) {
       active: pathname === experiencePath(locale, "wallet"),
     },
     {
-      label: t.help,
-      href: pathFor(locale, "help"),
+      label: dictionaries[locale].nav.faq,
+      href: pathFor(locale, "faq"),
       icon: LifeBuoy,
       active:
         pathname.startsWith(`${pathFor(locale, "faq")}/`) ||

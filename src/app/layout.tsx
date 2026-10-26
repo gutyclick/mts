@@ -18,6 +18,7 @@ import "@/styles/support-messenger.css";
 import "@/styles/destination-editorial.css";
 import "@/styles/seo.css";
 import "@/styles/legal.css";
+import "@/styles/operations.css";
 
 export const viewport: Viewport = {
   width: "device-width",

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { dictionaries, pathFor, type Locale, type PageKey } from "@/lib/i18n";
 import { Brand } from "./ui";
 import { LanguageSwitcher } from "./site-navigation";
@@ -8,7 +7,7 @@ export function Footer({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
   const columns: { title: string; pages: PageKey[] }[] = [
     { title: t.explore, pages: ["destinations", "how"] },
-    { title: t.useful, pages: ["compatibility", "faq", "help"] },
+    { title: t.useful, pages: ["compatibility", "faq"] },
     { title: t.legal, pages: ["terms", "privacy", "refunds", "cookies"] },
   ];
   return (
@@ -31,7 +30,6 @@ export function Footer({ locale }: { locale: Locale }) {
               {column.pages.map((page) => (
                 <Link key={page} href={pathFor(locale, page)}>
                   {t.nav[page]}
-                  {page === "help" && <ArrowUpRight size={13} />}
                 </Link>
               ))}
             </div>

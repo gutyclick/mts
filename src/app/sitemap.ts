@@ -8,9 +8,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const destinations = await getDestinations();
   const entries: { page?: PageKey; slug?: string }[] = [
     {},
-    ...(
-      ["destinations", "how", "compatibility", "help", "faq"] as PageKey[]
-    ).map((page) => ({ page })),
+    ...(["destinations", "how", "compatibility", "faq"] as PageKey[]).map(
+      (page) => ({ page }),
+    ),
     ...destinations.map(({ slug }) => ({ slug })),
   ];
   return [

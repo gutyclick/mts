@@ -12,6 +12,7 @@ import {
   type AdminFilters,
 } from "./model";
 import { z } from "zod";
+import { adminAssurance } from "./security-model";
 export async function adminSession() {
   const client = await authClient();
   const {
@@ -20,14 +21,26 @@ export async function adminSession() {
   } = await client.auth.getUser();
   if (error && error.status && error.status >= 500)
     throw new Error("Session unavailable");
-  if (!user?.email_confirmed_at) return { user: null, admin: false };
+  if (!user?.email_confirmed_at)
+    return { user: null, ...adminAssurance(false, null, false) };
   const { data, error: roleError } = await client
     .from("admin_memberships")
     .select("user_id")
     .eq("user_id", user.id)
     .maybeSingle();
   if (roleError) throw new Error("Admin authorization unavailable");
-  return { user, admin: !!data };
+  if (!data) return { user, ...adminAssurance(false, null, false) };
+  const { data: assurance, error: assuranceError } =
+    await client.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (assuranceError) throw Error("Admin assurance unavailable");
+  return {
+    user,
+    ...adminAssurance(
+      true,
+      assurance.currentLevel,
+      user.factors?.some((f) => f.status === "verified") ?? false,
+    ),
+  };
 }
 export async function adminData(actor: string, filter: AdminFilters) {
   const db = checkoutDatabase();

@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
   try {
     const session = await adminSession();
     if (!session.user) return fail(401);
+    if (session.needsMfa) return fail(428);
     if (!session.admin) return fail(403);
     const text = await request.text();
     if (text.length > 8192) return fail(413);

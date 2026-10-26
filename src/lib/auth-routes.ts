@@ -39,9 +39,13 @@ export function safeAccountNext(value: unknown, locale: Locale) {
     }
     if (
       url.origin === "https://mytripsim.invalid" &&
-      url.pathname === `/${locale}/admin`
+      [
+        `/${locale}/admin`,
+        `/${locale}/admin/security`,
+        `/${locale}/admin/operations`,
+      ].includes(url.pathname)
     )
-      return `/${locale}/admin`;
+      return url.pathname;
     if (
       url.origin === "https://mytripsim.invalid" &&
       url.pathname === `/${locale}/checkout/result`

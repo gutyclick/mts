@@ -24,6 +24,7 @@ export default async function Page({
     redirect(
       `${authPath(locale, "login")}?next=${encodeURIComponent(safeAccountNext(`/${locale}/admin/tickets${query.ticket ? `?ticket=${query.ticket}` : ""}`, locale))}`,
     );
+  if (session.needsMfa) redirect(`/${locale}/admin/security`);
   if (!session.admin) notFound();
   return <TicketDesk locale={locale} staff />;
 }

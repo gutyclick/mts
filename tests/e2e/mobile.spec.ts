@@ -29,8 +29,8 @@ test("app navigation reflects localized routes and stays clear of footer", async
   const footer = await page.locator(".footer-bottom").boundingBox();
   const dock = await nav.boundingBox();
   expect(footer!.y + footer!.height).toBeLessThanOrEqual(dock!.y + 1);
-  await nav.getByRole("link", { name: "Ayuda" }).click();
-  await expect(page).toHaveURL(/\/es\/ayuda/);
+  await nav.getByRole("link", { name: "FAQ" }).click();
+  await expect(page).toHaveURL(/\/es\/preguntas-frecuentes/);
   await page
     .getByRole("link", { name: "Cambiar idioma: English" })
     .first()
@@ -38,7 +38,7 @@ test("app navigation reflects localized routes and stays clear of footer", async
   await expect(
     page
       .getByRole("navigation", { name: "Main navigation" })
-      .getByRole("link", { name: "Help" }),
+      .getByRole("link", { name: "FAQ" }),
   ).toHaveAttribute("aria-current", "page");
   await page.setViewportSize({ width: 1440, height: 1000 });
   await expect(page.locator(".mobile-bottom-nav")).not.toBeVisible();

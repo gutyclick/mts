@@ -142,7 +142,7 @@ export function createEsimAccessAPI(
   transport: typeof fetch = fetch,
 ) {
   async function request(
-    path: "package/list" | "esim/query" | "esim/usage/query" | "esim/order",
+    path: "package/list" | "esim/query" | "esim/usage/query" | "esim/order" | "balance/query",
     payload: unknown,
   ) {
     const body = JSON.stringify(payload);
@@ -188,6 +188,20 @@ export function createEsimAccessAPI(
     return envelope.obj;
   }
   return {
+    async balance() {
+      const value = z
+        .object({
+          balance: z.coerce
+            .number()
+            .int()
+            .min(-Number.MAX_SAFE_INTEGER)
+            .max(Number.MAX_SAFE_INTEGER),
+          currencyCode: z.literal("USD").optional(),
+        })
+        .parse(await request("balance/query", {}));
+      // Provider contract: 10,000 integer units = USD 1, not cents.
+      return { balanceUnits: value.balance, currency: "USD" as const };
+    },
     async countryFixedPackages(locationCode: string) {
       if (!/^[A-Z]{2}$/.test(locationCode))
         throw new EsimAccessError("configuration");

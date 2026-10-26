@@ -19,6 +19,7 @@ export default async function Page({
   const session = await adminSession();
   if (!session.user)
     redirect(`${authPath(locale, "login")}?next=/${locale}/admin`);
+  if (session.needsMfa) redirect(`/${locale}/admin/security`);
   if (!session.admin) notFound();
   return <AdminDashboard locale={locale} email={session.user.email ?? ""} />;
 }

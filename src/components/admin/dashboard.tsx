@@ -123,6 +123,10 @@ export function AdminDashboard({
           cache: "no-store",
           signal: controller.signal,
         });
+        if (r.status === 428) {
+          router.replace(`/${locale}/admin/security`);
+          return;
+        }
         if (!r.ok) throw new Error("Unavailable");
         const value = await r.json();
         if (controller.signal.aborted) return;
@@ -158,7 +162,7 @@ export function AdminDashboard({
     }
     void load();
     return () => controller.abort();
-  }, [query, refresh, filters.tab]);
+  }, [query, refresh, filters.tab, router, locale]);
   function navigate(values: Record<string, string>) {
     const params = new URLSearchParams(query);
     params.delete("page");
@@ -200,6 +204,10 @@ export function AdminDashboard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      if (r.status === 428) {
+        router.replace(`/${locale}/admin/security`);
+        return;
+      }
       if (r.status === 429) {
         setNotice(
           es
@@ -328,6 +336,13 @@ export function AdminDashboard({
                 )}
             </button>
           ))}
+          <Link
+            href={`/${locale}/admin/operations`}
+            className="admin-support-link"
+          >
+            <Activity size={20} />
+            {es ? "Operaciones" : "Operations"}
+          </Link>
           <Link
             href={`/${locale}/admin/tickets`}
             className="admin-support-link"

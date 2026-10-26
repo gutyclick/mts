@@ -19,7 +19,7 @@
 - [x] Modelo de conversaciones, mensajes, tickets, notificaciones y límites; pruebas RLS e idempotencia.
 - [x] APIs protegidas de contexto, chat, tickets y respuestas administrativas.
 - [x] Widget accesible y multilingüe; vista de tickets del perfil y panel administrativo.
-- [ ] Configuración privada de IA y correo, cola de avisos y pruebas de integración.
-- [ ] Verificación móvil/escritorio, publicación y documentación de límites y operación.
+- [x] Configuración privada de IA y correo, cola de avisos y pruebas de integración.
+- [x] Verificación móvil/escritorio, publicación y documentación de límites y operación.
 
-Publicado y verificado el chat y los tickets; configuración privada de OpenAI completada. Build, seguridad, cuentas y accesibilidad aprobados. La entrega final permanece pendiente: Zoho rechaza `hello@mytripsim.com` porque la bandeja no existe. El propietario la creará. Los avisos se conservan en cola y están pausados hasta verificar la recepción. Detalle en `docs/support-integration.md`.
+Publicado y verificado el chat y los tickets; configuración privada de OpenAI completada. Build, seguridad, cuentas y accesibilidad aprobados. Tras la creación de la bandeja en Zoho, Resend confirmó la entrega del aviso a `hello@mytripsim.com`. Avisos y programador activos; ticket de verificación resuelto. Detalle en `docs/support-integration.md`.

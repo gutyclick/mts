@@ -126,7 +126,6 @@
   input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
   }
-  .popular-searches a,
   .text-link,
   .back-link,
   .reset-button,
@@ -241,19 +240,7 @@
     min-height: 48px;
     font-size: 14px;
   }
-  .popular-searches {
-    font-size: 11px;
-    gap: 5px;
-    margin-top: 9px;
-  }
-  .popular-searches a {
-    padding: 7px 9px;
-    font-size: 11px;
-  }
-  .hero-footnote {
-    font-size: 11px;
-    margin-top: 10px;
-  }
+
   /* Compact travel card keeps the mascot while giving search the first screen. */
   .hero-visual {
     max-width: none;

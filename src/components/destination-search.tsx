@@ -8,7 +8,6 @@ import {
   type FormEvent,
 } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin, Search, X } from "lucide-react";
 import { searchDestinations, type Destination } from "@/lib/catalog";
 import { DestinationFlag } from "./destination-flag";
@@ -199,19 +198,6 @@ export function DestinationSearch({
           )}
         </button>
       </form>
-      {!compact && (
-        <div className="popular-searches">
-          <span>{t.popularSearch}</span>
-          {["japan", "united-states", "europe"].map((slug) => {
-            const destination = searchDestinations(slug)[0];
-            return (
-              <Link key={slug} href={pathFor(locale, undefined, slug)}>
-                {destination.name[locale]}
-              </Link>
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }

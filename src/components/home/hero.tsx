@@ -33,10 +33,6 @@ export async function Hero({ locale }: { locale: Locale }) {
           items={destinations}
           popular={await getPopularDestinations()}
         />
-        <p className="hero-footnote">
-          <Check size={15} />
-          {t.heroNote}
-        </p>
       </div>
       <div className="sim-hero-visual">
         <SimMascot

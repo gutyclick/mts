@@ -33,6 +33,15 @@ test("support ownership, escalation, idempotency, roles, quotas and notification
         "utf8",
       ),
     );
+    await db.exec(
+      readFileSync(
+        new URL(
+          "../supabase/migrations/20261026000200_support_conversations.sql",
+          import.meta.url,
+        ),
+        "utf8",
+      ),
+    );
     await db.query(
       `insert into auth.users values($1,'customer@example.invalid',now()),($2,'other@example.invalid',now()),($3,'staff@example.invalid',now())`,
       [owner, other, staff],
@@ -225,6 +234,12 @@ test("support ownership, escalation, idempotency, roles, quotas and notification
       ]),
       /ticket_unavailable/,
     );
+    await db.query("select support_ticket_reply($1,$2,$3,$4,false)", [
+      owner,
+      ticket,
+      randomUUID(),
+      "More detail before resolution",
+    ]);
     const reply = randomUUID();
     await db.query("select support_ticket_reply($1,$2,$3,$4,true)", [
       staff,
@@ -254,15 +269,18 @@ test("support ownership, escalation, idempotency, roles, quotas and notification
       staff,
       ticket,
     ]);
-    await db.query("select support_ticket_reply($1,$2,$3,$4,false)", [
-      owner,
-      ticket,
-      randomUUID(),
-      "Another question",
-    ]);
+    await assert.rejects(
+      db.query("select support_ticket_reply($1,$2,$3,$4,false)", [
+        owner,
+        ticket,
+        randomUUID(),
+        "Another question",
+      ]),
+      /conversation_closed/,
+    );
     assert.equal(
       (await db.query("select status from support_threads")).rows[0].status,
-      "open",
+      "resolved",
     );
     assert.equal(
       (

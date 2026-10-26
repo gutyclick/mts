@@ -1,9 +1,11 @@
+import { mockMessenger } from "./support-fixture";
 import { expect, test } from "@playwright/test";
 
 for (const locale of ["en", "es"] as const) {
   test(`support handoff ${locale}: one message creates the ticket, pauses chat and preserves failed submissions`, async ({
     page,
   }) => {
+    await mockMessenger(page);
     const es = locale === "es",
       posts: Record<string, unknown>[] = [],
       ticket = "12345678-1234-4234-9234-123456789abc";
@@ -37,6 +39,12 @@ for (const locale of ["en", "es"] as const) {
         name: es
           ? "Hablar con SIM, asistente de ayuda"
           : "Chat with SIM, help assistant",
+      })
+      .click();
+    await page
+      .getByRole("button", {
+        name: es ? "Otra consulta" : "Something else",
+        exact: true,
       })
       .click();
     const dialog = page.getByRole("dialog");
@@ -123,6 +131,7 @@ for (const locale of ["en", "es"] as const) {
 test("returning from handoff restores the chat draft without submitting a ticket", async ({
   page,
 }) => {
+  await mockMessenger(page);
   await page.route("**/api/support/session", (route) =>
     route.fulfill({
       json: { authenticated: true, ai: true, orders: [], chatId: null },
@@ -134,6 +143,9 @@ test("returning from handoff restores the chat draft without submitting a ticket
   await page.goto("/en");
   await page
     .getByRole("button", { name: "Chat with SIM, help assistant" })
+    .click();
+  await page
+    .getByRole("button", { name: "Something else", exact: true })
     .click();
   const composer = page.locator(".support-composer textarea");
   await composer.fill("Please help me install my eSIM");

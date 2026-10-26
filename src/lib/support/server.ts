@@ -5,13 +5,10 @@ import { authClient } from "../supabase/auth-server";
 import { adminSession } from "../admin/server";
 import { checkoutDatabase, paymentOrigin } from "../payments/checkout-server";
 import { privateHash } from "../payments/checkout-core";
-import { supportAnswer } from "./ai";
 import {
   redactSupportText,
   supportMessageSchema,
   supportThreadSchema,
-  type SupportMessage,
-  type chatRequest,
   type ticketRequest,
 } from "./model";
 export class SupportError extends Error {
@@ -31,6 +28,11 @@ export const supportStatus = (e: unknown) =>
           invalid: 400,
           busy: 409,
           ticket_active: 409,
+          conversation_closed: 409,
+          conversation_active: 409,
+          active_conversation: 409,
+          already_rated: 409,
+          rating_unavailable: 409,
           rate_limited: 429,
         } as Record<string, number>
       )[e.code] ?? 503)
@@ -66,7 +68,7 @@ export async function supportJSON(request: NextRequest, max = 32000) {
     throw new SupportError("invalid");
   }
 }
-async function rpc(name: string, args: Record<string, unknown>) {
+export async function rpc(name: string, args: Record<string, unknown>) {
   const { data, error } = await checkoutDatabase().rpc(name, args);
   if (error) {
     const message = error.message ?? "";
@@ -74,6 +76,14 @@ async function rpc(name: string, args: Record<string, unknown>) {
       throw new SupportError("not_found");
     if (/thread_escalated/.test(message))
       throw new SupportError("ticket_active");
+    for (const code of [
+      "conversation_closed",
+      "conversation_active",
+      "already_rated",
+      "active_conversation",
+      "rating_unavailable",
+    ])
+      if (message.includes(code)) throw new SupportError(code);
     if (/chat_busy|request_conflict/.test(message))
       throw new SupportError("busy");
     throw new SupportError("unavailable");
@@ -148,7 +158,7 @@ export async function readSupportThread(
   let q = db
     .from("support_threads")
     .select(
-      "id,subject,status,language,order_id,created_at,updated_at,escalated_at,user_id",
+      "id,subject,status,language,order_id,created_at,updated_at,escalated_at,user_id,topic,closed_at,close_reason,rating,rating_comment,rated_at",
     )
     .eq("id", id);
   if (!staff) q = q.eq("user_id", actor);
@@ -198,159 +208,6 @@ export async function listSupport(
       rows: z.array(supportThreadSchema),
     })
     .parse(data);
-}
-export async function supportSession() {
-  let user;
-  try {
-    user = await supportUser();
-  } catch (e) {
-    if (e instanceof SupportError && e.code === "auth_required")
-      return {
-        authenticated: false,
-        ai:
-          process.env.SUPPORT_AI_ENABLED === "true" &&
-          !!process.env.OPENAI_API_KEY,
-      };
-    throw e;
-  }
-  const [orders, chat] = await Promise.all([
-    supportOrders(user.id),
-    checkoutDatabase()
-      .from("support_threads")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("status", "chat")
-      .order("updated_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-  ]);
-  if (chat.error) throw new SupportError("unavailable");
-  return {
-    authenticated: true,
-    identity: user.id,
-    ai:
-      process.env.SUPPORT_AI_ENABLED === "true" && !!process.env.OPENAI_API_KEY,
-    orders,
-    chatId: chat.data?.id ?? null,
-  };
-}
-export async function chatSupport(
-  body: z.infer<typeof chatRequest>,
-  request: NextRequest,
-) {
-  let user = null;
-  try {
-    user = await supportUser();
-  } catch (e) {
-    if (!(e instanceof SupportError && e.code === "auth_required")) throw e;
-  }
-  if ((body.threadId || body.orderId) && !user)
-    throw new SupportError("auth_required");
-  const ip = (
-    request.headers.get("x-vercel-forwarded-for") ??
-    request.headers.get("x-forwarded-for") ??
-    "local"
-  ).slice(0, 200);
-  await supportQuota(user?.id ?? ip, "chat", user ? 60 : 12);
-  const dayLimit = Math.max(
-    1,
-    Math.min(1000, Number(process.env.SUPPORT_DAILY_CHAT_LIMIT) || 300),
-  );
-  await supportQuota("global", "chat-budget", dayLimit, "day");
-  let history = body.history,
-    threadId: string | undefined,
-    token: string | undefined;
-  const message = redactSupportText(body.message);
-  let order =
-    body.orderId && user
-      ? await ownedOrderContext(user.id, body.orderId)
-      : null;
-  if (user) {
-    const start = z
-      .object({
-        id: z.uuid(),
-        token: z.uuid().optional(),
-        replay: z.boolean(),
-        answer: supportMessageSchema.nullable().optional(),
-      })
-      .parse(
-        await rpc("support_chat_start", {
-          p_user: user.id,
-          p_thread: body.threadId ?? null,
-          p_request: body.requestId,
-          p_body: message,
-          p_language: body.language,
-          p_locale: body.locale,
-          p_order: body.orderId ?? null,
-        }),
-      );
-    threadId = start.id;
-    token = start.token;
-    if (start.replay) {
-      if (!start.answer) throw new SupportError("busy");
-      return {
-        threadId,
-        message: start.answer,
-        escalate: false,
-        ai: start.answer.author === "assistant",
-      };
-    }
-    const thread = await readSupportThread(user.id, threadId, false);
-    history = thread.messages
-      .filter((m) => m.id !== body.requestId)
-      .slice(-6)
-      .map((m) => ({
-        role: m.author === "user" ? ("user" as const) : ("assistant" as const),
-        body: m.body,
-      }));
-    order = thread.order;
-  }
-  let answer,
-    ai = true;
-  try {
-    answer = await supportAnswer(
-      { message, language: body.language, locale: body.locale, history, order },
-      process.env,
-    );
-  } catch {
-    ai = false;
-    answer = {
-      answer:
-        body.locale === "es"
-          ? "SIM no puede generar una respuesta ahora. Puedes consultar nuestra ayuda o enviar tu consulta al equipo; no se ha creado un ticket todavía."
-          : "SIM can’t generate an answer right now. Browse our help or send your question to the team; no ticket has been created yet.",
-      references: [],
-      escalate: true,
-    };
-  }
-  let saved: SupportMessage;
-  if (user && threadId && token) {
-    const result = await rpc("support_chat_finish", {
-      p_user: user.id,
-      p_thread: threadId,
-      p_token: token,
-      p_request: body.requestId,
-      p_body: answer.answer,
-      p_citations: answer.references,
-      p_ai: ai,
-    });
-    if (!result) throw new SupportError("ticket_active");
-    saved = supportMessageSchema.parse(result);
-  } else
-    saved = {
-      id: crypto.randomUUID(),
-      thread_id: crypto.randomUUID(),
-      author: ai ? "assistant" : "system",
-      body: answer.answer,
-      citations: answer.references,
-      created_at: new Date().toISOString(),
-    };
-  return {
-    threadId: threadId ?? null,
-    message: saved,
-    escalate: answer.escalate,
-    ai,
-  };
 }
 export async function mutateSupport(
   actor: string,

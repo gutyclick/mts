@@ -91,6 +91,12 @@ export const supportThreadSchema = z.object({
   escalated_at: z.string().nullable(),
   customer_email: z.string().nullable().optional(),
   notification_status: z.string().nullable().optional(),
+  topic: z.string().optional(),
+  closed_at: z.string().nullable().optional(),
+  close_reason: z.enum(["resolved", "inactivity"]).nullable().optional(),
+  rating: z.number().int().min(1).max(5).nullable().optional(),
+  rating_comment: z.string().nullable().optional(),
+  rated_at: z.string().nullable().optional(),
 });
 export type SupportThread = z.infer<typeof supportThreadSchema>;
 export const ticketRequest = z.discriminatedUnion("action", [

@@ -62,7 +62,8 @@
     "stripe:setup:live": "node --experimental-strip-types scripts/setup-live-checkout.mjs",
     "stripe:deploy:live-env": "node --experimental-strip-types scripts/deploy-checkout-live-env.mjs",
     "stripe:domains:live": "node --experimental-strip-types scripts/register-payment-domains.mjs --live",
-    "test:live": "node --experimental-strip-types --test tests/live-checkout.test.mjs"
+    "test:live": "node --experimental-strip-types --test tests/live-checkout.test.mjs",
+    "test:support:lifecycle": "node --experimental-strip-types --test tests/support-conversations.test.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

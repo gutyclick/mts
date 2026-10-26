@@ -1,12 +1,28 @@
-import { NextResponse } from "next/server";
-import { supportSession } from "@/lib/support/server";
+import { NextRequest, NextResponse } from "next/server";
+import {
+  conversationSession,
+  conversationToken,
+} from "@/lib/support/conversations-server";
+import { guestSupportCookie } from "@/lib/support/conversations";
 import { supportFailure } from "@/lib/support/routes";
 import { paymentHeaders } from "@/lib/payments/checkout-server";
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    return NextResponse.json(await supportSession(), {
-      headers: paymentHeaders,
+    const token = conversationToken(request);
+    const response = NextResponse.json(
+      await conversationSession(request, token),
+      {
+        headers: paymentHeaders,
+      },
+    );
+    response.cookies.set(guestSupportCookie, token, {
+      httpOnly: true,
+      secure: request.nextUrl.protocol === "https:",
+      sameSite: "lax",
+      path: "/api/support",
+      maxAge: 7 * 86400,
     });
+    return response;
   } catch (e) {
     return supportFailure(e);
   }

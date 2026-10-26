@@ -14,6 +14,7 @@ import "@/styles/account.css";
 import "@/styles/commerce.css";
 import "@/styles/admin.css";
 import "@/styles/support.css";
+import "@/styles/support-messenger.css";
 import "@/styles/destination-editorial.css";
 import "@/styles/seo.css";
 

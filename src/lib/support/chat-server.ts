@@ -1,0 +1,117 @@
+import "server-only";
+import { z } from "zod";
+import type { NextRequest } from "next/server";
+import { chatRequest, redactSupportText, supportMessageSchema } from "./model";
+import { supportAnswer } from "./ai";
+import { rpc, supportQuota, ownedOrderContext, SupportError } from "./server";
+import {
+  actorArgs,
+  conversationActor,
+  conversationDetail,
+} from "./conversations-server";
+
+export async function chatSupport(
+  body: z.infer<typeof chatRequest>,
+  request: NextRequest,
+) {
+  const actor = await conversationActor(request);
+  if (body.orderId && !actor.user) throw new SupportError("auth_required");
+  const ip = (
+    request.headers.get("x-vercel-forwarded-for") ??
+    request.headers.get("x-forwarded-for") ??
+    "local"
+  ).slice(0, 200);
+  await supportQuota(actor.user ?? ip, "chat", actor.user ? 60 : 12);
+  await supportQuota(
+    "global",
+    "chat-budget",
+    Math.max(
+      1,
+      Math.min(1000, Number(process.env.SUPPORT_DAILY_CHAT_LIMIT) || 300),
+    ),
+    "day",
+  );
+  const message = redactSupportText(body.message);
+  let id = body.threadId;
+  if (!id) {
+    const opened = await rpc("support_conversation_open", {
+      ...actorArgs(actor),
+      p_id: body.requestId,
+      p_topic: "general",
+      p_subject: message.slice(0, 120),
+      p_locale: body.locale,
+      p_language: body.language,
+    });
+    id = z.uuid().parse(opened.id);
+  }
+  const start = await rpc("support_conversation_chat_start", {
+    ...actorArgs(actor),
+    p_thread: id,
+    p_request: body.requestId,
+    p_body: message,
+    p_language: body.language,
+    p_order: body.orderId ?? null,
+  });
+  if (start.closed) throw new SupportError("conversation_closed");
+  if (start.replay) {
+    if (!start.answer) throw new SupportError("busy");
+    const detail = await conversationDetail(actor, id);
+    return {
+      threadId: id,
+      thread: detail.thread,
+      message: supportMessageSchema.parse(start.answer),
+      escalate: false,
+      ai: start.answer.author === "assistant",
+    };
+  }
+  const token = z.uuid().parse(start.token);
+  const detail = await conversationDetail(actor, id);
+  const history = detail.messages
+    .filter(
+      (m) =>
+        m.id !== body.requestId &&
+        (m.author === "user" || m.author === "assistant"),
+    )
+    .slice(-6)
+    .map((m) => ({ role: m.author, body: m.body }));
+  const order =
+    detail.thread.order_id && actor.user
+      ? await ownedOrderContext(actor.user, detail.thread.order_id)
+      : null;
+  let answer,
+    ai = true;
+  try {
+    answer = await supportAnswer(
+      { message, language: body.language, locale: body.locale, history, order },
+      process.env,
+    );
+  } catch {
+    ai = false;
+    answer = {
+      answer:
+        body.locale === "es"
+          ? "SIM no puede responder ahora. Puedes consultar la ayuda o enviar tu consulta al equipo; todavía no se ha creado un ticket."
+          : "SIM cannot respond right now. Browse our help or send your request to the team; no ticket has been created yet.",
+      references: [],
+      escalate: true,
+    };
+  }
+  const saved = await rpc("support_conversation_chat_finish", {
+    ...actorArgs(actor),
+    p_thread: id,
+    p_token: token,
+    p_request: body.requestId,
+    p_body: answer.answer,
+    p_citations: answer.references,
+    p_ai: ai,
+  });
+  if (!saved) throw new SupportError("conversation_closed");
+  const updated = await conversationDetail(actor, id);
+  return {
+    threadId: id,
+    thread: updated.thread,
+    message: supportMessageSchema.parse(saved),
+    escalate: answer.escalate,
+    ai,
+  };
+}

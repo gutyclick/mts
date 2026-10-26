@@ -1,18 +1,38 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUp, Headphones, LoaderCircle, Ticket, X } from "lucide-react";
-import { SimMascot } from "../sim-mascot";
-import { supportMessageSchema, type SupportMessage } from "@/lib/support/model";
-import { authPath } from "@/lib/auth-routes";
-import { pathFor, type Locale } from "@/lib/i18n";
-import { SupportMessages, supportError, supportFetch } from "./shared";
-type Session = {
-  authenticated: boolean;
-  identity?: string;
-  ai: boolean;
-  chatId?: string | null;
-  orders?: { id: string; status: string; items: { plan_name: string }[] }[];
+import {
+  ArrowRight,
+  CheckCircle2,
+  CreditCard,
+  Globe2,
+  History,
+  LoaderCircle,
+  MessageCircle,
+  Plus,
+  QrCode,
+  Smartphone,
+  Wifi,
+} from "lucide-react";
+import type { Locale } from "@/lib/i18n";
+import { pathFor } from "@/lib/i18n";
+import {
+  conversationTopicNames,
+  conversationTopics,
+  type ConversationTopic,
+} from "@/lib/support/conversations";
+import { supportThreadSchema } from "@/lib/support/model";
+import { ConversationChat } from "./conversation-chat";
+import { MessengerHeader } from "./messenger-header";
+import type { MessengerSession, ConversationDetail } from "./messenger-types";
+import { statusText, supportError, supportFetch } from "./shared";
+const topicIcons = {
+  general: MessageCircle,
+  installation: QrCode,
+  connection: Wifi,
+  plans: Globe2,
+  orders: CreditCard,
+  compatibility: Smartphone,
 };
 export function ChatPanel({
   locale,
@@ -22,455 +42,297 @@ export function ChatPanel({
   close: () => void;
 }) {
   const es = locale === "es",
-    [session, setSession] = useState<Session | null>(null),
-    [messages, setMessages] = useState<SupportMessage[]>([]),
-    [thread, setThread] = useState<string>(),
-    [body, setBody] = useState(""),
-    [order, setOrder] = useState(""),
-    [language, setLanguage] = useState("auto"),
-    [busy, setBusy] = useState(false),
-    [error, setError] = useState(""),
-    [human, setHuman] = useState(false),
-    [ticketBody, setTicketBody] = useState(""),
-    [ticket, setTicket] = useState<string>(),
-    tail = useRef<HTMLDivElement>(null),
-    controller = useRef<AbortController | null>(null),
-    requestId = useRef<string | null>(null);
-  useEffect(() => {
-    const abort = new AbortController();
-    let identity: string | undefined,
-      ready = false;
-    controller.current = abort;
-    const load = async () => {
+    [session, setSession] = useState<MessengerSession | null>(null),
+    [detail, setDetail] = useState<ConversationDetail | null>(null),
+    [view, setView] = useState<"home" | "history" | "thread">("home"),
+    [busy, setBusy] = useState(true),
+    [error, setError] = useState("");
+  const load = useCallback(
+    async (resume = false, signal?: AbortSignal) => {
       try {
-        const s = (await supportFetch("/api/support/session", {
-          signal: abort.signal,
-        })) as Session;
-        if (abort.signal.aborted) return;
-        identity = s.identity;
-        ready = true;
-        setSession(s);
-        if (s.chatId) {
-          const d = await supportFetch(`/api/support/tickets?id=${s.chatId}`, {
-            signal: abort.signal,
-          });
-          if (abort.signal.aborted) return;
-          setThread(d.thread.id);
-          setOrder(d.thread.order_id ?? "");
-          setMessages(
-            d.messages.map((m: unknown) => supportMessageSchema.parse(m)),
+        const d = await supportFetch("/api/support/session", { signal });
+        if (signal?.aborted) return;
+        setError("");
+        const next = {
+          ...d,
+          conversations: (d.conversations ?? []).map((t: unknown) =>
+            supportThreadSchema.parse(t),
+          ),
+          idleSeconds: d.idleSeconds ?? 600,
+        } as MessengerSession;
+        setSession(next);
+        if (resume && next.chatId) {
+          const t = await supportFetch(
+            "/api/support/conversations?id=" + next.chatId,
+            { signal },
           );
+          if (signal?.aborted) return;
+          setDetail(t);
+          setView("thread");
         }
       } catch (e) {
-        if (!abort.signal.aborted) setError(supportError(e, es));
+        if (!signal?.aborted) setError(supportError(e, es));
+      } finally {
+        if (!signal?.aborted) setBusy(false);
       }
-    };
-    void load();
-    const check = async () => {
-      if (!ready || document.visibilityState !== "visible") return;
-      try {
-        const s = await supportFetch("/api/support/session", {
-          signal: abort.signal,
-        });
-        if (s.identity !== identity) close();
-      } catch {
-        close();
-      }
-    };
-    const onFocus = () => void check(),
-      timer = setInterval(onFocus, 30000);
-    window.addEventListener("focus", onFocus);
-    return () => {
-      abort.abort();
-      clearInterval(timer);
-      window.removeEventListener("focus", onFocus);
-    };
-  }, [es, close]);
+    },
+    [es],
+  );
   useEffect(() => {
-    tail.current?.scrollIntoView({ block: "end", behavior: "instant" });
-  }, [messages, busy, human, ticket]);
-  async function send(e: React.FormEvent, mode: "chat" | "ticket" = "chat") {
-    e.preventDefault();
-    const creatingTicket = mode === "ticket",
-      text = (creatingTicket ? ticketBody : body).trim();
-    if (
-      creatingTicket !== human ||
-      text.length < (creatingTicket ? 3 : 1) ||
-      busy ||
-      !session ||
-      (creatingTicket && !session.authenticated)
-    )
-      return;
+    const abort = new AbortController();
+    void Promise.resolve().then(() => load(true, abort.signal));
+    return () => abort.abort();
+  }, [load]);
+  async function start(topic: ConversationTopic) {
+    if (busy) return;
     setBusy(true);
     setError("");
-    requestId.current ??= crypto.randomUUID();
     try {
-      if (creatingTicket) {
-        const subject = (
-          text
-            .split(/\r?\n/)
-            .find((line) => line.trim().length >= 3)
-            ?.trim() ?? text.replace(/\s+/g, " ")
-        ).slice(0, 120);
-        const d = await supportFetch("/api/support/tickets", {
-          method: "POST",
-          signal: controller.current?.signal,
-          body: JSON.stringify({
-            locale,
-            request: {
-              action: "create",
-              requestId: requestId.current,
-              threadId: thread,
-              subject,
-              body: text,
-              language,
-              ...(order ? { orderId: order } : {}),
-            },
-          }),
-        });
-        setTicket(d.id);
-        setBody("");
-        setTicketBody("");
-        requestId.current = null;
-      } else {
-        const d = await supportFetch("/api/support/chat", {
-          method: "POST",
-          signal: controller.current?.signal,
-          body: JSON.stringify({
-            requestId: requestId.current,
-            threadId: thread,
-            message: text,
-            language,
-            locale,
-            ...(order ? { orderId: order } : {}),
-            history: session.authenticated
-              ? []
-              : messages
-                  .filter(
-                    (m) => m.author === "user" || m.author === "assistant",
-                  )
-                  .slice(-6)
-                  .map((m) => ({ role: m.author, body: m.body })),
-          }),
-        });
-        const m = supportMessageSchema.parse(d.message);
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: requestId.current!,
-            thread_id: d.threadId ?? crypto.randomUUID(),
-            author: "user",
-            body: text,
-            citations: [],
-            created_at: new Date().toISOString(),
-          },
-          m,
-        ]);
-        setThread(d.threadId ?? undefined);
-        setBody("");
-        requestId.current = null;
-      }
-    } catch (err) {
-      if (!controller.current?.signal.aborted) setError(supportError(err, es));
+      const d = await supportFetch("/api/support/conversations", {
+        method: "POST",
+        body: JSON.stringify({
+          action: "start",
+          requestId: crypto.randomUUID(),
+          topic,
+          locale,
+        }),
+      });
+      setDetail(d);
+      setView("thread");
+    } catch (e) {
+      setError(supportError(e, es));
+      if (e instanceof Error && e.message === "active_conversation")
+        await load(false);
     } finally {
       setBusy(false);
     }
   }
+  async function select(id: string) {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      setDetail(await supportFetch("/api/support/conversations?id=" + id));
+      setView("thread");
+    } catch (e) {
+      setError(supportError(e, es));
+    } finally {
+      setBusy(false);
+    }
+  }
+  const home = () => {
+    setDetail(null);
+    setView("home");
+    void load(false);
+  };
+  if (view === "thread" && detail && session)
+    return (
+      <ConversationChat
+        key={detail.thread.id}
+        detail={detail}
+        session={session}
+        locale={locale}
+        close={close}
+        onHome={home}
+      />
+    );
+  const active = session?.conversations.find((t) => t.status === "chat");
   return (
     <>
-      <header className="support-chat-header">
-        <div className="support-avatar">
-          <SimMascot variant="help" locale={locale} sizes="64px" />
-        </div>
-        <div>
-          <h2 id="sim-chat-title">
-            SIM {es ? "te acompaña" : "is here to help"}
-            <span
-              className={`support-online-dot${session?.ai ? " is-online" : ""}`}
-              role="img"
-              aria-label={
-                session?.ai
-                  ? es
-                    ? "SIM disponible"
-                    : "SIM available"
-                  : es
-                    ? "SIM sin conexión confirmada"
-                    : "SIM availability unconfirmed"
-              }
-            />
-          </h2>
-          <p>{es ? "Tu asistente de viaje" : "Your travel assistant"}</p>
-        </div>
+      <MessengerHeader locale={locale} ai={!!session?.ai} close={close} />
+      <nav
+        className="messenger-tabs"
+        aria-label={es ? "Secciones de ayuda" : "Help sections"}
+      >
         <button
-          onClick={close}
-          className="support-icon-button"
-          aria-label={es ? "Cerrar chat" : "Close chat"}
+          aria-current={view === "home" ? "page" : undefined}
+          onClick={() => setView("home")}
         >
-          <X size={22} />
+          <MessageCircle size={17} />
+          {es ? "Ayuda" : "Help"}
         </button>
-      </header>
-      <div className="support-chat-scroll">
-        <div className="support-welcome">
-          <p>
-            <strong>{es ? "¡Hola, viajero! 👋" : "Hello, traveler! 👋"}</strong>
-          </p>
-          <p>
-            {es
-              ? "Te ayudo con tu eSIM, la instalación y las dudas de tu viaje."
-              : "I can help with your eSIM, installation and travel questions."}
-          </p>
-        </div>
-        <div className="support-chat-options">
-          <label>
-            {es ? "Idioma de respuesta" : "Response language"}
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              disabled={busy}
-            >
-              <option value="auto">{es ? "Automático" : "Automatic"}</option>
-              {[
-                ["es", es ? "Español" : "Spanish"],
-                ["en", es ? "Inglés" : "English"],
-                ["pt", es ? "Portugués" : "Portuguese"],
-                ["fr", es ? "Francés" : "French"],
-                ["de", es ? "Alemán" : "German"],
-                ["it", es ? "Italiano" : "Italian"],
-              ].map(([v, n]) => (
-                <option key={v} value={v}>
-                  {n}
-                </option>
-              ))}
-            </select>
-          </label>
-          {session?.authenticated && (
-            <label>
-              {es ? "Sobre un pedido" : "About an order"}
-              <select
-                value={order}
-                disabled={busy}
-                onChange={(e) => {
-                  setOrder(e.target.value);
-                  requestId.current = null;
-                }}
-              >
-                <option value="">
-                  {es ? "Consulta general" : "General question"}
-                </option>
-                {session.orders?.map((o) => (
-                  <option key={o.id} value={o.id}>
-                    #{o.id.slice(0, 8).toUpperCase()} ·{" "}
-                    {o.items[0]?.plan_name ?? o.status}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-        </div>
-        {!messages.length && !human && (
-          <div className="support-suggestions">
-            {(es
-              ? [
-                  "¿Cómo instalo mi eSIM?",
-                  "¿Debo activar la itinerancia?",
-                  "¿Puedo compartir internet?",
-                ]
-              : [
-                  "How do I install my eSIM?",
-                  "Should I enable data roaming?",
-                  "Can I use a hotspot?",
-                ]
-            ).map((t) => (
-              <button
-                key={t}
-                disabled={busy}
-                onClick={() => {
-                  setBody(t);
-                  requestId.current = null;
-                }}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        )}
-        <SupportMessages messages={messages} es={es} />
+        <button
+          aria-current={view === "history" ? "page" : undefined}
+          onClick={() => {
+            setView("history");
+            void load(false);
+          }}
+        >
+          <History size={17} />
+          {es ? "Conversaciones" : "Conversations"}
+        </button>
+      </nav>
+      <div className="support-chat-scroll messenger-home-scroll">
         {busy && (
           <p className="support-thinking" role="status">
-            <LoaderCircle size={17} />
-            {es ? "Un momento…" : "One moment…"}
+            <LoaderCircle size={18} />
+            {es ? "Preparando tu ayuda…" : "Getting your help ready…"}
           </p>
         )}
-        {human && !ticket && (
-          <div className="support-human-card">
-            <Headphones size={22} />
-            <h3>{es ? "Hablemos con el equipo" : "Let’s ask the team"}</h3>
-            <p>
-              {es
-                ? session?.authenticated
-                  ? "Guardaremos esta conversación con tu consulta. Podrás ver las respuestas en tus tickets."
-                  : "Inicia sesión para enviar una consulta y ver las respuestas en tu cuenta. El chat de visitante no se guarda."
-                : session?.authenticated
-                  ? "We will save this conversation with your request. You can read replies in your tickets."
-                  : "Sign in to send a request and read replies in your account. Guest chat is not saved."}
-            </p>
-            {!session?.authenticated ? (
-              <Link
-                className="button button-primary"
-                href={`${authPath(locale, "login")}?next=/${locale}/support`}
-              >
-                {es ? "Iniciar sesión y pedir ayuda" : "Sign in and get help"}
-              </Link>
-            ) : (
-              <form
-                className="support-escalation-form"
-                onSubmit={(e) => send(e, "ticket")}
-              >
-                <label>
-                  {es
-                    ? "¿Con qué necesitas ayuda?"
-                    : "What do you need help with?"}
-                  <textarea
-                    value={ticketBody}
-                    minLength={3}
-                    maxLength={4000}
-                    rows={4}
-                    required
-                    disabled={busy}
-                    autoFocus
-                    onChange={(e) => {
-                      setTicketBody(e.target.value);
-                      requestId.current = null;
-                    }}
-                    placeholder={
-                      es ? "Ej. No consigo conectarme" : "e.g. I cannot connect"
-                    }
-                  />
-                </label>
+        {error && (
+          <div className="support-error" role="alert">
+            <p>{error}</p>
+            <button onClick={() => void load(false)}>
+              {es ? "Reintentar" : "Try again"}
+            </button>
+          </div>
+        )}
+        {view === "home" ? (
+          <>
+            <div className="messenger-intro">
+              <span className="eyebrow">
+                {es ? "CADA VIAJE, MÁS FÁCIL" : "EVERY TRIP, A LITTLE EASIER"}
+              </span>
+              <h3>{es ? "¿En qué te ayudamos?" : "How can we help?"}</h3>
+              <p>
+                {es
+                  ? "Elige un tema y cuéntanos qué sucede."
+                  : "Choose a topic and tell us what’s happening."}
+              </p>
+            </div>
+            {active ? (
+              <section className="messenger-resume">
+                <span className="messenger-mini-icon">
+                  <MessageCircle size={21} />
+                </span>
+                <div>
+                  <strong>
+                    {es
+                      ? "Tienes una conversación abierta"
+                      : "You have an open conversation"}
+                  </strong>
+                  <p>{active.subject}</p>
+                </div>
                 <button
                   className="button button-primary"
-                  type="submit"
-                  disabled={busy || ticketBody.trim().length < 3}
+                  disabled={busy}
+                  onClick={() => void select(active.id)}
                 >
-                  {busy ? <LoaderCircle size={17} /> : <Ticket size={17} />}{" "}
-                  {es ? "Crear ticket" : "Create ticket"}
+                  {es ? "Continuar conversación" : "Continue conversation"}
+                  <ArrowRight size={16} />
                 </button>
                 <small>
                   {es
-                    ? "Continuarás con el equipo desde Mis tickets."
-                    : "Continue with our team in My tickets."}
+                    ? "Puedes cerrarla desde el chat para empezar otro tema."
+                    : "Close it from the chat to start another topic."}
                 </small>
-              </form>
+              </section>
+            ) : (
+              <div className="messenger-topic-grid">
+                {conversationTopics.map((topic) => {
+                  const Icon = topicIcons[topic];
+                  return (
+                    <button
+                      key={topic}
+                      disabled={busy || !session}
+                      onClick={() => void start(topic)}
+                    >
+                      <span>
+                        <Icon size={21} />
+                      </span>
+                      <strong>{conversationTopicNames[locale][topic]}</strong>
+                      <ArrowRight size={16} />
+                    </button>
+                  );
+                })}
+              </div>
             )}
-          </div>
-        )}
-        {ticket && (
-          <div className="support-human-card" role="status">
-            <Ticket size={25} />
-            <h3>{es ? "Tu ticket está creado" : "Your ticket is ready"}</h3>
-            <p>
-              {es
-                ? "El equipo recibirá tu consulta. El historial queda en tu cuenta."
-                : "The team will receive your request. Your account keeps the history."}
-            </p>
-            <Link
-              className="button button-primary"
-              href={`/${locale}/support?ticket=${ticket}`}
-            >
-              {es ? "Ver mi ticket" : "View my ticket"}
-            </Link>
-          </div>
-        )}
-        {error && (
-          <p className="support-error" role="alert">
-            {error}
-          </p>
-        )}
-        <div ref={tail} />
-      </div>
-      <footer className="support-chat-footer">
-        {!ticket && (
-          <>
-            <form
-              id="sim-chat-form"
-              onSubmit={send}
-              className={`support-composer${human ? " is-paused" : ""}`}
-            >
-              <textarea
-                aria-label={es ? "Tu mensaje" : "Your message"}
-                value={human ? "" : body}
-                onChange={(e) => {
-                  setBody(e.target.value);
-                  requestId.current = null;
-                }}
-                maxLength={3000}
-                rows={2}
-                required
-                minLength={1}
-                disabled={busy || human}
-                aria-describedby={human ? "sim-chat-paused" : undefined}
-                placeholder={
-                  human
-                    ? es
-                      ? "Crea tu ticket en el recuadro de arriba."
-                      : "Create your ticket in the box above."
-                    : es
-                      ? "Escribe tu consulta…"
-                      : "Write your question…"
-                }
-              />
+            {session && session.conversations.length > 0 && (
               <button
-                type="submit"
-                disabled={busy || human || !session || !body.trim()}
-                aria-label={es ? "Enviar mensaje" : "Send message"}
+                className="messenger-history-link"
+                onClick={() => setView("history")}
               >
-                <ArrowUp size={21} />
+                <History size={18} />
+                {es ? "Ver mis conversaciones" : "View my conversations"}
+                <ArrowRight size={16} />
               </button>
-            </form>
-            {human && (
-              <p
-                id="sim-chat-paused"
-                className="support-paused-note"
-                role="status"
-              >
+            )}
+            <div className="messenger-help-note">
+              <CheckCircle2 size={18} />
+              <p>
                 {es
-                  ? "El chat está en pausa mientras creas tu ticket."
-                  : "Chat is paused while you create your ticket."}
+                  ? "Cada consulta tiene su propio historial. Al terminar podrás valorar la ayuda y empezar otra."
+                  : "Each issue has its own history. When you finish, you can rate the help and start another."}
               </p>
-            )}
-            <div className="support-footer-links">
-              <button
-                onClick={() => {
-                  if (!human) setTicketBody((previous) => previous || body);
-                  setHuman(!human);
-                  setError("");
-                  requestId.current = null;
-                }}
-                disabled={busy}
-              >
-                <Headphones size={15} />
-                {human
-                  ? es
-                    ? "Volver al chat"
-                    : "Back to chat"
-                  : es
-                    ? "Necesito ayuda humana"
-                    : "I need human help"}
-              </button>
-              <Link href={`/${locale}/support`}>
-                <Ticket size={15} />
-                {es ? "Mis tickets" : "My tickets"}
-              </Link>
             </div>
           </>
+        ) : (
+          <section className="messenger-history">
+            <div className="messenger-history-heading">
+              <h3>{es ? "Tus conversaciones" : "Your conversations"}</h3>
+              {!active && (
+                <button onClick={() => setView("home")}>
+                  <Plus size={16} />
+                  {es ? "Nueva" : "New"}
+                </button>
+              )}
+            </div>
+            {!session?.conversations.length && !busy && (
+              <div className="messenger-empty">
+                <MessageCircle size={30} />
+                <h4>
+                  {es
+                    ? "Tu próxima consulta empieza aquí"
+                    : "Your next question starts here"}
+                </h4>
+                <p>
+                  {es
+                    ? "Aquí encontrarás el historial de tus incidencias."
+                    : "Your conversation history will appear here."}
+                </p>
+                <button
+                  className="button button-primary"
+                  onClick={() => setView("home")}
+                >
+                  {es ? "Nueva consulta" : "New conversation"}
+                </button>
+              </div>
+            )}
+            <ul>
+              {session?.conversations.map((t) => (
+                <li key={t.id}>
+                  <button disabled={busy} onClick={() => void select(t.id)}>
+                    <span
+                      className={`messenger-history-icon ${t.status === "resolved" ? "is-closed" : ""}`}
+                    >
+                      {t.status === "resolved" ? (
+                        <CheckCircle2 size={21} />
+                      ) : (
+                        <MessageCircle size={21} />
+                      )}
+                    </span>
+                    <span>
+                      <strong>{t.subject}</strong>
+                      <small>
+                        {statusText(t.status, es)} ·{" "}
+                        {new Date(t.updated_at).toLocaleDateString(locale, {
+                          day: "numeric",
+                          month: "short",
+                        })}
+                      </small>
+                      {t.rating && (
+                        <small className="messenger-history-rating">
+                          {es ? "Tu valoración" : "Your rating"}: {t.rating}/5
+                        </small>
+                      )}
+                    </span>
+                    <ArrowRight size={16} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
-        <p className="support-ai-disclosure">
+      </div>
+      <footer className="messenger-home-footer">
+        <Link href={pathFor(locale, "faq")}>
+          {es ? "Explorar el centro de ayuda" : "Explore the help center"}
+          <ArrowRight size={15} />
+        </Link>
+        <p>
           {es
-            ? "SIM usa IA y puede equivocarse. No compartas datos privados."
-            : "SIM uses AI and may make mistakes. Don’t share private details."}{" "}
-          <Link href={pathFor(locale, "privacy")}>
-            {es ? "Privacidad" : "Privacy"}
-          </Link>
+            ? "Guardamos el historial para que puedas retomarlo. No compartas datos privados."
+            : "We save your history so you can return to it. Don’t share private information."}
         </p>
       </footer>
     </>

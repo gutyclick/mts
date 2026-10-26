@@ -28,6 +28,7 @@ import {
   type SupportMessage,
   type SupportThread,
 } from "@/lib/support/model";
+import { ConversationRating } from "./conversation-rating";
 import { SimMascot } from "../sim-mascot";
 import {
   SupportMessages,
@@ -331,6 +332,11 @@ export function TicketDesk({
                 <span className={`support-status support-status-${t.status}`}>
                   {statusText(t.status, es)}
                 </span>
+                {t.rating && (
+                  <small>
+                    {es ? "Valoración" : "Rating"}: {t.rating}/5
+                  </small>
+                )}
                 {staff && t.notification_status && (
                   <small>
                     {es ? "Aviso por correo" : "Email notice"}:{" "}
@@ -517,40 +523,64 @@ export function TicketDesk({
                 es={es}
                 staff={staff}
               />
-              <form
-                className="support-ticket-form"
-                onSubmit={(e) => void mutate("reply", e)}
-              >
-                <label>
-                  {detail.thread.status === "resolved"
-                    ? es
-                      ? "¿Necesitas algo más? Tu respuesta reabrirá el ticket."
-                      : "Need more help? Your reply will reopen the ticket."
-                    : es
-                      ? "Tu respuesta"
-                      : "Your reply"}
-                  <textarea
-                    required
-                    maxLength={4000}
-                    rows={3}
-                    value={body}
-                    onChange={(e) => {
-                      setBody(e.target.value);
-                      request.current = null;
-                    }}
-                    disabled={busy}
+              {detail.thread.status === "resolved" ? (
+                <div className="support-closed-issue">
+                  <ConversationRating
+                    key={detail.thread.id}
+                    thread={detail.thread}
+                    locale={locale}
+                    readOnly={staff}
+                    onRated={(thread) => setDetail({ ...detail, thread })}
                   />
-                </label>
-                <div className="support-form-actions">
-                  <button
-                    type="submit"
-                    className="button button-primary"
-                    disabled={busy || !body.trim()}
-                  >
-                    <Send size={17} />
-                    {es ? "Enviar respuesta" : "Send reply"}
-                  </button>
-                  {detail.thread.status !== "resolved" && (
+                  <p>
+                    {es
+                      ? "Esta incidencia está cerrada. Para otro problema, crea una nueva consulta."
+                      : "This issue is closed. Create a new conversation for another problem."}
+                  </p>
+                  {!staff && (
+                    <button
+                      className="button button-primary"
+                      onClick={() => {
+                        setCreate(true);
+                        setBody("");
+                        setSubject("");
+                        setOrder("");
+                        request.current = null;
+                      }}
+                    >
+                      <Plus size={17} />
+                      {es ? "Nueva consulta" : "New conversation"}
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <form
+                  className="support-ticket-form"
+                  onSubmit={(e) => void mutate("reply", e)}
+                >
+                  <label>
+                    {es ? "Tu respuesta" : "Your reply"}
+                    <textarea
+                      required
+                      maxLength={4000}
+                      rows={3}
+                      value={body}
+                      onChange={(e) => {
+                        setBody(e.target.value);
+                        request.current = null;
+                      }}
+                      disabled={busy}
+                    />
+                  </label>
+                  <div className="support-form-actions">
+                    <button
+                      type="submit"
+                      className="button button-primary"
+                      disabled={busy || !body.trim()}
+                    >
+                      <Send size={17} />
+                      {es ? "Enviar respuesta" : "Send reply"}
+                    </button>
                     <button
                       type="button"
                       disabled={busy}
@@ -559,14 +589,14 @@ export function TicketDesk({
                       <CheckCircle2 size={17} />
                       {es ? "Marcar resuelto" : "Mark resolved"}
                     </button>
-                  )}
-                </div>
-                <p className="support-privacy">
-                  {es
-                    ? "Las respuestas quedan aquí. Te avisaremos por correo cuando el equipo responda."
-                    : "Replies stay here. We will email you when the team responds."}
-                </p>
-              </form>
+                  </div>
+                  <p className="support-privacy">
+                    {es
+                      ? "Las respuestas quedan aquí. Te avisaremos por correo cuando el equipo responda."
+                      : "Replies stay here. We will email you when the team responds."}
+                  </p>
+                </form>
+              )}
             </>
           ) : (
             <div className="support-desk-empty">

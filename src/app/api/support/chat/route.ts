@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { chatRequest } from "@/lib/support/model";
-import {
-  chatSupport,
-  supportOrigin,
-  supportJSON,
-  SupportError,
-} from "@/lib/support/server";
+import { supportOrigin, supportJSON, SupportError } from "@/lib/support/server";
+import { chatSupport } from "@/lib/support/chat-server";
 import { supportFailure } from "@/lib/support/routes";
 import { paymentHeaders } from "@/lib/payments/checkout-server";
 export const maxDuration = 60;

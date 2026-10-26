@@ -73,6 +73,18 @@ export async function supportFetch(url: string, init?: RequestInit) {
 }
 export function supportError(e: unknown, es: boolean) {
   const code = e instanceof Error ? e.message : "";
+  if (code === "conversation_closed")
+    return es
+      ? "La incidencia está cerrada. Puedes iniciar una nueva consulta."
+      : "This issue is closed. You can start a new conversation.";
+  if (code === "active_conversation")
+    return es
+      ? "Continúa o cierra tu conversación actual antes de empezar otra."
+      : "Continue or close your current conversation before starting another.";
+  if (code === "already_rated")
+    return es
+      ? "Ya recibimos tu valoración de esta incidencia."
+      : "We already received your feedback for this issue.";
   if (code === "auth_required")
     return es ? "Inicia sesión para continuar." : "Sign in to continue.";
   if (code === "rate_limited")

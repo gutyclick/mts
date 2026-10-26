@@ -247,14 +247,6 @@ export function ChatPanel({
                 <ArrowRight size={16} />
               </button>
             )}
-            <div className="messenger-help-note">
-              <CheckCircle2 size={18} />
-              <p>
-                {es
-                  ? "Cada consulta tiene su propio historial. Al terminar podrás valorar la ayuda y empezar otra."
-                  : "Each issue has its own history. When you finish, you can rate the help and start another."}
-              </p>
-            </div>
           </>
         ) : (
           <section className="messenger-history">

@@ -15,6 +15,7 @@ Fecha: **26 de octubre de 2026**, America/Panama. Dominio principal: **https://w
 | Entidades      | Organization, WebSite, BreadcrumbList, CollectionPage e ItemList describen la marca, navegación y catálogo reales. No se publican reseñas ni ofertas inventadas.                        |
 | Iconos         | `sim_icon_.png` se usa para favicon ICO, icono PNG, Apple touch icon y manifest con tamaños 192/512.                                                                                    |
 | Imagen móvil   | La ficha declara su ancho real de imagen: 88 px en móvil y 270 px en escritorio, evitando solicitar una variante sobredimensionada.                                                     |
+| Carga inicial  | El botón de ayuda se mantiene visible; el panel, la conversación y la validación del chat se cargan al abrirlo mediante un módulo diferido.                                             |
 | Privacidad     | Cuentas, checkout, pedidos, administración y soporte personal permanecen excluidos de indexación. Las condiciones legales siguen como borrador y `noindex` hasta su revisión comercial. |
 
 Se aplicó como referencia la skill solicitada [claude-seo](https://github.com/AgriciDaniel/claude-seo). Se contrastaron sus recomendaciones con la documentación de Next instalada y fuentes oficiales de Google. No se ejecutaron sus instaladores remotos ni se añadieron servicios de pago.
@@ -30,6 +31,12 @@ Se aplicó como referencia la skill solicitada [claude-seo](https://github.com/A
 La referencia anterior está en [findings-baseline.md](./findings-baseline.md). Las pruebas iniciales móviles de Lighthouse fueron 92/93 de rendimiento para portada/Panamá, con CLS 0 y LCP 3,0/2,9 s. Son mediciones de laboratorio, no datos reales de Core Web Vitals. La categoría SEO automática de Lighthouse no mide posiciones en Google.
 
 La compilación local de producción pasó el rastreo completo de **508/508 URL sin fallos**, incluyendo títulos únicos y alternativas de idioma recíprocas. También pasaron TypeScript, ESLint y las 22 pruebas indicadas. Se revisaron portada, directorio, Panamá y Europa a 390 px de ancho sin desbordamiento horizontal. Una repetición anterior encontró errores temporales de conexión al catálogo; la comprobación directa de producción y Supabase y el rastreo completo posterior respondieron correctamente. El script usa dos solicitudes simultáneas para limitar la carga de auditoría.
+
+La versión publicada del cambio SEO (`078f745`) pasó también el rastreo completo de **508/508 URL** en `www.mytripsim.com`. El favicon, el manifest y robots.txt respondieron 200; se confirmó la redirección 308 de las antiguas fichas de plan. En un navegador móvil DPR 2, el banner de Panamá pasó a solicitar `w=256`, con 22.029 bytes, frente a los 36.302 bytes de la muestra anterior `w=750`.
+
+La medición posterior de Lighthouse anterior a diferir el chat obtuvo 75/87 de rendimiento para portada/Panamá, LCP 3,4/3,2 s y CLS 0; accesibilidad, buenas prácticas y SEO automático fueron 100 en ambas. Algunas ejecuciones fallaron por cierre del navegador. Por tanto, **no se ha demostrado una mejora del LCP** y estos resultados no equivalen a Core Web Vitals de usuarios reales. El JavaScript transferido en esas dos muestras fue prácticamente igual al anterior; la variación se observó principalmente en tiempo de ejecución del navegador.
+
+Como mejora adicional se separó el panel de chat de la carga inicial. La compilación y las seis pruebas de interfaz de soporte (móvil/escritorio, ES/EN) pasaron, junto a las cinco pruebas de soporte/seguridad. La comprobación de red local confirmó que el módulo del chat se solicita al abrirlo. Se requiere una medición posterior estable y seguimiento de campo para cuantificar su efecto sobre la velocidad; no se atribuye un aumento de ranking a este cambio.
 
 ## Enviar el sitemap en Search Console
 

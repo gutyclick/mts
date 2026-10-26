@@ -1,4 +1,15 @@
 export type PaymentMode = "test" | "live";
+export function paymentFormMatchesMode(
+  secret: unknown,
+  publicKey: string,
+  mode: PaymentMode,
+) {
+  return (
+    typeof secret === "string" &&
+    secret.startsWith(`cs_${mode}_`) &&
+    publicKey.startsWith(`pk_${mode}_`)
+  );
+}
 export function paymentMode(
   env: Record<string, string | undefined>,
 ): PaymentMode {

@@ -23,6 +23,7 @@ import { cartTotal } from "@/lib/cart";
 import { formatUSD } from "@/lib/retail-prices";
 import { CartItems, useCart } from "./cart-provider";
 import { EmbeddedPayment } from "./embedded-payment";
+import { paymentFormMatchesMode } from "@/lib/payments/checkout-mode";
 
 export function Checkout({
   locale,
@@ -183,9 +184,11 @@ export function Checkout({
         window.location.assign(url.href);
       } else {
         if (
-          typeof data.clientSecret !== "string" ||
-          !data.clientSecret.startsWith("cs_test_") ||
-          !publishableKey.startsWith("pk_test_")
+          !paymentFormMatchesMode(
+            data.clientSecret,
+            publishableKey,
+            testMode ? "test" : "live",
+          )
         )
           throw new Error("Invalid payment form");
         setPayment({

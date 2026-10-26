@@ -6,6 +6,7 @@ import { PGlite } from "@electric-sql/pglite";
 import {
   paymentEnvironment,
   paymentMode,
+  paymentFormMatchesMode,
 } from "../src/lib/payments/checkout-mode.ts";
 import { verifyPaymentSnapshot } from "../src/lib/payments/checkout-core.ts";
 import { verifyHoldSession } from "../src/lib/payments/hold-policy.ts";
@@ -25,6 +26,42 @@ test("payment environments select independent keys and never infer live from a t
   assert.equal(paymentEnvironment(env).secret, "live-secret");
   assert.equal(paymentEnvironment(env, "test").secret, "test-secret");
   assert.throws(() => liveSecret("sk_test_" + "x".repeat(24)));
+});
+
+test("browser accepts live payment forms and rejects mixed Stripe environments", () => {
+  assert.equal(
+    paymentFormMatchesMode(
+      "cs_live_order_secret_one",
+      "pk_live_public",
+      "live",
+    ),
+    true,
+  );
+  assert.equal(
+    paymentFormMatchesMode(
+      "cs_test_order_secret_one",
+      "pk_test_public",
+      "test",
+    ),
+    true,
+  );
+  assert.equal(
+    paymentFormMatchesMode(
+      "cs_live_order_secret_one",
+      "pk_test_public",
+      "live",
+    ),
+    false,
+  );
+  assert.equal(
+    paymentFormMatchesMode(
+      "cs_test_order_secret_one",
+      "pk_live_public",
+      "live",
+    ),
+    false,
+  );
+  assert.equal(paymentFormMatchesMode(null, "pk_live_public", "live"), false);
 });
 
 test("paid snapshots and expiry reconciliation bind the order environment", () => {

@@ -328,6 +328,13 @@ export function AdminDashboard({
                 )}
             </button>
           ))}
+          <Link
+            href={`/${locale}/admin/tickets`}
+            className="admin-support-link"
+          >
+            <LifeBuoy size={20} />
+            {es ? "Tickets de ayuda" : "Support tickets"}
+          </Link>
         </nav>
         <div className="admin-sidebar-bottom">
           <p>{email}</p>

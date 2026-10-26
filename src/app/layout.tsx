@@ -13,6 +13,7 @@ import "@/styles/sim-mascot.css";
 import "@/styles/account.css";
 import "@/styles/commerce.css";
 import "@/styles/admin.css";
+import "@/styles/support.css";
 
 export const viewport: Viewport = {
   width: "device-width",

@@ -16,6 +16,7 @@ const rules = [
     /\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b/,
   ],
   ["Stripe secret", /\b(?:sk|rk)_(?:live|test)_[A-Za-z0-9]{16,}\b/],
+  ["OpenAI secret", /\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{32,}\b/],
   ["Supabase key", /\bsb_(?:secret|publishable)_[A-Za-z0-9_-]{16,}\b/],
   [
     "JWT credential",

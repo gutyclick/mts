@@ -198,6 +198,10 @@ export default async function ContentPage({
       {key === "help" && (
         <section className="container guide-section">
           <HelpHub locale={locale} />
+          <Link className="button button-primary" href={`/${locale}/support`}>
+            {locale === "es" ? "Mis tickets de ayuda" : "My support tickets"}
+            <ArrowRight size={17} />
+          </Link>
           <p className="information-note">
             <Info size={21} />
             {t.helpNote}

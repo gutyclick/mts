@@ -24,6 +24,7 @@ import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { CopyValue } from "./copy-value";
 import { formatUSD } from "@/lib/retail-prices";
+import { CustomerSupportSummary } from "./support-summary";
 const dataLabel = (gb: number) =>
   gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`;
 function fulfillmentLabel(states: string[], live: boolean, es: boolean) {
@@ -131,6 +132,10 @@ export async function CustomerWallet({
               <ArrowRight size={15} />
             </Link>
           )}
+          <Link className="account-back" href={`/${locale}/support`}>
+            <Package size={17} />
+            {es ? "Mis tickets de ayuda" : "My support tickets"}
+          </Link>
         </div>
         <form action={signOut}>
           <input type="hidden" name="locale" value={locale} />
@@ -456,6 +461,7 @@ export async function CustomerWallet({
           </aside>
         </>
       )}
+      <CustomerSupportSummary locale={locale} userId={user.id} />
     </div>
   );
 }

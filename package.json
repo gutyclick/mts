@@ -50,7 +50,12 @@
     "fulfillment:start": "node scripts/configure-fulfillment.mjs --start",
     "test:fulfillment": "node --experimental-strip-types --test tests/fulfillment.test.mjs tests/fulfillment-security.test.mjs",
     "test:admin": "node --experimental-strip-types --test tests/admin.test.mjs tests/admin-security.test.mjs",
-    "admin:grant": "node scripts/grant-admin.mjs"
+    "admin:grant": "node scripts/grant-admin.mjs",
+    "support:configure": "node scripts/configure-support.mjs",
+    "support:deploy-env": "node scripts/deploy-support-env.mjs",
+    "support:start": "node scripts/deploy-support-env.mjs --start",
+    "test:support": "node --experimental-strip-types --test tests/support.test.mjs tests/support-security.test.mjs",
+    "test:support:web": "node scripts/test-support-web.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

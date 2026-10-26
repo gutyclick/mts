@@ -123,6 +123,12 @@ export function FAQFeedback({
           <h3 id={`${id}-title`}>{c.title}</h3>
         </div>
         <p>{c.description}</p>
+        <a href={`/${locale}/support`} className="button button-primary">
+          <LifeBuoy size={17} />
+          {locale === "es"
+            ? "Crear ticket de ayuda"
+            : "Create a support ticket"}
+        </a>
         <h4>{c.related}</h4>
         <div className="faq-related">
           {related.map((item) => (

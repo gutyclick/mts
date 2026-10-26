@@ -24,7 +24,9 @@ export function pathFor(locale: Locale, page?: PageKey, slug?: string) {
 }
 export function equivalentPath(path: string, locale: Locale) {
   const [, , section, slug, planId] = path.split("/");
-  if (section === "admin") return `/${locale}/admin`;
+  if (section === "admin")
+    return `/${locale}/admin${slug === "tickets" ? "/tickets" : ""}`;
+  if (section === "support") return `/${locale}/support`;
   if (section === "checkout" && slug === "result")
     return `/${locale}/checkout/result`;
   const accountMode = (Object.keys(authSegments) as AuthMode[]).find((key) =>
@@ -277,7 +279,7 @@ export const dictionaries = {
       },
     ],
     helpNote:
-      "Order support will be available when purchases launch. We are not accepting orders or payment in this preview.",
+      "Ask SIM for guidance, or create a support ticket to contact our team. Sign in to discuss a private order and keep your conversation history.",
     legalDraft: "Draft — not effective commercial terms",
     legalIntro:
       "This page describes the current preview only. Final policies must be reviewed and published before commercial launch.",
@@ -285,7 +287,7 @@ export const dictionaries = {
       terms:
         "MyTripSim is a brand of YellowCat Enterprises LLC. This website currently presents an illustrative eSIM catalog. You cannot place orders, make payments, or provision eSIMs. Product availability, prices, coverage, activation conditions, and fulfillment terms are not final. Binding purchase terms will be published before checkout becomes available.",
       privacy:
-        "This implementation does not include accounts, analytics, marketing trackers, or payment collection. Hosting providers may process technical request information such as IP addresses and access logs. A complete privacy notice identifying processors, retention periods, applicable rights, and a verified contact channel must be published before launch. Do not enter personal information into the destination search.",
+        "MyTripSim processes account details, orders and support conversations to provide the service. Supabase stores account and support records; Resend sends service emails. SIM uses OpenAI to answer support questions: messages and limited details of your selected order may be processed by OpenAI. SIM cannot access installation codes or payment credentials. Do not share passwords, cards or QR codes in the chat. OpenAI may temporarily retain API data to prevent abuse. AI responses can be wrong; you can request human help. Hosting providers may process technical request information. Contact hello@mytripsim.com about your personal data. The complete commercial privacy notice, including retention periods and applicable rights, remains pending review before launch.",
       refunds:
         "No payments are accepted in this preview, so no orders or refunds can be processed here. Before sales begin, a reviewed refund policy will define eligibility, activation and usage conditions, request procedures, timelines, and applicable consumer rights. This draft does not promise refunds for future products.",
     },
@@ -518,7 +520,7 @@ export const dictionaries = {
       },
     ],
     helpNote:
-      "La atención de pedidos estará disponible al iniciar las ventas. En esta versión no aceptamos pedidos ni pagos.",
+      "Consulta a SIM o crea un ticket para hablar con nuestro equipo. Inicia sesión para consultar un pedido privado y conservar el historial.",
     legalDraft: "Borrador — no son condiciones comerciales vigentes",
     legalIntro:
       "Esta página describe únicamente la versión de prueba. Las políticas definitivas deben revisarse y publicarse antes del lanzamiento comercial.",
@@ -526,7 +528,7 @@ export const dictionaries = {
       terms:
         "MyTripSim es una marca de YellowCat Enterprises LLC. Este sitio presenta un catálogo ilustrativo de eSIM. No se pueden realizar pedidos, pagos ni activar eSIM. La disponibilidad, precios, cobertura, condiciones de activación y entrega no son definitivos. Las condiciones vinculantes se publicarán antes de habilitar las compras.",
       privacy:
-        "Esta implementación no incluye cuentas, analítica, rastreadores publicitarios ni recopilación de pagos. El alojamiento puede procesar información técnica como direcciones IP y registros de acceso. Antes del lanzamiento se debe publicar un aviso completo con encargados del tratamiento, plazos de conservación, derechos aplicables y un contacto verificado. No introduzcas información personal en la búsqueda de destinos.",
+        "MyTripSim trata los datos de cuenta, pedidos y conversaciones de ayuda para prestar el servicio. Supabase almacena cuentas y soporte; Resend envía correos del servicio. SIM usa OpenAI para responder consultas: los mensajes y datos limitados del pedido que selecciones pueden ser tratados por OpenAI. SIM no tiene acceso a los códigos de instalación ni a las credenciales de pago. No compartas contraseñas, tarjetas ni QR en el chat. OpenAI puede conservar temporalmente datos de la API para prevenir abusos. La IA puede equivocarse y puedes pedir ayuda humana. El alojamiento puede procesar información técnica de las solicitudes. Escribe a hello@mytripsim.com sobre tus datos personales. El aviso comercial completo, incluidos los plazos de conservación y derechos aplicables, sigue pendiente de revisión antes del lanzamiento.",
       refunds:
         "En esta versión de prueba no se aceptan pagos, por lo que no se procesan pedidos ni reembolsos. Antes de iniciar las ventas, una política revisada definirá la elegibilidad, condiciones de activación y uso, procedimientos, plazos y derechos del consumidor aplicables. Este borrador no promete reembolsos para productos futuros.",
     },

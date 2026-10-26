@@ -29,6 +29,16 @@ export function safeAccountNext(value: unknown, locale: Locale) {
     const checkout = `/${locale}/${locale === "es" ? "compra" : "checkout"}`;
     if (
       url.origin === "https://mytripsim.invalid" &&
+      [`/${locale}/support`, `/${locale}/admin/tickets`].includes(url.pathname)
+    ) {
+      const ticket = url.searchParams.get("ticket");
+      return ticket &&
+        /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(ticket)
+        ? `${url.pathname}?ticket=${ticket}`
+        : url.pathname;
+    }
+    if (
+      url.origin === "https://mytripsim.invalid" &&
       url.pathname === `/${locale}/admin`
     )
       return `/${locale}/admin`;

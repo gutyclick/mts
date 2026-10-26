@@ -6,6 +6,7 @@ import { Footer } from "./footer";
 import { MobileNavigation } from "./mobile-navigation";
 import { PendingPaymentNotice } from "./commerce/pending-payment-notice";
 import { dictionaries, type Locale } from "@/lib/i18n";
+import { SupportWidget } from "./support/widget";
 export function SiteFrame({
   locale,
   children,
@@ -14,7 +15,9 @@ export function SiteFrame({
   children: ReactNode;
 }) {
   const pathname = usePathname(),
-    admin = pathname === `/${locale}/admin`;
+    admin =
+      pathname === `/${locale}/admin` ||
+      pathname.startsWith(`/${locale}/admin/`);
   return (
     <>
       <a href="#main-content" className="skip-link">
@@ -31,6 +34,7 @@ export function SiteFrame({
         <>
           <Footer locale={locale} />
           <MobileNavigation locale={locale} />
+          <SupportWidget locale={locale} />
         </>
       )}
     </>

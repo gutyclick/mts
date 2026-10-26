@@ -14,7 +14,7 @@ export const feedbackCopy = {
       "Your choice is kept for this visit. Your browser could not save it.",
     title: "Let’s find your next step",
     description:
-      "Try these related answers or prepare your question. Direct support is coming soon; this does not send a support request.",
+      "Try these related answers or create a ticket for our team. Your feedback alone does not send a support request.",
     related: "You may also find these useful",
     copy: "Copy my question",
     copied:
@@ -37,7 +37,7 @@ export const feedbackCopy = {
       "Tu elección se mantiene durante esta visita. Tu navegador no pudo guardarla.",
     title: "Busquemos tu siguiente paso",
     description:
-      "Consulta estas respuestas o prepara tu pregunta. El contacto directo estará disponible próximamente; esto no envía una solicitud de soporte.",
+      "Consulta estas respuestas o crea un ticket para nuestro equipo. Tu valoración por sí sola no envía una solicitud de soporte.",
     related: "Estas respuestas también pueden ayudarte",
     copy: "Copiar mi consulta",
     copied:

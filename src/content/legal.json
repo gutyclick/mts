@@ -1,0 +1,1300 @@
+{
+  "es": {
+    "terms": {
+      "title": "Términos y condiciones",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Quién presta el servicio y cómo contactar",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "MyTripSim es una marca de YellowCat Enterprises LLC, con domicilio en 1209 Mountain Road Pl NE, Albuquerque, Nuevo México 87110, Estados Unidos. YellowCat Enterprises LLC es el vendedor de los planes contratados a través de esta web."
+            },
+            {
+              "type": "paragraph",
+              "text": "Para consultas sobre contratos, pedidos, asistencia o reclamaciones: hello@mytripsim.com. Identifica tu pedido cuando sea posible. No envíes contraseñas, números completos de tarjeta, CVC ni códigos de instalación."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Qué compras",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Compras el plan concreto seleccionado en el checkout: destino o zona, variante, cantidad de datos, duración y condiciones que figuran en su ficha y resumen. Los planes publicados son de bolsa fija de datos; el nombre de una variante no sustituye sus condiciones específicas."
+            },
+            {
+              "type": "paragraph",
+              "text": "El plan se considera solo de datos salvo que su ficha incluya expresamente llamadas, minutos, número telefónico o SMS. No es un sustituto garantizado de tu línea habitual ni de un medio de comunicación de emergencia. Las llamadas a través de aplicaciones consumen datos."
+            },
+            {
+              "type": "paragraph",
+              "text": "MyTripSim gestiona la venta y la entrega con proveedores de conectividad y redes móviles. La disponibilidad comercial de un plan se comprueba al tramitarlo. Las imágenes de destinos y la mascota son ilustrativas."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Antes de comprar",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Comprueba que el modelo y la variante regional de tu dispositivo admiten eSIM, que el equipo está desbloqueado para otros operadores y que permite utilizar el plan. El verificador orienta con información del fabricante; la compatibilidad efectiva puede depender de la región, el software y el operador que bloqueó el equipo."
+            },
+            {
+              "type": "paragraph",
+              "text": "Revisa los países incluidos, la cantidad de datos, duración, inicio de vigencia, tecnologías y operadores informados, reglas de instalación y condiciones de compartir internet. No supongas que un plan regional incluye países que no aparecen en su cobertura."
+            },
+            {
+              "type": "paragraph",
+              "text": "Necesitas acceso a internet para instalar el perfil. Las instrucciones y el QR deben mantenerse privados: algunas eSIM solo permiten una instalación y no pueden trasladarse a otro equipo. Si hay un error, contacta con soporte antes de eliminar el perfil."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Cuenta, compra como invitado y beneficiario",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Puedes comprar con tu cuenta o continuar como invitado. Facilita información exacta y un correo al que tengas acceso. Si designas otro beneficiario, asegúrate de que puedas facilitar su correo para recibir la eSIM y de informarle sobre el servicio y el aviso de privacidad."
+            },
+            {
+              "type": "paragraph",
+              "text": "Protege tus credenciales y avísanos si detectas un acceso no autorizado. Comprar como invitado no elimina tus derechos de asistencia ni las obligaciones que correspondan a MyTripSim. El acceso a información privada de pedidos requiere las comprobaciones de identidad o autorización apropiadas."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Precio, pago y confirmación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "El checkout muestra el importe y la moneda antes de pagar. Revisa ese resumen; el precio de otro país, otra variante o una consulta anterior puede ser diferente. Cualquier impuesto o cargo que deba cobrarse debe informarse antes de confirmar el pago. Tu banco o emisor del medio de pago puede aplicar conversión de moneda u otros cargos propios."
+            },
+            {
+              "type": "paragraph",
+              "text": "Stripe procesa el pago. Los métodos ofrecidos dependen de tu dispositivo, navegador, país y de la disponibilidad del procesador. No se realizan pagos recurrentes por el solo hecho de comprar uno de estos planes fijos."
+            },
+            {
+              "type": "paragraph",
+              "text": "La creación de un carrito o una sesión de pago no equivale a un pago confirmado ni a una eSIM emitida. Si abandonas un pago, la web puede cancelar el intento tras cinco minutos de inactividad conforme a su estado. Si tu banco muestra un cargo o autorización pero el pedido no se confirma, consulta con soporte antes de repetir la compra."
+            }
+          ]
+        },
+        {
+          "id": "section-6",
+          "title": "6. Emisión y entrega",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Tras confirmar el pago, se solicita la preparación de la eSIM. El QR y las instrucciones se envían al correo del beneficiario indicado. Cuando el pedido está vinculado a una cuenta, la información autorizada también puede consultarse en Mis eSIM."
+            },
+            {
+              "type": "paragraph",
+              "text": "La entrega depende de la confirmación del pago, la disponibilidad del proveedor y la preparación del perfil; no se garantiza un tiempo universal de entrega instantánea. Revisa correo no deseado y el estado del pedido. Si no recibes la entrega o detectas un correo incorrecto, contacta con nosotros. Un fallo de entrega se gestionará conforme a la política de reembolsos y a los derechos legales aplicables."
+            }
+          ]
+        },
+        {
+          "id": "section-7",
+          "title": "7. Instalación, activación y consumo",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Sigue las instrucciones del plan. El inicio de la vigencia puede depender de la instalación o de la primera conexión a una red admitida, según el producto. Instalar antes del viaje puede iniciar el plazo en determinados planes; no hay una regla única para todo el catálogo."
+            },
+            {
+              "type": "paragraph",
+              "text": "Configura la eSIM como línea de datos y la itinerancia de datos según sus instrucciones. Revisa por separado la itinerancia de tu SIM habitual: MyTripSim no controla los cargos que facture tu operador de origen."
+            },
+            {
+              "type": "paragraph",
+              "text": "Las aplicaciones en segundo plano, actualizaciones y equipos conectados mediante hotspot consumen la misma bolsa de datos cuando compartir internet está permitido. El saldo mostrado puede actualizarse con retraso. La vigencia no se pausa por no utilizar la eSIM. Las recargas o cambios solo forman parte de la compra si están expresamente disponibles y contratados."
+            }
+          ]
+        },
+        {
+          "id": "section-8",
+          "title": "8. Cobertura y calidad de conexión",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Las redes y tecnologías publicadas proceden de la información del proveedor. La señal, velocidad y tecnología efectiva pueden variar por cobertura local, congestión, características del equipo, mantenimiento y otras circunstancias de la red. La mención de 4G o 5G no garantiza esa tecnología en toda ubicación."
+            },
+            {
+              "type": "paragraph",
+              "text": "Estas limitaciones técnicas no eliminan la responsabilidad que legalmente corresponda por un servicio no entregado o no conforme. Si el servicio falla, permite que soporte revise la incidencia y proponga una solución adecuada."
+            }
+          ]
+        },
+        {
+          "id": "section-9",
+          "title": "9. Uso permitido y seguridad",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Utiliza el servicio de forma lícita, sin fraude, acceso no autorizado, interferencias, abuso de redes ni actividades que vulneren derechos de terceros. No compartas públicamente credenciales, QR o enlaces privados de instalación."
+            },
+            {
+              "type": "paragraph",
+              "text": "Las restricciones de red específicas que afecten materialmente al plan deben informarse en sus condiciones. Cualquier suspensión por seguridad o uso indebido debe tener una justificación y respetar los derechos aplicables; esta cláusula no autoriza a retener pagos por servicios que deban devolverse legalmente."
+            }
+          ]
+        },
+        {
+          "id": "section-10",
+          "title": "10. Soporte y asistente SIM",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Puedes consultar las guías, utilizar el chat SIM o escribir a hello@mytripsim.com. SIM utiliza inteligencia artificial y puede equivocarse. Puede orientar y mostrar información autorizada, pero no decide reembolsos ni confirma por sí mismo cambios, cancelaciones o acciones que no haya realizado el equipo o el sistema transaccional."
+            },
+            {
+              "type": "paragraph",
+              "text": "El cierre del chat por inactividad no cancela tu pedido ni tu cuenta. Los tickets pendientes del equipo conservan su estado. No se promete atención humana continua ni un tiempo fijo de respuesta que no se haya anunciado expresamente."
+            }
+          ]
+        },
+        {
+          "id": "section-11",
+          "title": "11. Cancelaciones, reembolsos y reclamaciones",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "La política de reembolsos explica cómo solicitar ayuda y qué información se revisa. La instalación o el uso de una eSIM pueden ser relevantes para evaluar una devolución voluntaria, pero no suprimen automáticamente los derechos obligatorios del consumidor."
+            },
+            {
+              "type": "paragraph",
+              "text": "Si una ley aplicable reconoce desistimiento, garantías, devolución por falta de conformidad u otros remedios, estas condiciones no los excluyen. No se introduce mediante este documento una renuncia genérica a esos derechos."
+            }
+          ]
+        },
+        {
+          "id": "section-12",
+          "title": "12. Privacidad y propiedad intelectual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "La política de privacidad y la información sobre cookies explican el tratamiento de datos y el almacenamiento técnico. El permiso opcional para recibir ofertas es independiente de los correos necesarios para tramitar y atender tu compra."
+            },
+            {
+              "type": "paragraph",
+              "text": "Los contenidos y elementos de marca de la web están protegidos por los derechos que correspondan a sus titulares. Puedes consultar y conservar las condiciones e instrucciones para utilizar el servicio; no se concede una autorización general para reutilizar la marca o revender credenciales."
+            }
+          ]
+        },
+        {
+          "id": "section-13",
+          "title": "13. Responsabilidad y cambios",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Cada parte responde de sus obligaciones conforme a la ley aplicable. No se excluyen responsabilidades que no puedan limitarse legalmente ni derechos obligatorios de los consumidores. Una incidencia del proveedor no libera por sí sola a MyTripSim de atender su obligación contractual frente al comprador."
+            },
+            {
+              "type": "paragraph",
+              "text": "Los cambios de condiciones se publicarán con una nueva fecha y versión. No se aplicarán retroactivamente para reducir los derechos asociados a un pedido ya celebrado. Las condiciones de un plan ya comprado no se sustituyen simplemente por las de una nueva oferta."
+            }
+          ]
+        },
+        {
+          "id": "section-14",
+          "title": "14. Ley aplicable y resolución de conflictos",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Estas condiciones se rigen por las leyes de Nuevo México y las leyes federales de Estados Unidos aplicables, sin privarte de las protecciones imperativas de consumo que te correspondan por tu residencia u otras normas aplicables. Las controversias podrán plantearse ante los tribunales competentes de Nuevo México, salvo que tengas derecho a acudir a otros tribunales. No se exige arbitraje obligatorio ni se impone una renuncia a acciones colectivas mediante estas condiciones."
+            },
+            {
+              "type": "paragraph",
+              "text": "Para intentar resolver una reclamación, escribe a hello@mytripsim.com. Acudir primero a soporte no limita los plazos ni las vías legales que te correspondan."
+            }
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Política de privacidad",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Responsable y contacto",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Esta política explica el tratamiento de datos al visitar MyTripSim, crear una cuenta, comprar, recibir una eSIM o solicitar soporte. El responsable de las operaciones de MyTripSim descritas en esta política es YellowCat Enterprises LLC, 1209 Mountain Road Pl NE, Albuquerque, Nuevo México 87110, Estados Unidos."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contacto para privacidad: hello@mytripsim.com. Incluye una descripción de tu solicitud y el correo relacionado con tu cuenta o pedido. No adjuntes documentos de identidad ni datos financieros completos salvo que te solicitemos una comprobación proporcionada mediante un canal adecuado."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Datos que tratamos y de dónde proceden",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Cuenta: correo, nombre y apellido que facilitas, información de autenticación y datos necesarios para mantener la sesión. Las contraseñas se gestionan mediante el sistema de autenticación; el equipo de soporte no necesita conocerlas.",
+                "Compra y beneficiario: correo del comprador y del destinatario, planes, cantidades, importe, moneda, referencias, estado del pago y de la entrega, y preferencias opcionales de marketing. El comprador puede facilitarnos el correo de otra persona para entregarle la eSIM.",
+                "Pago: Stripe recibe los datos introducidos en su formulario y trata información del pago, del medio utilizado y del dispositivo conforme a su función. MyTripSim recibe identificadores y estados necesarios para gestionar el pedido; no recibe en su formulario propio el número completo de tarjeta ni el CVC.",
+                "Servicio eSIM: identificadores del perfil y del proveedor, códigos de instalación, estado, vigencia y datos de consumo disponibles. Los operadores y proveedores de conectividad pueden tratar información de red y del dispositivo necesaria para conectar y facturar el servicio; ello no significa que MyTripSim tenga acceso a todo el tráfico o contenido de tu navegación.",
+                "Soporte: mensajes, idioma, tema elegido, pedido que selecciones, respuestas del equipo, valoración opcional y comentario. La información que incluyas en el texto puede ser personal; evita enviar datos sensibles o de otras personas que no sean necesarios.",
+                "Datos técnicos: solicitudes al servidor, dirección IP o identificadores derivados de ella, navegador y datos de seguridad tratados por la infraestructura, identificadores de sesión y almacenamiento descrito en la política de cookies."
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Los datos proceden de ti, del comprador que te designa como beneficiario, de la interacción con la web y de los proveedores de pago o conectividad necesarios para tramitar el servicio."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Para qué se utilizan",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Usamos la información necesaria para crear y proteger cuentas, mantener carritos y pagos, comprobar importes y disponibilidad, emitir y entregar eSIM, consultar estado y consumo, prestar soporte, investigar incidencias y tramitar reclamaciones o devoluciones."
+            },
+            {
+              "type": "paragraph",
+              "text": "También utilizamos datos limitados para prevenir fraude y abuso, proteger accesos, conservar evidencias transaccionales y cumplir obligaciones legales. Si autorizas expresamente comunicaciones comerciales, podremos utilizar tu correo para enviarte novedades y ofertas de MyTripSim. Esa autorización es opcional y no condiciona la compra."
+            },
+            {
+              "type": "paragraph",
+              "text": "No describimos los datos de pedidos como una autorización general para fines publicitarios de terceros. Una nueva finalidad incompatible o una nueva categoría de tratamiento requiere la información y, cuando corresponda, la base o el permiso adicional exigidos por la ley."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Bases jurídicas, cuando sean aplicables",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Cuando la legislación aplicable requiera identificar una base jurídica, distinguimos la ejecución del contrato o gestiones solicitadas antes de contratar; el cumplimiento de obligaciones legales; los intereses legítimos de seguridad, prevención del fraude y atención de reclamaciones, sujetos a la evaluación correspondiente; y el consentimiento para tratamientos opcionales que lo requieran."
+            },
+            {
+              "type": "paragraph",
+              "text": "La solicitud de borrado o la retirada del consentimiento de marketing no impiden conservar los datos que sea obligatorio mantener ni anulan un pedido pendiente. No se considera que visitar la web equivalga a consentir cualquier tratamiento."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Proveedores y destinatarios",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Los siguientes servicios intervienen en la operación revisada de MyTripSim, con acceso limitado a la función que desempeñan:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Supabase: autenticación, base de datos de cuentas, pedidos, eSIM y soporte.",
+                "Vercel: alojamiento, entrega de la web, ejecución del servidor y registros técnicos de infraestructura.",
+                "Stripe y los participantes del pago: procesamiento, autenticación, prevención del fraude y gestión del pago. Stripe puede actuar como encargado o responsable independiente según la actividad.",
+                "eSIM Access y redes móviles participantes: preparación de perfiles y conectividad. Nuestra solicitud actual de emisión utiliza el código del plan y una referencia de transacción; no incluye el correo del beneficiario en esa llamada de emisión.",
+                "Resend: envío de correos de cuenta, entrega e incidencias. El correo de entrega contiene información de instalación que debe mantenerse privada.",
+                "Zoho: recepción y gestión del correo dirigido a nuestro contacto de soporte.",
+                "OpenAI: generación de respuestas del asistente SIM, según se explica en el apartado siguiente."
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "También podemos comunicar información cuando lo exija una obligación válida, para defender una reclamación o a asesores sujetos a deberes adecuados de confidencialidad. Una petición de información no autoriza a revelar el pedido de otra persona."
+            }
+          ]
+        },
+        {
+          "id": "section-6",
+          "title": "6. Asistente SIM e inteligencia artificial",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Al enviar una consulta a SIM, MyTripSim puede remitir a OpenAI tu mensaje, una parte reciente de la conversación y datos limitados del pedido que selecciones, previa comprobación de autorización. El tema que eliges al iniciar el chat sirve para contextualizar la conversación."
+            },
+            {
+              "type": "paragraph",
+              "text": "El sistema filtra determinados códigos y patrones sensibles, pero el filtrado no garantiza detectar todos los datos privados. No envíes contraseñas, tarjetas, QR ni credenciales de instalación. SIM no tiene herramientas para emitir eSIM, cobrar, cancelar, reembolsar ni modificar pedidos; la respuesta de la IA no sustituye la confirmación de una acción transaccional."
+            },
+            {
+              "type": "paragraph",
+              "text": "La integración solicita no guardar la respuesta como estado persistente mediante store:false. Esto no implica retención cero en el proveedor: OpenAI puede mantener registros para supervisión de abuso conforme a sus condiciones y a la configuración del servicio. La documentación de la API indica que los datos no se utilizan para entrenar modelos por defecto, salvo que el cliente opte por compartirlos."
+            },
+            {
+              "type": "paragraph",
+              "text": "Las respuestas pueden ser incorrectas. Puedes solicitar asistencia humana y utilizar el correo de contacto. No se asigna a SIM la decisión final sobre derechos de consumo, reclamaciones o reembolsos."
+            }
+          ]
+        },
+        {
+          "id": "section-7",
+          "title": "7. Conservación",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "El identificador de chat del visitante tiene una duración de siete días en el navegador. Las conversaciones cerradas de visitantes se eliminan del sistema después de treinta días sin actividad, según el proceso automático de limpieza. Una copia de seguridad puede conservar datos durante su ciclo técnico de sustitución.",
+                "El chat de IA termina tras diez minutos sin mensajes; eso no borra automáticamente la conversación ni cierra un ticket humano pendiente.",
+                "Conservamos datos de cuenta mientras sea necesario para mantener la relación y atender solicitudes. Los pedidos, pagos y evidencias que deban mantenerse por obligaciones fiscales, contables, prevención del fraude o reclamaciones se conservarán conforme a esas necesidades y a los plazos legales aplicables.",
+                "Los tickets asociados a cuentas y sus valoraciones se mantienen mientras sean necesarios para atender y documentar la incidencia y gestionar responsabilidades. No se ofrece un plazo fijo de borrado automático que el sistema no aplique.",
+                "La retirada del permiso comercial se tendrá en cuenta para detener ese uso; puede mantenerse una evidencia mínima de exclusión para evitar volver a incluirte indebidamente."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-8",
+          "title": "8. Tratamiento internacional",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "La infraestructura y los proveedores pueden tratar datos en países distintos al de tu residencia. Las localizaciones y garantías dependen del servicio contratado y de la operación concreta."
+            },
+            {
+              "type": "paragraph",
+              "text": "Cuando una transferencia requiera garantías adicionales, se aplicarán los mecanismos exigidos por la legislación correspondiente, como decisiones de adecuación o cláusulas contractuales cuando procedan. Puedes solicitar a hello@mytripsim.com información sobre los países y las garantías pertinentes a tus datos. No ofrecemos alojamiento exclusivo en tu país de residencia."
+            }
+          ]
+        },
+        {
+          "id": "section-9",
+          "title": "9. Tus opciones y derechos",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Puedes escribir a hello@mytripsim.com para solicitar acceso, corrección, eliminación o información sobre tus datos. Según la ley que te proteja, también puedes tener derechos de oposición, limitación, portabilidad, retirada del consentimiento y reclamación ante una autoridad competente."
+            },
+            {
+              "type": "paragraph",
+              "text": "Verificaremos de forma proporcionada la identidad o autorización antes de facilitar datos privados. La respuesta y sus plazos se ajustarán a la legislación aplicable. Si una parte de la solicitud no puede atenderse por una obligación de conservación u otra razón legal, explicaremos el motivo y el alcance."
+            },
+            {
+              "type": "paragraph",
+              "text": "Puedes retirar el permiso de marketing sin dejar de recibir correos estrictamente necesarios para tu cuenta, entrega o reclamación. El beneficiario también puede contactarnos respecto de sus datos, aunque el pedido lo haya realizado otra persona."
+            }
+          ]
+        },
+        {
+          "id": "section-10",
+          "title": "10. Seguridad, menores y cambios",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Aplicamos medidas de control de acceso y separación de cuentas, comunicaciones cifradas y limitación de datos en las interfaces. Ningún sistema es infalible. Mantén privado tu correo de entrega, QR y acceso a la cuenta, y comunica cualquier incidente al contacto indicado."
+            },
+            {
+              "type": "paragraph",
+              "text": "El servicio no está dirigido a menores de 13 años y no solicitamos deliberadamente sus datos. Para comprar debes tener capacidad legal o actuar con la autorización de un representante cuando corresponda. Si crees que un menor nos ha facilitado datos indebidamente, contacta para que podamos investigarlo y actuar conforme a la ley."
+            },
+            {
+              "type": "paragraph",
+              "text": "Los cambios relevantes se reflejarán con fecha y versión nuevas y con los avisos o permisos adicionales que correspondan. Las políticas de los proveedores enlazadas explican sus propios tratamientos; no sustituyen las obligaciones de MyTripSim."
+            }
+          ]
+        }
+      ]
+    },
+    "refunds": {
+      "title": "Reembolsos y cancelaciones",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Contacto y alcance",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Si tienes un problema con tu compra, escribe a hello@mytripsim.com o abre un ticket desde tu cuenta. Facilita la referencia del pedido, el correo utilizado y una descripción breve. Nunca envíes el número completo de tarjeta, el CVC, contraseñas ni el QR de instalación."
+            },
+            {
+              "type": "paragraph",
+              "text": "Esta política explica cómo atendemos incidencias. No sustituye ni limita los derechos obligatorios que te reconozca la ley aplicable. El resultado no depende únicamente de la política mayorista del proveedor."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Antes de pagar o mientras el pago está pendiente",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Puedes modificar o abandonar el carrito antes de pagar. Una sesión de pago creada no acredita que se haya cobrado el pedido. La web puede cancelar un intento abandonado tras cinco minutos de inactividad, de acuerdo con su estado."
+            },
+            {
+              "type": "paragraph",
+              "text": "Si detectas una autorización bancaria, un pago duplicado o una discrepancia entre el banco y el pedido, contacta antes de volver a pagar. Una autorización pendiente puede requerir liberación por el banco y no equivale necesariamente a un cobro definitivo."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Pago confirmado y falta de entrega",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Revisaremos si el pago se confirmó, si la eSIM se emitió y si se envió al correo indicado. Si el problema puede solucionarse, podremos completar la entrega o corregir el acceso tras verificar al destinatario. Si no se puede proporcionar el servicio contratado, se aplicará el remedio o devolución que corresponda conforme al contrato y a la ley."
+            },
+            {
+              "type": "paragraph",
+              "text": "La preparación del perfil y la entrega no tienen un plazo universal de inmediatez. Esta precisión no permite demorar indefinidamente un servicio ni evitar la devolución que legalmente proceda."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Problemas técnicos o falta de conformidad",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Contacta cuanto antes si no puedes instalar o conectar la eSIM en el destino cubierto. Indica el modelo y variante del teléfono, país, momento del fallo y mensaje de error. Las capturas deben ocultar credenciales y datos financieros."
+            },
+            {
+              "type": "paragraph",
+              "text": "El equipo podrá comprobar configuración, compatibilidad, cobertura, estado y consumo, y solicitar comprobaciones razonables. No borres la eSIM mientras se revisa el caso, salvo indicación del equipo: algunas instalaciones no pueden repetirse."
+            },
+            {
+              "type": "paragraph",
+              "text": "La solución puede consistir en asistencia, corrección, sustitución, reducción o devolución del importe, según lo que resulte procedente. La obligación de colaborar razonablemente no elimina tus plazos ni tus derechos legales."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Plan comprado por error, viaje cancelado o equipo incompatible",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Solicita la revisión e indica si instalaste o utilizaste la eSIM. Las solicitudes por cambio de opinión, viaje cancelado o compra por error se revisan individualmente, teniendo en cuenta el estado de instalación, activación y consumo y las condiciones del producto. No ofrecemos un plazo comercial general ni una aprobación automática de estas devoluciones."
+            },
+            {
+              "type": "paragraph",
+              "text": "Una incompatibilidad imputable a información incorrecta de la oferta no debe tratarse automáticamente como un error del cliente. La instalación o el consumo no excluyen por sí solos una reclamación por falta de conformidad."
+            }
+          ]
+        },
+        {
+          "id": "section-6",
+          "title": "6. Desistimiento y derechos de consumidores",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Algunas jurisdicciones reconocen un plazo para desistir de compras a distancia, con reglas y excepciones específicas. Si ese derecho te corresponde, puedes ejercerlo mediante una comunicación inequívoca a hello@mytripsim.com, identificando el pedido y tu decisión de desistir, sin necesidad de aportar una justificación cuando la ley no la exija."
+            },
+            {
+              "type": "paragraph",
+              "text": "La emisión del QR, la aceptación general de términos o la instalación no se describen aquí como una renuncia automática a esos derechos. Cualquier inicio anticipado de un servicio y sus efectos deben informarse y recabarse con los requisitos que correspondan a la naturaleza del contrato y a la normativa aplicable."
+            }
+          ]
+        },
+        {
+          "id": "section-7",
+          "title": "7. Tramitación de una devolución",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Revisaremos la solicitud y comunicaremos la decisión y su motivo. Si procede una devolución, indicaremos el importe y el medio utilizado, respetando los plazos legales y las condiciones del pago. El tiempo de reflejo en cuenta puede depender del banco o medio de pago; no se anuncia un plazo bancario fijo sin confirmación."
+            },
+            {
+              "type": "paragraph",
+              "text": "No se sustituye una devolución legalmente debida por crédito de tienda sin la base o acuerdo necesarios. No se impondrán gastos o deducciones no informados o prohibidos. Una disputa ante tu banco conserva el régimen y plazos que le correspondan; contactar con soporte no implica renunciar a esa vía."
+            }
+          ]
+        },
+        {
+          "id": "section-8",
+          "title": "8. Formulario orientativo para solicitar revisión",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Asunto: «Revisión de pedido / desistimiento», según corresponda.",
+                "Referencia del pedido y correo de compra.",
+                "Plan afectado y fecha de compra.",
+                "Solicitud: asistencia, cancelación, revisión de cobro, desistimiento u otra solución.",
+                "Descripción del problema y si el perfil se instaló o utilizó, cuando sea pertinente."
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Envía únicamente los datos necesarios. Este formulario orientativo no limita otras formas válidas de ejercer un derecho legal."
+            }
+          ]
+        }
+      ]
+    },
+    "cookies": {
+      "title": "Cookies y almacenamiento local",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Qué son y para qué se utilizan",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Las cookies son pequeños registros que guarda el navegador. MyTripSim también utiliza almacenamiento local para conservar determinadas funciones entre visitas. No todo almacenamiento tiene la misma finalidad ni el mismo régimen de consentimiento."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contacto: hello@mytripsim.com. La política de privacidad explica el tratamiento de datos asociado a estas funciones."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Inventario identificado en el código",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": ["Elemento", "Finalidad", "Duración identificada"],
+              "rows": [
+                [
+                  "Cookies de autenticación Supabase sb-*",
+                  "Mantener y renovar la sesión de la cuenta, incluyendo sus mecanismos de acceso",
+                  "Según la sesión y renovación del sistema de autenticación; puede renovarse al utilizar la cuenta"
+                ],
+                [
+                  "mts_checkout_browser",
+                  "Vincular de forma segura el navegador con un intento de pago y consultar su estado",
+                  "Un día en la configuración actual"
+                ],
+                [
+                  "mts_support_guest",
+                  "Recuperar el chat de un visitante en ese navegador y proteger su acceso",
+                  "Siete días, con renovación al utilizar la función"
+                ],
+                [
+                  "mytripsim.cart.v1 en almacenamiento local",
+                  "Guardar los identificadores y cantidades del carrito",
+                  "Hasta que se actualice o elimine; no tiene un vencimiento automático general"
+                ],
+                [
+                  "mytripsim.completed-carts.v1 en almacenamiento local",
+                  "Evitar restaurar carritos ya completados",
+                  "Se conservan hasta veinte referencias de pedidos completados, que se sustituyen por las nuevas o se borran desde el navegador"
+                ],
+                [
+                  "mytripsim.pending-payment.v1 en almacenamiento local",
+                  "Recuperar el aviso y acceso al pago en curso",
+                  "Se retira al resolver o limpiar el intento; el almacenamiento no equivale a la vigencia de la sesión bancaria"
+                ],
+                [
+                  "Valoraciones locales de preguntas frecuentes",
+                  "Recordar la valoración realizada desde ese navegador",
+                  "Hasta su actualización o borrado; únicamente se guarda tras usar la valoración"
+                ],
+                [
+                  "Identificadores del formulario de Stripe y métodos de pago",
+                  "Autenticación, prevención del fraude y funcionamiento del pago solicitado",
+                  "Duración variable según el identificador y el método utilizado; consulta la política de cookies de Stripe"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Los nombres y las duraciones de terceros pueden variar. El inventario debe actualizarse cuando cambien las integraciones. No se almacenan conversaciones completas ni códigos de instalación de eSIM en el almacenamiento local propio del chat."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Cookies necesarias y tratamientos opcionales",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "La sesión de cuenta, el carrito solicitado, la seguridad del pago y la recuperación del chat que abres tienen finalidades funcionales concretas. Su consideración jurídica debe evaluarse según su uso real y las reglas que te sean aplicables."
+            },
+            {
+              "type": "paragraph",
+              "text": "En el código revisado no se han identificado etiquetas propias de publicidad conductual ni herramientas propias de analítica de audiencia. Esto no significa que todas las tecnologías de terceros sean inexistentes o que cualquier nueva integración pueda instalarse sin informar."
+            },
+            {
+              "type": "paragraph",
+              "text": "Si se incorporan analítica o publicidad que requieran consentimiento, deberán permanecer bloqueadas hasta que el usuario elija, con una forma de rechazar y retirar el permiso que cumpla la legislación aplicable. El consentimiento para recibir ofertas por correo es una elección distinta del uso de cookies."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Cómo gestionar el almacenamiento",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Puedes consultar y borrar las cookies y los datos del sitio desde la configuración de tu navegador. Eliminar o bloquear los elementos necesarios puede cerrar tu sesión, vaciar el carrito, impedir recuperar un chat de visitante o dificultar el seguimiento de un pago en ese navegador."
+            },
+            {
+              "type": "paragraph",
+              "text": "Borrar datos del navegador no cancela un pedido, no elimina necesariamente los registros de MyTripSim y no revoca por sí solo un pago en Stripe. Para ejercer derechos sobre los datos conservados en nuestros sistemas, escribe a hello@mytripsim.com."
+            },
+            {
+              "type": "paragraph",
+              "text": "Los métodos de pago y carteras digitales pueden ofrecer controles propios. Consulta la información del proveedor cuando interactúes directamente con esos servicios."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Cambios",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "La versión definitiva mostrará fecha de actualización. Cuando se introduzca una finalidad opcional nueva, se facilitará la información y la elección que correspondan antes de activarla."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "en": {
+    "terms": {
+      "title": "Terms and conditions",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Seller and contact",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "MyTripSim is a brand of YellowCat Enterprises LLC, the seller of plans purchased through this website. Our address is 1209 Mountain Road Pl NE, Albuquerque, New Mexico 87110, United States."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contact hello@mytripsim.com for contracts, orders, support or complaints. Include your order reference where possible. Do not send passwords, full card numbers, security codes or installation credentials."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. What you purchase",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Your purchase is the specific plan selected at checkout: destination or region, variant, data allowance, validity and the conditions in its product information and order summary. Our published plans provide a fixed data allowance. A variant name does not replace its specific conditions."
+            },
+            {
+              "type": "paragraph",
+              "text": "Plans are data-only unless their information expressly includes calls, minutes, a telephone number or SMS. They are not a guaranteed replacement for your home line or emergency communications. Calls through apps use data."
+            },
+            {
+              "type": "paragraph",
+              "text": "MyTripSim arranges sales and delivery using connectivity suppliers and mobile networks. Commercial availability is checked when the order is processed. Destination and mascot images are illustrations."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Before purchasing",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Check that your exact device model and regional variant support eSIM, that your phone is carrier-unlocked and that it can use the plan. Our compatibility tool provides guidance based on manufacturer information; regional variants, software and carrier restrictions can affect actual compatibility."
+            },
+            {
+              "type": "paragraph",
+              "text": "Review the included countries, data, validity, validity start, networks, technologies, installation and hotspot conditions. Do not assume a regional plan covers a country that is not listed."
+            },
+            {
+              "type": "paragraph",
+              "text": "Installation requires internet access. Keep your QR and instructions private. Some profiles can be installed only once and cannot be transferred. Contact support before deleting a profile if something goes wrong."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Accounts, guests and recipients",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "You may purchase with an account or as a guest. Provide accurate information and an accessible email address. If you nominate another recipient, make sure you may provide their email for delivery and tell them about the service and privacy notice."
+            },
+            {
+              "type": "paragraph",
+              "text": "Protect your account and report suspected unauthorized access. Guest purchases retain applicable support and consumer rights. Access to private order information requires appropriate identity or authorization checks."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Price, payment and confirmation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Checkout displays the amount and currency before payment. Prices may differ between destinations, variants or visits. Any applicable tax or charge to be collected must be disclosed before you confirm payment. Your bank or payment provider may apply its own currency conversion or fees."
+            },
+            {
+              "type": "paragraph",
+              "text": "Stripe processes payments. Available methods depend on your device, browser, country and the processor. Purchasing a fixed plan does not by itself create a recurring subscription."
+            },
+            {
+              "type": "paragraph",
+              "text": "A cart or payment session is not a confirmed payment or issued eSIM. An abandoned payment attempt may be cancelled after five minutes of inactivity according to its status. If your bank shows a charge or authorization but the order is not confirmed, contact us before paying again."
+            }
+          ]
+        },
+        {
+          "id": "section-6",
+          "title": "6. Issuance and delivery",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After payment is confirmed, we request preparation of the eSIM. The QR and instructions are sent to the recipient email entered at checkout. Authorized information for account-linked purchases can also be viewed in My eSIMs."
+            },
+            {
+              "type": "paragraph",
+              "text": "Delivery depends on payment confirmation, supplier availability and profile preparation; we do not guarantee universal instant delivery. Check spam folders and your order status. Contact us about non-delivery or an incorrect email. Delivery failures are handled under our refund policy and applicable consumer rights."
+            }
+          ]
+        },
+        {
+          "id": "section-7",
+          "title": "7. Installation, activation and usage",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Follow the instructions for your plan. Validity may begin on installation or on first connection to a supported network, depending on the product. Installing before departure can start some plans; there is no single activation rule for all plans."
+            },
+            {
+              "type": "paragraph",
+              "text": "Select the eSIM for mobile data and configure roaming as instructed. Check your home SIM settings separately: we do not control charges from your home carrier."
+            },
+            {
+              "type": "paragraph",
+              "text": "Background apps, updates and hotspot devices use the same allowance where sharing is permitted. Reported usage may be delayed. Validity does not pause while unused. Top-ups or changes are included only when expressly offered and purchased."
+            }
+          ]
+        },
+        {
+          "id": "section-8",
+          "title": "8. Coverage and connection quality",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Published networks and technologies are supplied by the connectivity provider. Signal, speed and available technology vary with location, congestion, device, maintenance and network conditions. A reference to 4G or 5G does not guarantee that technology in every location."
+            },
+            {
+              "type": "paragraph",
+              "text": "These technical limitations do not remove any legal responsibility for non-delivery or a non-conforming service. Contact support so we can investigate and offer the appropriate remedy."
+            }
+          ]
+        },
+        {
+          "id": "section-9",
+          "title": "9. Acceptable use and security",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use the service lawfully, without fraud, unauthorized access, network interference, abuse or infringement of others' rights. Do not publish QR codes, credentials or private installation links."
+            },
+            {
+              "type": "paragraph",
+              "text": "Material product-specific restrictions must be disclosed in the plan information. A security or misuse suspension must have a justified basis and respect applicable rights; this provision does not authorize withholding legally required refunds."
+            }
+          ]
+        },
+        {
+          "id": "section-10",
+          "title": "10. Support and SIM",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Use our guides, SIM chat or hello@mytripsim.com. SIM uses AI and can make mistakes. It provides guidance and authorized information, but does not decide refunds or itself confirm cancellations, changes or other actions that have not been performed by the team or transaction system."
+            },
+            {
+              "type": "paragraph",
+              "text": "Inactivity closure of a chat does not cancel your account or order. Pending human-support tickets retain their status. No continuous human availability or fixed response time is promised unless expressly stated."
+            }
+          ]
+        },
+        {
+          "id": "section-11",
+          "title": "11. Cancellations, refunds and consumer rights",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Our refund policy explains requests and the information reviewed. Installation or use may affect a voluntary refund review, but does not automatically remove mandatory consumer rights."
+            },
+            {
+              "type": "paragraph",
+              "text": "Applicable withdrawal, conformity, warranty or other mandatory remedies remain available. These terms do not create a general waiver of such rights."
+            }
+          ]
+        },
+        {
+          "id": "section-12",
+          "title": "12. Privacy and intellectual property",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Our privacy and cookie policies explain data processing and technical storage. Optional email marketing permission is separate from messages necessary to process and support your purchase."
+            },
+            {
+              "type": "paragraph",
+              "text": "Website content and branding are protected by their owners' applicable rights. You may consult and keep the terms and instructions to use your service; no general permission to reuse our brand or resell installation credentials is granted."
+            }
+          ]
+        },
+        {
+          "id": "section-13",
+          "title": "13. Responsibility and changes",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Each party is responsible for its obligations under applicable law. We do not exclude liability or mandatory consumer rights that cannot legally be limited. A supplier failure does not by itself release MyTripSim from its contractual obligations to the purchaser."
+            },
+            {
+              "type": "paragraph",
+              "text": "Changes will have a new date and version and will not retrospectively reduce rights attached to an existing order. A newly advertised plan does not simply replace the conditions of one already purchased."
+            }
+          ]
+        },
+        {
+          "id": "section-14",
+          "title": "14. Applicable law and disputes",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "These terms are governed by New Mexico law and applicable United States federal law, without depriving you of mandatory consumer protection that applies through your residence or other applicable rules. Disputes may be brought before competent New Mexico courts unless you are entitled to use other courts. These terms do not require arbitration or impose a class-action waiver."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contact hello@mytripsim.com to seek a resolution. Contacting us first does not limit legal deadlines or remedies available to you."
+            }
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Controller and contact",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "This policy covers visiting MyTripSim, creating an account, purchasing, receiving an eSIM and obtaining support. YellowCat Enterprises LLC is responsible for the MyTripSim operations described here. Address: 1209 Mountain Road Pl NE, Albuquerque, New Mexico 87110, United States."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contact hello@mytripsim.com for privacy requests. Describe your request and identify the email related to your account or purchase. Do not attach identity documents or full financial information unless a proportionate check is requested through an appropriate channel."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Information and sources",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Account information: email, first and last name you provide, authentication and session information. Passwords are handled by the authentication system; support does not need to know them.",
+                "Purchases and recipients: purchaser and recipient email, plans, quantities, amounts, currency, references, payment and delivery status and optional marketing preferences. A purchaser may supply another person's email for delivery.",
+                "Payment information: Stripe processes information entered into its payment interface, payment method and device information. MyTripSim receives the identifiers and status needed to manage an order; our own form does not receive the full card number or CVC.",
+                "eSIM service information: profile and supplier identifiers, installation credentials, status, validity and available usage information. Connectivity providers and networks may process network and device information necessary for the service. This does not mean MyTripSim can access all traffic or browsing content.",
+                "Support: messages, language, selected topic and authorized order, team responses and optional rating and comment. Avoid unnecessary sensitive or third-party information in free text.",
+                "Technical information: server requests, IP addresses or derived identifiers, browser and infrastructure security information, session identifiers and storage explained in the cookie policy."
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Information comes from you, a purchaser who names you as recipient, your use of the website and payment or connectivity providers necessary to process the service."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Purposes",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "We use necessary information to operate and protect accounts, carts and payments; check amounts and availability; issue and deliver eSIMs; show status and usage; provide support; and address complaints, incidents and refunds."
+            },
+            {
+              "type": "paragraph",
+              "text": "Limited information is also used to prevent fraud and abuse, secure access, keep transaction evidence and meet legal obligations. If you expressly opt in, your email may be used for MyTripSim news and offers. This is optional and does not condition a purchase."
+            },
+            {
+              "type": "paragraph",
+              "text": "Purchase information is not general permission for third-party advertising. A new incompatible purpose or new processing category requires the information and, where appropriate, legal basis or permission required by law."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Legal grounds where applicable",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Where the applicable law requires a legal basis, we distinguish performance of a contract or steps you request before contracting; legal obligations; legitimate security, fraud-prevention and claims-handling interests, subject to the appropriate assessment; and consent for optional processing that requires it."
+            },
+            {
+              "type": "paragraph",
+              "text": "Deletion requests or withdrawal of marketing consent do not remove legal retention requirements or cancel pending orders. Merely visiting the site is not consent to every form of processing."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Providers and disclosures",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Supabase provides authentication and databases for accounts, orders, eSIMs and support.",
+                "Vercel hosts and delivers the website, runs the server and processes technical infrastructure logs.",
+                "Stripe and payment participants process and authenticate payments and prevent fraud. Stripe's controller or processor role depends on the activity.",
+                "eSIM Access and participating mobile networks prepare profiles and provide connectivity. Our current issuance request sends a plan code and transaction reference, not the recipient email in that request.",
+                "Resend sends account, delivery and service emails. Delivery messages contain private installation information.",
+                "Zoho receives and handles email sent to our support contact.",
+                "OpenAI generates SIM responses as explained below."
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Access is limited to the relevant function. Information may also be disclosed under a valid legal obligation, to handle a claim or to advisers under appropriate confidentiality duties. A request does not authorize disclosure of another person's order."
+            }
+          ]
+        },
+        {
+          "id": "section-6",
+          "title": "6. SIM and AI",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "When you message SIM, MyTripSim may send OpenAI your message, recent conversation and limited facts from an order you select after authorization checks. The selected topic provides conversational context."
+            },
+            {
+              "type": "paragraph",
+              "text": "The system filters certain sensitive patterns, but cannot guarantee detecting all private information. Do not send passwords, cards, QR or installation credentials. SIM has no tools to issue eSIMs, charge, cancel, refund or change orders; an AI answer is not confirmation of a transaction."
+            },
+            {
+              "type": "paragraph",
+              "text": "The integration requests no persistent response state through store:false. This does not mean zero provider retention: OpenAI may keep abuse-monitoring logs under its service terms and configuration. Its API documentation states that API data is not used for model training by default unless the customer opts to share it."
+            },
+            {
+              "type": "paragraph",
+              "text": "Answers may be incorrect. Human help and email support are available. SIM is not assigned final decisions on consumer rights, complaints or refunds."
+            }
+          ]
+        },
+        {
+          "id": "section-7",
+          "title": "7. Retention",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "The guest-chat browser identifier lasts seven days. Closed guest conversations are removed from our system after thirty days without activity by the automated cleanup process. Backups may retain information until their technical replacement cycle completes.",
+                "AI chat closes after ten minutes without messages. This does not erase its history or close pending human-support tickets.",
+                "Account information is retained as needed for the relationship and requests. Order, payment and related evidence needed for tax, accounting, fraud prevention or claims is kept according to those needs and applicable legal periods.",
+                "Account-linked support tickets and ratings are kept as needed to address and document the issue and responsibilities. We do not advertise a fixed automatic deletion period that the system does not apply.",
+                "Withdrawing marketing permission stops that use; minimum suppression evidence may be kept to avoid adding you again improperly."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-8",
+          "title": "8. International processing",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Infrastructure and providers may process data outside your country. Locations and safeguards depend on the service and operation concerned. Where additional transfer safeguards are required, the applicable mechanisms, such as adequacy decisions or contractual clauses where appropriate, apply. Ask hello@mytripsim.com about countries and relevant safeguards for your information. We do not offer hosting exclusively in your country of residence."
+            }
+          ]
+        },
+        {
+          "id": "section-9",
+          "title": "9. Choices and rights",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Contact hello@mytripsim.com to request access, correction, deletion or information about your data. Depending on the law protecting you, you may also have objection, restriction, portability, consent-withdrawal and supervisory-authority complaint rights."
+            },
+            {
+              "type": "paragraph",
+              "text": "We make proportionate identity or authorization checks before releasing private information. Responses and deadlines follow applicable law. Where retention or another legal reason prevents part of a request, we will explain the reason and scope."
+            },
+            {
+              "type": "paragraph",
+              "text": "You may withdraw marketing permission and still receive messages strictly necessary for an account, delivery or complaint. Recipients may contact us about their own data even if another person placed the order."
+            }
+          ]
+        },
+        {
+          "id": "section-10",
+          "title": "10. Security, children and changes",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "We use access controls, separation of accounts, encrypted communications and limited interface disclosures. No system is infallible. Keep your delivery email, QR and account access private and report incidents to our contact."
+            },
+            {
+              "type": "paragraph",
+              "text": "The service is not directed to children under thirteen and we do not knowingly seek their information. Purchasers must have legal capacity or appropriate representative authorization. Contact us if a child may have provided information improperly so we can investigate and act under applicable law."
+            },
+            {
+              "type": "paragraph",
+              "text": "Material changes will carry a new date and version, with any additional notices or permissions required. Provider policies describe their own processing and do not replace MyTripSim's obligations."
+            }
+          ]
+        }
+      ]
+    },
+    "refunds": {
+      "title": "Cancellations and refund policy",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. Contact and scope",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Email hello@mytripsim.com or open a ticket from your account. Include the order reference, purchase email and a brief explanation. Never send full card numbers, CVC, passwords or the installation QR."
+            },
+            {
+              "type": "paragraph",
+              "text": "This policy explains incident handling. It does not replace mandatory legal rights. Your outcome does not depend solely on our supplier's wholesale refund policy."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Before payment or while pending",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "You may change or abandon the cart before payment. A payment session does not prove that an order was charged. The site may cancel an abandoned attempt after five minutes of inactivity according to its status."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contact us about an authorization, duplicate charge or discrepancy between your bank and order before paying again. Pending authorizations may require release by your bank and are not necessarily completed charges."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Confirmed payment without delivery",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "We review payment confirmation, profile issuance and delivery to the supplied email. Where possible, we may complete delivery or correct access after verification. If the contracted service cannot be supplied, the remedy or refund due under the contract and applicable law applies."
+            },
+            {
+              "type": "paragraph",
+              "text": "There is no universal instant-preparation or delivery guarantee. This does not allow indefinite delay or avoidance of a legally required refund."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Technical problems and conformity",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Contact us promptly about installation or connectivity problems in a covered destination. Provide your exact device model and variant, country, timing and error message. Hide credentials and financial information in screenshots."
+            },
+            {
+              "type": "paragraph",
+              "text": "We may review configuration, compatibility, coverage, status and usage and request reasonable checks. Do not delete the profile during review unless instructed: some installations cannot be repeated."
+            },
+            {
+              "type": "paragraph",
+              "text": "The appropriate solution may involve support, correction, replacement, price reduction or refund. Reasonable cooperation does not remove legal deadlines or rights."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Purchase errors, cancelled trips or incompatible devices",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Tell us whether the eSIM has been installed or used. Change-of-mind, cancelled-trip and purchase-error requests are reviewed individually, considering installation, activation, usage and product conditions. We do not offer a general commercial return period or automatic approval of these requests."
+            },
+            {
+              "type": "paragraph",
+              "text": "Incompatibility caused by incorrect product information is not automatically treated as the customer's mistake. Installation or use does not by itself exclude a non-conformity claim."
+            }
+          ]
+        },
+        {
+          "id": "section-6",
+          "title": "6. Withdrawal and consumer rights",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Some jurisdictions provide a withdrawal period for distance purchases, with specific rules and exceptions. If applicable, send an unambiguous withdrawal statement to hello@mytripsim.com identifying the order. You need not give a reason where the law does not require one."
+            },
+            {
+              "type": "paragraph",
+              "text": "Issuing a QR, accepting general terms or installing a profile is not described here as an automatic waiver. Early service performance and its effects must be disclosed and requested under the requirements applicable to the contract and law."
+            }
+          ]
+        },
+        {
+          "id": "section-7",
+          "title": "7. Processing a refund",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "We review the request and explain the decision and reason. When a refund is due, we communicate the amount and method and respect applicable legal deadlines and payment conditions. The time for it to appear in your account can depend on the bank or payment method; we do not promise an unverified fixed banking period."
+            },
+            {
+              "type": "paragraph",
+              "text": "Legally due refunds are not replaced by store credit without the required basis or agreement. Undisclosed or unlawful deductions are not imposed. Contacting support does not waive applicable bank-dispute rights or deadlines."
+            }
+          ]
+        },
+        {
+          "id": "section-8",
+          "title": "8. Optional request format",
+          "blocks": [
+            {
+              "type": "list",
+              "items": [
+                "Subject: order review or withdrawal, as appropriate.",
+                "Order reference and purchase email.",
+                "Plan concerned and purchase date.",
+                "Request: support, cancellation, charge review, withdrawal or another remedy.",
+                "Problem description and installation or usage status when relevant."
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Provide only necessary information. This optional format does not restrict other valid ways to exercise a legal right."
+            }
+          ]
+        }
+      ]
+    },
+    "cookies": {
+      "title": "Cookies and local storage",
+      "sections": [
+        {
+          "id": "section-1",
+          "title": "1. What they do",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Cookies are small browser records. MyTripSim also uses local storage to preserve certain functions between visits. Different storage purposes can have different consent requirements."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contact hello@mytripsim.com. Our privacy policy explains associated personal-data processing."
+            }
+          ]
+        },
+        {
+          "id": "section-2",
+          "title": "2. Storage inventory",
+          "blocks": [
+            {
+              "type": "table",
+              "headers": ["Item", "Purpose", "Duration"],
+              "rows": [
+                [
+                  "Supabase authentication cookies sb-*",
+                  "Maintain and refresh account sessions and access mechanisms",
+                  "Depends on the session and authentication renewal; may renew when you use the account"
+                ],
+                [
+                  "mts_checkout_browser",
+                  "Securely link the browser to a payment attempt and its status",
+                  "One day in the current configuration"
+                ],
+                [
+                  "mts_support_guest",
+                  "Recover and protect a visitor's chat in that browser",
+                  "Seven days, renewed when using the function"
+                ],
+                [
+                  "mytripsim.cart.v1 in local storage",
+                  "Keep cart plan identifiers and quantities",
+                  "Until updated or removed; no general automatic expiry"
+                ],
+                [
+                  "mytripsim.completed-carts.v1 in local storage",
+                  "Avoid restoring completed carts",
+                  "Up to twenty completed-order references, replaced by new ones or cleared in the browser"
+                ],
+                [
+                  "mytripsim.pending-payment.v1 in local storage",
+                  "Recover a pending-payment notice and access",
+                  "Removed when the attempt is resolved or cleared; storage is not the banking session's validity"
+                ],
+                [
+                  "Local FAQ ratings",
+                  "Remember the rating made in that browser",
+                  "Until updated or cleared; saved only after using the rating function"
+                ],
+                [
+                  "Stripe and payment-method identifiers",
+                  "Payment authentication, fraud prevention and requested payment functions",
+                  "Varies by identifier and method; consult Stripe's cookie policy"
+                ]
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Third-party names and durations can vary. The inventory is updated with integrations. Our chat does not store whole conversations or eSIM installation credentials in its own browser local storage."
+            }
+          ]
+        },
+        {
+          "id": "section-3",
+          "title": "3. Necessary functions and optional processing",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Account sessions, a requested cart, payment security and recovering a chat you open serve specific functional purposes. Their legal classification depends on actual use and applicable rules."
+            },
+            {
+              "type": "paragraph",
+              "text": "We have not identified our own behavioral-advertising tags or audience-analytics tools in the reviewed website implementation. This does not mean third-party technologies are absent or that new integrations can be installed without notice."
+            },
+            {
+              "type": "paragraph",
+              "text": "If analytics or advertising requiring consent are introduced, they must remain blocked until the appropriate choice is made, with legally compliant refusal and withdrawal options. Email marketing permission is separate from cookie choices."
+            }
+          ]
+        },
+        {
+          "id": "section-4",
+          "title": "4. Controls",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "You can inspect and clear cookies and site data through your browser. Blocking necessary storage may sign you out, empty your cart, prevent recovery of guest chat or make tracking payment in that browser harder."
+            },
+            {
+              "type": "paragraph",
+              "text": "Clearing the browser does not cancel an order, necessarily erase records in MyTripSim's systems or reverse a Stripe payment. To exercise rights concerning server-held data, contact hello@mytripsim.com."
+            },
+            {
+              "type": "paragraph",
+              "text": "Payment methods and digital wallets may provide their own controls. Consult their information when interacting directly with those services."
+            }
+          ]
+        },
+        {
+          "id": "section-5",
+          "title": "5. Changes",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The policy carries an update date. A new optional purpose will be accompanied by the appropriate information and choice before activation."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

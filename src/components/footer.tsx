@@ -9,7 +9,7 @@ export function Footer({ locale }: { locale: Locale }) {
   const columns: { title: string; pages: PageKey[] }[] = [
     { title: t.explore, pages: ["destinations", "how"] },
     { title: t.useful, pages: ["compatibility", "faq", "help"] },
-    { title: t.legal, pages: ["terms", "privacy", "refunds"] },
+    { title: t.legal, pages: ["terms", "privacy", "refunds", "cookies"] },
   ];
   return (
     <footer className="site-footer">

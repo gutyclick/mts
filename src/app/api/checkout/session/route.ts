@@ -122,6 +122,14 @@ export async function POST(request: NextRequest) {
     }
     const order = orderSchema.parse(data);
     if (order.livemode !== live) return fail("attempt_conflict", 409);
+    // Record only a version explicitly accepted by this browser. Never backfill old orders.
+    const { error: acceptanceError } = await db
+      .from("checkout_legal_acceptances")
+      .upsert(
+        { order_id: order.id, version: body.legalVersion, locale: body.locale },
+        { onConflict: "order_id,version", ignoreDuplicates: true },
+      );
+    if (acceptanceError) return fail("payments_unavailable", 503);
     if (
       data.payment_in_progress ||
       (data.payment_hold_expires_at &&

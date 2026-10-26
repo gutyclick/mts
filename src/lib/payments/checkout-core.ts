@@ -1,6 +1,7 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import { cartSchema } from "../cart.ts";
+import { legalVersion } from "../legal-version.ts";
 
 export const checkoutRequestSchema = z
   .object({
@@ -15,6 +16,7 @@ export const checkoutRequestSchema = z
     expectedTotal: z.number().int().min(1).max(99999999),
     compatible: z.literal(true),
     terms: z.literal(true),
+    legalVersion: z.literal(legalVersion),
   })
   .strict()
   .refine((body) => !body.differentRecipient || !!body.recipientEmail, {

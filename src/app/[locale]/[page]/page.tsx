@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { LegalPage } from "@/components/legal-page";
+import { isLegalKey, legalDescriptions, legalDocument } from "@/lib/legal";
 import Link from "next/link";
 import { ArrowRight, Info } from "lucide-react";
 import { DestinationIndex } from "@/components/seo/destination-index";
@@ -41,6 +43,8 @@ function pageKey(locale: Locale, page: string) {
   );
 }
 function heading(locale: Locale, key: PageKey) {
+  if (isLegalKey(key))
+    return [legalDocument(locale, key).title, legalDescriptions[locale][key]];
   const t = dictionaries[locale];
   const content = {
     destinations: [catalogCopy[locale].title, catalogCopy[locale].description],
@@ -51,6 +55,7 @@ function heading(locale: Locale, key: PageKey) {
     terms: [t.nav.terms, t.legalIntro],
     privacy: [t.nav.privacy, t.legalIntro],
     refunds: [t.nav.refunds, t.legalIntro],
+    cookies: [t.nav.cookies, t.legalIntro],
   };
   return content[key];
 }
@@ -127,9 +132,7 @@ export async function generateMetadata({
     publicPageCopy(locale, key) ?? heading(locale, key);
   return {
     ...metadata(locale, title, description, key),
-    ...(key === "terms" || key === "privacy" || key === "refunds"
-      ? { robots: { index: false, follow: true } }
-      : {}),
+    ...(isLegalKey(key) ? { robots: { index: false, follow: true } } : {}),
   };
 }
 export default async function ContentPage({
@@ -165,6 +168,7 @@ export default async function ContentPage({
   const key = pageKey(locale, page);
   if (!key) notFound();
   if (key === "how") return <HowItWorksPage locale={locale} />;
+  if (isLegalKey(key)) return <LegalPage locale={locale} document={key} />;
   const t = dictionaries[locale];
   const [title, description] = heading(locale, key);
   return (
@@ -231,11 +235,6 @@ export default async function ContentPage({
             <Info size={21} />
             {t.helpNote}
           </p>
-        </section>
-      )}
-      {(key === "terms" || key === "privacy" || key === "refunds") && (
-        <section className="container legal-section">
-          <p>{t.legalContent[key]}</p>
         </section>
       )}
       {key === "faq" && <FAQCenter locale={locale} />}

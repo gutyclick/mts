@@ -6,6 +6,7 @@ import { PGlite } from "@electric-sql/pglite";
 import Stripe from "stripe";
 import { equivalentPath } from "../src/lib/i18n.ts";
 import { safeAccountNext } from "../src/lib/auth-routes.ts";
+import { legalVersion } from "../src/lib/legal-version.ts";
 import {
   checkoutRequestSchema,
   verifyPaymentSnapshot,
@@ -39,6 +40,7 @@ test("checkout rejects forged prices, IDs and missing consent; origins and guest
     expectedTotal: 400,
     compatible: true,
     terms: true,
+    legalVersion,
   };
   assert.ok(checkoutRequestSchema.safeParse(valid).success);
   assert.equal(checkoutRequestSchema.parse(valid).marketingOptIn, false);
@@ -61,6 +63,8 @@ test("checkout rejects forged prices, IDs and missing consent; origins and guest
   for (const changed of [
     { ...valid, priceId: "forged" },
     { ...valid, terms: false },
+    { ...valid, legalVersion: undefined },
+    { ...valid, legalVersion: "old-version" },
     { ...valid, compatible: false },
     { ...valid, expectedTotal: 0 },
     { ...valid, lines: [] },

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { legalVersion } from "@/lib/legal-version";
 import {
   ArrowLeft,
   ArrowRight,
@@ -132,6 +133,7 @@ export function Checkout({
           expectedTotal: total,
           compatible: true,
           terms: true,
+          legalVersion,
         }),
       });
       const data = await response.json();
@@ -472,13 +474,17 @@ export function Checkout({
                     onChange={(e) => setTerms(e.target.checked)}
                   />
                   <span>
-                    {es ? "He leído los" : "I have read the"}{" "}
+                    {es ? "Acepto los" : "I agree to the"}{" "}
                     <Link href={pathFor(locale, "terms")}>
                       {es ? "términos" : "terms"}
                     </Link>{" "}
                     {es ? "y la" : "and"}{" "}
                     <Link href={pathFor(locale, "refunds")}>
                       {es ? "política de reembolsos" : "refund policy"}
+                    </Link>
+                    {es ? " y he leído el " : " and have read the "}
+                    <Link href={pathFor(locale, "privacy")}>
+                      {es ? "aviso de privacidad" : "privacy notice"}
                     </Link>
                     .
                   </span>

@@ -7,7 +7,7 @@
     "import:catalog": "node scripts/import-catalog.mjs",
     "import:details": "node scripts/import-plan-details.mjs",
     "sync:images": "node scripts/sync-destination-images.mjs",
-    "prebuild": "npm run sync:images",
+    "prebuild": "npm run sync:images && npm run legal:build",
     "predev": "npm run sync:images",
     "dev": "next dev",
     "build": "next build",
@@ -63,7 +63,9 @@
     "stripe:deploy:live-env": "node --experimental-strip-types scripts/deploy-checkout-live-env.mjs",
     "stripe:domains:live": "node --experimental-strip-types scripts/register-payment-domains.mjs --live",
     "test:live": "node --experimental-strip-types --test tests/live-checkout.test.mjs",
-    "test:support:lifecycle": "node --experimental-strip-types --test tests/support-conversations.test.mjs"
+    "test:support:lifecycle": "node --experimental-strip-types --test tests/support-conversations.test.mjs",
+    "legal:build": "node scripts/build-legal-content.mjs",
+    "test:legal": "node --experimental-strip-types --test tests/legal.test.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

@@ -13,6 +13,7 @@ export const routeSegments = {
   terms: { en: "terms", es: "terminos" },
   privacy: { en: "privacy", es: "privacidad" },
   refunds: { en: "refunds", es: "reembolsos" },
+  cookies: { en: "cookies", es: "cookies" },
 } as const;
 export type PageKey = keyof typeof routeSegments;
 export function pathFor(locale: Locale, page?: PageKey, slug?: string) {
@@ -74,6 +75,7 @@ export const dictionaries = {
       terms: "Terms of service",
       privacy: "Privacy policy",
       refunds: "Refund policy",
+      cookies: "Cookies",
     },
     find: "Find your eSIM",
     menu: "Open navigation",
@@ -284,14 +286,6 @@ export const dictionaries = {
     legalDraft: "Service information",
     legalIntro:
       "Information about MyTripSim services, purchases and customer assistance.",
-    legalContent: {
-      terms:
-        "MyTripSim is a brand of YellowCat Enterprises LLC. Before purchasing, review your plan’s data allowance, validity, coverage and activation conditions, and confirm that your device supports eSIM and is carrier-unlocked. The total is shown before payment. Once payment is confirmed and the eSIM is prepared, installation details are sent to the recipient email. Keep your QR code private and follow the plan instructions. Contact hello@mytripsim.com about your order.",
-      privacy:
-        "MyTripSim processes account details, orders and support conversations to provide the service. Guest conversations are linked to an essential browser identifier stored for seven days and deleted from our systems after 30 days without activity. Supabase stores account and support records; Resend sends service emails. SIM uses OpenAI to answer support questions: messages and limited details of your selected order may be processed by OpenAI. SIM cannot access installation codes or payment credentials. Do not share passwords, cards or QR codes in the chat. OpenAI may temporarily retain API data to prevent abuse. AI responses can be wrong; you can request human help. Hosting providers may process technical request information. Contact hello@mytripsim.com about your personal data. You may contact the same address to request access, correction or deletion of your personal information, subject to applicable legal obligations.",
-      refunds:
-        "For assistance with a purchase or a refund request, contact hello@mytripsim.com with your order reference and a description of the issue. Do not send card details or your installation QR. Our team will review the payment, eSIM issuance, installation and usage status, the plan conditions and applicable consumer rights before responding. Do not delete the eSIM while the issue is being reviewed unless our team instructs you to do so.",
-    },
     notFound: "This destination isn't on the map.",
     notFoundBody:
       "The page may have moved. Explore our available destinations to find your next trip.",
@@ -315,6 +309,7 @@ export const dictionaries = {
       terms: "Términos del servicio",
       privacy: "Privacidad",
       refunds: "Reembolsos",
+      cookies: "Cookies",
     },
     find: "Encuentra tu eSIM",
     menu: "Abrir navegación",
@@ -525,14 +520,6 @@ export const dictionaries = {
     legalDraft: "Información del servicio",
     legalIntro:
       "Información sobre los servicios, las compras y la atención al cliente de MyTripSim.",
-    legalContent: {
-      terms:
-        "MyTripSim es una marca de YellowCat Enterprises LLC. Antes de comprar, revisa los datos, la vigencia, la cobertura y las condiciones de activación del plan, y confirma que tu dispositivo admite eSIM y está liberado. El importe total se muestra antes de pagar. Tras confirmar el pago y preparar la eSIM, enviaremos las instrucciones al correo del beneficiario. Mantén privado el QR y sigue las instrucciones del plan. Para consultas sobre tu pedido, escribe a hello@mytripsim.com.",
-      privacy:
-        "MyTripSim trata los datos de cuenta, pedidos y conversaciones de ayuda para prestar el servicio. Las conversaciones de visitantes se asocian a un identificador del navegador que dura siete días y se eliminan del sistema tras 30 días sin actividad. Supabase almacena cuentas y soporte; Resend envía correos del servicio. SIM usa OpenAI para responder consultas: los mensajes y datos limitados del pedido que selecciones pueden ser tratados por OpenAI. SIM no tiene acceso a los códigos de instalación ni a las credenciales de pago. No compartas contraseñas, tarjetas ni QR en el chat. OpenAI puede conservar temporalmente datos de la API para prevenir abusos. La IA puede equivocarse y puedes pedir ayuda humana. El alojamiento puede procesar información técnica de las solicitudes. Escribe a hello@mytripsim.com sobre tus datos personales. Puedes escribir a esa misma dirección para solicitar acceso, corrección o eliminación de tus datos, conforme a las obligaciones legales aplicables.",
-      refunds:
-        "Para recibir asistencia con una compra o solicitar un reembolso, escribe a hello@mytripsim.com con la referencia del pedido y una descripción del problema. No envíes datos de tarjeta ni tu QR de instalación. Nuestro equipo revisará el pago, la emisión, la instalación y el consumo de la eSIM, las condiciones del plan y los derechos aplicables antes de responder. No elimines la eSIM mientras se revisa el caso, salvo que nuestro equipo te lo indique.",
-    },
     notFound: "Esta página no está en el mapa.",
     notFoundBody:
       "Puede que se haya movido. Explora nuestros destinos para encontrar tu próximo viaje.",

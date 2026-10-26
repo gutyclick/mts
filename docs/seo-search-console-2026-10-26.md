@@ -18,7 +18,7 @@ Property: `sc-domain:mytripsim.com`. Read directly from the authenticated Search
 
 ## Release dependency
 
-The published sitemap still includes `/en/help` and `/es/ayuda`. Local changes already remove those entries and add permanent redirects to FAQ. They have not been deployed. After release, verify the 308 targets, menu links and sitemap; do not submit redirected Help URLs for indexing.
+Release `17af115` is published. Production verification confirmed 308 redirects from `/en/help` and `/es/ayuda` to the respective FAQ pages, and removal of Help entries from the live sitemap. The 508 discovered count above records Google's last sitemap read, not a promise that every discovered URL is currently canonical or indexed. Google will read the updated sitemap on its own; do not submit redirected Help URLs for indexing.
 
 ## Follow-up
 

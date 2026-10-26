@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { randomBytes, createHmac } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
+import { authenticatorQr } from "../src/lib/admin/authenticator-qr.ts";
 process.loadEnvFile(".env.local");
 const base = process.env.ADMIN_TEST_BASE || "http://localhost:3008";
 if (!/^http:\/\/localhost:\d+$/.test(base))
@@ -69,6 +70,7 @@ try {
   check((await admin.from("admin_memberships").insert({ user_id: id })).error);
   stage = "AAL1 login";
   check((await client.auth.signInWithPassword({ email, password })).error);
+  stage = "AAL1 server denial";
   assert.equal((await request("/api/admin/data")).status, 428);
   assert.equal((await request("/api/admin/operations")).status, 428);
   const security = await request("/es/admin/security");
@@ -80,6 +82,9 @@ try {
     issuer: "MyTripSim QA",
   });
   check(factor.error);
+  const renderedQr = authenticatorQr(factor.data.totp.qr_code);
+  assert.ok(renderedQr.startsWith("data:image/svg+xml;charset=utf-8,%3Csvg"));
+  assert.ok(renderedQr.length < 1000000);
   stage = "incorrect code";
   const correct = code(factor.data.totp.secret),
     wrong = String((Number(correct) + 1) % 1000000).padStart(6, "0");

@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { authClient } from "../supabase/auth-server";
 import { adminSession } from "./server";
+import { authenticatorQr } from "./authenticator-qr";
 export type MfaState = {
   factorId?: string;
   qr?: string;
@@ -13,10 +14,15 @@ export async function adminMfaAction(
   form: FormData,
 ): Promise<MfaState> {
   const es = form.get("locale") !== "en",
+    enrolling = form.get("action") === "enroll",
     fail: MfaState = {
-      error: es
-        ? "No pudimos verificar el acceso. Comprueba el código y la hora de tu autenticador e inténtalo de nuevo."
-        : "We couldn’t verify access. Check the code and your authenticator’s clock and try again.",
+      error: enrolling
+        ? es
+          ? "No pudimos preparar el autenticador. Vuelve a intentarlo o recarga la página."
+          : "We couldn’t prepare the authenticator. Try again or reload the page."
+        : es
+          ? "No pudimos verificar el acceso. Comprueba el código y la hora de tu autenticador e inténtalo de nuevo."
+          : "We couldn’t verify access. Check the code and your authenticator’s clock and try again.",
     };
   try {
     const session = await adminSession();
@@ -43,15 +49,9 @@ export async function adminMfaAction(
         issuer: "MyTripSim",
       });
       if (error) return fail;
-      let svg = data.totp.qr_code.replace(
-        /^data:image\/svg\+xml;(?:utf-8|charset=utf-8),/i,
-        "",
-      );
-      if (svg.startsWith("%")) svg = decodeURIComponent(svg);
-      if (!svg.trim().startsWith("<svg")) return fail;
       return {
         factorId: data.id,
-        qr: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`,
+        qr: authenticatorQr(data.totp.qr_code),
       };
     }
     const factorId = z.uuid().parse(form.get("factorId"));

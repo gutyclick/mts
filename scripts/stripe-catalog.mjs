@@ -8,16 +8,22 @@ import {
   catalogCSV,
   syncStripeCatalog,
   testSecret,
+  liveSecret,
 } from "./lib/stripe-catalog.mjs";
 
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 try {
   const args = process.argv.slice(2);
-  if (args.some((arg) => !["--apply"].includes(arg)))
+  if (args.some((arg) => !["--apply", "--live"].includes(arg)))
     throw new Error("Unknown option");
   const apply = args.includes("--apply");
-  // Validate the key before any mutation. No live mode option exists in this command.
-  const key = apply ? testSecret(process.env.STRIPE_TEST_SECRET_KEY) : null;
+  const live = args.includes("--live");
+  // Validate the selected environment before any mutation.
+  const key = apply
+    ? live
+      ? liveSecret(process.env.STRIPE_LIVE_SECRET_KEY)
+      : testSecret(process.env.STRIPE_TEST_SECRET_KEY)
+    : null;
   const readJSON = (path) => JSON.parse(readFileSync(path, "utf8"));
   const destinations = readJSON("src/data/destinations.json");
   const config = catalogConfig(process.env);
@@ -66,21 +72,30 @@ try {
   );
   if (apply) {
     const stripe = new Stripe(key, { maxNetworkRetries: 2, timeout: 20000 });
-    const bindings = await syncStripeCatalog(stripe, rows, (done, total) => {
-      console.log(`Test catalog: ${done}/${total} plans synchronized.`);
-    });
+    if (live && !(await stripe.accounts.retrieve()).charges_enabled)
+      throw new Error("Account not activated");
+    const bindings = await syncStripeCatalog(
+      stripe,
+      rows,
+      (done, total) => {
+        console.log(
+          `${live ? "Live" : "Test"} catalog: ${done}/${total} plans synchronized.`,
+        );
+      },
+      live,
+    );
     writeFileSync(
-      "private-data/stripe/test-bindings.json",
+      `private-data/stripe/${live ? "live" : "test"}-bindings.json`,
       JSON.stringify(bindings, null, 2) + "\n",
     );
     console.log(
-      `${bindings.length} test products/prices synchronized. No payments or eSIM orders created.`,
+      `${bindings.length} ${live ? "live" : "test"} products/prices synchronized. No payments or eSIM orders created.`,
     );
   } else console.log("Preview only. No Stripe connection or writes performed.");
 } catch {
   // SDK and database errors may contain request bodies or credentials. Never log raw errors.
   console.error(
-    "Stripe catalog failed. Check the test key, catalog, network and Stripe permissions. No credentials were printed. A partial sync can be resumed with the same command.",
+    "Stripe catalog failed. Check the selected key, catalog, network and Stripe permissions. No credentials were printed. A partial sync can be resumed with the same command.",
   );
   process.exitCode = 1;
 }

@@ -31,7 +31,7 @@ export const catalogCopy = {
     empty: "No plans match these filters. Try another allowance or duration.",
     fixedDescription: "A total data allowance for the duration shown.",
     sourceNote:
-      "Plan information from our catalog. Purchases are not available yet. Exact coverage and activation conditions must be confirmed before purchase.",
+      "Review the selected plan’s data, coverage and activation conditions before purchasing.",
     coverageNote:
       "This catalog identifies the country or region. A detailed list of included countries and operators is not provided for every regional package.",
     loadMore: "Show more destinations",
@@ -84,7 +84,7 @@ export const catalogCopy = {
       "No hay planes con estos filtros. Prueba otra cantidad de datos o duración.",
     fixedDescription: "Una cantidad total de datos para la duración indicada.",
     sourceNote:
-      "Información de nuestro catálogo de planes. Las compras todavía no están disponibles. La cobertura exacta y las condiciones de activación deben confirmarse antes de comprar.",
+      "Revisa los datos, la cobertura y las condiciones de activación del plan seleccionado antes de comprar.",
     coverageNote:
       "Este catálogo identifica el país o la región. No todos los paquetes regionales incluyen una lista detallada de países y operadores.",
     loadMore: "Ver más destinos",

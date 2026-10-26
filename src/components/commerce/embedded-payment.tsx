@@ -110,6 +110,7 @@ export function EmbeddedPayment({
         <CheckoutElementsProvider stripe={stripe} options={options}>
           <PaymentForm
             locale={locale}
+            live={publishableKey.startsWith("pk_live_")}
             total={total}
             buyer={buyer}
             recipient={recipient}
@@ -121,12 +122,14 @@ export function EmbeddedPayment({
   );
 }
 function PaymentForm({
+  live,
   locale,
   total,
   buyer,
   recipient,
   onBack,
 }: {
+  live: boolean;
   locale: Locale;
   total: number;
   buyer: string;
@@ -163,7 +166,8 @@ function PaymentForm({
     setBusy(true);
     setError("");
     try {
-      if (state.checkout.livemode) throw new Error("Live payments disabled");
+      if (state.checkout.livemode !== live)
+        throw new Error("Payment environment mismatch");
       const result = await state.checkout.confirm(
         expressEvent
           ? { expressCheckoutConfirmEvent: expressEvent }
@@ -298,13 +302,15 @@ function PaymentForm({
             ? es
               ? "Confirmando pago…"
               : "Confirming payment…"
-            : `${es ? "Pagar" : "Pay"} ${formatUSD(total, locale)} · ${es ? "prueba" : "test"}`}
+            : `${es ? "Pagar" : "Pay"} ${formatUSD(total, locale)}${live ? "" : ` · ${es ? "prueba" : "test"}`}`}
         </button>
-        <p className="commerce-muted">
-          {es
-            ? "Modo de pruebas. No se harán cargos ni se emitirán eSIM reales."
-            : "Test mode. No real charges or eSIMs will be issued."}
-        </p>
+        {!live && (
+          <p className="commerce-muted">
+            {es
+              ? "Modo de pruebas. No se harán cargos ni se emitirán eSIM reales."
+              : "Test mode. No real charges or eSIMs will be issued."}
+          </p>
+        )}
       </form>
       <button
         type="button"

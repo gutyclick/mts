@@ -78,6 +78,7 @@ export const handledEvents = new Set([
 export type ExpectedPayment = {
   id: string;
   amount_total: number;
+  livemode?: boolean;
   stripe_session_id: string | null;
   items: { stripe_price_id: string; quantity: number; unit_amount: number }[];
 };
@@ -95,7 +96,7 @@ export function verifyPaymentSnapshot(
   lines: { priceId: string; quantity: number | null; amount: number }[],
 ) {
   if (
-    session.livemode ||
+    session.livemode !== (order.livemode ?? false) ||
     session.mode !== "payment" ||
     session.id !== order.stripe_session_id ||
     session.client_reference_id !== order.id ||

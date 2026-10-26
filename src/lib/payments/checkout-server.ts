@@ -1,28 +1,30 @@
 import "server-only";
 import Stripe from "stripe";
+import { paymentEnvironment, paymentMode } from "./checkout-mode";
+export { paymentEnvironment, paymentMode } from "./checkout-mode";
 import { createClient } from "@supabase/supabase-js";
 import { catalogConfig } from "../supabase/catalog-api";
 import { checkoutOrigin } from "./checkout-core";
 
 export function checkoutConfigured() {
+  const c = paymentEnvironment(process.env);
   return (
-    process.env.STRIPE_TEST_CHECKOUT_ENABLED === "true" &&
-    /^(sk|rk)_test_[a-zA-Z0-9]{16,}$/.test(
-      process.env.STRIPE_TEST_SECRET_KEY ?? "",
-    ) &&
-    /^pk_test_[a-zA-Z0-9]{16,}$/.test(
-      process.env.STRIPE_TEST_PUBLISHABLE_KEY ?? "",
-    ) &&
+    c.enabled &&
+    (!c.live ||
+      !process.env.VERCEL_ENV ||
+      process.env.VERCEL_ENV === "production") &&
+    new RegExp("^(sk|rk)_" + c.mode + "_[a-zA-Z0-9]{16,}$").test(c.secret) &&
+    new RegExp("^pk_" + c.mode + "_[a-zA-Z0-9]{16,}$").test(c.publicKey) &&
     /^sb_secret_/.test(process.env.SUPABASE_CHECKOUT_SECRET_KEY ?? "") &&
     (process.env.CHECKOUT_REQUEST_SECRET?.length ?? 0) >= 32 &&
-    /^whsec_/.test(process.env.STRIPE_TEST_WEBHOOK_SECRET ?? "")
+    /^whsec_/.test(c.webhook)
   );
 }
-export function checkoutStripe() {
-  const key = process.env.STRIPE_TEST_SECRET_KEY ?? "";
-  if (!/^(sk|rk)_test_[a-zA-Z0-9]{16,}$/.test(key))
-    throw new Error("Test Stripe not configured");
-  return new Stripe(key, { maxNetworkRetries: 2, timeout: 15000 });
+export function checkoutStripe(live = paymentMode(process.env) === "live") {
+  const c = paymentEnvironment(process.env, live ? "live" : "test");
+  if (!new RegExp("^(sk|rk)_" + c.mode + "_[a-zA-Z0-9]{16,}$").test(c.secret))
+    throw new Error("Stripe not configured");
+  return new Stripe(c.secret, { maxNetworkRetries: 2, timeout: 15000 });
 }
 export function checkoutDatabase() {
   const config = catalogConfig(process.env);

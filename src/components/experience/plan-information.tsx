@@ -40,8 +40,8 @@ export function PlanInformation({
                 ? "Este plan no admite recargas."
                 : "This plan cannot be topped up."
               : es
-                ? "Admite datos adicionales para la misma zona dentro de la vigencia. Las recargas aún no están disponibles en la web."
-                : "Supports additional data for the same area within the validity period. Website top-ups are not available yet."}
+                ? "Este plan admite datos adicionales para la misma zona dentro de su vigencia. Consulta con soporte las opciones para tu eSIM."
+                : "Supports additional data for the same area within its validity period. Contact support to check options for your eSIM."}
           </p>
           {details.apn && (
             <div className="plan-apn-details">

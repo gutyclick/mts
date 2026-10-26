@@ -115,7 +115,8 @@ export const dictionaries = {
       },
       { title: "Clear plan details", body: "The details, before you decide." },
     ],
-    previewNotice: "Explore our plan catalog. Purchases are not available yet.",
+    previewNotice:
+      "Find your destination and choose the data plan for your trip.",
     popularTitle: "Explore popular destinations",
     popularDescription: "A city break or a bigger adventure. Start here.",
     allDestinations: "All destinations",
@@ -134,7 +135,7 @@ export const dictionaries = {
       },
       {
         title: "Compare your plans",
-        body: "Review data, duration and plan type. Purchases will come later.",
+        body: "Compare data, validity and plan variants before choosing.",
       },
       {
         title: "Scan and connect",
@@ -189,7 +190,7 @@ export const dictionaries = {
       {
         question: "When does my eSIM activate?",
         answer:
-          "Activation rules vary. Some plans begin at installation; others begin when connecting to a supported network. Review the exact plan terms before installation. Our preview does not promise a specific activation rule.",
+          "Activation rules vary. Some plans begin at installation; others begin when connecting to a supported network. Review the exact plan terms before installation. Check the validity start shown for your selected plan.",
       },
     ],
     footerDescription: "A world to explore.\nA simpler way to stay connected.",
@@ -201,12 +202,12 @@ export const dictionaries = {
     footerTag: "Made for curious travelers.",
     destinationsTitle: "Where will you go next?",
     destinationsDescription:
-      "Explore our preview collection of country and regional eSIM plans.",
+      "Explore our country and regional travel eSIM plans.",
     plans: "Find your travel plan",
     plansDescription: "Choose the data and duration that fit your adventure.",
-    demo: "Preview catalog",
+    demo: "eSIM catalog",
     demoDetails:
-      "Illustrative plans and USD prices. Supplier networks, activation rules, coverage and top-ups are not confirmed. No purchases are available.",
+      "Prices are shown in USD. Review the coverage, activation and conditions for your selected plan.",
     data: "Data allowance",
     validity: "Validity",
     allData: "All data amounts",
@@ -217,9 +218,9 @@ export const dictionaries = {
     unconfirmed: "To be confirmed by supplier",
     activation: "Activation",
     topup: "Top-up eligibility",
-    checkout: "Checkout is not active",
+    checkout: "Complete your order",
     checkoutBody:
-      "This is a preview plan. Payments and eSIM delivery are not available yet. No order has been created and you have not been charged.",
+      "Review your plan and recipient details, then continue to secure payment.",
     gotIt: "Back to plans",
     planEmpty:
       "No plans match these filters. Try a different data amount or duration.",
@@ -229,11 +230,11 @@ export const dictionaries = {
     checkCompatibility: "Check compatibility",
     coverage: "Coverage overview",
     coverageSample:
-      "Preview coverage only. Exact countries, operators and coverage must be confirmed with the supplier before sale.",
+      "Review the included countries and operators for the selected plan.",
     planFaq: "Before you connect",
-    dataOnly: "Data-only preview plan",
+    dataOnly: "Data-only plan",
     back: "All destinations",
-    planCount: "preview plans",
+    planCount: "data plans",
     selectedTrip: "Trip preference",
     clear: "Clear search",
     howTitle: "Less setup. More seeing the world.",
@@ -280,16 +281,16 @@ export const dictionaries = {
     ],
     helpNote:
       "Ask SIM for guidance, or create a support ticket to contact our team. Sign in to discuss a private order and keep your conversation history.",
-    legalDraft: "Draft — not effective commercial terms",
+    legalDraft: "Service information",
     legalIntro:
-      "This page describes the current preview only. Final policies must be reviewed and published before commercial launch.",
+      "Information about MyTripSim services, purchases and customer assistance.",
     legalContent: {
       terms:
-        "MyTripSim is a brand of YellowCat Enterprises LLC. This website currently presents an illustrative eSIM catalog. You cannot place orders, make payments, or provision eSIMs. Product availability, prices, coverage, activation conditions, and fulfillment terms are not final. Binding purchase terms will be published before checkout becomes available.",
+        "MyTripSim is a brand of YellowCat Enterprises LLC. Before purchasing, review your plan’s data allowance, validity, coverage and activation conditions, and confirm that your device supports eSIM and is carrier-unlocked. The total is shown before payment. Once payment is confirmed and the eSIM is prepared, installation details are sent to the recipient email. Keep your QR code private and follow the plan instructions. Contact hello@mytripsim.com about your order.",
       privacy:
-        "MyTripSim processes account details, orders and support conversations to provide the service. Supabase stores account and support records; Resend sends service emails. SIM uses OpenAI to answer support questions: messages and limited details of your selected order may be processed by OpenAI. SIM cannot access installation codes or payment credentials. Do not share passwords, cards or QR codes in the chat. OpenAI may temporarily retain API data to prevent abuse. AI responses can be wrong; you can request human help. Hosting providers may process technical request information. Contact hello@mytripsim.com about your personal data. The complete commercial privacy notice, including retention periods and applicable rights, remains pending review before launch.",
+        "MyTripSim processes account details, orders and support conversations to provide the service. Supabase stores account and support records; Resend sends service emails. SIM uses OpenAI to answer support questions: messages and limited details of your selected order may be processed by OpenAI. SIM cannot access installation codes or payment credentials. Do not share passwords, cards or QR codes in the chat. OpenAI may temporarily retain API data to prevent abuse. AI responses can be wrong; you can request human help. Hosting providers may process technical request information. Contact hello@mytripsim.com about your personal data. You may contact the same address to request access, correction or deletion of your personal information, subject to applicable legal obligations.",
       refunds:
-        "No payments are accepted in this preview, so no orders or refunds can be processed here. Before sales begin, a reviewed refund policy will define eligibility, activation and usage conditions, request procedures, timelines, and applicable consumer rights. This draft does not promise refunds for future products.",
+        "For assistance with a purchase or a refund request, contact hello@mytripsim.com with your order reference and a description of the issue. Do not send card details or your installation QR. Our team will review the payment, eSIM issuance, installation and usage status, the plan conditions and applicable consumer rights before responding. Do not delete the eSIM while the issue is being reviewed unless our team instructs you to do so.",
     },
     notFound: "This destination isn't on the map.",
     notFoundBody:
@@ -353,7 +354,7 @@ export const dictionaries = {
       { title: "Planes claros", body: "Los detalles, antes de elegir." },
     ],
     previewNotice:
-      "Consulta nuestro catálogo de planes. Las compras todavía no están disponibles.",
+      "Encuentra tu destino y elige el plan de datos para tu viaje.",
     popularTitle: "Explora los destinos favoritos",
     popularDescription:
       "Una escapada o una gran aventura. Tu viaje empieza aquí.",
@@ -373,7 +374,7 @@ export const dictionaries = {
       },
       {
         title: "Compara tus planes",
-        body: "Consulta datos, duración y tipo de plan. Las compras llegarán después.",
+        body: "Compara datos, duración y variantes para elegir tu plan.",
       },
       {
         title: "Escanea y conéctate",
@@ -428,7 +429,7 @@ export const dictionaries = {
       {
         question: "¿Cuándo se activa mi eSIM?",
         answer:
-          "Las condiciones varían: algunos planes empiezan al instalarse; otros al conectarse a una red compatible. Revisa las condiciones exactas antes de instalarla. El catálogo de prueba no garantiza una regla de activación específica.",
+          "Las condiciones varían: algunos planes empiezan al instalarse; otros al conectarse a una red compatible. Revisa las condiciones exactas antes de instalarla. Consulta el inicio de vigencia indicado en el plan seleccionado.",
       },
     ],
     footerDescription:
@@ -441,12 +442,12 @@ export const dictionaries = {
     footerTag: "Para viajeros curiosos.",
     destinationsTitle: "¿Cuál será tu próxima aventura?",
     destinationsDescription:
-      "Explora nuestra selección de prueba de planes eSIM nacionales y regionales.",
+      "Explora nuestros planes eSIM de viaje por país y región.",
     plans: "Encuentra tu plan de viaje",
     plansDescription: "Elige los datos y la duración para tu próxima aventura.",
-    demo: "Catálogo de prueba",
+    demo: "Catálogo eSIM",
     demoDetails:
-      "Planes y precios en USD ilustrativos. Las redes, activación, cobertura y recargas no están confirmadas por el proveedor. No se pueden realizar compras.",
+      "Los precios se muestran en USD. Revisa la cobertura, la activación y las condiciones del plan seleccionado.",
     data: "Cantidad de datos",
     validity: "Vigencia",
     allData: "Todos los datos",
@@ -457,9 +458,9 @@ export const dictionaries = {
     unconfirmed: "Por confirmar con el proveedor",
     activation: "Activación",
     topup: "Posibilidad de recarga",
-    checkout: "El pago aún no está disponible",
+    checkout: "Completa tu pedido",
     checkoutBody:
-      "Este es un plan de prueba. Los pagos y la entrega de eSIM aún no están disponibles. No se ha creado un pedido ni realizado ningún cobro.",
+      "Revisa tu plan y el correo del beneficiario para continuar al pago seguro.",
     gotIt: "Volver a los planes",
     planEmpty:
       "No hay planes para estos filtros. Prueba otra cantidad de datos o duración.",
@@ -472,9 +473,9 @@ export const dictionaries = {
     coverageSample:
       "Cobertura ilustrativa. Los países, operadores y cobertura exactos deben confirmarse con el proveedor antes de la venta.",
     planFaq: "Antes de conectarte",
-    dataOnly: "Plan de prueba: solo datos",
+    dataOnly: "Plan de solo datos",
     back: "Todos los destinos",
-    planCount: "planes de prueba",
+    planCount: "planes de datos",
     selectedTrip: "Preferencia de viaje",
     clear: "Borrar búsqueda",
     howTitle: "Menos preparativos. Más mundo.",
@@ -521,16 +522,16 @@ export const dictionaries = {
     ],
     helpNote:
       "Consulta a SIM o crea un ticket para hablar con nuestro equipo. Inicia sesión para consultar un pedido privado y conservar el historial.",
-    legalDraft: "Borrador — no son condiciones comerciales vigentes",
+    legalDraft: "Información del servicio",
     legalIntro:
-      "Esta página describe únicamente la versión de prueba. Las políticas definitivas deben revisarse y publicarse antes del lanzamiento comercial.",
+      "Información sobre los servicios, las compras y la atención al cliente de MyTripSim.",
     legalContent: {
       terms:
-        "MyTripSim es una marca de YellowCat Enterprises LLC. Este sitio presenta un catálogo ilustrativo de eSIM. No se pueden realizar pedidos, pagos ni activar eSIM. La disponibilidad, precios, cobertura, condiciones de activación y entrega no son definitivos. Las condiciones vinculantes se publicarán antes de habilitar las compras.",
+        "MyTripSim es una marca de YellowCat Enterprises LLC. Antes de comprar, revisa los datos, la vigencia, la cobertura y las condiciones de activación del plan, y confirma que tu dispositivo admite eSIM y está liberado. El importe total se muestra antes de pagar. Tras confirmar el pago y preparar la eSIM, enviaremos las instrucciones al correo del beneficiario. Mantén privado el QR y sigue las instrucciones del plan. Para consultas sobre tu pedido, escribe a hello@mytripsim.com.",
       privacy:
-        "MyTripSim trata los datos de cuenta, pedidos y conversaciones de ayuda para prestar el servicio. Supabase almacena cuentas y soporte; Resend envía correos del servicio. SIM usa OpenAI para responder consultas: los mensajes y datos limitados del pedido que selecciones pueden ser tratados por OpenAI. SIM no tiene acceso a los códigos de instalación ni a las credenciales de pago. No compartas contraseñas, tarjetas ni QR en el chat. OpenAI puede conservar temporalmente datos de la API para prevenir abusos. La IA puede equivocarse y puedes pedir ayuda humana. El alojamiento puede procesar información técnica de las solicitudes. Escribe a hello@mytripsim.com sobre tus datos personales. El aviso comercial completo, incluidos los plazos de conservación y derechos aplicables, sigue pendiente de revisión antes del lanzamiento.",
+        "MyTripSim trata los datos de cuenta, pedidos y conversaciones de ayuda para prestar el servicio. Supabase almacena cuentas y soporte; Resend envía correos del servicio. SIM usa OpenAI para responder consultas: los mensajes y datos limitados del pedido que selecciones pueden ser tratados por OpenAI. SIM no tiene acceso a los códigos de instalación ni a las credenciales de pago. No compartas contraseñas, tarjetas ni QR en el chat. OpenAI puede conservar temporalmente datos de la API para prevenir abusos. La IA puede equivocarse y puedes pedir ayuda humana. El alojamiento puede procesar información técnica de las solicitudes. Escribe a hello@mytripsim.com sobre tus datos personales. Puedes escribir a esa misma dirección para solicitar acceso, corrección o eliminación de tus datos, conforme a las obligaciones legales aplicables.",
       refunds:
-        "En esta versión de prueba no se aceptan pagos, por lo que no se procesan pedidos ni reembolsos. Antes de iniciar las ventas, una política revisada definirá la elegibilidad, condiciones de activación y uso, procedimientos, plazos y derechos del consumidor aplicables. Este borrador no promete reembolsos para productos futuros.",
+        "Para recibir asistencia con una compra o solicitar un reembolso, escribe a hello@mytripsim.com con la referencia del pedido y una descripción del problema. No envíes datos de tarjeta ni tu QR de instalación. Nuestro equipo revisará el pago, la emisión, la instalación y el consumo de la eSIM, las condiciones del plan y los derechos aplicables antes de responder. No elimines la eSIM mientras se revisa el caso, salvo que nuestro equipo te lo indique.",
     },
     notFound: "Esta página no está en el mapa.",
     notFoundBody:

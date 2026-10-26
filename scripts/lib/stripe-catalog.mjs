@@ -48,15 +48,26 @@ export function testSecret(value) {
   return value;
 }
 
-export async function syncStripeCatalog(stripe, rows, onProgress = () => {}) {
+export function liveSecret(value) {
+  if (!/^(sk|rk)_live_[a-zA-Z0-9]{16,}$/.test(value ?? ""))
+    throw new Error("A Stripe live secret is required");
+  return value;
+}
+export async function syncStripeCatalog(
+  stripe,
+  rows,
+  onProgress = () => {},
+  live = false,
+) {
   const products = new Map();
   const prices = new Map();
   for await (const product of stripe.products.list({ limit: 100 })) {
-    if (product.livemode) throw new Error("Live mode rejected");
+    if (product.livemode !== live)
+      throw new Error("Stripe environment mismatch");
     products.set(product.id, product);
   }
   for await (const price of stripe.prices.list({ limit: 100 })) {
-    if (price.livemode) throw new Error("Live mode rejected");
+    if (price.livemode !== live) throw new Error("Stripe environment mismatch");
     if (price.lookup_key) prices.set(price.lookup_key, price);
   }
   // Check all existing identities before performing any writes.
@@ -117,6 +128,8 @@ export async function syncStripeCatalog(stripe, rows, onProgress = () => {}) {
         { idempotencyKey: `price_${hash(row.lookupKey)}` },
       );
     }
+    if (product.livemode !== live || price.livemode !== live)
+      throw new Error("Stripe environment mismatch");
     if (product.default_price !== price.id)
       await stripe.products.update(product.id, { default_price: price.id });
     bindings[index] = {

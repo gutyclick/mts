@@ -57,7 +57,12 @@
     "test:support": "node --experimental-strip-types --test tests/support.test.mjs tests/support-security.test.mjs",
     "test:support:web": "node scripts/test-support-web.mjs",
     "test:seo": "node --experimental-strip-types --test tests/seo.test.mjs",
-    "audit:seo": "node scripts/audit-seo.mjs"
+    "audit:seo": "node scripts/audit-seo.mjs",
+    "stripe:sync:live": "node --experimental-strip-types scripts/stripe-catalog.mjs --apply --live",
+    "stripe:setup:live": "node --experimental-strip-types scripts/setup-live-checkout.mjs",
+    "stripe:deploy:live-env": "node --experimental-strip-types scripts/deploy-checkout-live-env.mjs",
+    "stripe:domains:live": "node --experimental-strip-types scripts/register-payment-domains.mjs --live",
+    "test:live": "node --experimental-strip-types --test tests/live-checkout.test.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

@@ -235,10 +235,6 @@ export default async function ContentPage({
       )}
       {(key === "terms" || key === "privacy" || key === "refunds") && (
         <section className="container legal-section">
-          <p className="information-note">
-            <Info size={21} />
-            {t.legalDraft}
-          </p>
           <p>{t.legalContent[key]}</p>
         </section>
       )}

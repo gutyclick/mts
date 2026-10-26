@@ -5,6 +5,7 @@ import {
   verifyPaymentSnapshot,
 } from "@/lib/payments/checkout-core";
 import {
+  paymentEnvironment,
   checkoutDatabase,
   checkoutStripe,
   paymentHeaders,
@@ -18,19 +19,34 @@ export async function POST(request: NextRequest) {
       { received: status === 200 },
       { status, headers: paymentHeaders },
     );
-  const secret = process.env.STRIPE_TEST_WEBHOOK_SECRET;
   const signature = request.headers.get("stripe-signature");
-  if (!secret?.startsWith("whsec_") || !signature) return reply(400);
+  if (!signature) return reply(400);
   if (Number(request.headers.get("content-length")) > 262144) return reply(413);
   let event;
   try {
     const raw = await request.text();
     if (raw.length > 262144) return reply(413);
-    event = checkoutStripe().webhooks.constructEvent(raw, signature, secret);
+    for (const mode of ["live", "test"] as const) {
+      const config = paymentEnvironment(process.env, mode);
+      if (!config.webhook.startsWith("whsec_")) continue;
+      try {
+        const candidate = checkoutStripe(config.live).webhooks.constructEvent(
+          raw,
+          signature,
+          config.webhook,
+        );
+        if (candidate.livemode !== config.live) continue;
+        event = candidate;
+        break;
+      } catch {
+        /* A signature belongs to exactly one configured environment. */
+      }
+    }
+    if (!event) return reply(400);
   } catch {
     return reply(400);
   }
-  if (event.livemode || !handledEvents.has(event.type)) return reply(200);
+  if (!handledEvents.has(event.type)) return reply(200);
   try {
     const object = event.data.object;
     if (object.object !== "checkout.session") return reply(400);
@@ -46,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (duplicate) return reply(200);
     const { data: order, error } = await db
       .from("checkout_orders")
-      .select("id,amount_total,stripe_session_id")
+      .select("id,amount_total,stripe_session_id,livemode")
       .eq("id", orderId)
       .maybeSingle();
     if (error || !order) return reply(503);
@@ -55,7 +71,7 @@ export async function POST(request: NextRequest) {
       .select("stripe_price_id,quantity,unit_amount")
       .eq("order_id", orderId);
     if (itemError || !items?.length) return reply(503);
-    const stripe = checkoutStripe();
+    const stripe = checkoutStripe(event.livemode);
     const session = await stripe.checkout.sessions.retrieve(object.id);
     const lines = await stripe.checkout.sessions.listLineItems(session.id, {
       limit: 100,
@@ -82,7 +98,8 @@ export async function POST(request: NextRequest) {
       typeof session.payment_intent === "string"
         ? session.payment_intent
         : (session.payment_intent?.id ?? null);
-    const { error: recordError } = await db.rpc("record_test_checkout_event", {
+    const { error: recordError } = await db.rpc("record_checkout_event_v2", {
+      p_livemode: event.livemode,
       p_event_id: event.id,
       p_event_type: event.type,
       p_order_id: order.id,

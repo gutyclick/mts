@@ -31,7 +31,6 @@ export function TrustStrip({ locale }: { locale: Locale }) {
           );
         })}
       </div>
-      <p className="preview-note">{dictionaries[locale].previewNotice}</p>
     </div>
   );
 }

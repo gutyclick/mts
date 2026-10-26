@@ -175,8 +175,8 @@ export async function CustomerWallet({
                   <dd>
                     {selected.used_gb === null
                       ? es
-                        ? "Todavía no disponible"
-                        : "Not available yet"
+                        ? "Sin lectura de consumo"
+                        : "No usage reading"
                       : `${selected.used_gb} / ${order.data_gb} GB`}
                   </dd>
                 </div>

@@ -165,8 +165,8 @@ export function EsimDelivery({
       {!loading && !error && !units.length && (
         <p>
           {es
-            ? "Este pedido aún no tiene eSIM emitidas. Si es una compra de prueba, no genera una eSIM real."
-            : "No eSIMs have been issued for this order yet. Test purchases do not generate real eSIMs."}
+            ? "Aquí aparecerá el progreso de preparación y entrega de las eSIM de tu pedido."
+            : "Your order’s eSIM preparation and delivery progress will appear here."}
         </p>
       )}
       <div className="esim-delivery-list">

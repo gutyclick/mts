@@ -63,7 +63,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "purchase-availability",
             question: "Can I purchase a plan here?",
             answer:
-              "You can explore plans, save them in your cart and use the test checkout. Public live payments are not enabled yet. Issued eSIMs have a private QR and installation instructions in your account or the delivery email; a test payment does not automatically issue a real eSIM.",
+              "Choose a destination and plan, add it to your cart and complete payment. We will email the recipient a QR code and instructions once the eSIM is ready. When you purchase with an account, you can also view your orders and instructions in My eSIMs.",
           },
           {
             id: "similar-plan-names",
@@ -358,7 +358,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "purchase-availability",
             question: "¿Ya puedo comprar un plan aquí?",
             answer:
-              "Puedes explorar planes, guardarlos en el carrito y usar el checkout de pruebas. Los cobros públicos reales aún no están habilitados. Las eSIM emitidas tienen QR privado e instrucciones en tu cuenta o en el correo de entrega; un pago de prueba no emite automáticamente una eSIM real.",
+              "Elige tu destino y plan, añádelo al carrito y completa el pago. Enviaremos el QR y las instrucciones al correo del beneficiario cuando la eSIM esté preparada. Si compras con tu cuenta, también podrás consultar tus pedidos e instrucciones en Mis eSIM.",
           },
           {
             id: "similar-plan-names",

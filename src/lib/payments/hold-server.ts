@@ -22,7 +22,7 @@ const schema = z.object({
   status: z.enum(["pending", "paid", "expired", "failed", "cancelled"]),
   amount_total: z.number().int(),
   currency: z.literal("usd"),
-  livemode: z.literal(false),
+  livemode: z.boolean(),
   locale: z.enum(["es", "en"]),
   stripe_session_id: z.string().nullable(),
   billing_email: z.string().nullable(),
@@ -67,7 +67,7 @@ export async function reconcileHold(order: HoldOrder, inspect = false) {
     new Date(order.payment_hold_expires_at).getTime() <= Date.now();
   if (!due && !inspect) return order;
   const db = checkoutDatabase();
-  const stripe = checkoutStripe();
+  const stripe = checkoutStripe(order.livemode);
   let result: "cancelled" | "processing" | "expired" | null = null;
   if (due)
     result = await closeUnpaidCheckout(order, {

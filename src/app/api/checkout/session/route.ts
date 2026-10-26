@@ -11,6 +11,7 @@ import {
   resultPath,
 } from "@/lib/payments/checkout-core";
 import {
+  paymentMode,
   checkoutConfigured,
   checkoutDatabase,
   checkoutStripe,
@@ -22,6 +23,7 @@ const orderSchema = z.object({
   id: z.uuid(),
   status: z.string(),
   amount_total: z.number().int(),
+  livemode: z.boolean(),
   stripe_session_id: z.string().nullable(),
   checkout_url: z.string().nullable(),
   expires_at: z.string().nullable(),
@@ -40,6 +42,7 @@ export async function POST(request: NextRequest) {
   if (!checkoutConfigured()) return fail("payments_unavailable", 503);
   try {
     const origin = paymentOrigin();
+    const live = paymentMode(process.env) === "live";
     if (
       request.headers.get("origin") !== origin ||
       !request.headers.get("content-type")?.startsWith("application/json")
@@ -78,6 +81,7 @@ export async function POST(request: NextRequest) {
         recipient,
         marketingOptIn: body.marketingOptIn,
         uiMode: "elements",
+        livemode: live,
         walletVersion: "express-v1",
         holdPolicy: body.holdPolicy ?? null,
         user: user?.id ?? null,
@@ -87,7 +91,8 @@ export async function POST(request: NextRequest) {
       }),
     );
     const db = checkoutDatabase();
-    const { data, error } = await db.rpc("create_test_checkout_v2", {
+    const { data, error } = await db.rpc("create_checkout_v3", {
+      p_livemode: live,
       p_id: body.attemptId,
       p_user_id: user?.id ?? null,
       p_billing_email: email,
@@ -116,6 +121,7 @@ export async function POST(request: NextRequest) {
       return fail("payments_unavailable", 503);
     }
     const order = orderSchema.parse(data);
+    if (order.livemode !== live) return fail("attempt_conflict", 409);
     if (
       data.payment_in_progress ||
       (data.payment_hold_expires_at &&
@@ -139,13 +145,13 @@ export async function POST(request: NextRequest) {
       (order.expires_at && new Date(order.expires_at).getTime() <= Date.now())
     )
       return fail("checkout_expired", 409);
-    const stripe = checkoutStripe();
+    const stripe = checkoutStripe(live);
     if (order.stripe_session_id) {
       const existing = await stripe.checkout.sessions.retrieve(
         order.stripe_session_id,
       );
       if (
-        existing.livemode ||
+        existing.livemode !== live ||
         existing.ui_mode !== "elements" ||
         !existing.client_secret
       )
@@ -173,7 +179,7 @@ export async function POST(request: NextRequest) {
     for (const item of items) {
       const price = await stripe.prices.retrieve(item.stripe_price_id);
       if (
-        price.livemode ||
+        price.livemode !== live ||
         !price.active ||
         price.type !== "one_time" ||
         price.currency !== "usd" ||
@@ -204,7 +210,7 @@ export async function POST(request: NextRequest) {
       { idempotencyKey: `mts_elements_${order.id}` },
     );
     if (
-      session.livemode ||
+      session.livemode !== live ||
       session.amount_total !== order.amount_total ||
       session.currency !== "usd"
     )

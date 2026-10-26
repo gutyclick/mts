@@ -7,6 +7,7 @@ import {
   holdState,
 } from "@/lib/payments/hold-server";
 import {
+  paymentEnvironment,
   checkoutDatabase,
   checkoutStripe,
   paymentHeaders,
@@ -34,9 +35,9 @@ export async function POST(request: NextRequest) {
     if (order.status !== "pending" || order.payment_in_progress)
       return NextResponse.json(holdState(order), { headers: paymentHeaders });
     if (!order.stripe_session_id) return fail(409);
-    const session = await checkoutStripe().checkout.sessions.retrieve(
-      order.stripe_session_id,
-    );
+    const session = await checkoutStripe(
+      order.livemode,
+    ).checkout.sessions.retrieve(order.stripe_session_id);
     verifyHoldSession(order, session);
     if (
       session.status !== "open" ||
@@ -53,7 +54,10 @@ export async function POST(request: NextRequest) {
       {
         ...holdState(order),
         clientSecret: session.client_secret,
-        publishableKey: process.env.STRIPE_TEST_PUBLISHABLE_KEY,
+        publishableKey: paymentEnvironment(
+          process.env,
+          order.livemode ? "live" : "test",
+        ).publicKey,
         total: order.amount_total,
         buyer: order.billing_email ?? order.recipient_email,
         recipient: order.recipient_email,

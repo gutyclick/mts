@@ -203,8 +203,12 @@ export function PaymentResult({
         : "Complete payment"
       : paid
         ? es
-          ? "Pago de prueba confirmado"
-          : "Test payment confirmed"
+          ? receipt.test
+            ? "Pago de prueba confirmado"
+            : "Pago confirmado"
+          : receipt.test
+            ? "Test payment confirmed"
+            : "Payment confirmed"
         : stopped
           ? es
             ? "Tu pago no se ha completado"
@@ -250,8 +254,12 @@ export function PaymentResult({
                 : "We’ll keep your order for five minutes after you leave payment. You can resume with the remaining time."
               : paid
                 ? es
-                  ? "El pago de prueba está registrado, sin cargos reales. Puedes consultar el estado de tus eSIM debajo."
-                  : "Your test payment is recorded, with no real charges. Check your eSIM delivery status below."
+                  ? receipt.test
+                    ? "El pago de prueba está registrado, sin cargos reales. Puedes consultar el estado de tus eSIM debajo."
+                    : "Tu pago está confirmado. Puedes consultar el estado de tus eSIM y las instrucciones de entrega debajo."
+                  : receipt.test
+                    ? "Your test payment is recorded, with no real charges. Check your eSIM delivery status below."
+                    : "Your payment is confirmed. Check your eSIM preparation and delivery status below."
                 : stopped
                   ? es
                     ? "Puedes volver a tu carrito y continuar cuando quieras. Tus planes siguen guardados."
@@ -376,12 +384,14 @@ export function PaymentResult({
             {es ? "Explorar destinos" : "Explore destinations"}
           </Link>
         </div>
-        <p className="payment-result-note">
-          <ShieldCheck size={16} />
-          {es
-            ? "Modo de pruebas · Sin cargos reales"
-            : "Test mode · No real charges"}
-        </p>
+        {receipt?.test && (
+          <p className="payment-result-note">
+            <ShieldCheck size={16} />
+            {es
+              ? "Modo de pruebas · Sin cargos reales"
+              : "Test mode · No real charges"}
+          </p>
+        )}
       </section>
       {paid && <EsimDelivery locale={locale} orderId={orderId} />}
     </div>

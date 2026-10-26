@@ -36,6 +36,7 @@ export function Checkout({
   const es = locale === "es";
   const cart = useCart();
   const initialized = useRef(false);
+  const [testMode, setTestMode] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [publishableKey, setPublishableKey] = useState("");
   const [buyerEmail, setBuyerEmail] = useState(email ?? "");
@@ -66,6 +67,7 @@ export function Checkout({
         if (response.ok) {
           const data = await response.json();
           setEnabled(data.enabled === true);
+          setTestMode(data.mode === "test");
           setPublishableKey(
             typeof data.publishableKey === "string" ? data.publishableKey : "",
           );
@@ -418,20 +420,24 @@ export function Checkout({
                       {es
                         ? enabled
                           ? "En el siguiente paso introduces tu tarjeta aquí mismo, con la protección de Stripe."
-                          : "Tu precio final ya está disponible. Estamos preparando las opciones de pago para completar tu compra."
+                          : "Revisa tu correo y los detalles de tu pedido antes de continuar al pago."
                         : enabled
                           ? "Enter your card in the next step, right here, protected by Stripe."
-                          : "Your final price is now available. We’re preparing payment options so you can complete your purchase."}
+                          : "Review your email and order details before continuing to payment."}
                     </p>
                     <span className="checkout-pending">
                       <LockKeyhole size={14} />
                       {es
                         ? enabled
-                          ? "Modo de pruebas · sin cargos reales"
-                          : "El pago aún no está habilitado"
+                          ? testMode
+                            ? "Modo de pruebas · sin cargos reales"
+                            : "Pago protegido por Stripe"
+                          : "Conectando con el pago seguro"
                         : enabled
-                          ? "Test mode · no real charges"
-                          : "Payment is not available yet"}
+                          ? testMode
+                            ? "Test mode · no real charges"
+                            : "Payment protected by Stripe"
+                          : "Connecting to secure payment"}
                     </span>
                   </div>
                 </div>
@@ -499,8 +505,12 @@ export function Checkout({
                       : "Preparing payment…"
                     : enabled
                       ? es
-                        ? "Continuar al pago de prueba"
-                        : "Continue to test payment"
+                        ? testMode
+                          ? "Continuar al pago de prueba"
+                          : "Continuar al pago"
+                        : testMode
+                          ? "Continue to test payment"
+                          : "Continue to payment"
                       : es
                         ? "Continuar al pago"
                         : "Continue to payment"}
@@ -511,13 +521,13 @@ export function Checkout({
                   </p>
                 )}
                 <p id="checkout-payment-note" className="commerce-muted">
-                  {enabled
+                  {enabled && testMode
                     ? es
                       ? "Esta compra es de prueba: no se harán cargos ni se enviarán QR de eSIM reales."
                       : "This is a test purchase: no real charges or eSIM QR codes will be sent."
                     : es
-                      ? "No se realizará ningún cargo mientras el pago siga desactivado."
-                      : "You won’t be charged while payment remains disabled."}
+                      ? "El QR y las instrucciones se enviarán al correo del beneficiario tras confirmar el pago y preparar la eSIM."
+                      : "The QR code and instructions will be sent to the recipient after payment is confirmed and the eSIM is ready."}
                 </p>
               </form>
             )}

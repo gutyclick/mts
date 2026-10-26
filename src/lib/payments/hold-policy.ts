@@ -24,10 +24,11 @@ export type HoldOrder = {
   id: string;
   stripe_session_id: string | null;
   amount_total: number;
+  livemode?: boolean;
 };
 export function verifyHoldSession(order: HoldOrder, session: HoldSession) {
   if (
-    session.livemode ||
+    session.livemode !== (order.livemode ?? false) ||
     session.id !== order.stripe_session_id ||
     session.client_reference_id !== order.id ||
     session.metadata?.mts_order_id !== order.id ||

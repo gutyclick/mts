@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { browserCookie, validBrowserToken } from "@/lib/payments/checkout-core";
 import {
+  paymentEnvironment,
   checkoutConfigured,
   paymentHeaders,
 } from "@/lib/payments/checkout-server";
@@ -11,8 +12,10 @@ export function GET(request: NextRequest) {
   const response = NextResponse.json(
     {
       enabled,
-      mode: "test",
-      publishableKey: enabled ? process.env.STRIPE_TEST_PUBLISHABLE_KEY : null,
+      mode: paymentEnvironment(process.env).mode,
+      publishableKey: enabled
+        ? paymentEnvironment(process.env).publicKey
+        : null,
     },
     { headers: paymentHeaders },
   );

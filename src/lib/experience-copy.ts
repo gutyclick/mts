@@ -1,12 +1,11 @@
 export const experienceCopy = {
   en: {
-    preview: "Visual preview",
-    previewBody:
-      "Explore this administration preview with example data. Payments and eSIM activation are not available yet.",
+    preview: "Service overview",
+    previewBody: "Manage your orders and eSIM service information.",
     fullDetails: "Full plan details",
     previewPurchase: "Continue with this plan",
     wallet: "My eSIMs",
-    studio: "Administration preview",
+    studio: "Administration",
     install: "Installation guide",
     back: "Back",
     catalog: "Explore destinations",
@@ -47,8 +46,8 @@ export const experienceCopy = {
     checkoutDescription:
       "Review your cart and choose the email for your eSIM delivery.",
     review: "Review",
-    payment: "Payment preview",
-    confirmation: "Confirmation preview",
+    payment: "Payment",
+    confirmation: "Confirmation",
     traveler: "Traveler details",
     exampleOnly: "Example information — not submitted",
     name: "Name",
@@ -56,15 +55,14 @@ export const experienceCopy = {
     orderSummary: "Trip summary",
     compatible:
       "I have checked that my phone supports eSIM and is carrier unlocked.",
-    terms: "I understand this is a preview and no purchase will be made.",
-    continuePayment: "Continue to payment preview",
-    paymentBody:
-      "The secure payment form will appear here when purchasing is available. No card information is requested in this preview.",
+    terms: "I have reviewed the purchase terms.",
+    continuePayment: "Continue to payment",
+    paymentBody: "Complete payment using the secure Stripe form.",
     paymentPlaceholder: "Future secure payment form",
-    previewConfirmation: "Preview confirmation",
+    previewConfirmation: "Order confirmation",
     confirmationTitle: "This is how your confirmation will look",
     confirmationBody:
-      "No payment was made and no eSIM was issued. Your real installation instructions will arrive here and by email when purchases are available.",
+      "View the status of your order and eSIM delivery instructions.",
     exploreWallet: "Explore My eSIMs",
     whatNext: "Your next steps",
     nextSteps: [
@@ -72,12 +70,11 @@ export const experienceCopy = {
       "Install on the phone you will travel with.",
       "Activate according to your plan’s terms.",
     ],
-    noSelection: "Choose a plan to preview your trip",
-    noSelectionBody:
-      "Start with a destination, open a plan and follow the preview purchase link.",
+    noSelection: "Choose a plan for your trip",
+    noSelectionBody: "Choose a destination and plan, then add it to your cart.",
     walletTitle: "Your trips, all in one place",
     walletDescription:
-      "A preview of where you will find your eSIMs, installation guides and data usage.",
+      "Find your eSIMs, installation guides and data usage in one place.",
     all: "All",
     ready: "To install",
     active: "Active",
@@ -86,7 +83,7 @@ export const experienceCopy = {
     viewEsim: "View eSIM for",
     noTrips: "Your next trip starts here",
     noTripsBody:
-      "Your eSIMs will appear here when purchases are available. Explore the catalog to plan your next destination.",
+      "Your purchased eSIMs appear here. Explore the catalog to plan your next destination.",
     noFilter: "No example eSIMs in this category",
     installGuide: "View installation guide",
     usage: "Data usage",
@@ -107,7 +104,7 @@ export const experienceCopy = {
       "The SM-DP+ address and activation code will be supplied with your purchased eSIM.",
     topUp: "Top-up availability",
     topUpBody:
-      "Depends on the exact plan. No top-up is available in this preview.",
+      "Contact support to check additional-data options for your plan.",
     help: "Need a hand?",
     helpBody:
       "Find guidance on roaming, APN settings and keeping your home number.",
@@ -189,13 +186,12 @@ export const experienceCopy = {
     saved: "Content is read-only in this preview.",
   },
   es: {
-    preview: "Vista de demostración",
-    previewBody:
-      "Explora la administración de muestra con datos de ejemplo. Los pagos y la activación de eSIM todavía no están disponibles.",
+    preview: "Información del servicio",
+    previewBody: "Gestiona la información de tus pedidos y eSIM.",
     fullDetails: "Ver ficha completa",
     previewPurchase: "Continuar con este plan",
     wallet: "Mis eSIM",
-    studio: "Administración de muestra",
+    studio: "Administración",
     install: "Guía de instalación",
     back: "Volver",
     catalog: "Explorar destinos",
@@ -236,23 +232,22 @@ export const experienceCopy = {
     checkoutDescription:
       "Revisa tu carrito y elige el correo de entrega de tus eSIM.",
     review: "Resumen",
-    payment: "Pago de ejemplo",
-    confirmation: "Confirmación de ejemplo",
+    payment: "Pago",
+    confirmation: "Confirmación",
     traveler: "Datos del viajero",
     exampleOnly: "Información de ejemplo: no se envía",
     name: "Nombre",
     email: "Correo de entrega",
     orderSummary: "Resumen de tu viaje",
     compatible: "He revisado que mi teléfono admite eSIM y está liberado.",
-    terms: "Entiendo que es una demostración y no se realizará una compra.",
-    continuePayment: "Continuar al pago de ejemplo",
-    paymentBody:
-      "El formulario de pago seguro aparecerá aquí cuando habilitemos las compras. Esta demostración no solicita datos de tarjeta.",
+    terms: "He revisado las condiciones de compra.",
+    continuePayment: "Continuar al pago",
+    paymentBody: "Completa el pago en el formulario seguro de Stripe.",
     paymentPlaceholder: "Futuro formulario de pago seguro",
-    previewConfirmation: "Ver confirmación de ejemplo",
+    previewConfirmation: "Ver confirmación del pedido",
     confirmationTitle: "Así se verá tu confirmación",
     confirmationBody:
-      "No se realizó ningún pago ni se emitió una eSIM. Cuando habilitemos las compras, recibirás aquí y por correo tus instrucciones de instalación reales.",
+      "Consulta el estado de tu pedido y las instrucciones de entrega de tu eSIM.",
     exploreWallet: "Explorar Mis eSIM",
     whatNext: "Tus siguientes pasos",
     nextSteps: [
@@ -261,11 +256,10 @@ export const experienceCopy = {
       "Actívala según las condiciones de tu plan.",
     ],
     noSelection: "Elige un plan para preparar tu viaje",
-    noSelectionBody:
-      "Empieza por un destino, abre un plan y sigue el enlace de compra de ejemplo.",
+    noSelectionBody: "Elige un destino y un plan, y añádelo a tu carrito.",
     walletTitle: "Tus viajes, en un solo lugar",
     walletDescription:
-      "Una muestra de dónde encontrarás tus eSIM, instrucciones de instalación y consumo de datos.",
+      "Consulta tus eSIM, instrucciones de instalación y consumo de datos en un solo lugar.",
     all: "Todas",
     ready: "Por instalar",
     active: "Activas",
@@ -274,7 +268,7 @@ export const experienceCopy = {
     viewEsim: "Ver eSIM de",
     noTrips: "Tu próximo viaje empieza aquí",
     noTripsBody:
-      "Tus eSIM aparecerán aquí cuando habilitemos las compras. Explora el catálogo para preparar tu próximo destino.",
+      "Tus eSIM compradas aparecerán aquí. Explora el catálogo para preparar tu próximo destino.",
     noFilter: "No hay eSIM de ejemplo en esta categoría",
     installGuide: "Ver guía de instalación",
     usage: "Consumo de datos",
@@ -296,7 +290,7 @@ export const experienceCopy = {
       "La dirección SM-DP+ y el código de activación se entregarán con la eSIM que compres.",
     topUp: "Disponibilidad de recarga",
     topUpBody:
-      "Depende del plan concreto. Esta demostración no permite recargas.",
+      "Consulta con soporte las opciones de datos adicionales para tu plan.",
     help: "¿Necesitas una mano?",
     helpBody:
       "Consulta cómo configurar el roaming, el APN y tu número habitual.",

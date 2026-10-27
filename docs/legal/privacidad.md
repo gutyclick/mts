@@ -25,6 +25,8 @@ También utilizamos datos limitados para prevenir fraude y abuso, proteger acces
 
 No describimos los datos de pedidos como una autorización general para fines publicitarios de terceros. Una nueva finalidad incompatible o una nueva categoría de tratamiento requiere la información y, cuando corresponda, la base o el permiso adicional exigidos por la ley.
 
+Con tu consentimiento opcional, medimos sesiones de consulta de destinos, añadidos al carrito, inicio de pago y compra confirmada para mejorar la web. Usamos un identificador aleatorio de sesión de 30 minutos, del que solo guardamos una huella HMAC en Supabase; no incorporamos correo, códigos QR, credenciales de instalación, direcciones URL completas ni referencias de pedido a los eventos. Para atribuir la confirmación mantenemos temporalmente una asociación protegida con el pedido, que se elimina al retirar el permiso o al purgar la sesión. Son datos seudónimos, no necesariamente anónimos. Puedes rechazar o retirar el permiso en «Preferencias de privacidad» del pie de página sin afectar tu compra. Respetamos las señales Do Not Track y Global Privacy Control. Las sesiones y eventos se conservan 30 días, con una limpieza diaria que puede tardar hasta 24 horas adicionales; no usamos proveedores externos de analítica o publicidad para esta medición. Los controles contra abusos usan huellas separadas por hora de la dirección de red, sin guardar la IP en estas tablas. Esos controles y los marcadores de retirada caducan en una hora y 30 minutos respectivamente y se purgan diariamente. La retirada elimina los eventos y la asociación del pedido de la sesión actual cuando el servicio de datos está disponible; no permite localizar por sí sola sesiones anteriores sin vinculación. Para otras solicitudes escribe a hello@mytripsim.com.
+
 ## 4. Bases jurídicas, cuando sean aplicables
 
 Cuando la legislación aplicable requiera identificar una base jurídica, distinguimos la ejecución del contrato o gestiones solicitadas antes de contratar; el cumplimiento de obligaciones legales; los intereses legítimos de seguridad, prevención del fraude y atención de reclamaciones, sujetos a la evaluación correspondiente; y el consentimiento para tratamientos opcionales que lo requieran.
@@ -35,7 +37,7 @@ La solicitud de borrado o la retirada del consentimiento de marketing no impiden
 
 Los siguientes servicios intervienen en la operación revisada de MyTripSim, con acceso limitado a la función que desempeñan:
 
-- **Supabase:** autenticación, base de datos de cuentas, pedidos, eSIM y soporte.
+- **Supabase:** autenticación, base de datos de cuentas, pedidos, eSIM, soporte y estadísticas opcionales.
 - **Vercel:** alojamiento, entrega de la web, ejecución del servidor y registros técnicos de infraestructura.
 - **Stripe y los participantes del pago:** procesamiento, autenticación, prevención del fraude y gestión del pago. Stripe puede actuar como encargado o responsable independiente según la actividad.
 - **eSIM Access y redes móviles participantes:** preparación de perfiles y conectividad. Nuestra solicitud actual de emisión utiliza el código del plan y una referencia de transacción; no incluye el correo del beneficiario en esa llamada de emisión.

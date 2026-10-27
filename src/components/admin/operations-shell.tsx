@@ -52,6 +52,13 @@ export function OperationsShell({
           </Link>
           <Link
             className="admin-support-link"
+            href={`/${locale}/admin/analytics`}
+          >
+            <Activity size={20} />
+            {es ? "Ventas y conversión" : "Sales and conversion"}
+          </Link>
+          <Link
+            className="admin-support-link"
             href={`/${locale}/admin/tickets`}
           >
             <LifeBuoy size={20} />

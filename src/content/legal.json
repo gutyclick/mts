@@ -270,6 +270,10 @@
             {
               "type": "paragraph",
               "text": "No describimos los datos de pedidos como una autorización general para fines publicitarios de terceros. Una nueva finalidad incompatible o una nueva categoría de tratamiento requiere la información y, cuando corresponda, la base o el permiso adicional exigidos por la ley."
+            },
+            {
+              "type": "paragraph",
+              "text": "Con tu consentimiento opcional, medimos sesiones de consulta de destinos, añadidos al carrito, inicio de pago y compra confirmada para mejorar la web. Usamos un identificador aleatorio de sesión de 30 minutos, del que solo guardamos una huella HMAC en Supabase; no incorporamos correo, códigos QR, credenciales de instalación, direcciones URL completas ni referencias de pedido a los eventos. Para atribuir la confirmación mantenemos temporalmente una asociación protegida con el pedido, que se elimina al retirar el permiso o al purgar la sesión. Son datos seudónimos, no necesariamente anónimos. Puedes rechazar o retirar el permiso en «Preferencias de privacidad» del pie de página sin afectar tu compra. Respetamos las señales Do Not Track y Global Privacy Control. Las sesiones y eventos se conservan 30 días, con una limpieza diaria que puede tardar hasta 24 horas adicionales; no usamos proveedores externos de analítica o publicidad para esta medición. Los controles contra abusos usan huellas separadas por hora de la dirección de red, sin guardar la IP en estas tablas. Esos controles y los marcadores de retirada caducan en una hora y 30 minutos respectivamente y se purgan diariamente. La retirada elimina los eventos y la asociación del pedido de la sesión actual cuando el servicio de datos está disponible; no permite localizar por sí sola sesiones anteriores sin vinculación. Para otras solicitudes escribe a hello@mytripsim.com."
             }
           ]
         },
@@ -298,7 +302,7 @@
             {
               "type": "list",
               "items": [
-                "Supabase: autenticación, base de datos de cuentas, pedidos, eSIM y soporte.",
+                "Supabase: autenticación, base de datos de cuentas, pedidos, eSIM, soporte y estadísticas opcionales.",
                 "Vercel: alojamiento, entrega de la web, ejecución del servidor y registros técnicos de infraestructura.",
                 "Stripe y los participantes del pago: procesamiento, autenticación, prevención del fraude y gestión del pago. Stripe puede actuar como encargado o responsable independiente según la actividad.",
                 "eSIM Access y redes móviles participantes: preparación de perfiles y conectividad. Nuestra solicitud actual de emisión utiliza el código del plan y una referencia de transacción; no incluye el correo del beneficiario en esa llamada de emisión.",
@@ -553,7 +557,11 @@
           "blocks": [
             {
               "type": "table",
-              "headers": ["Elemento", "Finalidad", "Duración identificada"],
+              "headers": [
+                "Elemento",
+                "Finalidad",
+                "Duración identificada"
+              ],
               "rows": [
                 [
                   "Cookies de autenticación Supabase sb-*",
@@ -613,11 +621,15 @@
             },
             {
               "type": "paragraph",
-              "text": "En el código revisado no se han identificado etiquetas propias de publicidad conductual ni herramientas propias de analítica de audiencia. Esto no significa que todas las tecnologías de terceros sean inexistentes o que cualquier nueva integración pueda instalarse sin informar."
+              "text": "Las estadísticas propias son opcionales y permanecen desactivadas hasta que aceptes. Puedes elegir «Solo necesarias» o «Aceptar estadísticas» con la misma facilidad y cambiarlo en «Preferencias de privacidad» del pie de página. Rechazar no impide comprar ni usar el soporte. El permiso para ofertas por correo es independiente."
             },
             {
               "type": "paragraph",
-              "text": "Si se incorporan analítica o publicidad que requieran consentimiento, deberán permanecer bloqueadas hasta que el usuario elija, con una forma de rechazar y retirar el permiso que cumpla la legislación aplicable. El consentimiento para recibir ofertas por correo es una elección distinta del uso de cookies."
+              "text": "La cookie necesaria mts_stats_consent guarda una elección firmada (sí o no, versión v1) durante 180 días, sin identificador individual. Solo al aceptar se crea mts_stats_session, una cookie HttpOnly con un valor aleatorio y una duración absoluta de 30 minutos. El servidor guarda una huella HMAC de ese valor para contar sesiones que consultan destinos, añaden al carrito, empiezan el pago y completan una compra real; no utiliza píxeles ni analítica de terceros. No registra URLs completas, correos, QR ni códigos de instalación en los eventos."
+            },
+            {
+              "type": "paragraph",
+              "text": "Respetamos Do Not Track y Global Privacy Control desactivando la medición. Retirar el permiso detiene los nuevos eventos y borra la cookie opcional al confirmar la retirada en el servidor; si hay un fallo, el identificador se conserva solo para reintentar el borrado hasta su vencimiento original de 30 minutos; cuando la base de datos está disponible, también elimina los eventos y la asociación del pedido de la sesión actual. Los datos seudónimos de sesiones y eventos se conservan 30 días y se purgan diariamente (hasta 24 horas adicionales). Las huellas separadas para limitar abusos caducan en una hora y los marcadores que evitan reactivar sesiones retiradas en 30 minutos; se purgan diariamente. El borrado de una sesión actual no identifica automáticamente sesiones anteriores. La política de privacidad amplía esta información."
             }
           ]
         },
@@ -923,6 +935,10 @@
             {
               "type": "paragraph",
               "text": "Purchase information is not general permission for third-party advertising. A new incompatible purpose or new processing category requires the information and, where appropriate, legal basis or permission required by law."
+            },
+            {
+              "type": "paragraph",
+              "text": "With your optional consent, we measure destination views, cart additions, payment starts and confirmed purchases to improve our website. We use a random 30-minute session identifier and store only its HMAC in Supabase; events do not contain email, QR codes, installation credentials, full URLs or order references. A protected temporary order association allows payment attribution; it is removed upon withdrawal or session cleanup. These data are pseudonymous, not necessarily anonymous. Refuse or withdraw consent through “Privacy preferences” in the footer without affecting your purchase. We respect Do Not Track and Global Privacy Control. Sessions and events are retained for 30 days, with daily cleanup that may take up to 24 additional hours. We use no external advertising or analytics providers for this measurement. Abuse controls use separate hourly network-address hashes, without storing raw IP addresses in these tables. Those controls and withdrawal markers expire after one hour and 30 minutes respectively and are purged daily. Withdrawal removes the current session’s events and order association when the data service is available; it cannot by itself locate earlier unlinked sessions. Contact hello@mytripsim.com for other requests."
             }
           ]
         },
@@ -947,7 +963,7 @@
             {
               "type": "list",
               "items": [
-                "Supabase provides authentication and databases for accounts, orders, eSIMs and support.",
+                "Supabase provides authentication and databases for accounts, orders, eSIMs, support and optional statistics.",
                 "Vercel hosts and delivers the website, runs the server and processes technical infrastructure logs.",
                 "Stripe and payment participants process and authenticate payments and prevent fraud. Stripe's controller or processor role depends on the activity.",
                 "eSIM Access and participating mobile networks prepare profiles and provide connectivity. Our current issuance request sends a plan code and transaction reference, not the recipient email in that request.",
@@ -1198,7 +1214,11 @@
           "blocks": [
             {
               "type": "table",
-              "headers": ["Item", "Purpose", "Duration"],
+              "headers": [
+                "Item",
+                "Purpose",
+                "Duration"
+              ],
               "rows": [
                 [
                   "Supabase authentication cookies sb-*",
@@ -1258,11 +1278,15 @@
             },
             {
               "type": "paragraph",
-              "text": "We have not identified our own behavioral-advertising tags or audience-analytics tools in the reviewed website implementation. This does not mean third-party technologies are absent or that new integrations can be installed without notice."
+              "text": "Our first-party statistics are optional and remain off until you accept. “Necessary only” and “Accept statistics” are equally accessible; change your choice through “Privacy preferences” in the footer. Refusal does not prevent purchases or support. Email marketing permission is separate."
             },
             {
               "type": "paragraph",
-              "text": "If analytics or advertising requiring consent are introduced, they must remain blocked until the appropriate choice is made, with legally compliant refusal and withdrawal options. Email marketing permission is separate from cookie choices."
+              "text": "The necessary mts_stats_consent cookie remembers a signed yes/no preference (version v1) for 180 days without an individual identifier. Only acceptance creates mts_stats_session, an HttpOnly random cookie with an absolute 30-minute lifetime. The server stores its HMAC to count sessions viewing destinations, adding to cart, starting payment and completing a live purchase. No third-party analytics or pixels are used. Events do not include full URLs, email, QR codes or installation credentials."
+            },
+            {
+              "type": "paragraph",
+              "text": "We honor Do Not Track and Global Privacy Control by disabling collection. Withdrawal stops new events and clears the optional cookie when server cleanup is confirmed; on failure, the identifier is retained only to retry deletion until its original 30-minute expiry; when the database is available, it also removes the current session’s events and order association. Pseudonymous session and event data are retained for 30 days and purged daily (up to 24 additional hours). Separate abuse-limiting hashes expire after one hour and markers preventing withdrawn-session revival after 30 minutes; both are purged daily. Removing a current session does not automatically identify earlier sessions. See the privacy policy for further details."
             }
           ]
         },

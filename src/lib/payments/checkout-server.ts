@@ -38,7 +38,9 @@ export function checkoutDatabase() {
         fetch(input, {
           ...init,
           cache: "no-store",
-          signal: AbortSignal.timeout(10000),
+          signal: init?.signal
+            ? AbortSignal.any([init.signal, AbortSignal.timeout(10000)])
+            : AbortSignal.timeout(10000),
         }),
     },
   });

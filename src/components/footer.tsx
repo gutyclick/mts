@@ -2,6 +2,7 @@ import Link from "next/link";
 import { dictionaries, pathFor, type Locale, type PageKey } from "@/lib/i18n";
 import { Brand } from "./ui";
 import { LanguageSwitcher } from "./site-navigation";
+import { StatsPreferences } from "./analytics/consent";
 
 export function Footer({ locale }: { locale: Locale }) {
   const t = dictionaries[locale];
@@ -36,6 +37,7 @@ export function Footer({ locale }: { locale: Locale }) {
           ))}
         </div>
         <div className="footer-experience-links">
+          <StatsPreferences locale={locale}/>
           <Link href={experiencePath(locale, "wallet")}>
             {experienceCopy[locale].wallet}
           </Link>

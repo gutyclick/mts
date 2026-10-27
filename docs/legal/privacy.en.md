@@ -25,6 +25,8 @@ Limited information is also used to prevent fraud and abuse, secure access, keep
 
 Purchase information is not general permission for third-party advertising. A new incompatible purpose or new processing category requires the information and, where appropriate, legal basis or permission required by law.
 
+With your optional consent, we measure destination views, cart additions, payment starts and confirmed purchases to improve our website. We use a random 30-minute session identifier and store only its HMAC in Supabase; events do not contain email, QR codes, installation credentials, full URLs or order references. A protected temporary order association allows payment attribution; it is removed upon withdrawal or session cleanup. These data are pseudonymous, not necessarily anonymous. Refuse or withdraw consent through “Privacy preferences” in the footer without affecting your purchase. We respect Do Not Track and Global Privacy Control. Sessions and events are retained for 30 days, with daily cleanup that may take up to 24 additional hours. We use no external advertising or analytics providers for this measurement. Abuse controls use separate hourly network-address hashes, without storing raw IP addresses in these tables. Those controls and withdrawal markers expire after one hour and 30 minutes respectively and are purged daily. Withdrawal removes the current session’s events and order association when the data service is available; it cannot by itself locate earlier unlinked sessions. Contact hello@mytripsim.com for other requests.
+
 ## 4. Legal grounds where applicable
 
 Where the applicable law requires a legal basis, we distinguish performance of a contract or steps you request before contracting; legal obligations; legitimate security, fraud-prevention and claims-handling interests, subject to the appropriate assessment; and consent for optional processing that requires it.
@@ -33,7 +35,7 @@ Deletion requests or withdrawal of marketing consent do not remove legal retenti
 
 ## 5. Providers and disclosures
 
-- Supabase provides authentication and databases for accounts, orders, eSIMs and support.
+- Supabase provides authentication and databases for accounts, orders, eSIMs, support and optional statistics.
 - Vercel hosts and delivers the website, runs the server and processes technical infrastructure logs.
 - Stripe and payment participants process and authenticate payments and prevent fraud. Stripe's controller or processor role depends on the activity.
 - eSIM Access and participating mobile networks prepare profiles and provide connectivity. Our current issuance request sends a plan code and transaction reference, not the recipient email in that request.

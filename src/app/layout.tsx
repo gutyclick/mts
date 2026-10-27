@@ -20,6 +20,7 @@ import "@/styles/seo.css";
 import "@/styles/legal.css";
 import "@/styles/operations.css";
 import "@/styles/refunds.css";
+import "@/styles/analytics.css";
 
 export const viewport: Viewport = {
   width: "device-width",

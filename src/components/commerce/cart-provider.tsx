@@ -32,6 +32,7 @@ import { pathFor, type Locale } from "@/lib/i18n";
 import { DestinationFlag } from "../destination-flag";
 import { planVariant } from "@/lib/plan-variants";
 import { formatUSD } from "@/lib/retail-prices";
+import { recordStats } from "@/lib/analytics/client";
 
 const empty: CartLine[] = [];
 let memory = empty;
@@ -199,13 +200,19 @@ export function CartProvider({
     },
     ensure(line) {
       const current = snapshot();
-      if (!current.some((item) => cartKey(item) === cartKey(line)))
-        write(addCartLine(current, line));
+      if (!current.some((item) => cartKey(item) === cartKey(line))) {
+        const next = addCartLine(current, line);
+        write(next);
+        if (JSON.stringify(current) !== JSON.stringify(next))
+          recordStats("add_to_cart", line.destination);
+      }
     },
     add(line) {
       const before = snapshot();
       const next = addCartLine(before, line);
       write(next);
+      if (JSON.stringify(before) !== JSON.stringify(next))
+        recordStats("add_to_cart", line.destination);
       setNotice(
         JSON.stringify(before) === JSON.stringify(next)
           ? es

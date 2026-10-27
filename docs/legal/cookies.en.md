@@ -25,9 +25,11 @@ Third-party names and durations can vary. The inventory is updated with integrat
 
 Account sessions, a requested cart, payment security and recovering a chat you open serve specific functional purposes. Their legal classification depends on actual use and applicable rules.
 
-We have not identified our own behavioral-advertising tags or audience-analytics tools in the reviewed website implementation. This does not mean third-party technologies are absent or that new integrations can be installed without notice.
+Our first-party statistics are optional and remain off until you accept. “Necessary only” and “Accept statistics” are equally accessible; change your choice through “Privacy preferences” in the footer. Refusal does not prevent purchases or support. Email marketing permission is separate.
 
-If analytics or advertising requiring consent are introduced, they must remain blocked until the appropriate choice is made, with legally compliant refusal and withdrawal options. Email marketing permission is separate from cookie choices.
+The necessary `mts_stats_consent` cookie remembers a signed yes/no preference (version v1) for 180 days without an individual identifier. Only acceptance creates `mts_stats_session`, an HttpOnly random cookie with an absolute 30-minute lifetime. The server stores its HMAC to count sessions viewing destinations, adding to cart, starting payment and completing a live purchase. No third-party analytics or pixels are used. Events do not include full URLs, email, QR codes or installation credentials.
+
+We honor Do Not Track and Global Privacy Control by disabling collection. Withdrawal stops new events and clears the optional cookie when server cleanup is confirmed; on failure, the identifier is retained only to retry deletion until its original 30-minute expiry; when the database is available, it also removes the current session’s events and order association. Pseudonymous session and event data are retained for 30 days and purged daily (up to 24 additional hours). Separate abuse-limiting hashes expire after one hour and markers preventing withdrawn-session revival after 30 minutes; both are purged daily. Removing a current session does not automatically identify earlier sessions. See the privacy policy for further details.
 
 ## 4. Controls
 

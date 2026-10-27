@@ -352,6 +352,13 @@ export function AdminDashboard({
             {es ? "Reembolsos" : "Refunds"}
           </Link>
           <Link
+            className="admin-support-link"
+            href={`/${locale}/admin/analytics`}
+          >
+            <Activity size={20} />
+            {es ? "Ventas y conversión" : "Sales and conversion"}
+          </Link>
+          <Link
             href={`/${locale}/admin/tickets`}
             className="admin-support-link"
           >

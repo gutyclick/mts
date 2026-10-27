@@ -25,9 +25,11 @@ Los nombres y las duraciones de terceros pueden variar. El inventario debe actua
 
 La sesión de cuenta, el carrito solicitado, la seguridad del pago y la recuperación del chat que abres tienen finalidades funcionales concretas. Su consideración jurídica debe evaluarse según su uso real y las reglas que te sean aplicables.
 
-En el código revisado no se han identificado etiquetas propias de publicidad conductual ni herramientas propias de analítica de audiencia. Esto no significa que todas las tecnologías de terceros sean inexistentes o que cualquier nueva integración pueda instalarse sin informar.
+Las estadísticas propias son opcionales y permanecen desactivadas hasta que aceptes. Puedes elegir «Solo necesarias» o «Aceptar estadísticas» con la misma facilidad y cambiarlo en «Preferencias de privacidad» del pie de página. Rechazar no impide comprar ni usar el soporte. El permiso para ofertas por correo es independiente.
 
-Si se incorporan analítica o publicidad que requieran consentimiento, deberán permanecer bloqueadas hasta que el usuario elija, con una forma de rechazar y retirar el permiso que cumpla la legislación aplicable. El consentimiento para recibir ofertas por correo es una elección distinta del uso de cookies.
+La cookie necesaria `mts_stats_consent` guarda una elección firmada (sí o no, versión v1) durante 180 días, sin identificador individual. Solo al aceptar se crea `mts_stats_session`, una cookie HttpOnly con un valor aleatorio y una duración absoluta de 30 minutos. El servidor guarda una huella HMAC de ese valor para contar sesiones que consultan destinos, añaden al carrito, empiezan el pago y completan una compra real; no utiliza píxeles ni analítica de terceros. No registra URLs completas, correos, QR ni códigos de instalación en los eventos.
+
+Respetamos Do Not Track y Global Privacy Control desactivando la medición. Retirar el permiso detiene los nuevos eventos y borra la cookie opcional al confirmar la retirada en el servidor; si hay un fallo, el identificador se conserva solo para reintentar el borrado hasta su vencimiento original de 30 minutos; cuando la base de datos está disponible, también elimina los eventos y la asociación del pedido de la sesión actual. Los datos seudónimos de sesiones y eventos se conservan 30 días y se purgan diariamente (hasta 24 horas adicionales). Las huellas separadas para limitar abusos caducan en una hora y los marcadores que evitan reactivar sesiones retiradas en 30 minutos; se purgan diariamente. El borrado de una sesión actual no identifica automáticamente sesiones anteriores. La política de privacidad amplía esta información.
 
 ## 4. Cómo gestionar el almacenamiento
 

@@ -1,0 +1,224 @@
+.stats-preferences {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.stats-card {
+  background: white;
+  border: 1px solid #d5e4fa;
+  border-radius: 22px;
+  padding: 22px;
+  color: #183151;
+  box-shadow: 0 12px 45px #173c7024;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 520px;
+}
+.stats-banner {
+  position: fixed;
+  z-index: 65;
+  left: 24px;
+  bottom: 24px;
+  width: calc(100vw - 48px);
+}
+.stats-heading {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.stats-heading > span {
+  display: grid;
+  place-items: center;
+  color: #ed7c35;
+  background: #fff1e3;
+  padding: 9px;
+  border-radius: 12px;
+}
+.stats-heading h2 {
+  font-size: 18px;
+  margin: 0;
+  flex: 1;
+}
+.stats-card p {
+  margin: 12px 0;
+}
+.stats-card a {
+  color: #0863da;
+  text-decoration: underline;
+}
+.stats-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.stats-actions button {
+  flex: 1;
+  border: 1px solid #1669d8;
+  border-radius: 12px;
+  background: #eef5ff;
+  color: #1258ae;
+  font-weight: 700;
+  padding: 12px;
+  cursor: pointer;
+}
+.stats-actions button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.stats-actions button:focus-visible,
+.stats-preferences:focus-visible {
+  outline: 3px solid #ffab68;
+  outline-offset: 3px;
+}
+.stats-dialog {
+  width: calc(100vw - 32px);
+  margin: auto;
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+}
+.stats-dialog::backdrop {
+  background: #14294a88;
+}
+.stats-current {
+  background: #f2f7fe;
+  padding: 10px;
+  border-radius: 10px;
+}
+.analytics-period {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.analytics-period select {
+  padding: 10px 14px;
+  border: 1px solid #cddbee;
+  border-radius: 12px;
+  background: white;
+  color: #183151;
+}
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.analytics-card {
+  border: 1px solid #dbe6f5;
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  min-width: 0;
+}
+.analytics-card strong {
+  display: block;
+  font-size: 29px;
+  margin-top: 8px;
+}
+.analytics-card small {
+  color: #667f9f;
+}
+.analytics-funnel {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+.analytics-funnel li {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) 3fr 110px;
+  gap: 18px;
+  align-items: center;
+}
+.analytics-funnel li > strong {font-size:16px;margin:0;text-align:right;white-space:nowrap;}
+.analytics-funnel li > strong small {font-size:12px;}
+.analytics-bar {
+  height: 14px;
+  background: #eef4fd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.analytics-bar span {
+  display: block;
+  height: 100%;
+  background: #1972ed;
+  border-radius: 10px;
+  min-width: 0;
+}
+.analytics-funnel li:last-child .analytics-bar span {
+  background: #fb913f;
+}
+.analytics-note {
+  color: #637d9f;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+.analytics-table th,
+.analytics-table td {
+  text-align: left;
+  border-bottom: 1px solid #edf2fa;
+  padding: 14px 8px;
+}
+.analytics-table th {
+  color: #5c7595;
+  font-size: 13px;
+}
+.analytics-card h2 {
+  font-size: 20px;
+}
+.analytics-table-wrap {
+  overflow: auto;
+}
+@media (max-width: 700px) {
+  .stats-banner {
+    left: 12px;
+    bottom: calc(82px + env(safe-area-inset-bottom));
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 110px);
+    overflow: auto;
+    padding: 18px;
+  }
+  .stats-actions {
+    gap: 8px;
+  }
+  .stats-actions button {
+    padding: 11px 8px;
+    font-size: 13px;
+  }
+  .analytics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .analytics-card {
+    padding: 16px;
+  }
+  .analytics-card strong {
+    font-size: 23px;
+  }
+  .analytics-funnel li {
+    grid-template-columns: 1fr 110px;
+    grid-template-areas:"label count" "bar bar";
+    gap: 8px;
+  }
+  .analytics-bar {
+    grid-area:bar;
+  }
+  .analytics-funnel li > strong {
+    grid-area:count;
+  }
+  .analytics-funnel li > span:first-child {
+    grid-area:label;
+    font-size: 14px;
+  }
+}

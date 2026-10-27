@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { authClient } from "@/lib/supabase/auth-server";
 import { holdOrder, reconcileHold } from "@/lib/payments/hold-server";
+import { queueCheckoutMeasurement } from "@/lib/analytics/server";
 import {
   browserCookie,
   checkoutRequestSchema,
@@ -169,6 +170,7 @@ export async function POST(request: NextRequest) {
           p_id: order.id,
           p_action: "active",
         });
+      queueCheckoutMeasurement(request, order.id);
       return NextResponse.json(
         { clientSecret: existing.client_secret, orderId: order.id },
         { headers: paymentHeaders },
@@ -237,6 +239,7 @@ export async function POST(request: NextRequest) {
       .eq("id", order.id)
       .eq("status", "pending");
     if (updateError) throw new Error("Session persistence failed");
+    queueCheckoutMeasurement(request, order.id);
     return NextResponse.json(
       { clientSecret: session.client_secret, orderId: order.id },
       { headers: paymentHeaders },

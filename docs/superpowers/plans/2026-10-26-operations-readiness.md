@@ -52,9 +52,9 @@
 
 ### 4. Measurement
 
-- [ ] Add consent UI and preference controls, strict event schema, bounded retention/rate limits and private aggregate report.
-- [ ] Instrument destination view/add-to-cart/checkout and server-confirmed orders; distinguish consenting cohorts.
-- [ ] Update legal disclosures/version, test no collection before consent or after withdrawal and no PII in events.
+- [x] Add consent UI and preference controls, strict event schema, bounded retention/rate limits and private aggregate report.
+- [x] Instrument destination view/add-to-cart/checkout and server-confirmed orders; distinguish consenting cohorts.
+- [x] Update legal disclosures/version, test no collection before consent or after withdrawal and no PII in events.
 
 ### 5. SEO and release
 
@@ -64,6 +64,9 @@
 - [ ] Verify actual public/protected entry points; report completed versus owner-dependent work.
 
 ## Execution ledger
+
+- 2026-10-26 sales release verified: commit37dbba0 pushed to main and clean tracked snapshot deployed READY as dpl_GkPwHC4ZEECbAQTeKHQ8H1EJ9D6B, aliased to www.mytripsim.com. Production consent GET enabled with null initial preference and no optional session; anonymous report401/no-store, protected page307 and cross-origin event403 verified. Owner authenticated browser loaded actual report, financial cards and empty new cohort funnel correctly. Period selectors1/7/30 loaded; report inspected at390px and desktop with no page overflow (horizontal admin-nav scrolling only). Browser native screenshot wrapper briefly mis-scaled output after resize; direct tab capture and read-only DOM widths confirmed correct responsive layout. Dedicated analytics tab left as deliverable; viewport restored and local test server stopped. Latest typecheck and targeted lint passed; combined19 tests green; 37 changed staged files secret scan clean. No real payment, refund or email generated. Six user-deleted legacy images and untracked Vietnam image remain excluded. Backup dashboard now visibly authenticated in a separate owner-created tab3; actual backup/restore audit has not been performed in this sales-only turn.
+
 
 - 2026-10-26 sales measurement: local first-party consent/funnel/admin implementation complete. Migration008 applied; retention cron scheduled daily04:15UTC. Production analytics environment configured privately for next release. Local API integration passed with disposable user/session cleanup, no purchase/refund/email. Seven analytics tests and final combined19 checkout/live/legal tests passed, typecheck and targeted lint passed. Build passed. Desktop/390px ES/EN consent controls checked. Independent reviewer identified privacy-signal revocation and lost-token-on-RPC-error gaps; both fixed with failing-then-passing regression tests and retry-preserving cookie behavior. Cart events now blocked on private routes; in-flight cohort resurrection regression fixed with tombstone/advisory lock. Reviewer session ended after findings due provider usage limit; remaining final verification performed by primary agent. Cosmetic refund commit a96cd1b confirmed deployed READY as dpl_F99acX1Fq1McVj7R3KcTZfq38uia. Analytics commit/deployment and production report verification pending.
 

@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
+import { isPreparingDelivery } from "@/lib/esim-installation";
+import { QuickInstall } from "./quick-install";
+import { DeliveryRefresh } from "./delivery-refresh";
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,7 +26,7 @@ import { signOut } from "@/lib/account-actions";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { CopyValue } from "./copy-value";
-import {formatMoney,currencyCode} from "@/lib/currency";
+import { formatMoney, currencyCode } from "@/lib/currency";
 import { CustomerSupportSummary } from "./support-summary";
 const dataLabel = (gb: number) =>
   gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`;
@@ -72,6 +75,21 @@ export async function CustomerWallet({
     .select("user_id")
     .eq("user_id", user.id)
     .maybeSingle();
+  const preparing = checkouts.filter(
+    (o) =>
+      o.status === "paid" &&
+      isPreparingDelivery(
+        o.fulfillmentStates,
+        esims.filter((e) =>
+          orders.some(
+            (order) =>
+              order.id === e.order_id && order.checkout_order_id === o.id,
+          ),
+        ).length,
+      ),
+  );
+  const refreshing =
+    preparing.length > 0 || checkouts.some((o) => o.recentPending);
   const labels = es
     ? {
         ready: "Lista para instalar",
@@ -145,6 +163,7 @@ export async function CustomerWallet({
           </button>
         </form>
       </header>
+      {!selected && refreshing && <DeliveryRefresh locale={locale} />}
       {selected && order ? (
         <>
           <Link
@@ -218,6 +237,11 @@ export async function CustomerWallet({
               <h2>{es ? "Instala tu eSIM" : "Install your eSIM"}</h2>
               {qr ? (
                 <>
+                  <QuickInstall
+                    smdp={selected.smdp_address!}
+                    code={selected.activation_code!}
+                    locale={locale}
+                  />
                   <p>
                     {es
                       ? "Abre esta página en otra pantalla para escanear el QR con tu teléfono. También puedes instalarla manualmente."
@@ -278,7 +302,45 @@ export async function CustomerWallet({
               {es ? "Tus conexiones" : "Your connections"}
               <span>{esims.length}</span>
             </h2>
-            {!esims.length ? (
+            {preparing.length > 0 && (
+              <div className="customer-esim-grid">
+                {preparing.map((item) => (
+                  <article
+                    className="customer-card customer-preparing"
+                    key={item.id}
+                  >
+                    <span className="customer-status status-processing">
+                      {es
+                        ? "Pago confirmado · eSIM en preparación"
+                        : "Payment confirmed · Preparing eSIM"}
+                    </span>
+                    <h3>
+                      {es
+                        ? "Tu conexión está en camino"
+                        : "Your connection is on its way"}
+                    </h3>
+                    {item.items.map((line) => (
+                      <p key={line.plan_id}>
+                        {line.plan_name} × {line.quantity}
+                      </p>
+                    ))}
+                    <p>
+                      {es
+                        ? "Aquí aparecerá tu eSIM cuando termine la emisión. Te avisaremos también por correo. No necesitas repetir el pago."
+                        : "Your eSIM will appear here once issued. We’ll also email you. You don’t need to pay again."}
+                    </p>
+                    <Link
+                      className="button button-secondary"
+                      href={`/${locale}/checkout/result?order=${item.id}`}
+                    >
+                      {es ? "Seguir preparación" : "Track preparation"}
+                      <ArrowRight size={16} />
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            )}
+            {!esims.length && !preparing.length ? (
               <div className="customer-empty">
                 <Globe2 size={35} />
                 <h3>
@@ -402,7 +464,13 @@ export async function CustomerWallet({
                                   ? "Pago fallido"
                                   : "Payment failed"}
                       </span>
-                      <p>{formatMoney(item.amount_total,currencyCode(item.currency)??'USD', locale)}</p>
+                      <p>
+                        {formatMoney(
+                          item.amount_total,
+                          currencyCode(item.currency) ?? "USD",
+                          locale,
+                        )}
+                      </p>
                       <Link
                         href={`/${locale}/checkout/result?order=${item.id}`}
                       >

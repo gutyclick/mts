@@ -13,6 +13,8 @@ import {
 import { z } from "zod";
 import type { Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
+import { QuickInstall } from "@/components/account/quick-install";
+import { shouldPollDelivery } from "@/lib/esim-installation";
 import { CopyValue } from "@/components/account/copy-value";
 const unitSchema = z.object({
   id: z.uuid(),
@@ -47,6 +49,7 @@ export function EsimDelivery({
   const [units, setUnits] = useState<Unit[]>([]),
     [error, setError] = useState(false),
     [loading, setLoading] = useState(true),
+    [polling, setPolling] = useState(true),
     [retry, setRetry] = useState(0),
     [opening, setOpening] = useState<string | null>(null);
   useEffect(() => {
@@ -77,16 +80,26 @@ export function EsimDelivery({
           .object({ units: z.array(unitSchema) })
           .parse(await response.json());
         if (controller.signal.aborted) return;
-        setUnits(data.units);
+        setUnits((current) =>
+          data.units.map((unit) => {
+            const previous = current.find((u) => u.id === unit.id);
+            return unit.installationReady && previous?.qr
+              ? {
+                  ...unit,
+                  qr: previous.qr,
+                  smdpAddress: previous.smdpAddress,
+                  activationCode: previous.activationCode,
+                  apn: previous.apn,
+                }
+              : unit;
+          }),
+        );
         setError(false);
         setLoading(false);
-        if (
-          ++attempts < 120 &&
-          data.units.some((u) =>
-            ["queued", "provider_pending", "ready"].includes(u.state),
-          )
-        )
+        setPolling(shouldPollDelivery(data.units, attempts + 1));
+        if (shouldPollDelivery(data.units, ++attempts))
           timer = setTimeout(load, 5000);
+        else setPolling(false);
       } catch {
         if (!controller.signal.aborted) {
           setError(true);
@@ -130,8 +143,8 @@ export function EsimDelivery({
         <div>
           <h2 id="esim-delivery-title">
             {es
-              ? "Tus eSIM, listas para viajar"
-              : "Your eSIMs, ready to travel"}
+              ? "Preparación e instalación de tus eSIM"
+              : "Your eSIM preparation and installation"}
           </h2>
           <p>
             {es
@@ -165,10 +178,26 @@ export function EsimDelivery({
       {!loading && !error && !units.length && (
         <p>
           {es
-            ? "Aquí aparecerá el progreso de preparación y entrega de las eSIM de tu pedido."
-            : "Your order’s eSIM preparation and delivery progress will appear here."}
+            ? "Pago confirmado. Estamos iniciando la preparación de tu eSIM; no necesitas volver a pagar. Te avisaremos también por correo."
+            : "Payment confirmed. We’re starting your eSIM preparation; you don’t need to pay again. We’ll also email you."}
         </p>
       )}
+      {!loading &&
+        !error &&
+        !polling &&
+        (!units.length ||
+          units.some((u) =>
+            ["queued", "provider_pending", "ready"].includes(u.state),
+          )) && (
+          <button
+            type="button"
+            className="button button-secondary"
+            onClick={() => setRetry((v) => v + 1)}
+          >
+            <RefreshCw size={16} />
+            {es ? "Actualizar preparación" : "Refresh preparation"}
+          </button>
+        )}
       <div className="esim-delivery-list">
         {units.map((unit) => (
           <article className="esim-delivery-unit" key={unit.id}>
@@ -230,68 +259,77 @@ export function EsimDelivery({
                       : "Show QR and installation"}
                   </button>
                 ) : (
-                  <div className="esim-delivery-install">
-                    <div>
-                      <Image
-                        src={unit.qr}
-                        alt={
-                          es
-                            ? "QR privado de instalación de tu eSIM"
-                            : "Private eSIM installation QR"
-                        }
-                        width={256}
-                        height={256}
-                        unoptimized
-                        className="customer-qr"
-                      />
-                      <p>
-                        {es
-                          ? "Escanéalo desde otra pantalla o utiliza los datos manuales."
-                          : "Scan from another screen or use the manual details."}
-                      </p>
-                      <a
-                        className="button button-secondary"
-                        href={unit.qr}
-                        download={`MyTripSim-${unit.id.slice(0, 8)}.png`}
-                      >
-                        {es ? "Descargar QR" : "Download QR"}
-                      </a>
-                    </div>
-                    <div>
-                      <h4>
-                        {es ? "Instalación manual" : "Manual installation"}
-                      </h4>
-                      <p>SM-DP+</p>
-                      <CopyValue
-                        locale={locale}
-                        value={unit.smdpAddress!}
-                        label="SM-DP+"
-                      />
-                      <p>{es ? "Código de activación" : "Activation code"}</p>
-                      <CopyValue
-                        locale={locale}
-                        value={unit.activationCode!}
-                        label={es ? "código de activación" : "activation code"}
-                      />
-                      {unit.apn && (
-                        <>
-                          <p>APN</p>
-                          <CopyValue
-                            locale={locale}
-                            value={unit.apn}
-                            label="APN"
-                          />
-                        </>
-                      )}
-                      <Link
-                        className="button button-primary"
-                        href={experiencePath(locale, "install")}
-                      >
-                        {es
-                          ? "Ver guía de instalación"
-                          : "View installation guide"}
-                        <ArrowRight size={16} />
-                      </Link>
+                  <div>
+                    <QuickInstall
+                      smdp={unit.smdpAddress!}
+                      code={unit.activationCode!}
+                      locale={locale}
+                    />
+                    <div className="esim-delivery-install">
+                      <div>
+                        <Image
+                          src={unit.qr}
+                          alt={
+                            es
+                              ? "QR privado de instalación de tu eSIM"
+                              : "Private eSIM installation QR"
+                          }
+                          width={256}
+                          height={256}
+                          unoptimized
+                          className="customer-qr"
+                        />
+                        <p>
+                          {es
+                            ? "Escanéalo desde otra pantalla o utiliza los datos manuales."
+                            : "Scan from another screen or use the manual details."}
+                        </p>
+                        <a
+                          className="button button-secondary"
+                          href={unit.qr}
+                          download={`MyTripSim-${unit.id.slice(0, 8)}.png`}
+                        >
+                          {es ? "Descargar QR" : "Download QR"}
+                        </a>
+                      </div>
+                      <div>
+                        <h4>
+                          {es ? "Instalación manual" : "Manual installation"}
+                        </h4>
+                        <p>SM-DP+</p>
+                        <CopyValue
+                          locale={locale}
+                          value={unit.smdpAddress!}
+                          label="SM-DP+"
+                        />
+                        <p>{es ? "Código de activación" : "Activation code"}</p>
+                        <CopyValue
+                          locale={locale}
+                          value={unit.activationCode!}
+                          label={
+                            es ? "código de activación" : "activation code"
+                          }
+                        />
+                        {unit.apn && (
+                          <>
+                            <p>APN</p>
+                            <CopyValue
+                              locale={locale}
+                              value={unit.apn}
+                              label="APN"
+                            />
+                          </>
+                        )}
+                        <Link
+                          className="button button-primary"
+                          href={experiencePath(locale, "install")}
+                        >
+                          {es
+                            ? "Ver guía de instalación"
+                            : "View installation guide"}
+                          <ArrowRight size={16} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 )}

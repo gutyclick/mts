@@ -502,3 +502,12 @@
     animation: none;
   }
 }
+
+.quick-install { margin: 16px 0 24px; padding: 20px; border: 1px solid #d6e6fc; border-radius: 20px; background: #f3f8ff; }
+.quick-install h3 { margin: 0 0 8px; }
+.quick-install-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+.quick-install-actions .button { flex: 1 1 190px; }
+.delivery-refresh { padding: 18px 20px; background: #edf5ff; border-radius: 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.delivery-refresh p { flex: 1 1 260px; margin: 0; }
+.customer-preparing { border-color: #bcd8ff; background: #f6faff; }
+.customer-preparing .customer-status { white-space: normal; }

@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { runFulfillmentWorker } from "@/lib/fulfillment/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { recordStripeRefund, refundStripe } from "@/lib/payments/refund-server";
 import {
@@ -134,6 +135,15 @@ export async function POST(request: NextRequest) {
       p_currency: "usd",
       p_payment_intent: paymentIntent,
     });
+    if (!recordError && status === "paid" && event.livemode) {
+      after(async () => {
+        try {
+          await runFulfillmentWorker();
+        } catch {
+          /* The leased queue and scheduled worker retain retry ownership. */
+        }
+      });
+    }
     return reply(recordError ? 503 : 200);
   } catch {
     return reply(503);

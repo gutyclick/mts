@@ -58,8 +58,8 @@ export async function customerCheckoutOrders(
         id: z.uuid(),
         status: z.enum(["pending", "paid", "expired", "failed", "cancelled"]),
         amount_total: z.number().int(),
-        payment_total:z.number().int().nullable(),
-        payment_currency:z.string().nullable(),
+        payment_total: z.number().int().nullable(),
+        payment_currency: z.string().nullable(),
         livemode: z.boolean(),
         created_at: z.string(),
         items: z.array(
@@ -83,8 +83,11 @@ export async function customerCheckoutOrders(
   if (unitError) throw new Error("Could not load fulfillment status");
   return parsed.map((o) => ({
     ...o,
-    amount_total:o.payment_total??o.amount_total,
-    currency:o.payment_currency??'USD',
+    recentPending:
+      o.status === "pending" &&
+      Date.now() - Date.parse(o.created_at) < 15 * 60000,
+    amount_total: o.payment_total ?? o.amount_total,
+    currency: o.payment_currency ?? "USD",
     fulfillmentStates: (units ?? [])
       .filter((u) => u.order_id === o.id)
       .map((u) => String(u.state)),

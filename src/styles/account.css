@@ -564,6 +564,13 @@
   line-height: 1.15;
   margin: 8px 0 12px;
 }
+.trip-dashboard-heading > div {
+  min-width: 0;
+  flex: 1;
+}
+.trip-dashboard-heading .trip-greeting {
+  overflow-wrap: anywhere;
+}
 .trip-dashboard-heading p {
   margin: 0;
   color: #64758c;
@@ -1030,5 +1037,16 @@
   }
   .trip-dashboard-sidebar a {
     transition: none;
+  }
+}
+@media (max-width: 360px) {
+  .trip-status-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .trip-dashboard .customer-status {
+    white-space: normal;
+    line-height: 1.5;
+    max-width: 100%;
   }
 }

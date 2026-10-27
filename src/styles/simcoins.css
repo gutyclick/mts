@@ -139,171 +139,186 @@
 }
 .sc-levels {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
 .sc-level {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px 18px;
   border: 1px solid var(--border);
-  border-radius: 19px;
-  background: white;
-  padding: 25px 20px;
+  border-radius: 22px;
+  background: #fff;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
 }
-.sc-level-mark {
-  display: inline-grid;
-  place-items: center;
-  background: #eaf3ff;
-  color: var(--blue);
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+.sc-level:hover {
+  transform: translateY(-4px);
+  border-color: #b7d5ff;
+}
+.sc-level[data-current] {
+  border: 2px solid var(--blue);
+  padding: 23px 15px 17px;
+}
+.sc-level .simcoins-level-badge,
+.sc-level .simcoins-level-fallback {
+  margin-bottom: 14px;
 }
 .sc-level h3 {
   font-size: 17px;
-  margin: 18px 0;
+  letter-spacing: -0.4px;
+  margin: 0 0 15px;
 }
-.sc-level strong {
-  display: block;
-  font: 800 45px var(--font-jakarta);
-  letter-spacing: -2px;
+.sc-level > strong {
+  font:
+    800 34px var(--font-jakarta),
+    sans-serif;
+  letter-spacing: -1.2px;
   color: var(--blue-dark);
 }
-.sc-level strong small {
-  font-size: 22px;
+.sc-level > strong small {
+  font-size: 20px;
+  margin-left: 2px;
 }
-.sc-level p {
-  margin: 0 0 25px;
+.sc-level .sc-level-reward {
+  margin: 2px 0 18px;
   font-size: 12px;
 }
 .sc-level > div {
+  margin-top: auto;
+  padding-top: 14px;
+  width: 100%;
   border-top: 1px solid var(--border);
-  padding-top: 18px;
   font-size: 12px;
   line-height: 1.6;
-}
-.sc-level-3 {
-  background: #f0f6ff;
-  border-color: #a8cfff;
-}
-.sc-welcome {
-  padding: 17px 21px;
-  border-radius: 13px;
-  background: #f1f6fb;
-  margin-bottom: 22px;
-  line-height: 1.6;
-  color: #4c5c70;
-}
-.sc-calculator {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-.sc-calculator-panel {
-  padding: 30px;
-  background: #f1f7ff;
-  border-radius: 22px;
-  border: 1px solid #dbeaff;
-}
-.sc-calculator-panel label {
-  display: block;
-  font-size: 12px;
-  font-weight: 750;
-  margin-bottom: 9px;
-}
-.sc-money-input {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: white;
-  border: 1px solid #cad9e9;
-  border-radius: 10px;
-  padding: 0 15px;
-  margin-bottom: 22px;
-}
-.sc-money-input input {
-  border: 0;
-  background: transparent;
-  min-width: 0;
-  width: 100%;
-  padding: 15px 0;
-  color: var(--ink);
-  font-size: 20px;
-}
-.sc-calculator-panel select {
-  width: 100%;
-  border: 1px solid #cad9e9;
-  background: white;
-  border-radius: 10px;
-  padding: 13px;
-  color: var(--ink);
-}
-.sc-estimate {
-  margin-top: 26px;
-  border-top: 1px solid #d5e3f2;
-  padding-top: 24px;
-  display: grid;
-  gap: 8px;
-}
-.sc-estimate > span {
-  font-size: 12px;
   color: var(--muted);
 }
-.sc-estimate strong {
-  font: 800 38px var(--font-jakarta);
+.sc-level-3 {
+  background: #fffcf3;
+  border-color: #f2dfa9;
+}
+.sc-current-level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf3ff;
   color: var(--blue-dark);
-  letter-spacing: -1px;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.5;
+  padding: 4px 9px;
+  border-radius: 20px;
 }
-.sc-estimate strong small {
-  font-size: 15px;
-  letter-spacing: 0;
+.sc-level .sc-current-level {
+  margin: -7px 0 10px;
 }
-.sc-small {
-  font-size: 12px;
-  line-height: 1.65;
+.sc-welcome {
   display: flex;
-  gap: 7px;
-  align-items: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #f6f9fd;
+  margin-bottom: 20px;
 }
-.sc-small svg {
-  flex-shrink: 0;
-  margin-top: 3px;
+.sc-welcome strong {
+  font-size: 14px;
+  color: var(--ink);
 }
-.sc-error {
-  color: #b42318 !important;
+.sc-welcome p {
   font-size: 12px;
+  line-height: 1.6;
+  margin: 4px 0 0;
+}
+.sc-welcome .sc-current-level {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.sc-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 28px;
+}
+.sc-breadcrumb a:hover {
+  color: var(--blue-dark);
 }
 .sc-usage {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 70px;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 32px;
   align-items: center;
+  padding: 36px 42px;
+  margin: 20px 0 65px;
+  border: 1px solid #dceafd;
+  border-radius: 28px;
+  background: #f1f7ff;
 }
 .sc-usage-art {
+  grid-area: 1/2;
   display: grid;
   place-items: center;
 }
 .sc-usage-art img {
-  width: 220px;
+  width: 240px;
   height: auto;
-  filter: drop-shadow(0 15px 20px #edaf3526);
+  filter: drop-shadow(0 12px 15px #d9981a15);
 }
-.sc-usage ul {
+.sc-usage > div:last-child {
+  grid-area: 1/1;
+}
+.sc-value-pill {
+  display: inline-flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #dce8f7;
+  border-radius: 20px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--blue-dark);
+  margin-bottom: 16px;
+}
+.sc-usage h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+.sc-usage .sc-lead {
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 490px;
+  margin: 0 0 19px;
+}
+.sc-usage .sc-usage-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
   list-style: none;
   padding: 0;
-  display: grid;
-  gap: 14px;
+  margin: 0 0 22px;
 }
-.sc-usage li {
+.sc-usage-facts li {
+  font-size: 12px;
+  color: #405e82;
   display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 13px;
-  line-height: 1.6;
+  align-items: center;
+  gap: 7px;
 }
-.sc-usage li svg {
+.sc-usage-facts li::before {
+  content: "✓";
   color: var(--blue);
-  flex-shrink: 0;
-  margin-top: 2px;
+  font-weight: 800;
+}
+#sc-levels,
+#sc-conditions {
+  scroll-margin-top: 100px;
 }
 .sc-faq {
   max-width: 850px;
@@ -500,9 +515,6 @@
   .sc-levels {
     grid-template-columns: repeat(2, 1fr);
   }
-  .sc-calculator {
-    gap: 35px;
-  }
   .sc-steps {
     gap: 24px;
   }
@@ -511,7 +523,9 @@
     flex-direction: column;
   }
   .sc-usage {
+    grid-template-columns: minmax(0, 1fr) 200px;
     gap: 20px;
+    padding: 28px;
   }
 }
 @media (max-width: 650px) {
@@ -567,16 +581,10 @@
   .sc-level strong {
     font-size: 38px;
   }
-  .sc-calculator {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .sc-calculator-panel {
-    padding: 23px;
-  }
   .sc-usage {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: minmax(0, 1fr) 200px;
+    gap: 20px;
+    padding: 28px;
   }
   .sc-usage-art img {
     width: 140px;
@@ -608,5 +616,107 @@
   }
   .sc-wallet h2 {
     font-size: 27px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sc-hero {
+    padding-top: 24px;
+    padding-bottom: 32px;
+  }
+  .sc-breadcrumb {
+    margin-bottom: 20px;
+  }
+  .sc-hero h1 {
+    font-size: 38px;
+    letter-spacing: -1.6px;
+  }
+  .sc-lead {
+    font-size: 16px;
+  }
+  .sc-level {
+    padding: 20px 10px 16px;
+  }
+  .sc-level[data-current] {
+    padding: 19px 9px 15px;
+  }
+  .sc-level .simcoins-level-badge,
+  .sc-level .simcoins-level-fallback {
+    width: 90px;
+    height: 90px;
+  }
+  .sc-level h3 {
+    font-size: 14px;
+    margin: 0 0 11px;
+  }
+  .sc-level > strong {
+    font-size: 30px;
+  }
+  .sc-level .sc-level-reward {
+    margin-bottom: 14px;
+  }
+  .sc-level > div {
+    font-size: 11px;
+  }
+  .sc-welcome {
+    gap: 10px;
+    padding: 13px;
+  }
+  .sc-welcome .simcoins-level-badge {
+    width: 48px;
+    height: 48px;
+  }
+  .sc-welcome strong {
+    font-size: 12px;
+  }
+  .sc-welcome p {
+    font-size: 11px;
+  }
+  .sc-welcome .sc-current-level {
+    display: none;
+  }
+  .sc-usage {
+    grid-template-columns: 1fr;
+    padding: 25px 23px;
+    gap: 8px;
+    margin: 12px 0 38px;
+    border-radius: 22px;
+  }
+  .sc-usage > div:last-child {
+    grid-area: auto;
+  }
+  .sc-usage-art {
+    grid-area: auto;
+    order: 2;
+  }
+  .sc-usage-art img {
+    width: 175px;
+  }
+  .sc-usage h2 {
+    font-size: 27px;
+  }
+  .sc-usage .sc-lead {
+    font-size: 14px;
+  }
+  .sc-usage .sc-usage-facts {
+    gap: 9px;
+    margin-bottom: 18px;
+  }
+  .sc-usage-facts li {
+    font-size: 11px;
+  }
+  .sc-section-heading {
+    margin-bottom: 24px;
+  }
+  .sc-faq summary {
+    font-size: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sc-level {
+    transition: none;
+  }
+  .sc-level:hover {
+    transform: none;
   }
 }

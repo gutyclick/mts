@@ -1,5 +1,7 @@
 # SimCoins — implementation and launch review
 
+Visual update: the calculator has been removed at the owner's request. The current landing uses compact rewards information, supplied rank badges and small coin illustrations in balance/redemption contexts. See [the UI and SEO review](simcoins-ui-seo.md).
+
 ## Status and boundaries
 
 Implemented in the existing Next.js application. Transactional operation defaults to **off**. The migrations are additive local files; applying them, deploying, scheduling workers or enabling production rewards requires the owner's approval. No historical orders are enrolled, repriced or modified. Existing catalogue prices and recorded wholesale prices are not changed.

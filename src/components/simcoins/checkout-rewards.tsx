@@ -1,6 +1,7 @@
 "use client";
 import { formatMoney } from "@/lib/currency";
 import type { SimcoinsCheckoutQuote } from "@/lib/simcoins/checkout";
+import { SimcoinIcon } from "./art";
 
 export function CheckoutRewards({
   locale,
@@ -17,24 +18,22 @@ export function CheckoutRewards({
 }) {
   const es = locale === "es";
   return (
-    <aside className="commerce-card" aria-label="SimCoins">
-      <strong>SimCoins</strong>
+    <aside className="commerce-card sc-checkout-rewards" aria-label="SimCoins">
+      <div className="sc-checkout-rewards-title">
+        <SimcoinIcon size={26} />
+        <strong>SimCoins</strong>
+      </div>
       <p>
         {quote.firstPurchase
           ? es
-            ? "Tu primera compra elegible desbloquea Explorer o un nivel superior. Las próximas compras elegibles usan tu nuevo porcentaje."
-            : "Your first eligible purchase unlocks Explorer or a higher level. Future eligible purchases use your new rate."
+            ? "Tu primera compra elegible desbloquea tu próximo nivel."
+            : "Your first eligible purchase unlocks your next level."
           : es
-            ? `Ganarías ${quote.earnedCoins} SimCoins pendientes.`
-            : `You could earn ${quote.earnedCoins} pending SimCoins.`}
-      </p>
-      <p>
-        {es
-          ? "Se liberan después del pago, la entrega verificada y el plazo del programa."
-          : "Released after payment, verified delivery and the program waiting period."}
+            ? `${quote.earnedCoins} SimCoins pendientes con esta compra.`
+            : `${quote.earnedCoins} pending SimCoins with this purchase.`}
       </p>
       {quote.maxRedeemCoins > 0 && (
-        <label>
+        <label className="sc-checkout-redeem">
           <input
             type="checkbox"
             checked={useCoins}
@@ -58,13 +57,16 @@ export function CheckoutRewards({
           {formatMoney(quote.paymentTotal, quote.currency, locale)}
         </p>
       )}
-      {quote.earnedCoins === 0 && !quote.firstPurchase && (
+      <details className="sc-checkout-reward-conditions">
+        <summary>
+          {es ? "Condiciones de la recompensa" : "Reward conditions"}
+        </summary>
         <p>
           {es
-            ? "Esta compra no genera SimCoins según tu nivel y la elegibilidad del plan."
-            : "This purchase earns no SimCoins under your current level and plan eligibility."}
+            ? "Las monedas se liberan después del pago, la entrega verificada y el plazo del programa. Solo cuentan los importes y planes elegibles. El canje no se combina automáticamente con otras promociones."
+            : "Coins become available after payment, verified delivery and the program waiting period. Only eligible amounts and plans qualify. Redemption does not automatically combine with other promotions."}
         </p>
-      )}
+      </details>
     </aside>
   );
 }

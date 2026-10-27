@@ -1,23 +1,16 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   observeSimcoinsLanding,
   recordSimcoinsStats,
 } from "@/lib/simcoins/analytics-client";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Check,
-  Coins,
-  Compass,
-  Plane,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight, Coins, Compass, Plane } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { authPath } from "@/lib/auth-routes";
 import type { SimcoinsPublicProgram } from "@/lib/simcoins/model";
-import { SimcoinsCalculator } from "./calculator";
+import { LevelBadge } from "./art";
 import { simcoinsCopy } from "./copy";
 
 export function SimcoinsLanding({
@@ -32,6 +25,7 @@ export function SimcoinsLanding({
   currentLevelId?: string;
 }) {
   const t = simcoinsCopy[locale];
+  const [conditionsOpen, setConditionsOpen] = useState(false);
   useEffect(observeSimcoinsLanding, []);
   const releaseDays = new Intl.NumberFormat(locale, {
     maximumFractionDigits: 2,
@@ -41,6 +35,16 @@ export function SimcoinsLanding({
     <div className="simcoins-page">
       <section className="sc-hero container">
         <div className="sc-hero-copy">
+          <nav
+            className="sc-breadcrumb"
+            aria-label={locale === "es" ? "Ruta de navegación" : "Breadcrumb"}
+          >
+            <Link href={pathFor(locale)}>
+              {locale === "es" ? "Inicio" : "Home"}
+            </Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">SimCoins</span>
+          </nav>
           <p className="sc-eyebrow">{t.eyebrow}</p>
           <h1>{t.title}</h1>
           <p className="sc-lead">{t.intro}</p>
@@ -70,8 +74,8 @@ export function SimcoinsLanding({
                   : "Join for free"}
               <ArrowRight size={18} />
             </Link>
-            <a className="sc-text-link" href="#calculator">
-              {locale === "es" ? "Calcula un ejemplo" : "Calculate an example"}
+            <a className="sc-text-link" href="#sc-levels">
+              {locale === "es" ? "Descubre los niveles" : "Explore the levels"}
               <ArrowRight size={17} />
             </a>
           </div>
@@ -132,19 +136,23 @@ export function SimcoinsLanding({
             <p>{t.levelsIntro}</p>
           </div>
           <div className="sc-welcome">
-            <strong>
-              {locale === "es" ? "Viajero · 0%" : "Traveler · 0%"}
-            </strong>{" "}
-            —{" "}
-            {locale === "es"
-              ? "Empiezas aquí. Tu primera compra elegible te lleva a Explorer; las compras siguientes usan tu nuevo nivel."
-              : "Start here. Your first eligible purchase takes you to Explorer; later purchases use your new level."}
-            {currentLevelId === "traveler" && (
+            <LevelBadge id="traveler" size={64} />
+            <div>
+              <strong>
+                {locale === "es"
+                  ? "Tu aventura empieza en Viajero"
+                  : "Your journey starts as a Traveler"}
+              </strong>
               <p>
-                <strong>
-                  {locale === "es" ? "Tu nivel actual" : "Your current level"}
-                </strong>
+                {locale === "es"
+                  ? "0% al registrarte. La primera compra elegible desbloquea tu siguiente nivel."
+                  : "0% when you join. Your first eligible purchase unlocks your next level."}
               </p>
+            </div>
+            {currentLevelId === "traveler" && (
+              <span className="sc-current-level">
+                {locale === "es" ? "Tu nivel" : "Your level"}
+              </span>
             )}
           </div>
           <div className="sc-levels">
@@ -154,79 +162,67 @@ export function SimcoinsLanding({
                 <article
                   className={`sc-level sc-level-${i}`}
                   key={level.id}
-                  style={
-                    currentLevelId === level.id
-                      ? { outline: "2px solid var(--blue)", outlineOffset: 3 }
-                      : undefined
-                  }
+                  data-current={currentLevelId === level.id || undefined}
                 >
-                  <span className="sc-level-mark">
-                    <Compass size={23} />
-                  </span>
+                  <LevelBadge id={level.id} size={112} />
                   <h3>{level.name}</h3>
                   {currentLevelId === level.id && (
-                    <p>
-                      <strong style={{ fontSize: 12, letterSpacing: 0 }}>
-                        {locale === "es"
-                          ? "Tu nivel actual"
-                          : "Your current level"}
-                      </strong>
-                    </p>
+                    <span className="sc-current-level">
+                      {locale === "es"
+                        ? "Tu nivel actual"
+                        : "Your current level"}
+                    </span>
                   )}
                   <strong>
                     {level.rateBps / 100}
                     <small>%</small>
                   </strong>
-                  <p>{t.reward}</p>
+                  <p className="sc-level-reward">{t.reward}</p>
                   <div>
                     {level.id === "explorer"
                       ? t.first
-                      : `${t.from} USD ${level.thresholdCents / 100} ${t.spend}`}
+                      : `${t.from} USD ${level.thresholdCents / 100}`}
                   </div>
                 </article>
               ))}
           </div>
         </section>
-        <SimcoinsCalculator locale={locale} program={program} />
         <section className="sc-section sc-usage" aria-labelledby="sc-usage">
           <div className="sc-usage-art">
             <Image
-              src="/images/simcoins/simcoins_one.webp"
+              src="/images/simcoins/simcoins_pile.webp"
               alt=""
               width={360}
               height={360}
-              sizes="(max-width: 700px) 150px, 220px"
+              sizes="(max-width: 700px) 180px, 240px"
             />
           </div>
           <div>
-            <p className="sc-eyebrow">100 SIMCOINS = USD 1</p>
+            <span className="sc-value-pill">100 SimCoins = USD 1</span>
             <h2 id="sc-usage">{t.use}</h2>
             <p className="sc-lead">{t.useIntro}</p>
-            <p>
-              {locale === "es"
-                ? `La espera configurada es de ${releaseDays} días después de la entrega verificada: eSIM preparada y confirmación de entrega del correo. La aceptación del envío por sí sola no inicia este período.`
-                : `The configured waiting period is ${releaseDays} days after verified delivery: a prepared eSIM and confirmed email delivery. Email sending acceptance alone does not start this period.`}
-            </p>
-            <ul>
-              {t.rules.map((rule) => (
-                <li key={rule}>
-                  <Check size={18} />
-                  {rule}
-                </li>
-              ))}
+            <ul className="sc-usage-facts">
+              <li>
+                {locale === "es"
+                  ? `Hasta ${program.maxRedeemBps / 100}% de ahorro por compra`
+                  : `Up to ${program.maxRedeemBps / 100}% off per purchase`}
+              </li>
+              <li>
+                {locale === "es"
+                  ? "Sin vencimiento ordinario"
+                  : "No ordinary expiry"}
+              </li>
             </ul>
-            <p className="sc-small">
-              <ShieldCheck size={16} />
+            <a
+              className="sc-text-link"
+              href="#sc-conditions"
+              onClick={() => setConditionsOpen(true)}
+            >
               {locale === "es"
-                ? `El canje podrá cubrir hasta ${program.maxRedeemBps / 100}% del importe elegible, sujeto a las condiciones de la compra.`
-                : `Redemption may cover up to ${program.maxRedeemBps / 100}% of the eligible amount, subject to purchase conditions.`}
-            </p>
-            <Link className="sc-text-link" href={pathFor(locale, "terms")}>
-              {locale === "es"
-                ? "Consulta los términos del programa"
-                : "Read the program terms"}
+                ? "Cómo usar tus monedas"
+                : "How to use your coins"}
               <ArrowRight size={16} />
-            </Link>
+            </a>
           </div>
         </section>
         <section className="sc-section sc-faq" aria-labelledby="sc-faq">
@@ -245,6 +241,26 @@ export function SimcoinsLanding({
               </p>
             </details>
           ))}
+          <details
+            id="sc-conditions"
+            open={conditionsOpen}
+            onToggle={(event) => setConditionsOpen(event.currentTarget.open)}
+          >
+            <summary>
+              {locale === "es"
+                ? "Condiciones de tus SimCoins"
+                : "Your SimCoins conditions"}
+            </summary>
+            <p>
+              {locale === "es"
+                ? `100 SimCoins equivalen a USD 1 de crédito promocional. Se liberan ${releaseDays} días después de la entrega verificada de tu eSIM y su correo. El pago y la entrega deben estar confirmados. El canje se limita al saldo disponible y a un máximo del ${program.maxRedeemBps / 100}% del importe elegible, sin combinación automática con otras promociones. No se pueden transferir ni retirar como efectivo. Las devoluciones ajustan las monedas y el progreso del pedido original. La elegibilidad y recompensa se muestran antes de pagar.`
+                : `100 SimCoins equal USD 1 in promotional credit. They become available ${releaseDays} days after verified eSIM and email delivery. Payment and delivery must be confirmed. Redemption is limited to your available balance and up to ${program.maxRedeemBps / 100}% of the eligible amount, without automatic stacking with other promotions. Coins cannot be transferred or withdrawn as cash. Refunds adjust coins and progress from the original order. Eligibility and rewards are shown before payment.`}
+            </p>
+            <Link className="sc-text-link" href={pathFor(locale, "terms")}>
+              {locale === "es" ? "Términos del servicio" : "Terms of service"}
+              <ArrowRight size={16} />
+            </Link>
+          </details>
         </section>
         <section className="sc-final">
           <div>

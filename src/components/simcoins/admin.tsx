@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState, type FormEvent } from "react";
-import { Coins, RefreshCw, ShieldCheck } from "lucide-react";
+import { RefreshCw, ShieldCheck } from "lucide-react";
+import { SimcoinIcon } from "./art";
 import { OperationsShell } from "@/components/admin/operations-shell";
 import type { Locale } from "@/lib/i18n";
 
@@ -415,7 +416,7 @@ export function SimcoinsAdmin({
           ["redeemedCoins", t("Monedas canjeadas", "Redeemed coins")],
         ].map(([key, label]) => (
           <article key={key}>
-            <Coins size={22} />
+            <SimcoinIcon size={24} />
             <p>{label}</p>
             <strong>{data.configured ? text(aggregate[key]) : "—"}</strong>
             <small>

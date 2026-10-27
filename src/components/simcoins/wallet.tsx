@@ -7,6 +7,7 @@ import type {
   SimcoinsWallet,
 } from "@/lib/simcoins/model";
 import { simcoinsCopy } from "./copy";
+import { LevelBadge, SimcoinIcon } from "./art";
 
 export function SimcoinsWalletView({
   locale,
@@ -112,7 +113,7 @@ export function SimcoinsWalletView({
         )}
         <div className="sc-balances">
           <article className="sc-balance-main">
-            <Coins size={25} />
+            <SimcoinIcon size={32} />
             <p>{es ? "Disponibles" : "Available"}</p>
             <strong>
               {n(wallet.availableCoins)} <small>SimCoins</small>
@@ -144,13 +145,16 @@ export function SimcoinsWalletView({
         <section className="sc-wallet-level">
           <p className="sc-eyebrow">{es ? "NIVEL ACTUAL" : "CURRENT LEVEL"}</p>
           <div>
-            <h3>
-              {wallet.level.id === "traveler"
-                ? es
-                  ? "Viajero"
-                  : "Traveler"
-                : wallet.level.name}
-            </h3>
+            <div className="sc-wallet-tier">
+              <LevelBadge id={wallet.level.id} size={60} />
+              <h3>
+                {wallet.level.id === "traveler"
+                  ? es
+                    ? "Viajero"
+                    : "Traveler"
+                  : wallet.level.name}
+              </h3>
+            </div>
             <strong>{wallet.level.rateBps / 100}%</strong>
           </div>
           <p>

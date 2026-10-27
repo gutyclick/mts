@@ -1,50 +1,36 @@
 export const simcoinsCopy = {
   es: {
-    title: "Tu próximo viaje empieza con SimCoins.",
-    description:
-      "Conoce SimCoins, el programa de recompensas de MyTripSim: niveles, saldo y una calculadora ilustrativa para tus próximos viajes.",
+    title: "SimCoins. Cada viaje cuenta.",
     eyebrow: "SIMCOINS · RECOMPENSAS DE VIAJE",
-    intro:
-      "Tus viajes tienen mucho por delante. Descubre cómo las compras elegibles podrán acercarte a tu próxima TripSim.",
+    intro: "Tus eSIM de hoy, las recompensas de tu próxima aventura.",
     preview: "Próximamente",
-    off: "SimCoins está en preparación. Por ahora no se acumulan ni se canjean monedas.",
+    off: "Aún no se acumulan ni se canjean SimCoins.",
     wallet: "Ver mis SimCoins",
     explore: "Explorar destinos",
-    how: "De una TripSim a la siguiente",
+    how: "Viaja. Suma. Vuelve a explorar.",
     steps: [
       [
         "Elige tu próxima aventura",
-        "Compra una TripSim con tu cuenta. Solo el importe elegible pagado en dinero cuenta para las recompensas.",
+        "Elige una eSIM elegible y compra con tu cuenta.",
       ],
       [
-        "Dale tiempo a tus monedas",
-        "Las recompensas pasan por un período pendiente después de la entrega verificada.",
+        "Suma SimCoins",
+        "Recibe tus recompensas tras la entrega y el período de espera.",
       ],
       [
         "Vuelve a viajar",
-        "Cuando estén disponibles, podrás aplicar tus SimCoins en compras elegibles, dentro del límite permitido.",
+        "Usa tu saldo disponible en tu próxima compra elegible.",
       ],
     ],
     levels: "Cada viaje suma a tu recorrido",
     levelsIntro:
-      "Cuatro niveles según tu gasto elegible acumulado en USD. El nivel de cada compra se determina antes de esa compra.",
-    first: "Después de tu primera compra elegible",
+      "Tu gasto elegible abre nuevos niveles. Las ventajas crecen contigo.",
+    first: "Tras tu primera compra elegible",
     from: "Desde",
     spend: "de gasto elegible",
     reward: "en SimCoins",
-    calculator: "Haz una parada en la calculadora",
-    calculatorIntro:
-      "Explora una estimación. No crea saldo ni reserva recompensas.",
-    amount: "Compra elegible en USD",
-    level: "Nivel de la compra",
-    estimate: "SimCoins estimados",
-    invalid:
-      "Introduce un importe válido con hasta dos decimales (máximo USD 100.000).",
-    example:
-      "Ejemplo ilustrativo; las condiciones finales se verifican al comprar.",
-    use: "Monedas para seguir conectado",
-    useIntro:
-      "100 SimCoins equivalen a USD 1 de crédito promocional para compras elegibles de MyTripSim.",
+    use: "Tu saldo, tu próxima aventura.",
+    useIntro: "Convierte tus monedas en ahorro para tu próxima eSIM elegible.",
     rules: [
       "Sin transferencias ni retiro en efectivo.",
       "Sin vencimiento ordinario.",
@@ -99,50 +85,37 @@ export const simcoinsCopy = {
       "Encuentra la TripSim para tu destino y consulta aquí las novedades de SimCoins.",
   },
   en: {
-    title: "Your next journey starts with SimCoins.",
-    description:
-      "Discover SimCoins, the MyTripSim rewards program: levels, your balance and an illustrative calculator for your next trips.",
+    title: "SimCoins. Every journey counts.",
     eyebrow: "SIMCOINS · TRAVEL REWARDS",
-    intro:
-      "There is more travel ahead. Explore how eligible purchases could bring you closer to your next TripSim.",
+    intro: "Today’s eSIM. Rewards for your next adventure.",
     preview: "Coming soon",
-    off: "SimCoins is being prepared. Earning and redemption are currently unavailable.",
+    off: "Earning and redemption are not active yet.",
     wallet: "View my SimCoins",
     explore: "Explore destinations",
-    how: "From one TripSim to the next",
+    how: "Travel. Earn. Explore again.",
     steps: [
       [
         "Choose your next adventure",
-        "Buy a TripSim with your account. Only the eligible amount paid in cash counts toward rewards.",
+        "Choose an eligible eSIM and buy with your account.",
       ],
       [
-        "Give your coins a little time",
-        "Rewards remain pending for a period after verified delivery.",
+        "Collect SimCoins",
+        "Receive rewards after delivery and the waiting period.",
       ],
       [
         "Travel again",
-        "Once available, you can apply SimCoins to eligible purchases, within the permitted limit.",
+        "Use your available coins toward your next eligible purchase.",
       ],
     ],
     levels: "Every trip adds to your journey",
     levelsIntro:
-      "Four levels based on cumulative eligible spending in USD. Each purchase uses the level held before that purchase.",
+      "Eligible spending unlocks new levels. Your rewards grow with you.",
     first: "After your first eligible purchase",
     from: "From",
     spend: "in eligible spending",
     reward: "in SimCoins",
-    calculator: "Make a stop at the calculator",
-    calculatorIntro:
-      "Explore an estimate. This does not create a balance or reserve rewards.",
-    amount: "Eligible purchase in USD",
-    level: "Purchase level",
-    estimate: "Estimated SimCoins",
-    invalid:
-      "Enter a valid amount with up to two decimals (maximum USD 100,000).",
-    example: "Illustrative example; final eligibility is checked at purchase.",
-    use: "Coins to keep you connected",
-    useIntro:
-      "100 SimCoins equal USD 1 in promotional credit toward eligible MyTripSim purchases.",
+    use: "Your coins. Your next adventure.",
+    useIntro: "Turn your coins into savings on your next eligible eSIM.",
     rules: [
       "No transfers or cash withdrawals.",
       "No ordinary expiration.",

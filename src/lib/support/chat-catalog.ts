@@ -140,12 +140,18 @@ export function directPlanRecommendation(
     !plans.length
   )
     return null;
-  const plan = plans[0];
+  return catalogPlanRecommendation(plans[0], locale);
+}
+
+export function catalogPlanRecommendation(
+  plan: ReturnType<typeof selectChatPlans>[number],
+  locale: "es" | "en",
+) {
   return {
     planIds: [plan.id],
     answer:
       locale === "es"
-        ? `Te recomiendo esta opción: incluye ${plan.dataGb} GB y ${plan.days} días de vigencia, suficientes para el viaje que indicas. Puedes ver sus redes y condiciones en la ficha antes de añadirla al carrito.`
-        : `I recommend this option: it includes ${plan.dataGb} GB with ${plan.days} days of validity, enough for the trip you described. Check its networks and conditions on the plan page before adding it to your cart.`,
+        ? `La mejor opción para lo que buscas es este plan de ${plan.dataGb} GB con ${plan.days} días de vigencia. Puedes revisar sus redes y condiciones en la ficha y añadirlo al carrito.`
+        : `The best option for your requirements is this ${plan.dataGb} GB plan with ${plan.days} days of validity. Review its networks and conditions on the plan page and add it to your cart.`,
   };
 }

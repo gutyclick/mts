@@ -1,6 +1,10 @@
 import "server-only";
 import { supportCatalog } from "./catalog-server";
-import { planReferences, directPlanRecommendation } from "./chat-catalog";
+import {
+  planReferences,
+  directPlanRecommendation,
+  catalogPlanRecommendation,
+} from "./chat-catalog";
 import { z } from "zod";
 import type { NextRequest } from "next/server";
 import { chatRequest, redactSupportText, supportMessageSchema } from "./model";
@@ -99,32 +103,44 @@ export async function chatSupport(
       [...history.filter((m) => m.role === "user").map((m) => m.body), message],
       detail.thread.topic ?? "general",
     ).catch(() => null);
-    answer = await supportAnswer(
-      {
-        message,
-        language: body.language,
-        locale: body.locale,
-        history,
-        order,
-        topic: detail.thread.topic,
-        catalog: catalog
-          ? {
-              destination: catalog.destination.name[body.locale],
-              plans: catalog.plans,
-            }
-          : null,
-      },
-      process.env,
-    );
     const direct =
       !order && catalog
         ? directPlanRecommendation(message, catalog.plans, body.locale)
         : null;
-    if (direct) answer = { ...answer, ...direct };
+    answer = direct
+      ? { ...direct, references: [], escalate: false }
+      : await supportAnswer(
+          {
+            message,
+            language: body.language,
+            locale: body.locale,
+            history,
+            order,
+            topic: detail.thread.topic,
+            catalog: catalog
+              ? {
+                  destination: catalog.destination.name[body.locale],
+                  plans: catalog.plans,
+                }
+              : null,
+          },
+          process.env,
+        );
     const wantsPlans =
       /\bplans?\b|paquet|recom|compr|buy|precio|price|\bgb\b|opci[oó]n|option|segund|second/i.test(
         message,
       );
+    // Never expose a model-written recommendation when we can state verified catalog facts.
+    const recommendedId = answer.planIds[0];
+    const recommended =
+      !order && catalog && wantsPlans
+        ? catalog.plans.find((plan) => plan.id === recommendedId)
+        : undefined;
+    if (!direct && recommended)
+      answer = {
+        ...answer,
+        ...catalogPlanRecommendation(recommended, body.locale),
+      };
     const cards =
       catalog && wantsPlans
         ? planReferences(

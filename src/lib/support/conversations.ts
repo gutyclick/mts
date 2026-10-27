@@ -60,7 +60,7 @@ const conversationOpenings = {
 export function conversationOpening(locale: "es" | "en", topic?: string) {
   const selected =
     conversationTopics.find((value) => value === topic) ?? "general";
-  return conversationOpenings[locale][selected];
+  return `${locale === "es" ? "¡Hola, viajero!" : "Hello, traveler!"} ${conversationOpenings[locale][selected]}`;
 }
 export const conversationRequest = z.discriminatedUnion("action", [
   z

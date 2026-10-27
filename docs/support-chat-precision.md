@@ -12,3 +12,9 @@ Validation: 12 focused tests passed; TypeScript and focused ESLint passed. Real 
 Browser QA: Enter immediately displayed the outgoing bubble and typing state. A real Japan 10 GB / 20-day request returned a published 10 GB / 30-day IIJ card at USD 9. A subsequent roaming question sent successfully and preserved history. Closing the synthetic guest incident displayed the existing rating choices. A final server filter limits commercial cards to plan-related requests. No human ticket, email, payment or eSIM issuance was created.
 
 Production release: ee41a67, Vercel dpl_CZz494rTnWGi6CPYTodM2d8mnme5, READY with www.mytripsim.com alias. Final typecheck and 12 focused support tests passed. Vercel production build succeeded.
+
+## Verified recommendations and traveler greeting
+
+Graphify installed with `graphify install --platform codex`. A local code-only support map was generated at private-data/graphify-support/graphify-out/graph.json (11 code files; 72 extracted nodes, 223 edges; zero semantic/API extraction tokens). A bounded graph query traced supportAnswer, directPlanRecommendation and conversationOpening to the chat server. No runtime speedup is attributed to Graphify itself; the generic benchmark had no matching sample questions, so no token-saving percentage is claimed.
+
+Every topic opening now starts with a localized traveler greeting. Verified package recommendations are rendered from catalog facts, rather than model prose that can contradict plan availability. Straightforward destination/GB/duration purchase requests bypass AI entirely, reducing one model call and its latency; protected order and troubleshooting requests retain their existing context and handling. Fourteen focused support tests cover catalog matches, safe links, history merging, greetings, ownership, idempotency and conversation lifecycle.

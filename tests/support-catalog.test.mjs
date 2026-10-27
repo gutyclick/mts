@@ -140,3 +140,34 @@ test("simple purchase recommendations use catalog facts without inventing exact 
     null,
   );
 });
+
+test("every conversation topic starts with a traveler greeting", async () => {
+  const { conversationOpening, conversationTopics } =
+    await import("../src/lib/support/conversations.ts");
+  for (const topic of conversationTopics) {
+    assert.match(conversationOpening("es", topic), /^¡Hola, viajero!/);
+    assert.match(conversationOpening("en", topic), /^Hello, traveler!/);
+  }
+});
+test("verified recommendation uses only catalog facts and never a contradictory model sentence", async () => {
+  const { catalogPlanRecommendation } =
+    await import("../src/lib/support/chat-catalog.ts");
+  const [plan] = selectChatPlans(
+    [
+      {
+        id: "JP_10_30",
+        name: "Japan",
+        kind: "fixed",
+        dataGb: 10,
+        days: 30,
+        retailPriceCents: 1100,
+      },
+    ],
+    "10 GB 20 días",
+  );
+  const result = catalogPlanRecommendation(plan, "es");
+  assert.match(result.answer, /La mejor opción/);
+  assert.match(result.answer, /10 GB.*30 días/);
+  assert.doesNotMatch(result.answer, /no existe|no existente|exactamente/);
+  assert.deepEqual(result.planIds, ["JP_10_30"]);
+});

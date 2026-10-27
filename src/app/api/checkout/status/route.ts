@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     const { data: rawOrder, error } = await db
       .from("checkout_orders")
       .select(
-        "id,user_id,browser_hash,status,amount_total,currency,livemode,created_at,payment_hold_expires_at,payment_in_progress",
+        "id,user_id,browser_hash,status,amount_total,currency,payment_total,payment_currency,livemode,created_at,payment_hold_expires_at,payment_in_progress",
       )
       .eq("id", id)
       .maybeSingle();
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     const { data: items, error: itemsError } = await db
       .from("checkout_order_items")
       .select(
-        "plan_id,destination_slug,destination_name,plan_name,data_gb,days,quantity,unit_amount",
+        "plan_id,destination_slug,destination_name,plan_name,data_gb,days,quantity,unit_amount,payment_unit_amount",
       )
       .eq("order_id", id)
       .order("plan_id");
@@ -65,10 +65,13 @@ export async function GET(request: NextRequest) {
       {
         id: order.id,
         status: order.status,
-        total: order.amount_total,
-        currency: order.currency,
+        total: order.payment_total ?? order.amount_total,
+        currency: order.payment_currency ?? order.currency,
         test: !order.livemode,
-        items,
+        items: items.map((item) => ({
+          ...item,
+          unit_amount: item.payment_unit_amount ?? item.unit_amount,
+        })),
         holdExpiresAt: order.payment_hold_expires_at,
         paymentInProgress: order.payment_in_progress,
         serverTime: new Date().toISOString(),

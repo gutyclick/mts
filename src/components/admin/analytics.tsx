@@ -255,8 +255,8 @@ export function AnalyticsDashboard({ locale }: { locale: Locale }) {
           </section>
           <p className="analytics-note">
             {es
-              ? "Los importes incluyen todos los pedidos reales confirmados en el periodo, aunque no hayan aceptado estadísticas. No representan ingresos netos ni se usan como denominador del embudo. Los datos de sesión empiezan a registrarse desde la activación y se conservan 30 días, con limpieza diaria."
-              : "Amounts include all confirmed live orders in the period, including those without statistics consent. They are not net revenue and are not used as the funnel denominator. Session collection begins at activation and lasts 30 days, with daily cleanup."}
+              ? "Los importes incluyen todos los pedidos reales confirmados en el periodo, aunque no hayan aceptado estadísticas. Los importes se expresan en USD al precio base del pedido, antes de comisiones, diferencias de liquidación y reembolsos; no son ingresos netos ni el denominador del embudo. Los datos de sesión empiezan a registrarse desde la activación y se conservan 30 días, con limpieza diaria."
+              : "Amounts include all confirmed live orders in the period, including those without statistics consent. Amounts use each order’s original USD base price before fees, settlement exchange differences and refunds; they are not net revenue or the funnel denominator. Session collection begins at activation and lasts 30 days, with daily cleanup."}
           </p>
         </>
       )}

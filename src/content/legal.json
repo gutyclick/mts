@@ -82,6 +82,10 @@
             {
               "type": "paragraph",
               "text": "La creación de un carrito o una sesión de pago no equivale a un pago confirmado ni a una eSIM emitida. Si abandonas un pago, la web puede cancelar el intento tras cinco minutos de inactividad conforme a su estado. Si tu banco muestra un cargo o autorización pero el pedido no se confirma, consulta con soporte antes de repetir la compra."
+            },
+            {
+              "type": "paragraph",
+              "text": "Puedes elegir la moneda de presentación y de cobro entre las disponibles en el selector. Los precios se convierten desde nuestro catálogo base en USD usando una cotización informativa de Stripe, sin margen de cambio añadido por MyTripSim y con redondeo a la unidad mínima de cada divisa. Guardamos el importe y la moneda del intento antes de abrir el pago: ese intento no se recalcula si cambia la cotización. Una nueva selección o un nuevo intento puede tener otro precio; revísalo antes de confirmar. Esta fijación del precio al cliente no es una garantía sobre el tipo de liquidación bancaria. Tu banco o emisor puede cobrar gastos propios."
             }
           ]
         },
@@ -509,6 +513,10 @@
             {
               "type": "paragraph",
               "text": "No se sustituye una devolución legalmente debida por crédito de tienda sin la base o acuerdo necesarios. No se impondrán gastos o deducciones no informados o prohibidos. Una disputa ante tu banco conserva el régimen y plazos que le correspondan; contactar con soporte no implica renunciar a esa vía."
+            },
+            {
+              "type": "paragraph",
+              "text": "Una devolución autorizada utiliza el importe original de las unidades afectadas y la moneda en que se pagaron, sin recalcularlas con la cotización actual de la web. Los cambios de divisa entre tu banco y tu cuenta o los gastos del emisor pueden tener un tratamiento propio ajeno a MyTripSim."
             }
           ]
         },
@@ -602,6 +610,11 @@
                   "Identificadores del formulario de Stripe y métodos de pago",
                   "Autenticación, prevención del fraude y funcionamiento del pago solicitado",
                   "Duración variable según el identificador y el método utilizado; consulta la política de cookies de Stripe"
+                ],
+                [
+                  "mytripsim.currency.v1 en almacenamiento local",
+                  "Recordar la moneda que eliges para mostrar precios y pagar",
+                  "Hasta que la cambies o borres los datos del sitio; se guarda una elección de moneda, sin identificador de persona"
                 ]
               ]
             },
@@ -747,6 +760,10 @@
             {
               "type": "paragraph",
               "text": "A cart or payment session is not a confirmed payment or issued eSIM. An abandoned payment attempt may be cancelled after five minutes of inactivity according to its status. If your bank shows a charge or authorization but the order is not confirmed, contact us before paying again."
+            },
+            {
+              "type": "paragraph",
+              "text": "Choose a display and charge currency from those offered in the selector. Prices are converted from our USD base catalog using an informational Stripe quote, with no MyTripSim exchange markup and rounding to each currency’s minor unit. We save the attempt’s amount and currency before opening payment; later rate changes do not reprice that attempt. A new selection or payment attempt can have a different price, which you should review before confirming. Fixing your purchase price is not a guarantee of a bank settlement exchange rate. Your bank or issuer may apply its own charges."
             }
           ]
         },
@@ -1166,6 +1183,10 @@
             {
               "type": "paragraph",
               "text": "Legally due refunds are not replaced by store credit without the required basis or agreement. Undisclosed or unlawful deductions are not imposed. Contacting support does not waive applicable bank-dispute rights or deadlines."
+            },
+            {
+              "type": "paragraph",
+              "text": "An approved refund uses the affected units’ originally charged amount and currency, without reconverting at the website’s current exchange quote. Currency conversion between your bank and account or issuer fees may be treated separately outside MyTripSim."
             }
           ]
         },
@@ -1259,6 +1280,11 @@
                   "Stripe and payment-method identifiers",
                   "Payment authentication, fraud prevention and requested payment functions",
                   "Varies by identifier and method; consult Stripe's cookie policy"
+                ],
+                [
+                  "mytripsim.currency.v1 in local storage",
+                  "Remember your chosen display and payment currency",
+                  "Until changed or cleared with site data; stores a currency choice, not a person identifier"
                 ]
               ]
             },

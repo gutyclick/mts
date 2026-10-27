@@ -36,6 +36,8 @@ Stripe procesa el pago. Los métodos ofrecidos dependen de tu dispositivo, naveg
 
 La creación de un carrito o una sesión de pago no equivale a un pago confirmado ni a una eSIM emitida. Si abandonas un pago, la web puede cancelar el intento tras cinco minutos de inactividad conforme a su estado. Si tu banco muestra un cargo o autorización pero el pedido no se confirma, consulta con soporte antes de repetir la compra.
 
+Puedes elegir la moneda de presentación y de cobro entre las disponibles en el selector. Los precios se convierten desde nuestro catálogo base en USD usando una cotización informativa de Stripe, sin margen de cambio añadido por MyTripSim y con redondeo a la unidad mínima de cada divisa. Guardamos el importe y la moneda del intento antes de abrir el pago: ese intento no se recalcula si cambia la cotización. Una nueva selección o un nuevo intento puede tener otro precio; revísalo antes de confirmar. Esta fijación del precio al cliente no es una garantía sobre el tipo de liquidación bancaria. Tu banco o emisor puede cobrar gastos propios.
+
 ## 6. Emisión y entrega
 
 Tras confirmar el pago, se solicita la preparación de la eSIM. El QR y las instrucciones se envían al correo del beneficiario indicado. Cuando el pedido está vinculado a una cuenta, la información autorizada también puede consultarse en Mis eSIM.

@@ -15,7 +15,8 @@ import {
   LoaderCircle,
   Mail,
 } from "lucide-react";
-import { formatUSD } from "@/lib/retail-prices";
+import { formatMoney, type Currency } from "@/lib/currency";
+import { useCurrency } from "@/components/currency-provider";
 import type { Locale } from "@/lib/i18n";
 import { HoldCountdown, usePaymentPresence } from "./payment-hold";
 import {
@@ -27,6 +28,7 @@ export function EmbeddedPayment({
   clientSecret,
   publishableKey,
   total,
+  currency = "USD",
   locale,
   buyer,
   recipient,
@@ -36,6 +38,7 @@ export function EmbeddedPayment({
   clientSecret: string;
   publishableKey: string;
   total: number;
+  currency?: Currency;
   locale: Locale;
   buyer: string;
   recipient: string;
@@ -112,6 +115,7 @@ export function EmbeddedPayment({
             locale={locale}
             live={publishableKey.startsWith("pk_live_")}
             total={total}
+            currency={currency}
             buyer={buyer}
             recipient={recipient}
             onBack={onBack}
@@ -125,6 +129,7 @@ function PaymentForm({
   live,
   locale,
   total,
+  currency,
   buyer,
   recipient,
   onBack,
@@ -132,10 +137,13 @@ function PaymentForm({
   live: boolean;
   locale: Locale;
   total: number;
+  currency: Currency;
   buyer: string;
   recipient: string;
   onBack: () => void;
 }) {
+  const { setPaymentBusy } = useCurrency();
+  useEffect(() => () => setPaymentBusy(false), [setPaymentBusy]);
   const es = locale === "es";
   const state = useCheckoutElements();
   const [busy, setBusy] = useState(false);
@@ -163,10 +171,15 @@ function PaymentForm({
       return;
     }
     submitting.current = true;
+    setPaymentBusy(true);
     setBusy(true);
     setError("");
     try {
-      if (state.checkout.livemode !== live)
+      if (
+        state.checkout.livemode !== live ||
+        state.checkout.currency.toUpperCase() !== currency ||
+        state.checkout.total.total.minorUnitsAmount !== total
+      )
         throw new Error("Payment environment mismatch");
       const result = await state.checkout.confirm(
         expressEvent
@@ -183,6 +196,7 @@ function PaymentForm({
       );
     } finally {
       submitting.current = false;
+      setPaymentBusy(false);
       setBusy(false);
     }
   }
@@ -291,7 +305,14 @@ function PaymentForm({
         <button
           className="button button-primary checkout-pay"
           type="submit"
-          disabled={busy || !ready || state.type !== "success"}
+          disabled={
+            busy ||
+            !ready ||
+            state.type !== "success" ||
+            (state.type === "success" &&
+              (state.checkout.currency.toUpperCase() !== currency ||
+                state.checkout.total.total.minorUnitsAmount !== total))
+          }
         >
           {busy ? (
             <LoaderCircle className="payment-spinner" size={17} />
@@ -302,7 +323,7 @@ function PaymentForm({
             ? es
               ? "Confirmando pago…"
               : "Confirming payment…"
-            : `${es ? "Pagar" : "Pay"} ${formatUSD(total, locale)}${live ? "" : ` · ${es ? "prueba" : "test"}`}`}
+            : `${es ? "Pagar" : "Pay"} ${formatMoney(total, currency, locale)}${live ? "" : ` · ${es ? "prueba" : "test"}`}`}
         </button>
         {!live && (
           <p className="commerce-muted">

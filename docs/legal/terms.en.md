@@ -36,6 +36,8 @@ Stripe processes payments. Available methods depend on your device, browser, cou
 
 A cart or payment session is not a confirmed payment or issued eSIM. An abandoned payment attempt may be cancelled after five minutes of inactivity according to its status. If your bank shows a charge or authorization but the order is not confirmed, contact us before paying again.
 
+Choose a display and charge currency from those offered in the selector. Prices are converted from our USD base catalog using an informational Stripe quote, with no MyTripSim exchange markup and rounding to each currency’s minor unit. We save the attempt’s amount and currency before opening payment; later rate changes do not reprice that attempt. A new selection or payment attempt can have a different price, which you should review before confirming. Fixing your purchase price is not a guarantee of a bank settlement exchange rate. Your bank or issuer may apply its own charges.
+
 ## 6. Issuance and delivery
 
 After payment is confirmed, we request preparation of the eSIM. The QR and instructions are sent to the recipient email entered at checkout. Authorized information for account-linked purchases can also be viewed in My eSIMs.

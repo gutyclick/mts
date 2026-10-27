@@ -31,7 +31,7 @@ import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { DestinationFlag } from "../destination-flag";
 import { planVariant } from "@/lib/plan-variants";
-import { formatUSD } from "@/lib/retail-prices";
+import { Price, CartPrice } from "@/components/price";
 import { recordStats } from "@/lib/analytics/client";
 
 const empty: CartLine[] = [];
@@ -299,11 +299,22 @@ export function CartProvider({
         {count > 0 && !error && !loading && (
           <div className="cart-drawer-footer">
             <p>
-              {cartTotal(resolved) != null
-                ? `${es ? "Total" : "Total"}: ${formatUSD(cartTotal(resolved)!, locale)}`
-                : es
-                  ? "Precio pendiente de confirmar"
-                  : "Price to be confirmed"}
+              {cartTotal(resolved) != null ? (
+                <>
+                  {es ? "Total" : "Total"}:{" "}
+                  <CartPrice
+                    items={resolved.items.map((item) => ({
+                      unit: item.retailPriceCents!,
+                      quantity: item.quantity,
+                    }))}
+                    locale={locale}
+                  />
+                </>
+              ) : es ? (
+                "Precio pendiente de confirmar"
+              ) : (
+                "Price to be confirmed"
+              )}
             </p>
             <Link
               href={experiencePath(locale, "checkout")}
@@ -456,11 +467,17 @@ export function CartItems({ locale }: { locale: Locale }) {
               </button>
             </div>
             <span className="cart-price-pending">
-              {item.retailPriceCents != null
-                ? formatUSD(item.retailPriceCents * item.quantity, locale)
-                : es
-                  ? "Precio pendiente"
-                  : "Price pending"}
+              {item.retailPriceCents != null ? (
+                <Price
+                  cents={item.retailPriceCents}
+                  quantity={item.quantity}
+                  locale={locale}
+                />
+              ) : es ? (
+                "Precio pendiente"
+              ) : (
+                "Price pending"
+              )}
             </span>
           </div>
         </li>

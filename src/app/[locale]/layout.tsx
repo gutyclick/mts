@@ -3,6 +3,8 @@ import { isLocale, locales } from "@/lib/i18n";
 import { CartProvider } from "@/components/commerce/cart-provider";
 import { SiteFrame } from "@/components/site-frame";
 import { StatsProvider } from "@/components/analytics/consent";
+import { RegionalPreferences } from "@/components/regional-preferences";
+import {CurrencyProvider} from "@/components/currency-provider";
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -17,11 +19,13 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
   return (
     <div lang={locale} className="site-shell">
-      <StatsProvider locale={locale}>
-        <CartProvider locale={locale}>
-          <SiteFrame locale={locale}>{children}</SiteFrame>
-        </CartProvider>
-      </StatsProvider>
+      <CurrencyProvider><RegionalPreferences locale={locale}>
+        <StatsProvider locale={locale}>
+          <CartProvider locale={locale}>
+            <SiteFrame locale={locale}>{children}</SiteFrame>
+          </CartProvider>
+        </StatsProvider>
+      </RegionalPreferences></CurrencyProvider>
     </div>
   );
 }

@@ -21,6 +21,8 @@ const schema = z.object({
   browser_hash: z.string(),
   status: z.enum(["pending", "paid", "expired", "failed", "cancelled"]),
   amount_total: z.number().int(),
+  payment_currency:z.string().nullable(),
+  payment_total:z.number().int().nullable(),
   currency: z.literal("usd"),
   livemode: z.boolean(),
   locale: z.enum(["es", "en"]),
@@ -36,7 +38,7 @@ export async function holdOrder(id: string) {
   const { data, error } = await checkoutDatabase()
     .from("checkout_orders")
     .select(
-      "id,user_id,browser_hash,status,amount_total,currency,livemode,locale,stripe_session_id,billing_email,recipient_email,marketing_opt_in,payment_hold_expires_at,payment_in_progress",
+      "id,user_id,browser_hash,status,amount_total,currency,payment_currency,payment_total,livemode,locale,stripe_session_id,billing_email,recipient_email,marketing_opt_in,payment_hold_expires_at,payment_in_progress",
     )
     .eq("id", id)
     .maybeSingle();

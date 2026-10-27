@@ -23,7 +23,7 @@ import { signOut } from "@/lib/account-actions";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { CopyValue } from "./copy-value";
-import { formatUSD } from "@/lib/retail-prices";
+import {formatMoney,currencyCode} from "@/lib/currency";
 import { CustomerSupportSummary } from "./support-summary";
 const dataLabel = (gb: number) =>
   gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`;
@@ -402,7 +402,7 @@ export async function CustomerWallet({
                                   ? "Pago fallido"
                                   : "Payment failed"}
                       </span>
-                      <p>{formatUSD(item.amount_total, locale)}</p>
+                      <p>{formatMoney(item.amount_total,currencyCode(item.currency)??'USD', locale)}</p>
                       <Link
                         href={`/${locale}/checkout/result?order=${item.id}`}
                       >

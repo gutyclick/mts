@@ -196,6 +196,7 @@ test("receipt waits for confirmation and consumes purchased quantities once", as
     ),
   ).toBe(true);
   await page.locator("header .language-switch").click();
+  await page.getByRole("dialog").getByRole("link", {name: /English/}).click();
   await expect(page).toHaveURL(
     new RegExp(`/en/checkout/result\\?order=${order}`),
   );

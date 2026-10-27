@@ -21,6 +21,7 @@ import "@/styles/legal.css";
 import "@/styles/operations.css";
 import "@/styles/refunds.css";
 import "@/styles/analytics.css";
+import "@/styles/regional-preferences.css";
 
 export const viewport: Viewport = {
   width: "device-width",

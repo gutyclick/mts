@@ -1,4 +1,5 @@
 export const PAYMENT_HOLD_MS = 5 * 60 * 1000;
+import { currencyCode } from "../currency.ts";
 export const pendingPaymentKey = "mytripsim.pending-payment.v1";
 export function remainingHoldSeconds(
   deadline: string | null,
@@ -24,6 +25,8 @@ export type HoldOrder = {
   id: string;
   stripe_session_id: string | null;
   amount_total: number;
+  payment_currency?: string | null;
+  payment_total?: number | null;
   livemode?: boolean;
 };
 export function verifyHoldSession(order: HoldOrder, session: HoldSession) {
@@ -32,8 +35,9 @@ export function verifyHoldSession(order: HoldOrder, session: HoldSession) {
     session.id !== order.stripe_session_id ||
     session.client_reference_id !== order.id ||
     session.metadata?.mts_order_id !== order.id ||
-    session.currency !== "usd" ||
-    session.amount_total !== order.amount_total
+    !currencyCode(order.payment_currency ?? "USD") ||
+    session.currency !== (order.payment_currency ?? "USD").toLowerCase() ||
+    session.amount_total !== (order.payment_total ?? order.amount_total)
   )
     throw new Error("Session identity mismatch");
 }

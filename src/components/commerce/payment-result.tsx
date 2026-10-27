@@ -14,7 +14,8 @@ import { z } from "zod";
 import { useCart } from "./cart-provider";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
-import { formatUSD } from "@/lib/retail-prices";
+import { formatMoney, currencyCode, type Currency } from "@/lib/currency";
+import { currencySchema } from "@/lib/currency-schema";
 import { planVariant } from "@/lib/plan-variants";
 import { authPath } from "@/lib/auth-routes";
 import { SimMascot } from "@/components/sim-mascot";
@@ -29,7 +30,7 @@ const receiptSchema = z.object({
   paymentInProgress: z.boolean().optional(),
   serverTime: z.string().optional(),
   total: z.number().int().positive(),
-  currency: z.literal("usd"),
+  currency: currencySchema,
   test: z.boolean(),
   items: z.array(
     z.object({
@@ -68,6 +69,7 @@ export function PaymentResult({
     clientSecret: string;
     publishableKey: string;
     total: number;
+    currency: Currency;
     buyer: string;
     recipient: string;
   } | null>(null);
@@ -157,6 +159,7 @@ export function PaymentResult({
         clientSecret: data.clientSecret,
         publishableKey: data.publishableKey,
         total: data.total,
+        currency: currencyCode(data.currency) ?? "USD",
         buyer: data.buyer,
         recipient: data.recipient,
       });
@@ -305,14 +308,20 @@ export function PaymentResult({
                     </small>
                   </div>
                   <strong>
-                    {formatUSD(item.unit_amount * item.quantity, locale)}
+                    {formatMoney(
+                      item.unit_amount * item.quantity,
+                      receipt.currency,
+                      locale,
+                    )}
                   </strong>
                 </li>
               ))}
             </ul>
             <div className="payment-receipt-total">
               <strong>Total</strong>
-              <strong>{formatUSD(receipt.total, locale)}</strong>
+              <strong>
+                {formatMoney(receipt.total, receipt.currency, locale)}
+              </strong>
             </div>
           </div>
         )}

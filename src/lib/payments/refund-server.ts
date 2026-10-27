@@ -4,11 +4,12 @@ import { z } from "zod";
 import { checkoutDatabase, paymentEnvironment } from "./checkout-server";
 import { dispatchRefund } from "./refund-execution";
 import { refundView } from "./refund-model";
+import { currencySchema } from "../currency-schema";
 const jobSchema = z.object({
   id: z.uuid(),
   order_id: z.uuid(),
   amount: z.number().int().positive(),
-  currency: z.literal("usd"),
+  currency: currencySchema,
   livemode: z.boolean(),
   payment_intent: z.string(),
   stripe_refund_id: z.string().nullable(),
@@ -74,12 +75,19 @@ export async function executeAdminRefund(actor: string, id: string) {
     const [order, known] = await Promise.all([
       db
         .from("checkout_orders")
-        .select("amount_total,currency,livemode,stripe_payment_intent,status")
+        .select(
+          "amount_total,currency,payment_total,payment_currency,livemode,stripe_payment_intent,status",
+        )
         .eq("id", job.order_id)
         .single(),
       db.from("refund_requests").select("id").eq("order_id", job.order_id),
     ]);
     if (order.error || known.error) throw Error("Order snapshot unavailable");
+    if (
+      job.currency.toLowerCase() !==
+      (order.data.payment_currency ?? order.data.currency).toLowerCase()
+    )
+      throw Error("Refund currency mismatch");
     const payment = await stripe.paymentIntents.retrieve(job.payment_intent, {
       expand: ["latest_charge"],
     });
@@ -93,8 +101,10 @@ export async function executeAdminRefund(actor: string, id: string) {
     const result = await dispatchRefund(
       {
         order: {
-          amount: order.data.amount_total,
-          currency: order.data.currency,
+          amount: order.data.payment_total ?? order.data.amount_total,
+          currency: (
+            order.data.payment_currency ?? order.data.currency
+          ).toLowerCase(),
           livemode: order.data.livemode,
           paymentIntent: order.data.stripe_payment_intent,
           status: order.data.status,

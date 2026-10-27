@@ -650,8 +650,8 @@ export function AdminDashboard({
                 </strong>
                 <p className="admin-caption">
                   {es
-                    ? "Ventas brutas confirmadas, antes de reembolsos. No incluye pagos de prueba."
-                    : "Confirmed gross sales, before refunds. Test payments are excluded."}
+                    ? "Ventas confirmadas al precio base en USD, antes de comisiones y reembolsos. No incluye pagos de prueba."
+                    : "Confirmed sales at original USD base prices, before fees and refunds. Test payments are excluded."}
                 </p>
                 {data.value.daily.some((d) => d.orders > 0) ? (
                   <ol

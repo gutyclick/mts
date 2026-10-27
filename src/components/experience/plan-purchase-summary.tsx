@@ -15,7 +15,7 @@ import { CompatibilityChecker } from "@/components/compatibility-checker";
 import { PlanInformation } from "./plan-information";
 import { PlanNetworkDetails } from "./plan-network-details";
 import { PlanVariant } from "../plan-variant";
-import { formatUSD } from "@/lib/retail-prices";
+import { Price } from "@/components/price";
 
 export function PlanPurchaseSummary({
   locale,
@@ -64,7 +64,7 @@ export function PlanPurchaseSummary({
         <PlanVariant plan={plan} locale={locale} />
         {plan.retailPriceCents != null && (
           <strong className="selected-plan-price">
-            {formatUSD(plan.retailPriceCents, locale)}
+            {<Price cents={plan.retailPriceCents} locale={locale} />}
           </strong>
         )}
       </div>

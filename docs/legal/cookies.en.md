@@ -18,6 +18,7 @@ Contact hello@mytripsim.com. Our privacy policy explains associated personal-dat
 | mytripsim.pending-payment.v1 in local storage | Recover a pending-payment notice and access                              | Removed when the attempt is resolved or cleared; storage is not the banking session's validity |
 | Local FAQ ratings                             | Remember the rating made in that browser                                 | Until updated or cleared; saved only after using the rating function                           |
 | Stripe and payment-method identifiers         | Payment authentication, fraud prevention and requested payment functions | Varies by identifier and method; consult Stripe's cookie policy                                |
+| `mytripsim.currency.v1` in local storage | Remember your chosen display and payment currency | Until changed or cleared with site data; stores a currency choice, not a person identifier |
 
 Third-party names and durations can vary. The inventory is updated with integrations. Our chat does not store whole conversations or eSIM installation credentials in its own browser local storage.
 

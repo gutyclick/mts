@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { currencySchema } from "../currency-schema.ts";
 export const refundStates = [
   "requested",
   "approved",
@@ -13,7 +14,7 @@ export const refundRecord = z.object({
   id: z.uuid(),
   order_id: z.uuid(),
   amount: z.number().int().positive(),
-  currency: z.literal("usd"),
+  currency: currencySchema,
   livemode: z.boolean(),
   state: z.enum(refundStates),
   reason: z.string(),
@@ -36,7 +37,7 @@ export const refundView = z.object({
       id: z.uuid(),
       status: z.string(),
       amount: z.number(),
-      currency: z.literal("usd"),
+      currency: currencySchema,
       livemode: z.boolean(),
       units: z.array(
         z.object({

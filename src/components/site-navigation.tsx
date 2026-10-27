@@ -2,43 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { ArrowRight, Globe2, Menu, X } from "lucide-react";
-import {
-  dictionaries,
-  equivalentPath,
-  pathFor,
-  type Locale,
-  type PageKey,
-} from "@/lib/i18n";
+import { usePathname } from "next/navigation";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { dictionaries, pathFor, type Locale, type PageKey } from "@/lib/i18n";
 import { Brand } from "./ui";
 import { experiencePath } from "@/lib/experience-routes";
 import { experienceCopy } from "@/lib/experience-copy";
 import { CartTrigger } from "./commerce/cart-provider";
 
-export function LanguageSwitcher({ locale }: { locale: Locale }) {
-  const pathname = usePathname();
-  const query = useSearchParams().toString();
-  const target = locale === "en" ? "es" : "en";
-  return (
-    <a
-      className="language-switch"
-      href={`${equivalentPath(pathname, target)}${query ? `?${query}` : ""}`}
-      onClick={(event) => {
-        event.currentTarget.href = `${equivalentPath(pathname, target)}${window.location.search}${window.location.hash}`;
-      }}
-      onAuxClick={(event) => {
-        event.currentTarget.href = `${equivalentPath(pathname, target)}${window.location.search}${window.location.hash}`;
-      }}
-      hrefLang={target}
-      aria-label={`${locale.toUpperCase()} / ${target.toUpperCase()} — ${dictionaries[locale].language}: ${target === "es" ? "Español" : "English"}`}
-    >
-      <Globe2 size={17} />
-      <span>{locale.toUpperCase()}</span>
-      <span className="language-alternative">/ {target.toUpperCase()}</span>
-    </a>
-  );
-}
+export { RegionalTrigger as LanguageSwitcher } from "./regional-preferences";
+import { RegionalTrigger as LanguageSwitcher } from "./regional-preferences";
 export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const t = dictionaries[locale];

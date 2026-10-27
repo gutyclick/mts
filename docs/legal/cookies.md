@@ -18,6 +18,7 @@ Contacto: **hello@mytripsim.com**. La política de privacidad explica el tratami
 | `mytripsim.pending-payment.v1` en almacenamiento local     | Recuperar el aviso y acceso al pago en curso                                       | Se retira al resolver o limpiar el intento; el almacenamiento no equivale a la vigencia de la sesión bancaria                 |
 | Valoraciones locales de preguntas frecuentes               | Recordar la valoración realizada desde ese navegador                               | Hasta su actualización o borrado; únicamente se guarda tras usar la valoración                                                |
 | Identificadores del formulario de Stripe y métodos de pago | Autenticación, prevención del fraude y funcionamiento del pago solicitado          | Duración variable según el identificador y el método utilizado; consulta la política de cookies de Stripe                     |
+| `mytripsim.currency.v1` en almacenamiento local | Recordar la moneda que eliges para mostrar precios y pagar | Hasta que la cambies o borres los datos del sitio; se guarda una elección de moneda, sin identificador de persona |
 
 Los nombres y las duraciones de terceros pueden variar. El inventario debe actualizarse cuando cambien las integraciones. No se almacenan conversaciones completas ni códigos de instalación de eSIM en el almacenamiento local propio del chat.
 

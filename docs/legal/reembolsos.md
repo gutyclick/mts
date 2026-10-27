@@ -44,6 +44,8 @@ Revisaremos la solicitud y comunicaremos la decisión y su motivo. Si procede un
 
 No se sustituye una devolución legalmente debida por crédito de tienda sin la base o acuerdo necesarios. No se impondrán gastos o deducciones no informados o prohibidos. Una disputa ante tu banco conserva el régimen y plazos que le correspondan; contactar con soporte no implica renunciar a esa vía.
 
+Una devolución autorizada utiliza el importe original de las unidades afectadas y la moneda en que se pagaron, sin recalcularlas con la cotización actual de la web. Los cambios de divisa entre tu banco y tu cuenta o los gastos del emisor pueden tener un tratamiento propio ajeno a MyTripSim.
+
 ## 8. Formulario orientativo para solicitar revisión
 
 - Asunto: «Revisión de pedido / desistimiento», según corresponda.

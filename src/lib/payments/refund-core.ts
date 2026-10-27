@@ -1,3 +1,4 @@
+import { currencyCode } from "../currency.ts";
 export type RefundSnapshot = {
   order: {
     amount: number;
@@ -57,7 +58,7 @@ export function refundDecision(
     payment.disputed ||
     payment.id !== order.paymentIntent ||
     payment.livemode !== order.livemode ||
-    order.currency !== "usd" ||
+    !currencyCode(order.currency) ||
     payment.currency !== order.currency ||
     payment.amountReceived !== order.amount ||
     !Number.isSafeInteger(order.amount) ||

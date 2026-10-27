@@ -1,4 +1,5 @@
 "use client";
+import { formatMoney, currencyCode } from "@/lib/currency";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -74,11 +75,8 @@ export function RefundsDashboard({
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [revision, setRevision] = useState(0);
-  const money = (n: number) =>
-    new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency: "USD",
-    }).format(n / 100);
+  const money = (n: number, currency = data?.order?.currency ?? "USD") =>
+    formatMoney(n, currencyCode(currency) ?? "USD", locale);
   const date = (v: string) =>
     new Intl.DateTimeFormat(locale, {
       dateStyle: "medium",
@@ -428,7 +426,8 @@ export function RefundsDashboard({
             <div className="refund-section-heading">
               <div>
                 <strong>
-                  {money(r.amount)} · #{r.order_id.slice(0, 8).toUpperCase()}
+                  {money(r.amount, r.currency)} · #
+                  {r.order_id.slice(0, 8).toUpperCase()}
                 </strong>
                 <small>
                   {date(r.updated_at)} ·{" "}
@@ -500,7 +499,7 @@ export function RefundsDashboard({
               >
                 <h3>
                   {es ? "Autorizar devolución de" : "Approve refund of"}{" "}
-                  {money(r.amount)}
+                  {money(r.amount, r.currency)}
                 </h3>
                 <p>
                   {es
@@ -541,7 +540,7 @@ export function RefundsDashboard({
                     ) : (
                       <RotateCcw size={17} />
                     )}{" "}
-                    {es ? "Reembolsar" : "Refund"} {money(r.amount)}
+                    {es ? "Reembolsar" : "Refund"} {money(r.amount, r.currency)}
                   </button>
                 </div>
               </div>

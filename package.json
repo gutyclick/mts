@@ -75,7 +75,9 @@
     "operations:setup": "node scripts/setup-operations.mjs",
     "test:analytics": "node --experimental-strip-types --test tests/analytics.test.mjs tests/analytics-security.test.mjs tests/analytics-withdrawal.test.mjs",
     "analytics:setup": "node scripts/setup-analytics.mjs",
-    "test:analytics:web": "node scripts/test-analytics-web.mjs"
+    "test:analytics:web": "node scripts/test-analytics-web.mjs",
+    "test:currencies": "node --experimental-strip-types --test tests/currency*.test.mjs tests/regional-preferences.test.mjs",
+    "currencies:setup": "node --experimental-strip-types scripts/setup-currencies.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

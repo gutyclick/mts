@@ -44,6 +44,8 @@ We review the request and explain the decision and reason. When a refund is due,
 
 Legally due refunds are not replaced by store credit without the required basis or agreement. Undisclosed or unlawful deductions are not imposed. Contacting support does not waive applicable bank-dispute rights or deadlines.
 
+An approved refund uses the affected units’ originally charged amount and currency, without reconverting at the website’s current exchange quote. Currency conversion between your bank and account or issuer fees may be treated separately outside MyTripSim.
+
 ## 8. Optional request format
 
 - Subject: order review or withdrawal, as appropriate.

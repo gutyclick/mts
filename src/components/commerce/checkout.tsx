@@ -21,7 +21,8 @@ import { authPath } from "@/lib/auth-routes";
 import { experiencePath } from "@/lib/experience-routes";
 import type { CartLine } from "@/lib/cart";
 import { cartTotal } from "@/lib/cart";
-import { formatUSD } from "@/lib/retail-prices";
+import { formatMoney, currencyCode, type Currency } from "@/lib/currency";
+import { useCurrency } from "@/components/currency-provider";
 import { CartItems, useCart } from "./cart-provider";
 import { EmbeddedPayment } from "./embedded-payment";
 import { paymentFormMatchesMode } from "@/lib/payments/checkout-mode";
@@ -37,6 +38,7 @@ export function Checkout({
 }) {
   const es = locale === "es";
   const cart = useCart();
+  const pricing = useCurrency();
   const initialized = useRef(false);
   const [testMode, setTestMode] = useState(false);
   const [enabled, setEnabled] = useState(false);
@@ -50,6 +52,7 @@ export function Checkout({
     clientSecret: string;
     orderId: string;
     total: number;
+    currency: Currency;
     buyer: string;
     recipient: string;
   } | null>(null);
@@ -86,6 +89,15 @@ export function Checkout({
   const count = cart.lines.reduce((sum, item) => sum + item.quantity, 0);
   const next = encodeURIComponent(experiencePath(locale, "checkout"));
   const total = cartTotal(cart.resolved);
+  const paymentTotal =
+    total === null
+      ? null
+      : pricing.total(
+          cart.resolved.items.map((item) => ({
+            unit: item.retailPriceCents!,
+            quantity: item.quantity,
+          })),
+        );
   const checkoutKey = JSON.stringify([
     cart.lines,
     buyerEmail.trim(),
@@ -94,6 +106,9 @@ export function Checkout({
     marketingOptIn,
     total,
     locale,
+    pricing.currency,
+    pricing.quote?.id,
+    paymentTotal,
   ]);
   const activePayment = payment?.key === checkoutKey ? payment : null;
   async function pay(event: FormEvent<HTMLFormElement>) {
@@ -102,12 +117,27 @@ export function Checkout({
       submitting.current ||
       !enabled ||
       total == null ||
+      paymentTotal == null ||
+      !pricing.ready ||
+      !!pricing.busy ||
       cart.loading ||
       cart.error ||
       !compatible ||
       !terms
     )
       return;
+    if (
+      pricing.quote?.expiresAt &&
+      new Date(pricing.quote.expiresAt).getTime() <= Date.now()
+    ) {
+      await pricing.select(pricing.currency);
+      setError(
+        es
+          ? "Actualizamos la cotización. Revisa el total antes de continuar."
+          : "We refreshed the exchange rate. Review the total before continuing.",
+      );
+      return;
+    }
     const recipient = differentRecipient
       ? recipientEmail.trim()
       : buyerEmail.trim();
@@ -131,6 +161,9 @@ export function Checkout({
           holdPolicy: "leave-v1",
           lines: cart.lines,
           expectedTotal: total,
+          currency: pricing.currency,
+          fxQuoteId: pricing.quote?.id ?? null,
+          expectedPaymentTotal: paymentTotal,
           compatible: true,
           terms: true,
           legalVersion,
@@ -139,15 +172,22 @@ export function Checkout({
       const data = await response.json();
       if (!response.ok) {
         if (
-          ["checkout_expired", "price_changed", "attempt_conflict"].includes(
-            data.error,
-          )
+          [
+            "checkout_expired",
+            "price_changed",
+            "attempt_conflict",
+            "quote_expired",
+          ].includes(data.error)
         )
           paymentAttempt.current = null;
         if (["price_changed", "unavailable_plan"].includes(data.error))
           cart.retry();
+        if (data.error === "quote_expired")
+          await pricing.select(pricing.currency);
         const messages: Record<string, string> = es
           ? {
+              quote_expired:
+                "La cotización ha vencido. Revisa el total actualizado y vuelve a continuar.",
               price_changed:
                 "El precio ha cambiado. Revisa el nuevo total antes de continuar.",
               unavailable_plan:
@@ -160,6 +200,8 @@ export function Checkout({
                 "Permite las cookies necesarias y recarga esta página para continuar.",
             }
           : {
+              quote_expired:
+                "The exchange quote expired. Review the updated total and continue again.",
               price_changed:
                 "The price has changed. Review the updated total before continuing.",
               unavailable_plan:
@@ -193,11 +235,22 @@ export function Checkout({
           )
         )
           throw new Error("Invalid payment form");
+        const confirmedCurrency = currencyCode(
+          data.paymentCurrency ?? (pricing.currency === "USD" ? "USD" : null),
+        );
+        const confirmedTotal =
+          data.paymentTotal ?? (pricing.currency === "USD" ? total : null);
+        if (
+          confirmedCurrency !== pricing.currency ||
+          confirmedTotal !== paymentTotal
+        )
+          throw Error("Payment total mismatch");
         setPayment({
           key,
           clientSecret: data.clientSecret,
           orderId: data.orderId,
-          total,
+          total: confirmedTotal,
+          currency: confirmedCurrency,
           buyer: buyerEmail.trim(),
           recipient,
         });
@@ -268,6 +321,7 @@ export function Checkout({
                 clientSecret={activePayment.clientSecret}
                 publishableKey={publishableKey}
                 total={activePayment.total}
+                currency={activePayment.currency}
                 locale={locale}
                 buyer={activePayment.buyer}
                 recipient={activePayment.recipient}
@@ -498,6 +552,9 @@ export function Checkout({
                     cart.loading ||
                     cart.error ||
                     total == null ||
+                    paymentTotal == null ||
+                    !pricing.ready ||
+                    !!pricing.busy ||
                     !compatible ||
                     !terms
                   }
@@ -524,6 +581,7 @@ export function Checkout({
                         ? "Continuar al pago"
                         : "Continue to payment"}
                 </button>
+                {pricing.error&&<div className="checkout-error" role="alert"><p>{es?'No pudimos actualizar los precios en esta moneda. Reintenta o elige USD en el selector.':'We could not update prices in this currency. Retry or choose USD in the selector.'}</p><button type="button" className="commerce-link" disabled={!!pricing.busy} onClick={()=>void pricing.select(pricing.currency)}>{es?'Actualizar moneda':'Refresh currency'}</button></div>}
                 {error && (
                   <p className="checkout-error" role="alert">
                     {error}
@@ -575,7 +633,9 @@ export function Checkout({
                 {!cart.loading &&
                 !cart.error &&
                 cartTotal(cart.resolved) != null
-                  ? formatUSD(cartTotal(cart.resolved)!, locale)
+                  ? paymentTotal === null
+                    ? "—"
+                    : formatMoney(paymentTotal, pricing.currency, locale)
                   : es
                     ? "Por confirmar"
                     : "To be confirmed"}

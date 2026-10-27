@@ -46,7 +46,7 @@ export async function customerCheckoutOrders(
   const { data, error } = await client
     .from("checkout_orders")
     .select(
-      "id,status,amount_total,livemode,created_at,items:checkout_order_items(plan_id,plan_name,quantity)",
+      "id,status,amount_total,payment_total,payment_currency,livemode,created_at,items:checkout_order_items(plan_id,plan_name,quantity)",
     )
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
@@ -58,6 +58,8 @@ export async function customerCheckoutOrders(
         id: z.uuid(),
         status: z.enum(["pending", "paid", "expired", "failed", "cancelled"]),
         amount_total: z.number().int(),
+        payment_total:z.number().int().nullable(),
+        payment_currency:z.string().nullable(),
         livemode: z.boolean(),
         created_at: z.string(),
         items: z.array(
@@ -81,6 +83,8 @@ export async function customerCheckoutOrders(
   if (unitError) throw new Error("Could not load fulfillment status");
   return parsed.map((o) => ({
     ...o,
+    amount_total:o.payment_total??o.amount_total,
+    currency:o.payment_currency??'USD',
     fulfillmentStates: (units ?? [])
       .filter((u) => u.order_id === o.id)
       .map((u) => String(u.state)),

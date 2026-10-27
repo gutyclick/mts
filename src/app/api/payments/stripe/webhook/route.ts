@@ -81,13 +81,17 @@ export async function POST(request: NextRequest) {
     if (duplicate) return reply(200);
     const { data: order, error } = await db
       .from("checkout_orders")
-      .select("id,amount_total,stripe_session_id,livemode")
+      .select(
+        "id,amount_total,stripe_session_id,livemode,payment_currency,payment_total",
+      )
       .eq("id", orderId)
       .maybeSingle();
     if (error || !order) return reply(503);
     const { data: items, error: itemError } = await db
       .from("checkout_order_items")
-      .select("stripe_price_id,quantity,unit_amount")
+      .select(
+        "stripe_price_id,quantity,unit_amount,payment_stripe_price_id,payment_unit_amount",
+      )
       .eq("order_id", orderId);
     if (itemError || !items?.length) return reply(503);
     const stripe = checkoutStripe(event.livemode);
@@ -124,8 +128,10 @@ export async function POST(request: NextRequest) {
       p_order_id: order.id,
       p_session_id: session.id,
       p_status: status,
-      p_amount: session.amount_total,
-      p_currency: session.currency,
+      // Actual local money and generated Stripe prices were verified above. This
+      // legacy ledger contract remains canonical USD for provider/accounting jobs.
+      p_amount: order.amount_total,
+      p_currency: "usd",
       p_payment_intent: paymentIntent,
     });
     return reply(recordError ? 503 : 200);

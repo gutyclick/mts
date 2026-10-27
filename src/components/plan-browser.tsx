@@ -8,7 +8,7 @@ import { type Locale, pathFor } from "@/lib/i18n";
 import { catalogCopy } from "@/lib/catalog-copy";
 import { PlanPurchaseSummary } from "./experience/plan-purchase-summary";
 import { planVariant } from "@/lib/plan-variants";
-import { formatUSD } from "@/lib/retail-prices";
+import { Price } from "@/components/price";
 
 export function PlanBrowser({
   locale,
@@ -207,7 +207,12 @@ export function PlanBrowser({
                       <span className="plan-validity">
                         {plan.retailPriceCents != null && (
                           <strong className="plan-option-price">
-                            {formatUSD(plan.retailPriceCents, locale)}
+                            {
+                              <Price
+                                cents={plan.retailPriceCents}
+                                locale={locale}
+                              />
+                            }
                           </strong>
                         )}{" "}
                         <span className="plan-option-duration">

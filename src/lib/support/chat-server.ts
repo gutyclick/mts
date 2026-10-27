@@ -121,14 +121,19 @@ export async function chatSupport(
         ? directPlanRecommendation(message, catalog.plans, body.locale)
         : null;
     if (direct) answer = { ...answer, ...direct };
-    const cards = catalog
-      ? planReferences(
-          answer.planIds,
-          catalog.plans,
-          catalog.destination,
-          body.locale,
-        )
-      : [];
+    const wantsPlans =
+      /\bplans?\b|paquet|recom|compr|buy|precio|price|\bgb\b|opci[oó]n|option|segund|second/i.test(
+        message,
+      );
+    const cards =
+      catalog && wantsPlans
+        ? planReferences(
+            answer.planIds,
+            catalog.plans,
+            catalog.destination,
+            body.locale,
+          )
+        : [];
     answer = {
       ...answer,
       references: [...cards, ...answer.references].slice(0, 4),

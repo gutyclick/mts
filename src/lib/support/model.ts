@@ -66,11 +66,23 @@ export function visibleReferences(ids: string[], locale: "es" | "en") {
       : [];
   });
 }
-export const referenceSchema = z.object({
+const articleReferenceSchema = z.object({
   id: z.string().max(80),
   title: z.string().max(300),
   href: z.string().regex(/^\/(?:es\/preguntas-frecuentes|en\/faq)\/[^\s]*$/),
 });
+export const referenceSchema = z.union([
+  articleReferenceSchema,
+  z.object({
+    kind: z.literal("plan"),
+    id: z.string().startsWith("plan:").max(110),
+    title: z.string().max(300),
+    href: z
+      .string()
+      .regex(/^\/(?:es|en)\/esim\/[a-z0-9-]+\?plan=[A-Za-z0-9_.%+-]+$/),
+    priceCents: z.number().int().positive().max(100000000),
+  }),
+]);
 export const supportMessageSchema = z.object({
   id: z.uuid(),
   thread_id: z.uuid(),

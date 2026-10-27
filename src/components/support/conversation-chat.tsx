@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { mergeMessages } from "@/lib/support/chat-catalog";
 import {
   ArrowUp,
   Headphones,
@@ -40,6 +41,11 @@ export function ConversationChat({
     [messages, setMessages] = useState<SupportMessage[]>(detail.messages),
     [thread] = useState(detail.thread.id),
     [body, setBody] = useState(""),
+    [pendingMessage, setPendingMessage] = useState<{
+      id: string;
+      body: string;
+      created_at: string;
+    } | null>(null),
     [order, setOrder] = useState(detail.thread.order_id ?? ""),
     [language, setLanguage] = useState(detail.thread.language ?? "auto"),
     [busy, setBusy] = useState(false),
@@ -54,9 +60,7 @@ export function ConversationChat({
     requestId = useRef<string | null>(null);
   const closed = current.status === "resolved";
   const busyRef = useRef(false);
-  useEffect(() => {
-    busyRef.current = busy;
-  }, [busy]);
+  const revision = useRef(0);
   const clockOffset = useRef(0);
   useEffect(() => {
     clockOffset.current = detail.serverTime
@@ -65,15 +69,19 @@ export function ConversationChat({
   }, [detail.serverTime]);
   const refresh = useCallback(
     async (signal?: AbortSignal) => {
+      const startedAtRevision = revision.current;
       const d = await supportFetch("/api/support/conversations?id=" + thread, {
         signal,
       });
-      if (signal?.aborted) return;
+      if (signal?.aborted || startedAtRevision !== revision.current) return;
       if (d.serverTime)
         clockOffset.current = new Date(d.serverTime).getTime() - Date.now();
       setCurrent(supportThreadSchema.parse(d.thread));
-      setMessages(
-        d.messages.map((m: unknown) => supportMessageSchema.parse(m)),
+      setMessages((previous) =>
+        mergeMessages(
+          previous,
+          d.messages.map((m: unknown) => supportMessageSchema.parse(m)),
+        ),
       );
       if (d.thread.escalated_at) setTicket(thread);
     },
@@ -92,7 +100,7 @@ export function ConversationChat({
           close();
           return;
         }
-        await refresh(abort.signal);
+        if (!busyRef.current) await refresh(abort.signal);
       } catch (e) {
         if (!abort.signal.aborted) setError(supportError(e, es));
       }
@@ -108,6 +116,8 @@ export function ConversationChat({
   const finish = useCallback(
     async (reason: "resolved" | "inactivity") => {
       if (busyRef.current) return;
+      busyRef.current = true;
+      revision.current++;
       setBusy(true);
       setError("");
       try {
@@ -119,6 +129,7 @@ export function ConversationChat({
       } catch (e) {
         if (!controller.current?.signal.aborted) setError(supportError(e, es));
       } finally {
+        busyRef.current = false;
         setBusy(false);
       }
     },
@@ -140,7 +151,7 @@ export function ConversationChat({
   }, [current.status, current.updated_at, busy, detail.idleSeconds, finish]);
   useEffect(() => {
     tail.current?.scrollIntoView({ block: "end", behavior: "instant" });
-  }, [messages, busy, human, ticket]);
+  }, [messages, busy, human, ticket, pendingMessage]);
   async function send(
     e: React.FormEvent,
     mode: "chat" | "ticket" | "reply" = "chat",
@@ -152,14 +163,20 @@ export function ConversationChat({
       closed ||
       (mode !== "reply" && creatingTicket !== human) ||
       text.length < (creatingTicket ? 3 : 1) ||
-      busy ||
+      busyRef.current ||
       !session ||
       (creatingTicket && !session.authenticated)
     )
       return;
+    busyRef.current = true;
+    revision.current++;
     setBusy(true);
     setError("");
     requestId.current ??= crypto.randomUUID();
+    const outgoingId = requestId.current;
+    const outgoingAt = new Date().toISOString();
+    if (mode === "chat")
+      setPendingMessage({ id: outgoingId, body: text, created_at: outgoingAt });
     try {
       if (mode === "reply") {
         await supportFetch("/api/support/tickets", {
@@ -229,18 +246,21 @@ export function ConversationChat({
           }),
         });
         const m = supportMessageSchema.parse(d.message);
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: requestId.current!,
-            thread_id: d.threadId ?? crypto.randomUUID(),
-            author: "user",
-            body: text,
-            citations: [],
-            created_at: new Date().toISOString(),
-          },
-          m,
-        ]);
+        revision.current++;
+        setMessages((prev) =>
+          mergeMessages(prev, [
+            {
+              id: outgoingId,
+              thread_id: d.threadId ?? crypto.randomUUID(),
+              author: "user",
+              body: text,
+              citations: [],
+              created_at: outgoingAt,
+            },
+            m,
+          ]),
+        );
+        setPendingMessage(null);
         if (d.thread) setCurrent(supportThreadSchema.parse(d.thread));
         setBody("");
         requestId.current = null;
@@ -329,10 +349,29 @@ export function ConversationChat({
           </div>
         )}
         <SupportMessages messages={messages} es={es} />
+        {pendingMessage &&
+          !messages.some((m) => m.id === pendingMessage.id) && (
+            <article
+              className="support-message support-message-user"
+              aria-live="polite"
+            >
+              <small>{es ? "Tú" : "You"}</small>
+              <p>{pendingMessage.body}</p>
+              <small>
+                {busy
+                  ? es
+                    ? "Enviando…"
+                    : "Sending…"
+                  : es
+                    ? "Envío sin confirmar. Puedes reintentar."
+                    : "Delivery not confirmed. You can retry."}
+              </small>
+            </article>
+          )}
         {busy && (
           <p className="support-thinking" role="status">
             <LoaderCircle size={17} />
-            {es ? "Un momento…" : "One moment…"}
+            {es ? "SIM está escribiendo…" : "SIM is typing…"}
           </p>
         )}
         {!closed && human && !ticket && (
@@ -470,7 +509,18 @@ export function ConversationChat({
                 value={human ? "" : body}
                 onChange={(e) => {
                   setBody(e.target.value);
+                  setPendingMessage(null);
                   requestId.current = null;
+                }}
+                onKeyDown={(e) => {
+                  if (
+                    e.key === "Enter" &&
+                    !e.shiftKey &&
+                    !e.nativeEvent.isComposing
+                  ) {
+                    e.preventDefault();
+                    if (!busyRef.current) e.currentTarget.form?.requestSubmit();
+                  }
                 }}
                 maxLength={3000}
                 rows={2}

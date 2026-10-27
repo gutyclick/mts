@@ -482,3 +482,9 @@
     transition: none;
   }
 }
+
+.support-plan-cards { display: grid; gap: 8px; margin-top: 12px; }
+.support-plan-cards a { display: grid; gap: 6px; background: #fff; color: #142b49; border: 1px solid #cfe0fa; border-radius: 14px; padding: 14px; text-decoration: none; }
+.support-plan-cards a:hover { border-color: #1269ed; background: #f4f8ff; }
+.support-plan-cards span { color: #1269ed; font-weight: 700; }
+.support-plan-cards small { color: #526785; }

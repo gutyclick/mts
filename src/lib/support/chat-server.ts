@@ -1,4 +1,6 @@
 import "server-only";
+import { supportCatalog } from "./catalog-server";
+import { planReferences, directPlanRecommendation } from "./chat-catalog";
 import { z } from "zod";
 import type { NextRequest } from "next/server";
 import { chatRequest, redactSupportText, supportMessageSchema } from "./model";
@@ -73,14 +75,30 @@ export async function chatSupport(
         (m.author === "user" || m.author === "assistant"),
     )
     .slice(-6)
-    .map((m) => ({ role: m.author, body: m.body }));
-  const order =
-    detail.thread.order_id && actor.user
-      ? await ownedOrderContext(actor.user, detail.thread.order_id)
-      : null;
+    .map((m) => ({
+      role: m.author,
+      body:
+        m.body +
+        (m.author === "assistant" &&
+        m.citations.some((c) => "kind" in c && c.kind === "plan")
+          ? "\nPlan cards shown in order: " +
+            JSON.stringify(
+              m.citations.filter((c) => "kind" in c && c.kind === "plan"),
+            )
+          : ""),
+    }));
+
   let answer,
     ai = true;
   try {
+    const order =
+      detail.thread.order_id && actor.user
+        ? await ownedOrderContext(actor.user, detail.thread.order_id)
+        : null;
+    const catalog = await supportCatalog(
+      [...history.filter((m) => m.role === "user").map((m) => m.body), message],
+      detail.thread.topic ?? "general",
+    ).catch(() => null);
     answer = await supportAnswer(
       {
         message,
@@ -89,9 +107,32 @@ export async function chatSupport(
         history,
         order,
         topic: detail.thread.topic,
+        catalog: catalog
+          ? {
+              destination: catalog.destination.name[body.locale],
+              plans: catalog.plans,
+            }
+          : null,
       },
       process.env,
     );
+    const direct =
+      !order && catalog
+        ? directPlanRecommendation(message, catalog.plans, body.locale)
+        : null;
+    if (direct) answer = { ...answer, ...direct };
+    const cards = catalog
+      ? planReferences(
+          answer.planIds,
+          catalog.plans,
+          catalog.destination,
+          body.locale,
+        )
+      : [];
+    answer = {
+      ...answer,
+      references: [...cards, ...answer.references].slice(0, 4),
+    };
   } catch {
     ai = false;
     answer = {

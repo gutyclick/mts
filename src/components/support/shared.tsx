@@ -41,13 +41,29 @@ export function SupportMessages({
                     : "Information"}
           </small>
           <p>{m.body}</p>
-          {m.citations.length > 0 && (
-            <div className="support-citations">
-              {m.citations.map((c) => (
-                <Link key={c.id} href={c.href}>
-                  {c.title} ↗
-                </Link>
-              ))}
+          {m.citations.some((c) => "kind" in c && c.kind === "plan") && (
+            <div className="support-plan-cards">
+              {m.citations
+                .filter((c) => "kind" in c && c.kind === "plan")
+                .map((c) => (
+                  <Link key={c.id} href={c.href}>
+                    <strong>{c.title}</strong>
+                    {"priceCents" in c && (
+                      <span>
+                        {new Intl.NumberFormat(es ? "es-PA" : "en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          currencyDisplay: "code",
+                        }).format(c.priceCents / 100)}
+                      </span>
+                    )}
+                    <small>
+                      {es
+                        ? "Ver plan y precio actual"
+                        : "View plan and current price"}
+                    </small>
+                  </Link>
+                ))}
             </div>
           )}
           <time dateTime={m.created_at}>
@@ -62,17 +78,32 @@ export function SupportMessages({
   );
 }
 export async function supportFetch(url: string, init?: RequestInit) {
-  const r = await fetch(url, {
-    ...init,
-    cache: "no-store",
-    headers: { "Content-Type": "application/json", ...init?.headers },
-  });
-  const data = await r.json();
-  if (!r.ok) throw new Error(data.error ?? "unavailable");
-  return data;
+  const abort = new AbortController();
+  const onAbort = () => abort.abort();
+  if (init?.signal?.aborted) abort.abort();
+  init?.signal?.addEventListener("abort", onAbort, { once: true });
+  const timer = setTimeout(() => abort.abort(), 45000);
+  try {
+    const r = await fetch(url, {
+      ...init,
+      cache: "no-store",
+      signal: abort.signal,
+      headers: { "Content-Type": "application/json", ...init?.headers },
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error ?? "unavailable");
+    return data;
+  } finally {
+    clearTimeout(timer);
+    init?.signal?.removeEventListener("abort", onAbort);
+  }
 }
 export function supportError(e: unknown, es: boolean) {
   const code = e instanceof Error ? e.message : "";
+  if (code === "busy" || code === "chat_busy")
+    return es
+      ? "SIM está terminando la respuesta anterior. Espera un momento y reintenta; no se enviará dos veces."
+      : "SIM is finishing the previous reply. Wait a moment and retry; your message will not be sent twice.";
   if (code === "conversation_closed")
     return es
       ? "La incidencia está cerrada. Puedes iniciar una nueva consulta."

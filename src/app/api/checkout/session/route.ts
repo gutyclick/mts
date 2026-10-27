@@ -5,6 +5,10 @@ import { holdOrder, reconcileHold } from "@/lib/payments/hold-server";
 import { queueCheckoutMeasurement } from "@/lib/analytics/server";
 import { verifyHoldSession } from "@/lib/payments/hold-policy";
 import {
+  reserveSimcoinsCheckout,
+  simcoinsCheckoutEnabled,
+} from "@/lib/simcoins/checkout-server";
+import {
   browserCookie,
   checkoutRequestSchema,
   validBrowserToken,
@@ -43,7 +47,7 @@ const itemSchema = z.object({
 });
 export const maxDuration = 60;
 export async function POST(request: NextRequest) {
-  let stage='request';
+  let stage = "request";
   const fail = (error: string, status: number) =>
     NextResponse.json({ error }, { status, headers: paymentHeaders });
   if (!checkoutConfigured()) return fail("payments_unavailable", 503);
@@ -97,11 +101,14 @@ export async function POST(request: NextRequest) {
         currency: body.currency,
         fxQuoteId: body.fxQuoteId,
         paymentTotal: body.expectedPaymentTotal ?? body.expectedTotal,
+        ...(body.simcoinsQuoteId
+          ? { simcoinsQuoteId: body.simcoinsQuoteId }
+          : {}),
         lines: [...body.lines].sort((a, b) => a.planId.localeCompare(b.planId)),
       }),
     );
     const db = checkoutDatabase();
-    stage='create_order';
+    stage = "create_order";
     const { data, error } = await db.rpc("create_checkout_v3", {
       p_livemode: live,
       p_id: body.attemptId,
@@ -129,9 +136,11 @@ export async function POST(request: NextRequest) {
         ["attempt_conflict", 409],
       ] as const)
         if (error.message.includes(code)) return fail(code, status);
-      console.error('checkout_preparation_failed',{stage,kind:error.code});return fail("payments_unavailable", 503);
+      console.error("checkout_preparation_failed", { stage, kind: error.code });
+      return fail("payments_unavailable", 503);
     }
-    stage='parse_order';let order = orderSchema.parse(data);
+    stage = "parse_order";
+    let order = orderSchema.parse(data);
     if (order.livemode !== live) return fail("attempt_conflict", 409);
     // Record only a version explicitly accepted by this browser. Never backfill old orders.
     const { error: acceptanceError } = await db
@@ -164,21 +173,55 @@ export async function POST(request: NextRequest) {
       (order.expires_at && new Date(order.expires_at).getTime() <= Date.now())
     )
       return fail("checkout_expired", 409);
-    stage='prepare_currency';const prepared = await db.rpc("prepare_checkout_payment", {
-      p_id: order.id,
-      p_currency: body.currency,
-      p_quote: body.fxQuoteId,
-      p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
-    });
+    if (
+      !order.stripe_session_id &&
+      new Date(order.created_at).getTime() < Date.now() - 25 * 60 * 1000
+    )
+      return fail("checkout_expired", 409);
+    if (body.simcoinsQuoteId) {
+      stage = "reserve_simcoins";
+      try {
+        await reserveSimcoinsCheckout(
+          order.id,
+          user?.id ?? null,
+          body.simcoinsQuoteId,
+        );
+      } catch {
+        return fail("simcoins_quote_expired", 409);
+      }
+    }
+    stage = "prepare_currency";
+    const prepared = await db.rpc(
+      body.simcoinsQuoteId && simcoinsCheckoutEnabled()
+        ? "simcoins_prepare_payment"
+        : "prepare_checkout_payment",
+      body.simcoinsQuoteId
+        ? {
+            p_order: order.id,
+            p_currency: body.currency,
+            p_quote: body.fxQuoteId,
+            p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
+          }
+        : {
+            p_id: order.id,
+            p_currency: body.currency,
+            p_quote: body.fxQuoteId,
+            p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
+          },
+    );
     if (prepared.error) {
       for (const code of ["quote_expired", "price_changed", "attempt_conflict"])
         if (prepared.error.message.includes(code)) return fail(code, 409);
-      console.error('checkout_preparation_failed',{stage,kind:prepared.error.code});return fail("payments_unavailable", 503);
+      console.error("checkout_preparation_failed", {
+        stage,
+        kind: prepared.error.code,
+      });
+      return fail("payments_unavailable", 503);
     }
     order = orderSchema.parse(prepared.data);
     const stripe = checkoutStripe(live);
     if (order.stripe_session_id) {
-      stage='existing_session';
+      stage = "existing_session";
       const existing = await stripe.checkout.sessions.retrieve(
         order.stripe_session_id,
       );
@@ -207,7 +250,8 @@ export async function POST(request: NextRequest) {
     }
     if (new Date(order.created_at).getTime() < Date.now() - 25 * 60 * 1000)
       return fail("checkout_expired", 409);
-    stage='read_items';const { data: rawItems, error: itemsError } = await db
+    stage = "read_items";
+    const { data: rawItems, error: itemsError } = await db
       .from("checkout_order_items")
       .select(
         "stripe_price_id,quantity,unit_amount,plan_id,payment_unit_amount,payment_stripe_price_id",
@@ -217,7 +261,7 @@ export async function POST(request: NextRequest) {
     if (itemsError) throw new Error("Order unavailable");
     const items = z.array(itemSchema).min(1).max(20).parse(rawItems);
     const products = new Map<string, string>();
-    stage='verify_base_prices';
+    stage = "verify_base_prices";
     // Verify prices against Stripe itself, never trust amounts or Stripe IDs from a browser.
     for (const item of items) {
       const price = await stripe.prices.retrieve(item.stripe_price_id);
@@ -236,7 +280,8 @@ export async function POST(request: NextRequest) {
         throw Error("Product identity mismatch");
       products.set(item.plan_id, product);
     }
-    stage='create_session';const session = await stripe.checkout.sessions.create(
+    stage = "create_session";
+    const session = await stripe.checkout.sessions.create(
       {
         mode: "payment",
         ui_mode: "elements",
@@ -246,7 +291,8 @@ export async function POST(request: NextRequest) {
         client_reference_id: order.id,
         customer_email: email,
         line_items: items.map((item) =>
-          order.payment_currency === "USD"
+          order.payment_currency === "USD" &&
+          item.payment_unit_amount === item.unit_amount
             ? { price: item.stripe_price_id, quantity: item.quantity }
             : {
                 price_data: {
@@ -273,7 +319,8 @@ export async function POST(request: NextRequest) {
       throw new Error("Session mismatch");
     if (!session.client_secret || session.ui_mode !== "elements")
       throw new Error("Missing payment form");
-    stage='bind_line_items';const lines = await stripe.checkout.sessions.listLineItems(session.id, {
+    stage = "bind_line_items";
+    const lines = await stripe.checkout.sessions.listLineItems(session.id, {
       limit: 100,
     });
     if (lines.has_more || lines.data.length !== items.length)
@@ -305,14 +352,21 @@ export async function POST(request: NextRequest) {
         productId: expectedProduct,
       };
     });
-    stage='persist_session';const bound = await db.rpc("bind_checkout_payment", {
+    stage = "persist_session";
+    const bound = await db.rpc("bind_checkout_payment", {
       p_id: order.id,
       p_session: session.id,
       p_bindings: bindings,
       p_expires: new Date(session.expires_at * 1000).toISOString(),
       p_touch: !!body.holdPolicy,
     });
-    if (bound.error || bound.data !== true){console.error('checkout_preparation_failed',{stage,kind:bound.error?.code??'no_binding'});throw Error("Session persistence failed");}
+    if (bound.error || bound.data !== true) {
+      console.error("checkout_preparation_failed", {
+        stage,
+        kind: bound.error?.code ?? "no_binding",
+      });
+      throw Error("Session persistence failed");
+    }
     queueCheckoutMeasurement(request, order.id);
     return NextResponse.json(
       {
@@ -323,8 +377,11 @@ export async function POST(request: NextRequest) {
       },
       { headers: paymentHeaders },
     );
-  } catch(error) {
-    console.error('checkout_preparation_failed',{stage,kind:error instanceof Error?error.name:'unknown'});
+  } catch (error) {
+    console.error("checkout_preparation_failed", {
+      stage,
+      kind: error instanceof Error ? error.name : "unknown",
+    });
     return fail("payments_unavailable", 503);
   }
 }

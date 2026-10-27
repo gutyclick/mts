@@ -37,6 +37,7 @@ export function Footer({ locale }: { locale: Locale }) {
           ))}
         </div>
         <div className="footer-experience-links">
+          <Link href={`/${locale}/simcoins`}>SimCoins</Link>
           <StatsPreferences locale={locale}/>
           <Link href={experiencePath(locale, "wallet")}>
             {experienceCopy[locale].wallet}

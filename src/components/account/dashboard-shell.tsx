@@ -6,6 +6,7 @@ import {
   Package,
   UserRound,
   WalletCards,
+  Coins,
 } from "lucide-react";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
@@ -41,6 +42,7 @@ export function DashboardShell({
     },
     { id: "support", label: es ? "Soporte" : "Support", icon: Headphones },
     { id: "account", label: es ? "Cuenta" : "Account", icon: UserRound },
+    { id: "simcoins", label: "SimCoins", icon: Coins },
   ] as const;
   return (
     <div className="container customer-account trip-dashboard">
@@ -70,11 +72,15 @@ export function DashboardShell({
             {items.map((item) => (
               <Link
                 key={item.id}
-                href={experiencePath(
-                  locale,
-                  "wallet",
-                  item.id === "esims" ? undefined : { section: item.id },
-                )}
+                href={
+                  item.id === "simcoins"
+                    ? `/${locale}/account/simcoins`
+                    : experiencePath(
+                        locale,
+                        "wallet",
+                        item.id === "esims" ? undefined : { section: item.id },
+                      )
+                }
                 aria-current={section === item.id ? "page" : undefined}
               >
                 <item.icon size={20} />

@@ -11,6 +11,11 @@ export function browserStatsBlocked() {
 }
 export function setStatsPermission(value: boolean) {
   allowed = value && !browserStatsBlocked();
+  if (typeof window !== "undefined")
+    window.dispatchEvent(new Event("mts:stats-permission"));
+}
+export function statsPermissionAllowed() {
+  return allowed && !browserStatsBlocked();
 }
 export function recordStats(
   kind: "destination_view" | "add_to_cart",

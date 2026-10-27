@@ -40,8 +40,10 @@ export function safeAccountNext(value: unknown, locale: Locale) {
     if (
       url.origin === "https://mytripsim.invalid" &&
       [
+        `/${locale}/account/simcoins`,
         `/${locale}/admin`,
         `/${locale}/admin/security`,
+        `/${locale}/admin/simcoins`,
         `/${locale}/admin/operations`,
         `/${locale}/admin/refunds`,
         `/${locale}/admin/analytics`,

@@ -26,6 +26,9 @@ import { useCurrency } from "@/components/currency-provider";
 import { CartItems, useCart } from "./cart-provider";
 import { EmbeddedPayment } from "./embedded-payment";
 import { paymentFormMatchesMode } from "@/lib/payments/checkout-mode";
+import { CheckoutRewards } from "@/components/simcoins/checkout-rewards";
+import type { SimcoinsCheckoutQuote } from "@/lib/simcoins/checkout";
+import { recordSimcoinsStats } from "@/lib/simcoins/analytics-client";
 
 export function Checkout({
   locale,
@@ -42,6 +45,15 @@ export function Checkout({
   const initialized = useRef(false);
   const [testMode, setTestMode] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  const [simcoinsEnabled, setSimcoinsEnabled] = useState(false);
+  const [useCoins, setUseCoins] = useState(false);
+  const [rewards, setRewards] = useState<{
+    key: string;
+    quote: SimcoinsCheckoutQuote;
+  } | null>(null);
+  const [rewardsBusy, setRewardsBusy] = useState(false);
+  const [rewardsRefresh, setRewardsRefresh] = useState(0);
+  const [rewardsSettled, setRewardsSettled] = useState("");
   const [publishableKey, setPublishableKey] = useState("");
   const [buyerEmail, setBuyerEmail] = useState(email ?? "");
   const [differentRecipient, setDifferentRecipient] = useState(false);
@@ -72,6 +84,7 @@ export function Checkout({
         if (response.ok) {
           const data = await response.json();
           setEnabled(data.enabled === true);
+          setSimcoinsEnabled(data.simcoinsEnabled === true);
           setTestMode(data.mode === "test");
           setPublishableKey(
             typeof data.publishableKey === "string" ? data.publishableKey : "",
@@ -89,7 +102,7 @@ export function Checkout({
   const count = cart.lines.reduce((sum, item) => sum + item.quantity, 0);
   const next = encodeURIComponent(experiencePath(locale, "checkout"));
   const total = cartTotal(cart.resolved);
-  const paymentTotal =
+  const grossPaymentTotal =
     total === null
       ? null
       : pricing.total(
@@ -98,6 +111,69 @@ export function Checkout({
             quantity: item.quantity,
           })),
         );
+  const rewardsKey = JSON.stringify([
+    cart.lines,
+    pricing.currency,
+    pricing.quote?.id ?? null,
+    useCoins,
+    rewardsRefresh,
+  ]);
+  const rewardsQuote = rewards?.key === rewardsKey ? rewards.quote : null;
+  const paymentTotal = rewardsQuote?.paymentTotal ?? grossPaymentTotal;
+  useEffect(() => {
+    if (
+      !simcoinsEnabled ||
+      !email ||
+      !pricing.ready ||
+      cart.loading ||
+      cart.error ||
+      !cart.lines.length
+    )
+      return;
+    const controller = new AbortController();
+    queueMicrotask(() => {
+      if (!controller.signal.aborted) setRewardsBusy(true);
+    });
+    fetch("/api/simcoins/quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        lines: cart.lines,
+        currency: pricing.currency,
+        fxQuoteId: pricing.quote?.id ?? null,
+        useCoins,
+      }),
+    })
+      .then(async (response) => {
+        const data = await response.json();
+        if (!controller.signal.aborted)
+          setRewards(
+            response.ok && data.available && data.quote
+              ? { key: rewardsKey, quote: data.quote }
+              : null,
+          );
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setRewardsBusy(false);
+          setRewardsSettled(rewardsKey);
+        }
+      });
+    return () => controller.abort();
+  }, [
+    simcoinsEnabled,
+    email,
+    pricing.ready,
+    cart.loading,
+    cart.error,
+    rewardsKey,
+    cart.lines,
+    pricing.currency,
+    pricing.quote?.id,
+    useCoins,
+  ]);
   const checkoutKey = JSON.stringify([
     cart.lines,
     buyerEmail.trim(),
@@ -109,12 +185,25 @@ export function Checkout({
     pricing.currency,
     pricing.quote?.id,
     paymentTotal,
+    rewardsQuote?.id ?? null,
   ]);
   const activePayment = payment?.key === checkoutKey ? payment : null;
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (rewardsQuote && Date.parse(rewardsQuote.expiresAt) <= Date.now()) {
+      setRewards(null);
+      setRewardsRefresh((value) => value + 1);
+      setError(
+        es
+          ? "Actualizamos tus SimCoins. Revisa el total antes de continuar."
+          : "We refreshed your SimCoins. Review the total before continuing.",
+      );
+      return;
+    }
     if (
       submitting.current ||
+      rewardsBusy ||
+      (simcoinsEnabled && !!email && rewardsSettled !== rewardsKey) ||
       !enabled ||
       total == null ||
       paymentTotal == null ||
@@ -163,6 +252,7 @@ export function Checkout({
           expectedTotal: total,
           currency: pricing.currency,
           fxQuoteId: pricing.quote?.id ?? null,
+          ...(rewardsQuote ? { simcoinsQuoteId: rewardsQuote.id } : {}),
           expectedPaymentTotal: paymentTotal,
           compatible: true,
           terms: true,
@@ -177,6 +267,7 @@ export function Checkout({
             "price_changed",
             "attempt_conflict",
             "quote_expired",
+            "simcoins_quote_expired",
           ].includes(data.error)
         )
           paymentAttempt.current = null;
@@ -184,6 +275,11 @@ export function Checkout({
           cart.retry();
         if (data.error === "quote_expired")
           await pricing.select(pricing.currency);
+        if (data.error === "simcoins_quote_expired") {
+          setRewards(null);
+          setUseCoins(false);
+          setRewardsRefresh((value) => value + 1);
+        }
         const messages: Record<string, string> = es
           ? {
               quote_expired:
@@ -290,6 +386,18 @@ export function Checkout({
       ) : (
         <div className="commerce-checkout-grid">
           <section className="commerce-checkout-main">
+            {rewardsQuote && (
+              <CheckoutRewards
+                locale={locale}
+                quote={rewardsQuote}
+                useCoins={useCoins}
+                busy={busy || rewardsBusy || !!activePayment}
+                onUseCoins={(value) => {
+                  setUseCoins(value);
+                  if (value) recordSimcoinsStats("simcoins_checkout_redeem");
+                }}
+              />
+            )}
             {!email && !activePayment && (
               <div className="checkout-account-offer">
                 <span className="commerce-badge">

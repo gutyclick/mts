@@ -10,5 +10,9 @@ export default defineConfig([
     "next-env.d.ts",
     "playwright-report/**",
     "test-results/**",
+    // Local credentials/tool state and generated audit fixtures are not application source.
+    ".supabase/**",
+    ".vercel/**",
+    "private-data/**",
   ]),
 ]);

@@ -16,6 +16,7 @@ export const dashboardSections = [
   "orders",
   "support",
   "account",
+  "simcoins",
 ] as const;
 export type DashboardSection = (typeof dashboardSections)[number];
 export const dashboardFilters = ["all", "ready", "active", "ended"] as const;

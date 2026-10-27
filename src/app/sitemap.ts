@@ -3,9 +3,11 @@ import { getDestinations } from "@/lib/catalog-server";
 import { locales, pathFor, faqTopicPath, type PageKey } from "@/lib/i18n";
 import { faqTopicSegments, type FAQTopic } from "@/lib/faq-topics";
 import { experiencePath } from "@/lib/experience-routes";
+import { getSimcoinsPublicProgram } from "@/lib/simcoins/server";
 import { siteUrl } from "@/lib/seo";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const destinations = await getDestinations();
+  const simcoinsPublic = (await getSimcoinsPublicProgram()).publicEnabled;
   const entries: { page?: PageKey; slug?: string }[] = [
     {},
     ...(["destinations", "how", "compatibility", "faq"] as PageKey[]).map(
@@ -14,6 +16,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...destinations.map(({ slug }) => ({ slug })),
   ];
   return [
+    ...(simcoinsPublic ? locales : []).map((locale) => ({
+      url: `${siteUrl}/${locale}/simcoins`,
+      alternates: {
+        languages: {
+          en: `${siteUrl}/en/simcoins`,
+          es: `${siteUrl}/es/simcoins`,
+          "x-default": `${siteUrl}/en/simcoins`,
+        },
+      },
+    })),
     ...locales.map((locale) => ({
       url: `${siteUrl}${experiencePath(locale, "install")}`,
       alternates: {

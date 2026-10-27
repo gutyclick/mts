@@ -142,7 +142,12 @@ export function createEsimAccessAPI(
   transport: typeof fetch = fetch,
 ) {
   async function request(
-    path: "package/list" | "esim/query" | "esim/usage/query" | "esim/order" | "balance/query",
+    path:
+      | "package/list"
+      | "esim/query"
+      | "esim/usage/query"
+      | "esim/order"
+      | "balance/query",
     payload: unknown,
   ) {
     const body = JSON.stringify(payload);
@@ -213,6 +218,43 @@ export function createEsimAccessAPI(
       if (typeof object !== "object" || !object || !("packageList" in object))
         throw new EsimAccessError("response");
       return projectFixedPackages(object.packageList);
+    },
+    // Private profitability input only. Never include this response in public catalog DTOs.
+    async privateCostPackages() {
+      const object = await request("package/list", {
+        type: "BASE",
+        dataType: "1",
+      });
+      if (typeof object !== "object" || !object || !("packageList" in object))
+        throw new EsimAccessError("response");
+      const packages = projectFixedPackages(object.packageList);
+      const raw = z
+        .array(
+          z
+            .object({
+              slug: identifier,
+              price: z.coerce
+                .number()
+                .int()
+                .positive()
+                .max(Number.MAX_SAFE_INTEGER)
+                .optional(),
+              currencyCode: z.string().optional(),
+            })
+            .passthrough(),
+        )
+        .parse(object.packageList);
+      return packages.map((item) => {
+        const entry = raw.find((row) => row.slug === item.slug);
+        return {
+          ...item,
+          // Unknown/missing denomination or cost remains ineligible.
+          wholesaleUnitUnits:
+            entry?.currencyCode === "USD" && entry.price != null
+              ? entry.price
+              : null,
+        };
+      });
     },
     async purchaseProfile(slug: string, transactionId: string) {
       if (

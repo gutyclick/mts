@@ -10,6 +10,7 @@ export const checkoutRequestSchema = z
     locale: z.enum(["es", "en"]),
     currency: z.enum(currencies.map((c) => c.code)).default("USD"),
     fxQuoteId: z.uuid().nullable().default(null),
+    simcoinsQuoteId: z.uuid().optional(),
     expectedPaymentTotal: z.number().int().min(1).max(99999999).optional(),
     email: z.email().max(254),
     differentRecipient: z.boolean().default(false),

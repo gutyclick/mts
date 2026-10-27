@@ -25,8 +25,10 @@ export function pathFor(locale: Locale, page?: PageKey, slug?: string) {
 }
 export function equivalentPath(path: string, locale: Locale) {
   const [, , section, slug, planId] = path.split("/");
+  if (section === "simcoins") return `/${locale}/simcoins`;
+  if (section === "account" && slug === "simcoins") return `/${locale}/account/simcoins`;
   if (section === "admin")
-    return `/${locale}/admin${["tickets", "analytics", "operations", "refunds", "security"].includes(slug) ? `/${slug}` : ""}`;
+    return `/${locale}/admin${["tickets", "analytics", "operations", "refunds", "security", "simcoins"].includes(slug) ? `/${slug}` : ""}`;
   if (section === "support") return `/${locale}/support`;
   if (section === "checkout" && slug === "result")
     return `/${locale}/checkout/result`;

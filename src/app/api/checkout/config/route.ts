@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { browserCookie, validBrowserToken } from "@/lib/payments/checkout-core";
+import { simcoinsCheckoutEnabled } from "@/lib/simcoins/checkout-server";
 import {
   paymentEnvironment,
   checkoutConfigured,
@@ -12,6 +13,7 @@ export function GET(request: NextRequest) {
   const response = NextResponse.json(
     {
       enabled,
+      simcoinsEnabled: enabled && simcoinsCheckoutEnabled(),
       mode: paymentEnvironment(process.env).mode,
       publishableKey: enabled
         ? paymentEnvironment(process.env).publicKey

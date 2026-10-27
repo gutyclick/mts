@@ -1,0 +1,113 @@
+export type SimcoinsLevel = {
+  id: string;
+  name: string;
+  thresholdCents: number;
+  rateBps: number;
+};
+export type SimcoinsSettings = {
+  policyVersion: number;
+  coinsPerUsd: number;
+  maxRedeemBps: number;
+  minContributionBps: number;
+  stripeBps: number;
+  stripeFxBps: number;
+  fixedFeeUnits: number;
+  affiliateBps: number;
+  maxPromotionBps: number;
+  otherVariableUnits: number;
+  costsMaxAgeSeconds: number;
+  releaseDelaySeconds: number;
+};
+export type SimcoinsPublicProgram = {
+  publicEnabled: boolean;
+  enabled: boolean;
+  earnEnabled: boolean;
+  redeemEnabled: boolean;
+  levels: SimcoinsLevel[];
+  releaseDelaySeconds: number;
+  coinsPerUsd: number;
+  maxRedeemBps: number;
+};
+export type SimcoinsWallet = {
+  availableCoins: number;
+  pendingCoins: number;
+  reservedCoins: number;
+  debtCoins: number;
+  eligibleSpendCents: number;
+  level: SimcoinsLevel;
+  nextLevel: SimcoinsLevel | null;
+  history: {
+    id: string;
+    type: string;
+    amountCoins: number;
+    status: string;
+    createdAt: string;
+    reason: string;
+    orderReference?: string;
+  }[];
+  pending: {
+    orderReference: string;
+    coins: number;
+    releaseAt: string | null;
+  }[];
+};
+export type SimcoinsQuoteLine = {
+  planId: string;
+  quantity: number;
+  grossUnitCents: number;
+  taxUnitCents?: number;
+  promotionUnitCents?: number;
+  wholesaleUnitUnits: number | null;
+  costObservedAt: string | null;
+  earnEnabled: boolean;
+  redeemEnabled: boolean;
+};
+export type SimcoinsUnitSnapshot = {
+  planId: string;
+  unitIndex: number;
+  grossCents: number;
+  netCents: number;
+  paidCents: number;
+  taxCents: number;
+  promotionCents: number;
+  redeemedCoins: number;
+  earnedCoins: number;
+  eligibleSpendCents: number;
+  wholesaleUnits: number;
+  fixedFeeUnits: number;
+  earnEligible: boolean;
+  reason: string | null;
+};
+export type SimcoinsQuote = {
+  version: 1;
+  policyVersion: number;
+  levelId: string;
+  rateBps: number;
+  currency: string;
+  fxRate: string;
+  currencyDecimals: number;
+  grossCents: number;
+  netCents: number;
+  taxCents: number;
+  promoCents: number;
+  redeemedCoins: number;
+  earnedCoins: number;
+  eligibleSpendCents: number;
+  maxRedeemCoins: number;
+  contributionUnits: number;
+  reason: string | null;
+  lines: {
+    planId: string;
+    quantity: number;
+    grossUnitCents: number;
+    netUnitCents: number;
+    redeemUnitCoins: number;
+    earnedCoins: number;
+    eligibleSpendCents: number;
+    wholesaleUnitUnits: number;
+    earnEligible: boolean;
+    redeemEligible: boolean;
+    reason: string | null;
+  }[];
+  units: SimcoinsUnitSnapshot[];
+};

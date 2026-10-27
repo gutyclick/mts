@@ -1,3 +1,4 @@
+import { simcoinsFAQ } from "./simcoins/faq.ts";
 export interface FAQQuestion {
   id: string;
   question: string;
@@ -26,7 +27,7 @@ export interface HelpContent {
   categories: FAQCategory[];
 }
 
-// Product policies supplied by our eSIM provider; device behavior checked against manufacturer guidance.
+// Provider product guidance, manufacturer device guidance and MyTripSim program rules.
 export const helpContent: Record<"en" | "es", HelpContent> = {
   en: {
     title: "A little guidance. A smoother trip.",
@@ -321,6 +322,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
           },
         ],
       },
+      simcoinsFAQ("en"),
     ],
   },
   es: {
@@ -619,6 +621,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
           },
         ],
       },
+      simcoinsFAQ("es"),
     ],
   },
 };

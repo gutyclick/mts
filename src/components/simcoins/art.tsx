@@ -7,6 +7,7 @@ const badges: Record<string, string> = {
   traveler: "badge_traveler",
   explorer: "badge_explorer",
   adventurer: "badge_adventurer",
+  globetrotter: "badge_globetrotter",
   legend: "badge_legend",
 };
 

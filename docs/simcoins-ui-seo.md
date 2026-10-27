@@ -7,7 +7,7 @@
 - Bloque de canje compacto con `simcoins_pile`, equivalencia, límite de ahorro y acceso a condiciones desplegables. El enlace abre las condiciones antes de llevar al lector a ellas.
 - Moneda individual pequeña: 32 px en el saldo, 26 px en el checkout y 24 px en administración. La insignia del nivel actual aparece en la billetera a 60 px.
 - Insignias Viajero, Explorer, Adventurer y Legend convertidas a WebP de 320 × 320, conservando proporciones y transparencia. Tamaños: 19–31 KB. Los PNG originales se conservan.
-- Globetrotter conserva un globo de Lucide: no se recibió todavía una insignia específica para ese nivel.
+- Globetrotter incorpora la insignia aportada, optimizada a WebP de 320 × 320 (29,8 KB).
 
 La dirección visual mantiene Jakarta e Inter, el azul de interfaz, el naranja de marca, superficies blancas y azul suave, y bordes redondeados. Las insignias son el foco de las tarjetas; las condiciones extensas permanecen en desplegables. Se respeta la preferencia de movimiento reducido.
 
@@ -32,3 +32,10 @@ Referencias: [títulos descriptivos de Google Search Central](https://developers
 - Billetera y checkout revisados con datos ficticios en un servidor local independiente. No se consultaron ni modificaron saldos reales.
 
 Los cambios se mantienen en la rama local de SimCoins. Esta revisión no aplica migraciones, publica producción ni activa acumulación o canje.
+
+## FAQ de SimCoins
+
+- Categoría propia con diez respuestas en ES/EN, rutas localizadas y enlace al programa.
+- Landing con seis respuestas esenciales y condiciones, tarjetas táctiles de 64 px, foco visible y acordeón exclusivo para móvil.
+- Contenido compartido entre la landing y el centro de preguntas frecuentes.
+- Verificación adicional: 18 pruebas del catálogo, TypeScript y ESLint aprobados; móvil de 390 px sin desbordamiento, insignia cargada y condiciones abiertas desde su enlace.

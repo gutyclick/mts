@@ -1,5 +1,6 @@
 export const faqTopicSegments = {
   basics: { en: "getting-started", es: "primeros-pasos" },
+  simcoins: { en: "simcoins", es: "simcoins" },
   compatibility: {
     en: "phones-and-compatibility",
     es: "telefonos-y-compatibilidad",

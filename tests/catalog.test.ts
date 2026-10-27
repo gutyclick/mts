@@ -179,7 +179,7 @@ test("language switching preserves informational routes and destinations", () =>
   for (const locale of locales)
     assert.equal(
       helpContent[locale].categories.flatMap((c) => c.questions).length,
-      29,
+      39,
     );
 });
 
@@ -207,8 +207,14 @@ test("FAQ IDs survive translation and related articles reference existing questi
           assert.ok(ids.has(related));
           assert.notEqual(related, q.id);
         }
-        for (const link of q.links ?? [])
-          assert.ok(new URL(link.href).protocol === "https:");
+        for (const link of q.links ?? []) {
+          const url = new URL(link.href, "https://www.mytripsim.com");
+          assert.equal(url.protocol, "https:");
+          if (link.href.startsWith("/")) {
+            assert.equal(url.origin, "https://www.mytripsim.com");
+            assert.ok(url.pathname.startsWith(`/${locale}/`));
+          }
+        }
       }
   for (const value of [null, "unknown", "true", "{vote:helpful}", 1])
     assert.equal(parseFAQVote(value), null);

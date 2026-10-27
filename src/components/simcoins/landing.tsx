@@ -6,8 +6,9 @@ import {
 } from "@/lib/simcoins/analytics-client";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Coins, Compass, Plane } from "lucide-react";
-import { pathFor, type Locale } from "@/lib/i18n";
+import { ArrowRight, Coins, Compass, Plane, Plus } from "lucide-react";
+import { faqTopicPath, pathFor, type Locale } from "@/lib/i18n";
+import { simcoinsFAQ } from "@/lib/simcoins/faq";
 import { authPath } from "@/lib/auth-routes";
 import type { SimcoinsPublicProgram } from "@/lib/simcoins/model";
 import { LevelBadge } from "./art";
@@ -26,6 +27,16 @@ export function SimcoinsLanding({
 }) {
   const t = simcoinsCopy[locale];
   const [conditionsOpen, setConditionsOpen] = useState(false);
+  const quickQuestions = simcoinsFAQ(locale).questions.filter((q) =>
+    [
+      "simcoins-what-are",
+      "simcoins-availability",
+      "simcoins-levels",
+      "simcoins-pending",
+      "simcoins-redeeming",
+      "simcoins-refunds",
+    ].includes(q.id),
+  );
   useEffect(observeSimcoinsLanding, []);
   const releaseDays = new Intl.NumberFormat(locale, {
     maximumFractionDigits: 2,
@@ -227,40 +238,90 @@ export function SimcoinsLanding({
         </section>
         <section className="sc-section sc-faq" aria-labelledby="sc-faq">
           <div className="sc-section-heading">
-            <h2 id="sc-faq">{t.faq}</h2>
-          </div>
-          {t.questions.map(([question, answer], index) => (
-            <details key={question}>
-              <summary>{question}</summary>
-              <p>
-                {index === 1 && program.enabled
-                  ? locale === "es"
-                    ? "Consulta tu checkout para ver si la compra admite SimCoins y las recompensas que le corresponden. Solo las operaciones elegibles confirmadas generan progreso y monedas según tu nivel anterior a la compra."
-                    : "Check your checkout for purchase eligibility and its applicable rewards. Only confirmed eligible purchases generate progress and coins, using your level before the purchase."
-                  : answer}
-              </p>
-            </details>
-          ))}
-          <details
-            id="sc-conditions"
-            open={conditionsOpen}
-            onToggle={(event) => setConditionsOpen(event.currentTarget.open)}
-          >
-            <summary>
+            <p className="sc-eyebrow">
+              {locale === "es" ? "TE LO PONEMOS FÁCIL" : "LET’S KEEP IT SIMPLE"}
+            </p>
+            <h2 id="sc-faq">
               {locale === "es"
-                ? "Condiciones de tus SimCoins"
-                : "Your SimCoins conditions"}
-            </summary>
+                ? "Preguntas sobre SimCoins"
+                : "Questions about SimCoins"}
+            </h2>
             <p>
               {locale === "es"
-                ? `100 SimCoins equivalen a USD 1 de crédito promocional. Se liberan ${releaseDays} días después de la entrega verificada de tu eSIM y su correo. El pago y la entrega deben estar confirmados. El canje se limita al saldo disponible y a un máximo del ${program.maxRedeemBps / 100}% del importe elegible, sin combinación automática con otras promociones. No se pueden transferir ni retirar como efectivo. Las devoluciones ajustan las monedas y el progreso del pedido original. La elegibilidad y recompensa se muestran antes de pagar.`
-                : `100 SimCoins equal USD 1 in promotional credit. They become available ${releaseDays} days after verified eSIM and email delivery. Payment and delivery must be confirmed. Redemption is limited to your available balance and up to ${program.maxRedeemBps / 100}% of the eligible amount, without automatic stacking with other promotions. Coins cannot be transferred or withdrawn as cash. Refunds adjust coins and progress from the original order. Eligibility and rewards are shown before payment.`}
+                ? "Las respuestas esenciales, a un toque."
+                : "The essentials, just a tap away."}
             </p>
-            <Link className="sc-text-link" href={pathFor(locale, "terms")}>
-              {locale === "es" ? "Términos del servicio" : "Terms of service"}
-              <ArrowRight size={16} />
-            </Link>
-          </details>
+          </div>
+          <div className="sc-faq-list">
+            {quickQuestions.map(({ id, question, answer }) => (
+              <details key={id} name="simcoins-help" className="sc-faq-item">
+                <summary>
+                  <span>{question}</span>
+                  <span className="sc-faq-toggle" aria-hidden="true">
+                    <Plus size={18} />
+                  </span>
+                </summary>
+                <div className="sc-faq-answer">
+                  <p>
+                    {id === "simcoins-availability"
+                      ? !program.enabled
+                        ? t.off
+                        : locale === "es"
+                          ? "Consulta tu checkout para ver si la compra admite SimCoins y las recompensas que le corresponden. Solo las operaciones elegibles confirmadas generan progreso y monedas según tu nivel anterior a la compra."
+                          : "Check your checkout for purchase eligibility and its applicable rewards. Only confirmed eligible purchases generate progress and coins, using your level before the purchase."
+                      : answer}
+                  </p>
+                </div>
+              </details>
+            ))}
+            <details
+              id="sc-conditions"
+              name="simcoins-help"
+              className="sc-faq-item"
+              open={conditionsOpen}
+              onToggle={(event) => setConditionsOpen(event.currentTarget.open)}
+            >
+              <summary>
+                <span>
+                  {locale === "es"
+                    ? "Condiciones de tus SimCoins"
+                    : "Your SimCoins conditions"}
+                </span>
+                <span className="sc-faq-toggle" aria-hidden="true">
+                  <Plus size={18} />
+                </span>
+              </summary>
+              <div className="sc-faq-answer">
+                <p>
+                  {locale === "es"
+                    ? `100 SimCoins equivalen a USD 1 de crédito promocional. Se liberan ${releaseDays} días después de la entrega verificada de tu eSIM y su correo. El pago y la entrega deben estar confirmados.`
+                    : `100 SimCoins equal USD 1 in promotional credit. They become available ${releaseDays} days after verified eSIM and email delivery. Payment and delivery must be confirmed.`}
+                </p>
+                <p>
+                  {locale === "es"
+                    ? `El canje se limita al saldo disponible y a un máximo del ${program.maxRedeemBps / 100}% del importe elegible, sin combinación automática con otras promociones.`
+                    : `Redemption is limited to your available balance and up to ${program.maxRedeemBps / 100}% of the eligible amount, without automatic stacking with other promotions.`}
+                </p>
+                <p>
+                  {locale === "es"
+                    ? "No se pueden transferir ni retirar como efectivo. Las devoluciones ajustan las monedas y el progreso del pedido original. La elegibilidad y recompensa se muestran antes de pagar."
+                    : "Coins cannot be transferred or withdrawn as cash. Refunds adjust coins and progress from the original order. Eligibility and rewards are shown before payment."}
+                </p>
+                <Link className="sc-text-link" href={pathFor(locale, "terms")}>
+                  {locale === "es"
+                    ? "Términos del servicio"
+                    : "Terms of service"}
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </details>
+          </div>
+          <Link className="sc-faq-more" href={faqTopicPath(locale, "simcoins")}>
+            {locale === "es"
+              ? "Ver todas las preguntas de SimCoins"
+              : "See all SimCoins questions"}
+            <ArrowRight size={17} />
+          </Link>
         </section>
         <section className="sc-final">
           <div>

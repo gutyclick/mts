@@ -293,15 +293,33 @@ export function FAQCenter({
           </button>
         </div>
       )}
-      {topicId && (
+      {topicId === "simcoins" ? (
         <aside className="faq-sources">
-          <h2>{c.sources}</h2>
-          <p>{c.sourceDescription}</p>
-          <a href="https://support.apple.com/en-us/118669">Apple · eSIM</a>
-          <a href="https://support.google.com/pixelphone/answer/9449293">
-            Google Pixel · eSIM
-          </a>
+          <h2>
+            {locale === "es"
+              ? "Tu programa de recompensas"
+              : "Your rewards program"}
+          </h2>
+          <p>
+            {locale === "es"
+              ? "Consulta el estado del programa, sus niveles y las condiciones antes de comprar."
+              : "Check the program status, levels and conditions before purchasing."}
+          </p>
+          <Link href={`/${locale}/simcoins`}>
+            SimCoins <ArrowRight size={16} />
+          </Link>
         </aside>
+      ) : (
+        topicId && (
+          <aside className="faq-sources">
+            <h2>{c.sources}</h2>
+            <p>{c.sourceDescription}</p>
+            <a href="https://support.apple.com/en-us/118669">Apple · eSIM</a>
+            <a href="https://support.google.com/pixelphone/answer/9449293">
+              Google Pixel · eSIM
+            </a>
+          </aside>
+        )
       )}
     </section>
   );

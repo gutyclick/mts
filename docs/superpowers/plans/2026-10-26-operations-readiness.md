@@ -30,15 +30,15 @@
 
 ### 1. Operational alerts
 
-- [ ] Verify provider balance API units and Resend webhook signature contract in primary docs.
-- [ ] Create operations migrations/settings, alert episodes, delivery events, secure RPCs and signed scheduler.
-- [ ] Add server modules under src/lib/operations and routes under api/internal/operations and api/webhooks/resend.
-- [ ] Add private operations admin screen/navigation using existing design tokens, email template and environment configuration script.
+- [x] Verify provider balance API units and Resend webhook signature contract in primary docs.
+- [x] Create operations migrations/settings, alert episodes, delivery events, secure RPCs and signed scheduler.
+- [x] Add server modules under src/lib/operations and routes under api/internal/operations and api/webhooks/resend.
+- [x] Add private operations admin screen/navigation using existing design tokens, email template and environment configuration script.
 - [ ] Watch failing tests, implement, run security/idempotency/webhook tests and ES/EN desktop/mobile tests.
 
 ### 2. Admin MFA and refunds
 
-- [ ] Add admin security enrollment/challenge page and server actions, then require AAL2 throughout adminSession callers.
+- [x] Add admin security enrollment/challenge page and server actions, then require AAL2 throughout adminSession callers.
 - [ ] Add refund-unit reservations, requests, approval transitions and audit migrations/RPCs.
 - [ ] Add protected reviewed refund API/UI, Stripe execution and signed-event reconciliation, provider-cancellation disclosure.
 - [ ] Prove ownership, amounts, environment isolation, retries, lease races and no duplicate charges/refunds with tests.
@@ -58,14 +58,16 @@
 
 ### 5. SEO and release
 
-- [ ] Audit production sitemap/robots/canonicals and render checks.
-- [ ] Review GSC authenticated data after browser connection or identify missing source explicitly.
+- [x] Audit production sitemap/robots/canonicals and render checks.
+- [x] Review GSC authenticated data after browser connection or identify missing source explicitly.
 - [ ] Run relevant unit/security, build, lint, UI and secret checks; independent final review; migrate/deploy in safe order.
 - [ ] Verify actual public/protected entry points; report completed versus owner-dependent work.
 
 ## Execution ledger
 
-- 2026-10-26 MFA hotfix: owner reported an error before the QR. Confirmed own unverified factor existed; reproduced with a disposable account. Supabase SVG contains an XML declaration and leading generator comment, rejected by the original startsWith('<svg') validator. Added dedicated bounded authenticatorQr normalizer and regression cases for XML/comment/raw/data-URL formats; verified against an actual newly enrolled Supabase factor without printing its contents. Seven unit/database tests and actual MFA SDK/SSR-cookie integration passed; all temporary users removed. Initial local rerun failed because the old local server was absent/rebuilt; a fresh completed-build server on port3011 resolved the test infrastructure issue. Owner's own factor was never inspected for secrets, changed or removed. Hotfix release pending.
+- 2026-10-26 owner confirmed successful administrator access after QR fix. Refund subsystem now implemented locally: unit reservations, explicit approval, fulfillment-lease gate/hold, server-calculated amounts, Stripe dispatch with stable idempotency/reconciliation and bounded retry window, private ES/EN UI, signed refund webhook branch and event-configuration script. Five mocked/PGlite tests pass, types and targeted lint pass. Database migration 20261026000600 is NOT applied; refund UI/API are NOT deployed; no actual Stripe refund created. Independent review requested before release. Next steps: address review, full integration/API/UI checks, migrate/deploy/configure lifecycle events, then continue backup and consent measurement. Supabase browser sign-in for actual backups still awaits owner. Unrelated images remain excluded.
+
+- 2026-10-26 MFA hotfix: owner reported an error before the QR. Confirmed own unverified factor existed; reproduced with a disposable account. Supabase SVG contains an XML declaration and leading generator comment, rejected by the original startsWith('<svg') validator. Added dedicated bounded authenticatorQr normalizer and regression cases for XML/comment/raw/data-URL formats; verified against an actual newly enrolled Supabase factor without printing its contents. Seven unit/database tests and actual MFA SDK/SSR-cookie integration passed; all temporary users removed. Initial local rerun failed because the old local server was absent/rebuilt; a fresh completed-build server resolved the test infrastructure issue. A full native-form Server Action integration also passed: visible QR after actual enrollment action, wrong code preserves form, successful code persists AAL2 cookies. Owner's own factor was never inspected for secrets, changed or removed. Commit 05eeffc deployed as dpl_BtnmWiF4vr5EfW2c2XUVJD5V6BHx, READY and aliased to production. Build, lint and 800-file secret scan passed. Owner asked to reload and finish enrollment. Additional form regression script and updated release ledger to be included in next commit.
 
 - 2026-10-26 release checkpoint: commit 17af115 pushed to main; clean tracked-code archive deployed as dpl_3eUKbxARoyn1eZ9G6rscsxDVys8R and aliased to www.mytripsim.com. Migration 20261026000500 applied. Resend delivery webhook prepared privately, production signing variables configured and webhook enabled after endpoint checks. Five-minute operational cron enabled for gustavo@mytripsim.com / USD 20. First authenticated production worker check returned HTTP 200, balance query successful, zero active incidents and no notification sent. Production 308 Help→FAQ, sitemap cleanup, anonymous API 401 and unsigned webhook 400 verified. Owner MFA enrollment requested; synthetic enrollment/incorrect-code/AAL2-cookie/revoked-membership integration passed and temporary account removed. Independent review found a worker duration risk; fixed with two-job batch + deadline, regression tested (six tests pass). Next build and targeted lint passed. Secret scan: 798 staged files clean. Actual owner enrollment, backup coverage/restore, refunds and consent analytics still pending. Supabase browser sign-in requested for real backup inspection. New untracked Vietnam image and six pre-existing JPG deletions were excluded from release.
 

@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   LifeBuoy,
   ShieldCheck,
+  RotateCcw,
 } from "lucide-react";
 import { Brand } from "../ui";
 import type { Locale } from "@/lib/i18n";
@@ -41,6 +42,13 @@ export function OperationsShell({
           >
             <Activity size={20} />
             {es ? "Operaciones" : "Operations"}
+          </Link>
+          <Link
+            className="admin-support-link"
+            href={`/${locale}/admin/refunds`}
+          >
+            <RotateCcw size={20} />
+            {es ? "Reembolsos" : "Refunds"}
           </Link>
           <Link
             className="admin-support-link"

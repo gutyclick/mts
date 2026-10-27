@@ -11,6 +11,7 @@ Open `/es/admin/operations` or `/en/admin/operations`. Membership and verified M
 ## Deployment order
 
 1. `npm.cmd run test:operations` and `npm.cmd run test:admin:mfa` against the local production server. The integration test creates/removes only its own temporary user, sends no email and performs no financial transaction.
+   For the complete native Server Action form flow, start a completed production build on port 3012 and run `npm.cmd run test:admin:mfa:forms` (or set `ADMIN_TEST_BASE` to another local port). It verifies that enrollment actually renders the QR, a wrong code preserves verification, and successful verification persists cookies. Do not rebuild `.next` while this test server is running.
 2. `npm.cmd run operations:setup -- --prepare`: create a dedicated Resend webhook, immediately store its signing secret in ignored `.env.local`, leave it disabled until deployment. Existing endpoints are not overwritten if their secret is missing.
 3. Apply the additive Supabase migration; it starts with monitoring disabled.
 4. `npm.cmd run operations:setup -- --deploy-env`: store the signing secret and server-only enable flag in Vercel production.

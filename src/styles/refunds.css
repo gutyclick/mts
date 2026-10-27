@@ -1,0 +1,210 @@
+.refund-search,
+.refund-order,
+.refund-history {
+  padding: 24px;
+  margin: 22px 0;
+}
+.refund-search label,
+.refund-reason {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.refund-search > div {
+  display: flex;
+  gap: 12px;
+}
+.refund-search input {
+  flex: 1;
+  min-width: 0;
+}
+.refund-search input,
+.refund-reason textarea {
+  border: 1px solid var(--border, #dbe7f6);
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  color: inherit;
+  font: inherit;
+}
+.refund-search input:focus-visible,
+.refund-reason textarea:focus-visible {
+  outline: 3px solid #1269ed;
+  outline-offset: 2px;
+}
+.refund-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.refund-section-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 1.2rem;
+}
+.refund-section-heading small {
+  display: block;
+  margin-top: 7px;
+  color: #526785;
+}
+.refund-section-heading > span {
+  font-size: 0.85rem;
+  color: #526785;
+}
+.refund-units {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.refund-unit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #dbe7f6;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.refund-unit:has(input:disabled) {
+  background: #f5f8fc;
+  cursor: default;
+}
+.refund-unit > span {
+  flex: 1;
+  min-width: 0;
+}
+.refund-unit small {
+  display: block;
+  margin-top: 5px;
+  color: #526785;
+  line-height: 1.5;
+}
+.refund-unit input,
+.refund-confirm input {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  accent-color: #1269ed;
+}
+.refund-reason {
+  flex-direction: column;
+  align-items: stretch;
+  margin: 22px 0;
+}
+.refund-reason textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-weight: 400;
+}
+.refund-record {
+  padding: 22px 0;
+  border-top: 1px solid #e4edf8;
+}
+.refund-record > p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  color: #526785;
+}
+.refund-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.refund-state {
+  background: #edf5ff;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.refund-state[data-state="succeeded"] {
+  background: #e8f8ee;
+  color: #25794a;
+}
+.refund-state[data-state="review"],
+.refund-state[data-state="failed"] {
+  background: #fff1e6;
+  color: #934318;
+}
+.refund-confirm {
+  margin-top: 20px;
+  border: 1px solid #ffc997;
+  background: #fff7ef;
+  border-radius: 18px;
+  padding: 20px;
+}
+.refund-confirm > label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+.refund-confirm p {
+  line-height: 1.7;
+  color: #6c513d;
+}
+.refund-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #eaf6ee;
+  border-radius: 16px;
+  padding: 16px;
+  color: #275c3d;
+  line-height: 1.6;
+}
+@media (max-width: 640px) {
+  .refund-search,
+  .refund-order,
+  .refund-history {
+    padding: 18px;
+  }
+  .refund-search > div {
+    flex-direction: column;
+  }
+  .refund-unit {
+    padding: 13px;
+    gap: 9px;
+  }
+  .refund-unit > strong {
+    font-size: 0.9rem;
+  }
+  .refund-actions .button {
+    flex: 1;
+    min-width: 140px;
+  }
+  .refund-confirm {
+    padding: 16px;
+  }
+}
+.refund-audit {
+  padding: 20px;
+}
+.refund-audit summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.refund-audit ol {
+  list-style: none;
+  padding: 0;
+}
+.refund-audit li {
+  padding: 14px 0;
+  border-top: 1px solid #e4edf8;
+}
+.refund-audit small {
+  display: block;
+  margin-top: 7px;
+  color: #526785;
+  line-height: 1.6;
+}

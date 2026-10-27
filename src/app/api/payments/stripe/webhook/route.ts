@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { recordStripeRefund, refundStripe } from "@/lib/payments/refund-server";
 import {
   handledEvents,
   verifyPaymentSnapshot,
@@ -45,6 +46,24 @@ export async function POST(request: NextRequest) {
     if (!event) return reply(400);
   } catch {
     return reply(400);
+  }
+  if (
+    ["refund.created", "refund.updated", "refund.failed"].includes(event.type)
+  ) {
+    try {
+      const object = event.data.object;
+      if (object.object !== "refund") return reply(400);
+      if (!z.uuid().safeParse(object.metadata?.mts_refund_request).success)
+        return reply(200);
+      const checkedAt = new Date().toISOString();
+      const current = await refundStripe(event.livemode).refunds.retrieve(
+        object.id,
+      );
+      await recordStripeRefund(current, event.livemode, checkedAt);
+      return reply(200);
+    } catch {
+      return reply(503);
+    }
   }
   if (!handledEvents.has(event.type)) return reply(200);
   try {

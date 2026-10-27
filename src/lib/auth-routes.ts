@@ -43,6 +43,7 @@ export function safeAccountNext(value: unknown, locale: Locale) {
         `/${locale}/admin`,
         `/${locale}/admin/security`,
         `/${locale}/admin/operations`,
+        `/${locale}/admin/refunds`,
       ].includes(url.pathname)
     )
       return url.pathname;

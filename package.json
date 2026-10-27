@@ -68,6 +68,10 @@
     "test:legal": "node --experimental-strip-types --test tests/legal.test.mjs",
     "test:operations": "node --experimental-strip-types --test tests/operations.test.mjs tests/operations-security.test.mjs tests/admin-mfa.test.mjs tests/admin-qr.test.mjs",
     "test:admin:mfa": "node --experimental-strip-types scripts/test-admin-mfa.mjs",
+    "test:admin:mfa:forms": "node scripts/test-admin-mfa-actions.mjs",
+    "test:refunds": "node --experimental-strip-types --test tests/refunds.test.mjs tests/refunds-security.test.mjs",
+    "test:refunds:integration": "node scripts/test-admin-refunds.mjs",
+    "refunds:events": "node --experimental-strip-types scripts/configure-refund-events.mjs",
     "operations:setup": "node scripts/setup-operations.mjs"
   },
   "dependencies": {

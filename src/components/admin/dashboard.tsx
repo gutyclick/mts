@@ -18,6 +18,7 @@ import {
   LogOut,
   Package,
   RefreshCw,
+  RotateCcw,
   Search,
   ShieldCheck,
   Users,
@@ -344,6 +345,13 @@ export function AdminDashboard({
             {es ? "Operaciones" : "Operations"}
           </Link>
           <Link
+            href={`/${locale}/admin/refunds`}
+            className="admin-support-link"
+          >
+            <RotateCcw size={20} />
+            {es ? "Reembolsos" : "Refunds"}
+          </Link>
+          <Link
             href={`/${locale}/admin/tickets`}
             className="admin-support-link"
           >
@@ -635,8 +643,8 @@ export function AdminDashboard({
                 </strong>
                 <p className="admin-caption">
                   {es
-                    ? "Total confirmado. Los pagos de prueba no se incluyen."
-                    : "Confirmed total. Test payments are excluded."}
+                    ? "Ventas brutas confirmadas, antes de reembolsos. No incluye pagos de prueba."
+                    : "Confirmed gross sales, before refunds. Test payments are excluded."}
                 </p>
                 {data.value.daily.some((d) => d.orders > 0) ? (
                   <ol
@@ -873,6 +881,14 @@ export function AdminDashboard({
                             : "Live payment"
                           : "Stripe test"}
                       </small>
+                      {o.status === "paid" && (
+                        <Link
+                          className="admin-link"
+                          href={`/${locale}/admin/refunds?order=${o.id}`}
+                        >
+                          {es ? "Revisar reembolso" : "Review refund"}
+                        </Link>
+                      )}
                     </div>
                   </article>
                 ))}

@@ -63,7 +63,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "purchase-availability",
             question: "Can I purchase a plan here?",
             answer:
-              "Choose a destination and plan, add it to your cart and complete payment. We will email the recipient a QR code and instructions once the eSIM is ready. When you purchase with an account, you can also view your orders and instructions in My eSIMs.",
+              "Choose a destination and plan, add it to your cart and complete payment. We will email the recipient a QR code and instructions once the eSIM is ready. When you purchase with an account, you can also view your orders and instructions in My TripSim.",
           },
           {
             id: "similar-plan-names",
@@ -137,7 +137,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "install-esim",
             question: "How is a travel eSIM installed?",
             answer:
-              "Install an issued MyTripSim eSIM with the private QR or manual settings in My eSIMs or your delivery email. Use reliable Wi-Fi and follow the instructions for your exact phone and plan. Keep your installation codes private.",
+              "Install an issued MyTripSim eSIM with the private QR or manual settings in My TripSim or your delivery email. Use reliable Wi-Fi and follow the instructions for your exact phone and plan. Keep your installation codes private.",
           },
           {
             id: "internet-for-installation",
@@ -298,7 +298,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "remaining-data",
             question: "Where can I check remaining data?",
             answer:
-              "My eSIMs shows the latest saved usage reading when one is available. It is not a real-time balance: provider usage can be delayed and phone estimates may differ. If the reading is missing or you need a connection check, contact MyTripSim support.",
+              "My TripSim shows the latest saved usage reading when one is available. It is not a real-time balance: provider usage can be delayed and phone estimates may differ. If the reading is missing or you need a connection check, contact MyTripSim support.",
           },
           {
             id: "troubleshooting-details",
@@ -358,7 +358,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "purchase-availability",
             question: "¿Ya puedo comprar un plan aquí?",
             answer:
-              "Elige tu destino y plan, añádelo al carrito y completa el pago. Enviaremos el QR y las instrucciones al correo del beneficiario cuando la eSIM esté preparada. Si compras con tu cuenta, también podrás consultar tus pedidos e instrucciones en Mis eSIM.",
+              "Elige tu destino y plan, añádelo al carrito y completa el pago. Enviaremos el QR y las instrucciones al correo del beneficiario cuando la eSIM esté preparada. Si compras con tu cuenta, también podrás consultar tus pedidos e instrucciones en Mis TripSim.",
           },
           {
             id: "similar-plan-names",
@@ -434,7 +434,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "install-esim",
             question: "¿Cómo se instala una eSIM de viaje?",
             answer:
-              "Instala tu eSIM MyTripSim emitida con el QR privado o los ajustes manuales de Mis eSIM o del correo de entrega. Utiliza una red Wi-Fi fiable y sigue las instrucciones de tu teléfono y plan. Mantén privados tus códigos de instalación.",
+              "Instala tu eSIM MyTripSim emitida con el QR privado o los ajustes manuales de Mis TripSim o del correo de entrega. Utiliza una red Wi-Fi fiable y sigue las instrucciones de tu teléfono y plan. Mantén privados tus códigos de instalación.",
           },
           {
             id: "internet-for-installation",
@@ -596,7 +596,7 @@ export const helpContent: Record<"en" | "es", HelpContent> = {
             id: "remaining-data",
             question: "¿Dónde consulto los datos restantes?",
             answer:
-              "Mis eSIM muestra la última lectura de consumo guardada cuando está disponible. No es un saldo en tiempo real: el proveedor puede informar con retraso y las estimaciones del teléfono pueden diferir. Si falta la lectura o necesitas revisar la conexión, contacta con soporte MyTripSim.",
+              "Mis TripSim muestra la última lectura de consumo guardada cuando está disponible. No es un saldo en tiempo real: el proveedor puede informar con retraso y las estimaciones del teléfono pueden diferir. Si falta la lectura o necesitas revisar la conexión, contacta con soporte MyTripSim.",
           },
           {
             id: "troubleshooting-details",

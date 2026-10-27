@@ -192,7 +192,7 @@ export function TicketDesk({
             href={
               staff
                 ? `/${locale}/admin`
-                : `/${locale}/${es ? "mis-esim" : "my-esims"}`
+                : `/${locale}/${es ? "mis-esim" : "my-esims"}?section=support`
             }
           >
             <ArrowLeft size={16} />
@@ -201,8 +201,8 @@ export function TicketDesk({
                 ? "Administración"
                 : "Administration"
               : es
-                ? "Mis eSIM"
-                : "My eSIMs"}
+                ? "Mis TripSim"
+                : "My TripSim"}
           </Link>
           <span className="support-eyebrow">
             MYTRIPSIM / {es ? "AYUDA" : "SUPPORT"}

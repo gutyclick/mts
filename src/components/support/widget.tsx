@@ -9,11 +9,17 @@ const ChatPanel = lazy(() =>
   import("./chat-panel").then((module) => ({ default: module.ChatPanel })),
 );
 
-export function SupportWidget({ locale }: { locale: Locale }) {
+export function SupportWidget({
+  locale,
+  inline = false,
+}: {
+  locale: Locale;
+  inline?: boolean;
+}) {
   const path = usePathname();
-  return <WidgetDialog key={path} locale={locale} />;
+  return <WidgetDialog key={path} locale={locale} inline={inline} />;
 }
-function WidgetDialog({ locale }: { locale: Locale }) {
+function WidgetDialog({ locale, inline }: { locale: Locale; inline: boolean }) {
   const [open, setOpen] = useState(false),
     dialog = useRef<HTMLDialogElement>(null),
     es = locale === "es";
@@ -24,7 +30,11 @@ function WidgetDialog({ locale }: { locale: Locale }) {
   return (
     <>
       <button
-        className="support-launcher"
+        className={
+          inline
+            ? "button button-primary trip-support-chat"
+            : "support-launcher"
+        }
         onClick={() => setOpen(true)}
         aria-label={
           es
@@ -34,7 +44,15 @@ function WidgetDialog({ locale }: { locale: Locale }) {
         aria-haspopup="dialog"
       >
         <MessageCircle size={23} />
-        <span>{es ? "¿Te ayudo?" : "Need help?"}</span>
+        <span>
+          {inline
+            ? es
+              ? "Hablar con SIM"
+              : "Chat with SIM"
+            : es
+              ? "¿Te ayudo?"
+              : "Need help?"}
+        </span>
       </button>
       <dialog
         ref={dialog}

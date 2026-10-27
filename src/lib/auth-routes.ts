@@ -62,8 +62,13 @@ export function safeAccountNext(value: unknown, locale: Locale) {
     if (url.origin !== "https://mytripsim.invalid" || url.pathname !== fallback)
       return fallback;
     const id = url.searchParams.get("esim");
-    return id && /^[0-9a-f-]{36}$/i.test(id)
-      ? `${fallback}?esim=${id}`
+    if (id && /^[0-9a-f-]{36}$/i.test(id)) return `${fallback}?esim=${id}`;
+    const section = url.searchParams.get("section");
+    if (section && ["orders", "support", "account"].includes(section))
+      return `${fallback}?section=${section}`;
+    const filter = url.searchParams.get("filter");
+    return filter && ["ready", "active", "ended"].includes(filter)
+      ? `${fallback}?filter=${filter}`
       : fallback;
   } catch {
     return fallback;

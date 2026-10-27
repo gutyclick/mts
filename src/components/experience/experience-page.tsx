@@ -49,6 +49,8 @@ export async function ExperiencePage({
       <CustomerWallet
         locale={locale}
         selectedId={typeof query.esim === "string" ? query.esim : undefined}
+        section={typeof query.section === "string" ? query.section : undefined}
+        filter={typeof query.filter === "string" ? query.filter : undefined}
       />
     );
   }

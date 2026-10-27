@@ -4,7 +4,7 @@ export const experienceCopy = {
     previewBody: "Manage your orders and eSIM service information.",
     fullDetails: "Full plan details",
     previewPurchase: "Continue with this plan",
-    wallet: "My eSIMs",
+    wallet: "My TripSim",
     studio: "Administration",
     install: "Installation guide",
     back: "Back",
@@ -63,7 +63,7 @@ export const experienceCopy = {
     confirmationTitle: "This is how your confirmation will look",
     confirmationBody:
       "View the status of your order and eSIM delivery instructions.",
-    exploreWallet: "Explore My eSIMs",
+    exploreWallet: "Explore My TripSim",
     whatNext: "Your next steps",
     nextSteps: [
       "Receive your eSIM and installation instructions.",
@@ -124,7 +124,7 @@ export const experienceCopy = {
       },
       {
         title: "Add your travel eSIM",
-        body: "Use the QR code or manual installation details in My eSIMs for your specific eSIM.",
+        body: "Use the QR code or manual installation details in My TripSim for your specific eSIM.",
       },
       {
         title: "Name your lines",
@@ -190,7 +190,7 @@ export const experienceCopy = {
     previewBody: "Gestiona la información de tus pedidos y eSIM.",
     fullDetails: "Ver ficha completa",
     previewPurchase: "Continuar con este plan",
-    wallet: "Mis eSIM",
+    wallet: "Mis TripSim",
     studio: "Administración",
     install: "Guía de instalación",
     back: "Volver",
@@ -248,7 +248,7 @@ export const experienceCopy = {
     confirmationTitle: "Así se verá tu confirmación",
     confirmationBody:
       "Consulta el estado de tu pedido y las instrucciones de entrega de tu eSIM.",
-    exploreWallet: "Explorar Mis eSIM",
+    exploreWallet: "Explorar Mis TripSim",
     whatNext: "Tus siguientes pasos",
     nextSteps: [
       "Recibe tu eSIM y las instrucciones de instalación.",
@@ -310,7 +310,7 @@ export const experienceCopy = {
       },
       {
         title: "Añade tu eSIM de viaje",
-        body: "Utiliza el QR o los datos de instalación manual de tu eSIM, disponibles en Mis eSIM.",
+        body: "Utiliza el QR o los datos de instalación manual de tu eSIM, disponibles en Mis TripSim.",
       },
       {
         title: "Pon nombre a tus líneas",

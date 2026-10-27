@@ -382,8 +382,8 @@ export function Checkout({
                   >
                     <BadgeCheck size={16} />
                     {es
-                      ? "Sesión iniciada · Ir a Mis eSIM"
-                      : "Signed in · Go to My eSIMs"}
+                      ? "Sesión iniciada · Ir a Mis TripSim"
+                      : "Signed in · Go to My TripSim"}
                   </Link>
                 )}
                 <label className="commerce-checkbox checkout-marketing">
@@ -581,7 +581,23 @@ export function Checkout({
                         ? "Continuar al pago"
                         : "Continue to payment"}
                 </button>
-                {pricing.error&&<div className="checkout-error" role="alert"><p>{es?'No pudimos actualizar los precios en esta moneda. Reintenta o elige USD en el selector.':'We could not update prices in this currency. Retry or choose USD in the selector.'}</p><button type="button" className="commerce-link" disabled={!!pricing.busy} onClick={()=>void pricing.select(pricing.currency)}>{es?'Actualizar moneda':'Refresh currency'}</button></div>}
+                {pricing.error && (
+                  <div className="checkout-error" role="alert">
+                    <p>
+                      {es
+                        ? "No pudimos actualizar los precios en esta moneda. Reintenta o elige USD en el selector."
+                        : "We could not update prices in this currency. Retry or choose USD in the selector."}
+                    </p>
+                    <button
+                      type="button"
+                      className="commerce-link"
+                      disabled={!!pricing.busy}
+                      onClick={() => void pricing.select(pricing.currency)}
+                    >
+                      {es ? "Actualizar moneda" : "Refresh currency"}
+                    </button>
+                  </div>
+                )}
                 {error && (
                   <p className="checkout-error" role="alert">
                     {error}

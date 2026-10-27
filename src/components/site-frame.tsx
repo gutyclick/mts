@@ -7,6 +7,7 @@ import { MobileNavigation } from "./mobile-navigation";
 import { PendingPaymentNotice } from "./commerce/pending-payment-notice";
 import { dictionaries, type Locale } from "@/lib/i18n";
 import { SupportWidget } from "./support/widget";
+import { experiencePath } from "@/lib/experience-routes";
 export function SiteFrame({
   locale,
   children,
@@ -34,7 +35,9 @@ export function SiteFrame({
         <>
           <Footer locale={locale} />
           <MobileNavigation locale={locale} />
-          <SupportWidget locale={locale} />
+          {pathname !== experiencePath(locale, "wallet") && (
+            <SupportWidget locale={locale} />
+          )}
         </>
       )}
     </>

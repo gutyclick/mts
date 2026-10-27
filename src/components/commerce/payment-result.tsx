@@ -377,7 +377,7 @@ export function PaymentResult({
               className="button button-primary"
               href={experiencePath(locale, "wallet")}
             >
-              {es ? "Ir a Mis eSIM" : "Go to My eSIMs"}
+              {es ? "Ir a Mis TripSim" : "Go to My TripSim"}
               <ArrowRight size={17} />
             </Link>
           ) : (

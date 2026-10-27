@@ -63,7 +63,7 @@ export function OperationsShell({
           {es ? "Volver a la web" : "Back to website"}
         </Link>
       </aside>
-      <main className="operations-main">{children}</main>
+      <div className="operations-main">{children}</div>
     </div>
   );
 }

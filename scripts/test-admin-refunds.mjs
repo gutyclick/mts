@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { randomBytes, randomUUID, createHmac } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
+import { mkdirSync, writeFileSync } from "node:fs";
 process.loadEnvFile(".env.local");
 const base = process.env.ADMIN_TEST_BASE || "http://localhost:3013";
 if (!/^http:\/\/localhost:\d+$/.test(base))
@@ -181,6 +182,14 @@ try {
       ),
     );
     assert.ok(!html.includes("pi_qa_refund_"));
+    if (process.argv.includes("--capture")) {
+      mkdirSync("private-data/refund-ui", { recursive: true });
+      // Only this selected disposable order is rendered. Remove all executable JS and auth-free links stay inert.
+      const staticHtml = html
+        .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+        .replace("<head>", `<head><base href="${base}/">`);
+      writeFileSync(`private-data/refund-ui/${locale}.html`, staticHtml);
+    }
   }
   stage = "request rejection";
   assert.equal((await post({ action: "reject", id: requestId })).status, 200);

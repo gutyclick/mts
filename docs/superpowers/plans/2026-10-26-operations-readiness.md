@@ -39,9 +39,9 @@
 ### 2. Admin MFA and refunds
 
 - [x] Add admin security enrollment/challenge page and server actions, then require AAL2 throughout adminSession callers.
-- [ ] Add refund-unit reservations, requests, approval transitions and audit migrations/RPCs.
-- [ ] Add protected reviewed refund API/UI, Stripe execution and signed-event reconciliation, provider-cancellation disclosure.
-- [ ] Prove ownership, amounts, environment isolation, retries, lease races and no duplicate charges/refunds with tests.
+- [x] Add refund-unit reservations, requests, approval transitions and audit migrations/RPCs.
+- [x] Add protected reviewed refund API/UI, Stripe execution and signed-event reconciliation, provider-cancellation disclosure.
+- [x] Prove ownership, amounts, environment isolation, retries, lease races and no duplicate charges/refunds with tests.
 
 ### 3. Backup and restore
 
@@ -64,6 +64,8 @@
 - [ ] Verify actual public/protected entry points; report completed versus owner-dependent work.
 
 ## Execution ledger
+
+- 2026-10-26 refund release: migrations006/007 applied; commit0d54058 deployed READY as dpl_EHQrmvVv4uM2Ubfv2vwJcZ3QmnWx and aliased to www.mytripsim.com. Signed refund.created/updated/failed added to existing live/test Stripe endpoints without removing checkout events. Anonymous refund API401/no-store, page login redirect and unsigned Stripe webhook400 verified. Independent reviewer found terminal-response ordering, selected-order history and refunded-unit alert issues; reproduced each red and fixed, reviewer verified green (10 tests); final combined12 tests passed. Actual local API/ES-EN SSR integration passed with disposable test-only records, request/reject only, no Stripe call or real refund; all fixtures removed and remaining refund_requests count0 confirmed. Types/lint/build and full816-file secret scan passed. Static, script-free preview of own disposable order was checked at390px and1440px; no page overflow. Improved header/cards and removed nested main landmark; final cosmetic patch pending publication. Analytics consent model/spec/tests started locally, no analytics collection enabled. Backup browser still at sign-in, awaiting owner.
 
 - 2026-10-26 owner confirmed successful administrator access after QR fix. Refund subsystem now implemented locally: unit reservations, explicit approval, fulfillment-lease gate/hold, server-calculated amounts, Stripe dispatch with stable idempotency/reconciliation and bounded retry window, private ES/EN UI, signed refund webhook branch and event-configuration script. Five mocked/PGlite tests pass, types and targeted lint pass. Database migration 20261026000600 is NOT applied; refund UI/API are NOT deployed; no actual Stripe refund created. Independent review requested before release. Next steps: address review, full integration/API/UI checks, migrate/deploy/configure lifecycle events, then continue backup and consent measurement. Supabase browser sign-in for actual backups still awaits owner. Unrelated images remain excluded.
 

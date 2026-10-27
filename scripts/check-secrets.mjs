@@ -1,9 +1,16 @@
 import { execFileSync } from "node:child_process";
 
 // Read the index, not working files: these are the exact bytes a commit records.
-const files = execFileSync("git", ["ls-files", "--cached", "-z"], {
-  encoding: "utf8",
-})
+const changedOnly = process.argv.includes("--staged-only");
+const files = execFileSync(
+  "git",
+  changedOnly
+    ? ["diff", "--cached", "--name-only", "--diff-filter=ACMR", "-z"]
+    : ["ls-files", "--cached", "-z"],
+  {
+    encoding: "utf8",
+  },
+)
   .split("\0")
   .filter(Boolean);
 const rules = [
@@ -59,6 +66,6 @@ if (findings.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Checked ${files.length} staged files: no credential patterns or forbidden files found.`,
+    `Checked ${files.length} ${changedOnly ? "changed staged" : "staged"} files: no credential patterns or forbidden files found.`,
   );
 }

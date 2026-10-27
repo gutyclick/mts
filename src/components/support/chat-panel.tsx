@@ -237,16 +237,6 @@ export function ChatPanel({
                 })}
               </div>
             )}
-            {session && session.conversations.length > 0 && (
-              <button
-                className="messenger-history-link"
-                onClick={() => setView("history")}
-              >
-                <History size={18} />
-                {es ? "Ver mis conversaciones" : "View my conversations"}
-                <ArrowRight size={16} />
-              </button>
-            )}
           </>
         ) : (
           <section className="messenger-history">

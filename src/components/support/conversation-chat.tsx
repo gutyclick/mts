@@ -272,6 +272,7 @@ export function ConversationChat({
           await refresh(controller.current?.signal);
       }
     } finally {
+      busyRef.current = false;
       setBusy(false);
     }
   }

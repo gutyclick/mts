@@ -1,3 +1,16 @@
+import { isPreparingDelivery } from "./esim-installation.ts";
+
+export function isDashboardPreparing(
+  order: { livemode: boolean; status: string; fulfillmentStates: string[] },
+  publishedProfiles: number,
+) {
+  return (
+    order.livemode &&
+    order.status === "paid" &&
+    isPreparingDelivery(order.fulfillmentStates, publishedProfiles)
+  );
+}
+
 export const dashboardSections = [
   "esims",
   "orders",

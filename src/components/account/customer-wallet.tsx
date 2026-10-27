@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
-import { isPreparingDelivery } from "@/lib/esim-installation";
 import { QuickInstall } from "./quick-install";
 import { DeliveryRefresh } from "./delivery-refresh";
 import {
@@ -36,6 +35,7 @@ import {
   dashboardFilter,
   filterDashboardEsims,
   dashboardFilters,
+  isDashboardPreparing,
 } from "@/lib/customer-dashboard";
 import { CustomerSupportSummary } from "./support-summary";
 const dataLabel = (gb: number) =>
@@ -100,21 +100,20 @@ export async function CustomerWallet({
           .eq("user_id", user.id)
           .maybeSingle()
       : { data: null };
-  const preparing = checkouts.filter(
-    (o) =>
-      o.status === "paid" &&
-      isPreparingDelivery(
-        o.fulfillmentStates,
-        esims.filter((e) =>
-          orders.some(
-            (order) =>
-              order.id === e.order_id && order.checkout_order_id === o.id,
-          ),
-        ).length,
-      ),
+  const preparing = checkouts.filter((o) =>
+    isDashboardPreparing(
+      o,
+      esims.filter((e) =>
+        orders.some(
+          (order) =>
+            order.id === e.order_id && order.checkout_order_id === o.id,
+        ),
+      ).length,
+    ),
   );
   const refreshing =
-    preparing.length > 0 || checkouts.some((o) => o.recentPending);
+    preparing.length > 0 ||
+    checkouts.some((o) => o.livemode && o.recentPending);
   const labels = es
     ? {
         ready: "Lista para instalar",

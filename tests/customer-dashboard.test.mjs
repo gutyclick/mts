@@ -5,7 +5,31 @@ import {
   dashboardSection,
   dashboardFilter,
   filterDashboardEsims,
+  isDashboardPreparing,
 } from "../src/lib/customer-dashboard.ts";
+test("only real paid orders can show issuance preparation in the dashboard", () => {
+  assert.equal(
+    isDashboardPreparing(
+      { livemode: false, status: "paid", fulfillmentStates: [] },
+      0,
+    ),
+    false,
+  );
+  assert.equal(
+    isDashboardPreparing(
+      { livemode: true, status: "paid", fulfillmentStates: [] },
+      0,
+    ),
+    true,
+  );
+  assert.equal(
+    isDashboardPreparing(
+      { livemode: true, status: "pending", fulfillmentStates: [] },
+      0,
+    ),
+    false,
+  );
+});
 test("account login keeps only known dashboard sections and filters", () => {
   assert.equal(
     safeAccountNext("/es/mis-esim?section=support&next=https://bad.test", "es"),

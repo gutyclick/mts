@@ -117,3 +117,69 @@ Todos los planes propios del alcance declaran 3G/4G/5G y activación al conectar
 - [50 variantes/duraciones propias](./2026-10-27-variantes-mercados.csv).
 
 No se han modificado precios, catálogo, Stripe ni la web. Auditoría de lectura, sin compra ni emisión.
+
+## Revisión del 27 de octubre: coste mayorista y ficha europea
+
+### Exportaciones privadas con coste
+
+Se han generado versiones privadas de los dos CSV, con la columna exacta `coste_mayorista_usd`. La comparación de 25 filas usa el coste del `Plan_min_ID` de esa fila, no el coste de otra variante ni el menor coste de todas las opciones. El detalle de 50 filas usa cada `Plan_ID` exacto.
+
+Fuente: consulta autenticada de lectura a `package/list` de eSIM Access, productos BASE de datos fijos. Se verificaron identificador, volumen, duración y moneda USD. Se utiliza el campo `price`, dividido entre 10.000, con cuatro decimales; no se utiliza `retailPrice`, que es un precio de venta sugerido. Cada fila incluye fuente y hora UTC de consulta. Es una cotización actual del catálogo de nuestra cuenta, no una factura histórica ni un coste neto después de comisiones, impuestos o descuentos de saldo.
+
+Los archivos con coste están únicamente en `private-data/audits/`, excluidos de Git. Las exportaciones públicas anteriores conservan solo precios de venta. Esta revisión sí verifica costes mayoristas; todavía no calcula margen neto ni modifica tarifas.
+
+### Cobertura: 41 destinos, no 41 países soberanos
+
+La API actual confirma la misma lista publicada: 41 códigos únicos. Son 36 estados soberanos y cinco entradas adicionales:
+
+| Código | Destino | Clasificación |
+|---|---|---|
+| GG | Guernsey | Dependencia de la Corona británica |
+| JE | Jersey | Dependencia de la Corona británica |
+| IM | Isla de Man | Dependencia de la Corona británica |
+| AX | Åland | Región autónoma de Finlandia |
+| GI | Gibraltar | Territorio británico de ultramar |
+
+Las tres dependencias no forman parte del Reino Unido. Åland forma parte de Finlandia y tiene código separado para la cobertura. No se debe deducir cobertura territorial adicional por la relación constitucional: se conservan los códigos exactos del proveedor. El código EU-42 sigue siendo un identificador comercial, no evidencia de un destino adicional. Para el cliente: **«41 destinos de Europa: países y territorios incluidos»**. La lista ordenada, sin duplicados y con clasificación está en [CSV de cobertura](./2026-10-27-europa-cobertura.csv).
+
+Fuentes: [Ministerio de Justicia británico](https://www.gov.uk/government/publications/crown-dependencies-jersey-guernsey-and-the-isle-of-man), [Ministerio de Exteriores finlandés](https://um.fi/sr/the-special-status-of-the-aland-islands) y [Gibraltar en GOV.UK](https://www.gov.uk/foreign-travel-advice/gibraltar/warnings-and-insurance).
+
+### Tecnología y redes
+
+La API de Europa20 GB/90 días declara `speed=3G/4G/5G` y una `locationNetworkList` con 41 destinos y sus operadores. Es una declaración de tecnologías admitidas; no garantiza que cada operador, ubicación o equipo disponga de 5G. Redacción recomendada: **«Acceso a las redes disponibles del plan. 4G/5G donde haya cobertura y con un dispositivo compatible; la tecnología y velocidad pueden variar según ubicación, operador y condiciones del servicio.»** No utilizar «5G garantizado» ni atribuir 5G a todas las redes por igual.
+
+### `drei.at` es un APN, no la lista de operadores
+
+En nuestra ficha publicada aparece en `details.apn`, separado de `details.networks`. Drei publica oficialmente `drei.at` como nombre de punto de acceso. Eso confirma su función de APN, pero no demuestra por sí solo qué empresa es el operador de origen de esta eSIM o qué red utiliza en cada país.
+
+La consulta actual de paquetes de eSIM Access no suministra un campo APN para este plan; por tanto, no constituye una reconfirmación actual de la configuración almacenada. No se ha sustituido el APN ni se ha inferido el operador de origen. La lista de redes válida para esta consulta es `locationNetworkList`; el operador de origen y cualquier cambio de APN requieren confirmación específica del mayorista o de las instrucciones de instalación de la eSIM emitida. El campo `ipExport=UK/NO` describe salida de tráfico y tampoco es una lista de operadores ni cobertura.
+
+Fuente: [configuración oficial de Drei](https://www.drei.at/de/hilfe/technische-hilfe/handyeinstellungen.html).
+
+### Vigencia del plan europeo de 90 días
+
+La consulta exacta de `EU-42_20_90` devuelve `duration=90`, `durationUnit=DAY`, `activeType=2` y `unusedValidTime=180`. La documentación define `activeType=2` como primera conexión a red y `activeType=1` como primera instalación. Para este plan: **«90 días desde la primera conexión de la eSIM a una red admitida del destino»**. No empieza por abrir el carrito ni por pagar; la instalación no es el disparador declarado para este producto.
+
+`unusedValidTime=180` es un plazo independiente indicado por el proveedor para el paquete sin usar; no es una vigencia de datos de 180 días. Antes de comunicar una fecha límite concreta de instalación o activación, debe comprobarse el punto de partida contractual y la caducidad real devuelta para la eSIM emitida. No presentar estos dos plazos como intercambiables.
+
+Fuente: [contrato de campos y activación de la API](https://docs.esimaccess.com/).
+
+### Precio y jerarquía comercial recomendada
+
+El precio base publicado auditado sigue siendo USD43 por el paquete completo. USD2,15/GB resulta de 43÷20 y sirve como dato secundario de comparación; no es facturación por consumo ni el coste mayorista. La talla de 30 días también cuesta USD43, por lo que siempre debe indicarse la duración seleccionada.
+
+Propuesta de presentación, sin cambios aplicados a la web:
+
+> **Europa · 20 GB · 90 días**
+>
+> **USD 43 por el paquete completo**
+>
+> 41 destinos de Europa, incluidos países y territorios.
+>
+> La vigencia comienza con la primera conexión a una red admitida del destino.
+>
+> 4G/5G donde esté disponible y con equipo compatible. Consulta los operadores por destino.
+>
+> Como referencia: USD2,15 por GB del paquete.
+
+Pendientes concretos antes de cerrar la ficha: confirmar el operador de origen, reconfirmar APN con el mayorista y precisar desde qué evento se cuenta el plazo de paquete sin usar. Ninguna de estas incertidumbres se ha convertido en una promesa comercial.

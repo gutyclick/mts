@@ -77,7 +77,10 @@
     "analytics:setup": "node scripts/setup-analytics.mjs",
     "test:analytics:web": "node scripts/test-analytics-web.mjs",
     "test:currencies": "node --experimental-strip-types --test tests/currency*.test.mjs tests/regional-preferences.test.mjs",
-    "currencies:setup": "node --experimental-strip-types scripts/setup-currencies.mjs"
+    "currencies:setup": "node --experimental-strip-types scripts/setup-currencies.mjs",
+    "pricing:preview": "node --experimental-strip-types scripts/preview-demand-pricing.mjs",
+    "pricing:apply": "node --experimental-strip-types scripts/apply-demand-pricing.mjs --apply",
+    "test:pricing": "node --test tests/pricing-policy.test.mjs tests/pricing-campaign.test.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

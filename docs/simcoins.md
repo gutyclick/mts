@@ -4,7 +4,7 @@ Visual update: the calculator has been removed at the owner's request. The curre
 
 ## Status and boundaries
 
-Implemented in the existing Next.js application. Transactional operation defaults to **off**. The migrations are additive local files; applying them, deploying, scheduling workers or enabling production rewards requires the owner's approval. No historical orders are enrolled, repriced or modified. Existing catalogue prices and recorded wholesale prices are not changed.
+Implemented in the existing Next.js application. The owner authorized commercial publication and activation on 27 October 2026, including checkout, account balances and levels, administration and the worker. The three additive migrations have been applied after a rolled-back validation against the real schema. See [launch evidence](simcoins-launch.md) for activation and deployment status. Default environment templates remain off. No historical orders are enrolled, repriced or modified. Existing catalogue prices and recorded wholesale prices are not changed.
 
 The separate, private `simcoins_private_costs` cache holds authenticated, identity-checked current supplier quotations in 1/10,000 USD units. It does not overwrite the catalogue's wholesale records or expose costs to browsers. Missing, stale or ambiguous costs exclude rewards. Provider refresh is lease controlled.
 
@@ -32,7 +32,7 @@ Release initially requires paid status, valid provisioning, sent fulfillment, a 
 - `config.ts` / `model.ts`: centralized defaults, flags and contracts.
 - `server.ts`: validated settings and private owner wallet projection; no costs in customer DTOs.
 - `checkout-server.ts`: trusted catalogue/cost/FX quote, opaque quote ID and reservation adapter.
-- Additive migrations `20261027000300_simcoins.sql` and `20261027000400_simcoins_analytics.sql`: service-only RPCs, immutable snapshots, append-only ledger, row locks, compensation postings and audits.
+- Additive migrations `20261027000300_simcoins.sql`, `20261027000400_simcoins_analytics.sql` and `20261027000500_simcoins_worker.sql`: service-only RPCs, immutable snapshots, append-only ledger, row locks, compensation postings, audits and explicitly configured release scheduling.
 - Public `/{es,en}/simcoins`, authenticated `/{es,en}/account/simcoins`, MFA-protected `/{es,en}/admin/simcoins`.
 - Existing authoritative order/refund changes drive database triggers. The browser redirect never grants rewards. Existing provider provisioning and Stripe identity verification remain authoritative.
 
@@ -78,14 +78,16 @@ npx.cmd next build --webpack
 
 Tests use PGlite and mocked APIs; no automated test emits an eSIM or charges/refunds a live payment. The ledger tests exercise actual migration functions with isolated auth/order/provider/email fixtures. Focused engine tests cover all rates, first-purchase timing, thresholds, exact rounding, fees, tax/promotion exclusion, insufficient margin, unknown costs and cumulative refunds. Checkout/admin/privacy tests exercise intent-only payloads, FX allocation, MFA/ownership boundaries and disabled behavior.
 
-## Activation checklist — approval required
+## Activation runbook
+
+The owner authorized this launch on 27 October 2026. This checklist remains an operational reference; observed completion is recorded in [launch evidence](simcoins-launch.md).
 
 1. Review UI, the program conditions, seven-day delay, conservative affiliate reserve and opt-in product selection with the owner. Review financial liability and statutory consumer/privacy wording before commercial launch.
 2. Back up the database and validate both additive migrations against a staging copy of the real schema. Apply only after approval; do not backfill old orders.
 3. Verify permissions, settings, five tier rows, append-only triggers, RLS and enabled=false in the target environment. Compare existing checkout/refund tests against the deployed schema.
 4. Configure `SIMCOINS_PERSISTENCE_READY=true` only after migration verification. Keep master/earn/redeem false during inspection. Enable audited admin operations separately, through `SIMCOINS_ADMIN_ENABLED=true` and the database admin setting, with MFA already enforced.
 5. Opt in verified fixed plans deliberately. Refresh authenticated wholesale quotes; evaluate real contribution at all tiers, FX currencies and redemption limits. Do not enable unknown-cost plans.
-6. Configure a unique server-only `SIMCOINS_WORKER_SECRET` (at least 32 random characters) and an authenticated scheduler that POSTs `/api/internal/simcoins/run` periodically with its bearer secret. Never place it in a browser or Git. The worker is idempotent and accepts no customer financial payload.
+6. Call the service-only `configure_simcoins_worker()` after deployment and database activation. It schedules `simcoins_release_due(100)` every five minutes inside Supabase Cron, without transmitting a bearer credential. The protected HTTP endpoint `/api/internal/simcoins/run` remains available for operator checks using `SIMCOINS_WORKER_SECRET`, configured privately and never placed in a browser or Git. Both release paths are idempotent.
 7. Test staging payment → provisioning mock → signed delivered event → delayed release, failed/expired/ambiguous payment, two-tab reservation and cumulative refunds. Verify consent/withdrawal and both locales/mobile layouts.
 8. Obtain explicit production publication and activation approval. Enable both environment and database master/earning/redemption gates deliberately. Start with a small verified product set, observe pending liabilities, delivery evidence and margin exclusions.
 9. Rollback: disable new earning/redemption gates first; retain migration/schema/ledger, refund processing and operational reconciliation. Never drop ledger tables or delete postings to turn the feature off. Honor existing committed snapshots and retain the private audit trail.
@@ -98,4 +100,4 @@ Until those steps are approved and verified, local implementation does **not** m
 
 Security review corrected test-payment eligibility, graceful exclusion on unknown costs, the configured public-visibility failure mode and private exclusion auditing. The audit includes the financial exclusion reason and policy/line snapshot, deduplicated and ratebounded; failed optional audit transport never blocks an ordinary payment. No live credentials were printed, no remote migration/deployment ran, and no live eSIM/payment/refund was used.
 
-The commercial launch remains dependent on approval, staging schema verification, current live provider-response verification, selected product opt-ins, signed delivery evidence, scheduler configuration and review of the program conditions. Unbound/ambiguous checkout reservations require authoritative operational reconciliation as described above.
+This verification report records the original local implementation. The subsequent authorized commercial launch and its production checks are recorded in [launch evidence](simcoins-launch.md). Unbound/ambiguous checkout reservations require authoritative operational reconciliation as described above.

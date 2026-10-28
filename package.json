@@ -81,7 +81,8 @@
     "pricing:preview": "node --experimental-strip-types scripts/preview-demand-pricing.mjs",
     "pricing:apply": "node --experimental-strip-types scripts/apply-demand-pricing.mjs --apply",
     "test:pricing": "node --test tests/pricing-policy.test.mjs tests/pricing-campaign.test.mjs",
-    "test:simcoins": "node --experimental-strip-types --test tests/simcoins-*.test.mjs"
+    "test:simcoins": "node --experimental-strip-types --test tests/simcoins-*.test.mjs",
+    "simcoins:setup": "node --experimental-strip-types scripts/setup-simcoins.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

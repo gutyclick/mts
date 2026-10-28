@@ -17,9 +17,9 @@ Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento en V
 
 Seguir la [guía de conexión](supabase-setup.md): identificar el proyecto, revisar/aplicar la migración y el seed sin precios, configurar la clave publicable y ejecutar `npm run supabase:check`. No conectar automáticamente proyectos de otras aplicaciones ni restablecer bases remotas.
 
-RLS limita las consultas a registros publicados. Ni visitantes ni cuentas normales tienen permisos de escritura. El panel dentro de la web sigue siendo una muestra; la edición inicial se realiza desde el Dashboard autenticado de Supabase.
+RLS limita las consultas públicas a registros publicados. Las operaciones de administración utilizan membresía privada, MFA y auditoría desde el panel autenticado.
 
-Las cuentas utilizan Supabase Auth y las tablas privadas `customer_orders` y `customer_esims`. La migración y la configuración de correo están en [cuentas y Mis eSIM](accounts.md). `AUTH_SITE_URL` permite fijar el origen de autenticación; el predeterminado es `https://www.mytripsim.com`. El SMTP de Resend se configura exclusivamente en Supabase Auth, nunca como clave pública ni en Vercel. Los pagos y el aprovisionamiento siguen pendientes.
+Las cuentas utilizan Supabase Auth y las tablas privadas `customer_orders` y `customer_esims`. La migración y la configuración de correo están en [cuentas y Mis eSIM](accounts.md). `AUTH_SITE_URL` permite fijar el origen de autenticación; el predeterminado es `https://www.mytripsim.com`. El SMTP de Resend se configura exclusivamente en Supabase Auth, nunca como clave pública ni en Vercel. Stripe live y el aprovisionamiento están operativos; el propietario confirmó compras reales satisfactorias el 27 de octubre de 2026. Consulta [pagos de producción](production-payments.md).
 
 ## Credenciales y archivos locales
 

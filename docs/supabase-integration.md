@@ -42,4 +42,4 @@ Vercel `mts` tiene las dos variables en Production, Preview y Development. La cl
 - Un marcador temporal en el nombre de `AF_1_7` apareció en producción sin desplegar de nuevo. El nombre original se restauró en `finally`; una comprobación posterior confirmó que el marcador ya no aparece. No se cambiaron datos, duración, redes ni disponibilidad.
 - En producción móvil (390 px), Japón mostró 23 planes y Afganistán 6, con selección visible y sin desbordamiento horizontal.
 
-La administración dentro de la web, cuentas de clientes, pagos y emisión de eSIM continúan pendientes de sus etapas funcionales. El catálogo ya se administra desde el Dashboard de Supabase.
+La administración web privada, cuentas de clientes, Stripe live y entrega de eSIM están conectados. El propietario confirmó compras reales satisfactorias el 27 de octubre de 2026. Las secciones anteriores describen la integración inicial; el estado operativo está en [pagos de producción](production-payments.md) y [SimCoins](simcoins.md).

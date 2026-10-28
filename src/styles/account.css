@@ -1050,3 +1050,35 @@
     max-width: 100%;
   }
 }
+.trip-rewards-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface, #fff);
+  color: var(--ink);
+  text-decoration: none;
+}
+.trip-rewards-summary > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+.trip-rewards-summary span,
+.trip-rewards-summary small {
+  font-size: 12px;
+}
+.trip-rewards-summary strong {
+  font-size: 20px;
+}
+.trip-rewards-summary > svg {
+  flex-shrink: 0;
+}
+.trip-rewards-summary:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}

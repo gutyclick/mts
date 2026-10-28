@@ -2,7 +2,7 @@
 
 Repositorio: [gutyclick/mts](https://github.com/gutyclick/mts). Alojamiento: **Vercel**. Catálogo conectado a **Supabase/PostgreSQL**. Producción: [www.mytripsim.com](https://www.mytripsim.com/es). Consulta la [guía de despliegue y credenciales](docs/deployment.md).
 
-Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de 1.730 planes de datos fijos en inglés y español, con precios finales en USD. Pagos y aprovisionamiento de eSIM siguen pendientes.
+Sitio público de **MyTripSim**, marca de **YellowCat Enterprises LLC**. Catálogo de planes de datos fijos en inglés y español, con precios y cobros en 18 monedas. Stripe live y el aprovisionamiento están operativos; el propietario confirmó compras reales satisfactorias el 27 de octubre de 2026.
 
 ## Ejecutar
 
@@ -48,7 +48,7 @@ La FAQ principal es un índice de seis temas, cada uno con página propia y ruta
 
 La ficha del plan muestra detalles, cobertura y condiciones juntos e incluye un verificador de compatibilidad por marca, modelo y región de compra. Los modelos con documentación oficial se distinguen de los pendientes de confirmar. Consulta [fuentes y criterios del verificador](docs/device-compatibility.md).
 
-Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). El [carrito y checkout](docs/checkout.md) conservan planes entre visitas, permiten cambiar cantidades y ofrecen correo de invitado o acceso a una cuenta. Los precios finales ya se muestran; los cobros y el aprovisionamiento siguen pendientes; la administración sigue siendo de muestra.
+Registro, confirmación, acceso, recuperación y Mis eSIM usan Supabase Auth y datos privados protegidos por RLS. Las cuentas nuevas empiezan vacías; cada cliente ve únicamente sus pedidos e instrucciones. Consulta [cuentas y correo](docs/accounts.md). El [carrito y checkout](docs/checkout.md) conservan planes entre visitas, permiten cambiar cantidades y ofrecen correo de invitado o acceso a una cuenta. Stripe live, entrega de eSIM, reembolsos y administración privada con MFA están conectados. SimCoins incorpora saldo, niveles y recompensas para nuevas compras elegibles; consulta [operación y condiciones](docs/simcoins.md).
 
 | Página           | Inglés              | Español                    |
 | ---------------- | ------------------- | -------------------------- |
@@ -67,7 +67,7 @@ Los 241 slugs se encuentran en `src/data/destinations.json` y se comparten entre
 
 ## Arquitectura
 
-La primera integración de Supabase incluye migración, catálogo inicial sin precios, permisos RLS y lectura desde el servidor. La conexión remota requiere configurar el proyecto y las variables de entorno: [instrucciones y verificación](docs/supabase-setup.md). Sin configuración se mantiene el catálogo local. La administración dentro de la web sigue siendo de muestra; la edición inicial se realiza desde el Dashboard de Supabase.
+Supabase mantiene catálogo, precios y datos privados con RLS y lectura desde el servidor. La conexión requiere configurar el proyecto y las variables de entorno: [instrucciones y verificación](docs/supabase-setup.md). La administración web utiliza membresía privada y MFA; las operaciones sensibles dejan auditoría.
 
 La [integración de eSIM Access](docs/esimaccess.md) consulta el catálogo firmado desde el servidor y mantiene el enlace privado de los planes publicados con los códigos del proveedor. No importa precios ni emite eSIM. Incluye herramientas de configuración segura, comprobación y sincronización, más adaptadores privados de consulta de perfiles y consumo.
 

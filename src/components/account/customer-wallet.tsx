@@ -38,6 +38,8 @@ import {
   isDashboardPreparing,
 } from "@/lib/customer-dashboard";
 import { CustomerSupportSummary } from "./support-summary";
+import { getCustomerSimcoins } from "@/lib/simcoins/server";
+import { SimcoinsDashboardSummary } from "../simcoins/dashboard-summary";
 const dataLabel = (gb: number) =>
   gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`;
 function fulfillmentLabel(states: string[], live: boolean, es: boolean) {
@@ -88,9 +90,10 @@ export async function CustomerWallet({
             : undefined,
     ),
   );
-  const [{ orders, esims }, checkouts] = await Promise.all([
+  const [{ orders, esims }, checkouts, rewards] = await Promise.all([
     customerRecords(client, user.id),
     customerCheckoutOrders(client, user.id),
+    getCustomerSimcoins(user.id),
   ]);
   const { data: adminMembership } =
     section === "account"
@@ -178,6 +181,9 @@ export async function CustomerWallet({
       esimCount={esims.length}
       orderCount={orderCount}
     >
+      {!selected && rewards.configured && rewards.program.enabled && (
+        <SimcoinsDashboardSummary locale={locale} wallet={rewards.wallet} />
+      )}
       {!selected &&
         (section === "esims" || section === "orders") &&
         refreshing && <DeliveryRefresh locale={locale} />}

@@ -209,7 +209,6 @@ export const dictionaries = {
       "Explore our country and regional travel eSIM plans.",
     plans: "Find your travel plan",
     plansDescription: "Choose the data and duration that fit your adventure.",
-    demo: "eSIM catalog",
     demoDetails:
       "Prices are shown in USD. Review the coverage, activation and conditions for your selected plan.",
     data: "Data allowance",
@@ -442,7 +441,6 @@ export const dictionaries = {
       "Explora nuestros planes eSIM de viaje por país y región.",
     plans: "Encuentra tu plan de viaje",
     plansDescription: "Elige los datos y la duración para tu próxima aventura.",
-    demo: "Catálogo eSIM",
     demoDetails:
       "Los precios se muestran en USD. Revisa la cobertura, la activación y las condiciones del plan seleccionado.",
     data: "Cantidad de datos",

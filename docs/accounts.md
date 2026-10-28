@@ -4,7 +4,7 @@
 
 Registro con correo y contraseña, confirmación de correo, acceso, cierre de sesión y recuperación. Supabase Auth mantiene las credenciales; Next.js utiliza sesiones SSR con cookies HttpOnly y verifica al usuario en el servidor. Se conserva ES/EN y la interfaz actual: tarjeta de acceso clara, SIM como acompañante y controles cómodos en móvil.
 
-Mis eSIM pasa a ser un área privada con pedidos, eSIM e instrucciones reales. Una cuenta nueva empieza vacía. El catálogo, la guía general y el checkout de muestra siguen siendo públicos. No se generan compras, consumos ni códigos ficticios en cuentas reales. Pagos y emisión automática del proveedor quedan fuera de esta etapa.
+Mis eSIM es un área privada con pedidos, eSIM e instrucciones reales. Una cuenta nueva empieza vacía. El catálogo, la guía general y el checkout siguen siendo públicos. Stripe live y la emisión automática están conectados; el propietario confirmó compras reales satisfactorias el 27 de octubre de 2026. El panel también enlaza el saldo y los niveles de SimCoins. No se generan compras, consumos ni códigos ficticios en cuentas reales.
 
 ## Implementación
 

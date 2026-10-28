@@ -652,3 +652,18 @@
     max-height: 94dvh;
   }
 }
+
+/* Let the logo yield space to the touch controls on narrow phones. */
+@media (max-width: 380px) {
+  .site-header .brand {
+    flex: 0 1 128px;
+    min-width: 0;
+  }
+  .site-header .brand-logo {
+    width: 100%;
+    max-width: 128px;
+  }
+  .site-header .header-actions {
+    flex-shrink: 0;
+  }
+}

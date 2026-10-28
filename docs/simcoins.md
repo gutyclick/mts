@@ -4,7 +4,7 @@ Visual update: the calculator has been removed at the owner's request. The curre
 
 ## Status and boundaries
 
-Implemented in the existing Next.js application. The owner authorized commercial publication and activation on 27 October 2026, including checkout, account balances and levels, administration and the worker. The three additive migrations have been applied after a rolled-back validation against the real schema. See [launch evidence](simcoins-launch.md) for activation and deployment status. Default environment templates remain off. No historical orders are enrolled, repriced or modified. Existing catalogue prices and recorded wholesale prices are not changed.
+Active in production following the owner's authorization on 27 October 2026, including checkout, account balances and levels, administration and the worker. The three additive migrations were applied after a rolled-back validation against the real schema. 880 identity- and margin-verified plans participate; runtime cost/FX/contribution checks remain authoritative. See [launch evidence](simcoins-launch.md). Default environment templates remain off for new installations. No historical orders are enrolled, repriced or modified. Existing catalogue prices and recorded wholesale prices are not changed.
 
 The separate, private `simcoins_private_costs` cache holds authenticated, identity-checked current supplier quotations in 1/10,000 USD units. It does not overwrite the catalogue's wholesale records or expose costs to browsers. Missing, stale or ambiguous costs exclude rewards. Provider refresh is lease controlled.
 

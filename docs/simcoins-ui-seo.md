@@ -31,7 +31,7 @@ Referencias: [títulos descriptivos de Google Search Central](https://developers
 - Navegador local: ES/EN, 1440 px y 390 px, sin calculadora ni desbordamiento horizontal; insignias e ilustración de monedas cargadas; condiciones abiertas desde su enlace.
 - Billetera y checkout revisados con datos ficticios en un servidor local independiente. No se consultaron ni modificaron saldos reales.
 
-Los cambios se mantienen en la rama local de SimCoins. Esta revisión no aplica migraciones, publica producción ni activa acumulación o canje.
+Esta revisión visual inicial no aplicó migraciones ni activó acumulación o canje. El lanzamiento posterior autorizado está activo en producción; consulta [evidencia de lanzamiento](simcoins-launch.md).
 
 ## FAQ de SimCoins
 

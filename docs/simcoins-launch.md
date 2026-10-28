@@ -22,4 +22,14 @@ Unused demonstration components and their stale labels were removed. README and 
 
 37 existing SimCoins tests and the new scheduler test passed. The combined financial/payment/currency/refund/fulfillment/dashboard run passed 64 tests before the scheduler test was added; the default 18-test suite also passed. TypeScript, ESLint and the production webpack build passed (599 generated pages).
 
-Production publication, activation and live smoke-check results will be appended after deployment.
+## Production result
+
+Runtime commit `7a99be9` deployed READY as `dpl_61FWPL9P1oUe2DSyMMv64LZNuNCc`, aliased to `https://www.mytripsim.com`. A clean Git archive excluded local environment files, private evidence, generated graph caches and unrelated user image changes. The branch is `codex/simcoins-rewards`.
+
+Environment and database master/earning/redemption/admin flags are enabled. Activation and product selection have private audit records. Production checkout configuration returns live/enabled with SimCoins enabled. The release job `mts-simcoins-release` is active on `*/5 * * * *`; its first observed scheduled run succeeded. An authenticated HTTP worker check also returned 200, while unauthenticated worker/admin requests returned 401.
+
+Public ES/EN program pages returned 200, displayed all levels and no inactive launch notice. An actual disposable confirmed customer authenticated through Supabase SSR: both dashboard summaries and private wallets returned 200 with Traveler/Viajero, available balance and next-level progress. Normal customers were denied administration. The operator-only admin snapshot returned enabled settings and five tiers. The empty QA wallets and users were removed; no financial history was created.
+
+A quote built from actual verified provider costs was accepted by production SQL inside a rolled-back transaction, verifying first-purchase progress at 0% without retaining a quote, account, order or posting. Anonymous quote requests cannot earn/redeem. No charge, eSIM issuance, refund or email was generated during launch verification. The two existing paid live orders remain unchanged, with zero retroactively participating orders at launch.
+
+The final source scan found no `demo`, `demostración` or old public-preview text in application code. Checks and private evidence are stored under `private-data/simcoins-launch/`. Fresh mobile visual inspection of the new dashboard summary was not performed in this release; the existing full wallet/landing mobile checks remain documented separately.

@@ -15,10 +15,11 @@ type TagWindow = Window & {
 };
 export function GoogleAdsTag({ consent }: { consent: boolean }) {
   const path = usePathname();
-  const allowed = consent && googleAdsPage(path) && !browserStatsBlocked();
+  const publicPage = googleAdsPage(path);
+  const allowed = consent && publicPage && !browserStatsBlocked();
   useEffect(() => {
     const w = window as TagWindow;
-    if (!allowed) {
+    if (!publicPage) {
       w.gtag?.("consent", "update", adsConsent(false));
       return;
     }
@@ -34,7 +35,7 @@ export function GoogleAdsTag({ consent }: { consent: boolean }) {
       w.gtag("js", new Date());
       w.mtsAdsInitialized = true;
     }
-    w.gtag("consent", "update", adsConsent(true));
+    w.gtag("consent", "update", adsConsent(allowed));
     w.gtag("config", googleAdsId, {
       send_page_view: false,
       allow_ad_personalization_signals: false,
@@ -46,8 +47,8 @@ export function GoogleAdsTag({ consent }: { consent: boolean }) {
     return () => {
       w.gtag?.("consent", "update", adsConsent(false));
     };
-  }, [allowed, path]);
-  return allowed ? (
+  }, [allowed, path, publicPage]);
+  return publicPage ? (
     <Script
       id="mts-google-ads"
       src={`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`}

@@ -243,8 +243,8 @@ export function StatsProvider({
       </div>
       <p>
         {es
-          ? "Las funciones necesarias permiten comprar y usar tu eSIM. Si aceptas estadísticas opcionales, medimos qué destinos se consultan y cómo se completa la compra para mejorar la web. Google Ads solo se carga si marcas la opción de medición publicitaria."
-          : "Necessary features let you buy and use your eSIM. If you accept optional statistics, we measure destination views and the purchase journey to improve our website. Google Ads only loads if you select advertising measurement."}
+          ? "Las funciones necesarias permiten comprar y usar tu eSIM. Si aceptas estadísticas opcionales, medimos qué destinos se consultan y cómo se completa la compra para mejorar la web. Google Ads carga con permisos denegados y puede enviar señales sin cookies. Solo habilitamos cookies publicitarias si marcas la opción correspondiente."
+          : "Necessary features let you buy and use your eSIM. If you accept optional statistics, we measure destination views and the purchase journey to improve our website. Google Ads loads with consent denied and may send cookieless signals. Advertising cookies are enabled only if you select the option below."}
       </p>
       <Link href={pathFor(locale, "cookies")} onClick={() => setManual(false)}>
         {es
@@ -289,8 +289,8 @@ export function StatsProvider({
         />
         <span>
           {es
-            ? "Permitir también medición publicitaria con Google Ads (opcional). Sin anuncios personalizados."
-            : "Also allow advertising measurement with Google Ads (optional). No personalized ads."}
+            ? "Permitir cookies de medición publicitaria con Google Ads (opcional). Sin anuncios personalizados."
+            : "Allow advertising measurement cookies with Google Ads (optional). No personalized ads."}
         </span>
       </label>
       <div className="stats-actions">

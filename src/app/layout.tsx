@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
+import { googleAdsBootstrap } from "@/lib/analytics/google-ads";
 import { headers } from "next/headers";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -56,7 +58,12 @@ export default async function RootLayout({
     (await headers()).get("x-mytripsim-locale") === "es" ? "es" : "en";
   return (
     <html lang={locale} className={`${inter.variable} ${jakarta.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Script id="mts-google-consent-default" strategy="beforeInteractive">
+          {googleAdsBootstrap}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }

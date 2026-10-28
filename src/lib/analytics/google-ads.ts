@@ -32,3 +32,6 @@ export function adsConsent(granted: boolean) {
     analytics_storage: "denied",
   } as const;
 }
+
+// Runs before external tags, including when there is no saved consent choice.
+export const googleAdsBootstrap = `window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});window.gtag('set','ads_data_redaction',true);window.gtag('js',new Date());window.mtsAdsInitialized=true;`;

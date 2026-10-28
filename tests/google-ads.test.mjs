@@ -61,3 +61,25 @@ test("advertising consent never enables personalization or analytics storage", (
   assert.equal(adsConsent(true).analytics_storage, "denied");
   assert.ok(Object.values(adsConsent(false)).every((x) => x === "denied"));
 });
+import vm from "node:vm";
+import { googleAdsBootstrap } from "../src/lib/analytics/google-ads.ts";
+test("advanced bootstrap denies every consent before initialization and never grants permissions or configures a destination", () => {
+  const context = { window: {}, Date };
+  vm.runInNewContext(googleAdsBootstrap, context);
+  const commands = context.window.dataLayer.map((x) => Array.from(x));
+  assert.equal(commands[0][0], "consent");
+  assert.equal(commands[0][1], "default");
+  assert.ok(Object.values(commands[0][2]).every((x) => x === "denied"));
+  assert.equal(
+    commands.findIndex((x) => x[0] === "js"),
+    2,
+  );
+  assert.equal(
+    commands.some(
+      (x) => x[0] === "config" || Object.values(x[2] ?? {}).includes("granted"),
+    ),
+    false,
+  );
+  assert.equal(commands[1][1], "ads_data_redaction");
+  assert.equal(commands[1][2], true);
+});

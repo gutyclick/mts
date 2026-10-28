@@ -85,7 +85,16 @@ export function DashboardShell({
                 aria-current={section === item.id ? "page" : undefined}
               >
                 <item.icon size={20} />
-                <span>{item.label}</span>
+                <span
+                  className={
+                    item.id === "esims" ? "trip-nav-label-full" : undefined
+                  }
+                >
+                  {item.label}
+                </span>
+                {item.id === "esims" && (
+                  <span className="trip-nav-label-short">TripSim</span>
+                )}
                 {"count" in item && <small>{item.count}</small>}
               </Link>
             ))}

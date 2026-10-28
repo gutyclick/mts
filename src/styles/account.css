@@ -582,7 +582,10 @@
   font-size: 13px;
   font-weight: 650;
 }
-.trip-dashboard-heading > .button {
+.trip-dashboard-mascot {
+  width: 168px;
+  height: 168px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 .trip-dashboard-layout {
@@ -944,13 +947,10 @@
     font-size: 12px;
     max-width: 250px;
   }
-  .trip-dashboard-heading > .button {
-    min-height: 42px;
-    padding: 10px 12px;
-    font-size: 11px;
-  }
-  .trip-dashboard-heading > .button svg {
-    display: none;
+  .trip-dashboard-mascot {
+    width: 88px;
+    height: 88px;
+    align-self: center;
   }
   .trip-dashboard-layout {
     display: block;

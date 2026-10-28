@@ -1,7 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import {
-  ArrowRight,
   Headphones,
   Package,
   UserRound,
@@ -9,7 +9,7 @@ import {
   Coins,
 } from "lucide-react";
 import { experiencePath } from "@/lib/experience-routes";
-import { pathFor, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 import type { DashboardSection } from "@/lib/customer-dashboard";
 export function DashboardShell({
   locale,
@@ -58,13 +58,14 @@ export function DashboardShell({
               : "Install your eSIMs and manage your orders."}
           </p>
         </div>
-        <Link
-          className="button button-primary"
-          href={pathFor(locale, "destinations")}
-        >
-          {es ? "Nueva TripSim" : "New TripSim"}
-          <ArrowRight size={17} />
-        </Link>
+        <Image
+          className="trip-dashboard-mascot"
+          src="/images/sim/sim_welcome_dashboard_user.webp"
+          alt=""
+          width={168}
+          height={168}
+          sizes="(max-width: 650px) 88px, 168px"
+        />
       </header>
       <div className="trip-dashboard-layout">
         <aside className="trip-dashboard-sidebar">

@@ -16,6 +16,8 @@ import {
   recordStats,
   setStatsPermission,
 } from "@/lib/analytics/client";
+import { GoogleAdsTag } from "./google-ads";
+import { adsPreference, adsPreferenceKey } from "@/lib/analytics/google-ads";
 import { destinationFromPath, publicStatsPath } from "@/lib/analytics/model";
 async function readPreference(signal?: AbortSignal) {
   let r = await fetch("/api/analytics/consent", { cache: "no-store", signal });
@@ -72,6 +74,22 @@ export function StatsProvider({
     [manual, setManual] = useState(false),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(false);
+  const [adsChoice, setAdsChoice] = useState<"yes" | "no" | null>(null);
+  const [adsDraft, setAdsDraft] = useState(false);
+  useEffect(() => {
+    const refresh = () => {
+      try {
+        const choice = adsPreference(localStorage.getItem(adsPreferenceKey));
+        setAdsChoice(choice);
+        setAdsDraft(choice === "yes" && !browserStatsBlocked());
+      } catch {
+        setAdsChoice("no");
+      }
+    };
+    refresh();
+    window.addEventListener("storage", refresh);
+    return () => window.removeEventListener("storage", refresh);
+  }, []);
   useEffect(() => {
     const abort = new AbortController();
     readPreference(abort.signal)
@@ -104,7 +122,22 @@ export function StatsProvider({
   const publicPage = publicStatsPath(path);
   async function choose(choice: "yes" | "no") {
     if (busy) return;
-    if (choice === "no") setStatsPermission(false);
+    if (choice === "no") {
+      setStatsPermission(false);
+      setAdsChoice("no");
+      setAdsDraft(false);
+      try {
+        localStorage.setItem(
+          adsPreferenceKey,
+          JSON.stringify({
+            choice: "no",
+            expires: Date.now() + 180 * 86400000,
+          }),
+        );
+      } catch {
+        /* No storage means no advertising permission. */
+      }
+    }
     setBusy(true);
     setError(false);
     try {
@@ -117,6 +150,19 @@ export function StatsProvider({
       const data = await r.json(),
         accepted =
           data.choice === "yes" && !data.blocked && !browserStatsBlocked();
+      const ads =
+        choice === "yes" && adsDraft && !data.blocked && !browserStatsBlocked()
+          ? "yes"
+          : "no";
+      try {
+        localStorage.setItem(
+          adsPreferenceKey,
+          JSON.stringify({ choice: ads, expires: Date.now() + 180 * 86400000 }),
+        );
+        setAdsChoice(ads);
+      } catch {
+        setAdsChoice("no");
+      }
       setStatsPermission(accepted);
       setState((old) => ({
         enabled: old?.enabled ?? false,
@@ -197,8 +243,8 @@ export function StatsProvider({
       </div>
       <p>
         {es
-          ? "Las funciones necesarias permiten comprar y usar tu eSIM. Si aceptas estadísticas opcionales, medimos qué destinos se consultan y cómo se completa la compra para mejorar la web. Sin publicidad de terceros."
-          : "Necessary features let you buy and use your eSIM. If you accept optional statistics, we measure destination views and the purchase journey to improve our website. No third-party advertising."}
+          ? "Las funciones necesarias permiten comprar y usar tu eSIM. Si aceptas estadísticas opcionales, medimos qué destinos se consultan y cómo se completa la compra para mejorar la web. Google Ads solo se carga si marcas la opción de medición publicitaria."
+          : "Necessary features let you buy and use your eSIM. If you accept optional statistics, we measure destination views and the purchase journey to improve our website. Google Ads only loads if you select advertising measurement."}
       </p>
       <Link href={pathFor(locale, "cookies")} onClick={() => setManual(false)}>
         {es
@@ -234,6 +280,19 @@ export function StatsProvider({
             : "We could not save your choice. Please try again."}
         </p>
       )}
+      <label className="stats-ads-choice">
+        <input
+          type="checkbox"
+          checked={adsDraft}
+          disabled={busy || state?.blocked}
+          onChange={(event) => setAdsDraft(event.target.checked)}
+        />
+        <span>
+          {es
+            ? "Permitir también medición publicitaria con Google Ads (opcional). Sin anuncios personalizados."
+            : "Also allow advertising measurement with Google Ads (optional). No personalized ads."}
+        </span>
+      </label>
       <div className="stats-actions">
         <button type="button" disabled={busy} onClick={() => void choose("no")}>
           {es ? "Solo necesarias" : "Necessary only"}
@@ -243,7 +302,13 @@ export function StatsProvider({
           disabled={busy || state?.blocked || !state?.enabled}
           onClick={() => void choose("yes")}
         >
-          {es ? "Aceptar estadísticas" : "Accept statistics"}
+          {adsDraft
+            ? es
+              ? "Aceptar selección"
+              : "Accept selection"
+            : es
+              ? "Aceptar estadísticas"
+              : "Accept statistics"}
         </button>
       </div>
     </>
@@ -251,8 +316,9 @@ export function StatsProvider({
   return (
     <Context.Provider value={{ open: () => setManual(true) }}>
       {children}
+      <GoogleAdsTag consent={adsChoice === "yes" && !state?.blocked} />
       {state?.enabled &&
-        !state.choice &&
+        (!state.choice || adsChoice === null) &&
         !state.blocked &&
         publicPage &&
         !manual && (

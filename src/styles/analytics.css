@@ -137,8 +137,15 @@
   gap: 18px;
   align-items: center;
 }
-.analytics-funnel li > strong {font-size:16px;margin:0;text-align:right;white-space:nowrap;}
-.analytics-funnel li > strong small {font-size:12px;}
+.analytics-funnel li > strong {
+  font-size: 16px;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+.analytics-funnel li > strong small {
+  font-size: 12px;
+}
 .analytics-bar {
   height: 14px;
   background: #eef4fd;
@@ -208,17 +215,32 @@
   }
   .analytics-funnel li {
     grid-template-columns: 1fr 110px;
-    grid-template-areas:"label count" "bar bar";
+    grid-template-areas: "label count" "bar bar";
     gap: 8px;
   }
   .analytics-bar {
-    grid-area:bar;
+    grid-area: bar;
   }
   .analytics-funnel li > strong {
-    grid-area:count;
+    grid-area: count;
   }
   .analytics-funnel li > span:first-child {
-    grid-area:label;
+    grid-area: label;
     font-size: 14px;
   }
+}
+.stats-ads-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.stats-ads-choice input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--blue);
 }

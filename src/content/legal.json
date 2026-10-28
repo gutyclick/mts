@@ -408,6 +408,24 @@
               "text": "Los cambios relevantes se reflejarán con fecha y versión nuevas y con los avisos o permisos adicionales que correspondan. Las políticas de los proveedores enlazadas explican sus propios tratamientos; no sustituyen las obligaciones de MyTripSim."
             }
           ]
+        },
+        {
+          "id": "google-ads",
+          "title": "Medición publicitaria opcional con Google Ads",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Solo cargamos la etiqueta Google Ads AW-653792266 si seleccionas expresamente la medición publicitaria en Preferencias de privacidad. El permiso para estadísticas internas o para recibir correos comerciales no activa esta opción. Respetamos Do Not Track y Global Privacy Control. Puedes rechazarla sin afectar tu compra o retirar el permiso desde el pie de página. No usamos anuncios personalizados ni conversiones mejoradas."
+            },
+            {
+              "type": "paragraph",
+              "text": "Al autorizarla, Google recibe información técnica como la dirección IP, datos del navegador y la página pública visitada, y puede utilizar cookies e identificadores publicitarios sujetos a su configuración y políticas. La etiqueta no se configura en cuentas, administración, soporte privado, checkout ni páginas de instalación. No le enviamos correos, QR, códigos de instalación, datos de tarjeta ni saldos. La medición publicitaria es independiente del embudo interno de ventas. Consulta cómo utiliza Google los datos en https://policies.google.com/technologies/partner-sites."
+            },
+            {
+              "type": "paragraph",
+              "text": "Guardamos únicamente tu elección publicitaria, sin identificador de persona, en el almacenamiento local mts_google_ads_consent_v1 durante un máximo de 180 días. Al retirar el permiso detenemos la configuración de la etiqueta y comunicamos el rechazo a Google si ya estaba cargada. El permiso de estadísticas internas se gestiona por separado."
+            }
+          ]
         }
       ]
     },
@@ -565,11 +583,7 @@
           "blocks": [
             {
               "type": "table",
-              "headers": [
-                "Elemento",
-                "Finalidad",
-                "Duración identificada"
-              ],
+              "headers": ["Elemento", "Finalidad", "Duración identificada"],
               "rows": [
                 [
                   "Cookies de autenticación Supabase sb-*",
@@ -671,6 +685,24 @@
             {
               "type": "paragraph",
               "text": "La versión definitiva mostrará fecha de actualización. Cuando se introduzca una finalidad opcional nueva, se facilitará la información y la elección que correspondan antes de activarla."
+            }
+          ]
+        },
+        {
+          "id": "google-ads",
+          "title": "Medición publicitaria opcional con Google Ads",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Solo cargamos la etiqueta Google Ads AW-653792266 si seleccionas expresamente la medición publicitaria en Preferencias de privacidad. El permiso para estadísticas internas o para recibir correos comerciales no activa esta opción. Respetamos Do Not Track y Global Privacy Control. Puedes rechazarla sin afectar tu compra o retirar el permiso desde el pie de página. No usamos anuncios personalizados ni conversiones mejoradas."
+            },
+            {
+              "type": "paragraph",
+              "text": "Al autorizarla, Google recibe información técnica como la dirección IP, datos del navegador y la página pública visitada, y puede utilizar cookies e identificadores publicitarios sujetos a su configuración y políticas. La etiqueta no se configura en cuentas, administración, soporte privado, checkout ni páginas de instalación. No le enviamos correos, QR, códigos de instalación, datos de tarjeta ni saldos. La medición publicitaria es independiente del embudo interno de ventas. Consulta cómo utiliza Google los datos en https://policies.google.com/technologies/partner-sites."
+            },
+            {
+              "type": "paragraph",
+              "text": "Guardamos únicamente tu elección publicitaria, sin identificador de persona, en el almacenamiento local mts_google_ads_consent_v1 durante un máximo de 180 días. Al retirar el permiso detenemos la configuración de la etiqueta y comunicamos el rechazo a Google si ya estaba cargada. El permiso de estadísticas internas se gestiona por separado."
             }
           ]
         }
@@ -1078,6 +1110,24 @@
               "text": "Material changes will carry a new date and version, with any additional notices or permissions required. Provider policies describe their own processing and do not replace MyTripSim's obligations."
             }
           ]
+        },
+        {
+          "id": "google-ads",
+          "title": "Optional advertising measurement with Google Ads",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "We load Google Ads tag AW-653792266 only when you explicitly select advertising measurement in Privacy preferences. Internal statistics consent or email marketing permission does not enable this option. We respect Do Not Track and Global Privacy Control. You can refuse without affecting your purchase or withdraw permission through the footer. We do not enable personalized ads or enhanced conversions."
+            },
+            {
+              "type": "paragraph",
+              "text": "When you allow it, Google receives technical information such as your IP address, browser information and the public page visited, and may use advertising cookies and identifiers subject to its settings and policies. The tag is not configured on account, administration, private support, checkout or installation pages. We do not send it emails, QR codes, installation codes, card details or balances. Advertising measurement is separate from the internal sales funnel. Learn how Google uses data at https://policies.google.com/technologies/partner-sites."
+            },
+            {
+              "type": "paragraph",
+              "text": "We store only your advertising choice, with no personal identifier, in mts_google_ads_consent_v1 local storage for up to 180 days. Withdrawal stops tag configuration and signals denied consent to Google if it was already loaded. Internal statistics permission is managed separately."
+            }
+          ]
         }
       ]
     },
@@ -1235,11 +1285,7 @@
           "blocks": [
             {
               "type": "table",
-              "headers": [
-                "Item",
-                "Purpose",
-                "Duration"
-              ],
+              "headers": ["Item", "Purpose", "Duration"],
               "rows": [
                 [
                   "Supabase authentication cookies sb-*",
@@ -1341,6 +1387,24 @@
             {
               "type": "paragraph",
               "text": "The policy carries an update date. A new optional purpose will be accompanied by the appropriate information and choice before activation."
+            }
+          ]
+        },
+        {
+          "id": "google-ads",
+          "title": "Optional advertising measurement with Google Ads",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "We load Google Ads tag AW-653792266 only when you explicitly select advertising measurement in Privacy preferences. Internal statistics consent or email marketing permission does not enable this option. We respect Do Not Track and Global Privacy Control. You can refuse without affecting your purchase or withdraw permission through the footer. We do not enable personalized ads or enhanced conversions."
+            },
+            {
+              "type": "paragraph",
+              "text": "When you allow it, Google receives technical information such as your IP address, browser information and the public page visited, and may use advertising cookies and identifiers subject to its settings and policies. The tag is not configured on account, administration, private support, checkout or installation pages. We do not send it emails, QR codes, installation codes, card details or balances. Advertising measurement is separate from the internal sales funnel. Learn how Google uses data at https://policies.google.com/technologies/partner-sites."
+            },
+            {
+              "type": "paragraph",
+              "text": "We store only your advertising choice, with no personal identifier, in mts_google_ads_consent_v1 local storage for up to 180 days. Withdrawal stops tag configuration and signals denied consent to Google if it was already loaded. Internal statistics permission is managed separately."
             }
           ]
         }

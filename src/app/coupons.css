@@ -227,6 +227,7 @@
 }
 .coupon-dialog {
   --coupon-muted: #586b82;
+  margin: auto;
   width: min(740px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
   padding: 28px;

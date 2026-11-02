@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
         marketingOptIn: body.marketingOptIn,
         uiMode: "elements",
         livemode: live,
-        walletVersion: "express-v1",
+        walletVersion: "dynamic-inline-v2",
         holdPolicy: body.holdPolicy ?? null,
         user: user?.id ?? null,
         locale: body.locale,
@@ -285,7 +285,6 @@ export async function POST(request: NextRequest) {
       {
         mode: "payment",
         ui_mode: "elements",
-        allowed_payment_method_types: ["card", "link"],
         locale: body.locale,
         adaptive_pricing: { enabled: false },
         client_reference_id: order.id,

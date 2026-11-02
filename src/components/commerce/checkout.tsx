@@ -24,7 +24,14 @@ import { cartTotal } from "@/lib/cart";
 import { formatMoney, currencyCode, type Currency } from "@/lib/currency";
 import { useCurrency } from "@/components/currency-provider";
 import { CartItems, useCart } from "./cart-provider";
-import { EmbeddedPayment } from "./embedded-payment";
+import {
+  CheckoutPaymentFields,
+  PaymentDetailsError,
+  type PaymentFieldsHandle,
+} from "./checkout-payment-fields";
+import { confirmPreparedPayment } from "@/lib/payments/confirm-prepared-payment";
+import type { StripeCheckoutElementsSdk } from "@stripe/stripe-js";
+import { HoldCountdown, usePaymentPresence } from "./payment-hold";
 import { paymentFormMatchesMode } from "@/lib/payments/checkout-mode";
 import { CheckoutRewards } from "@/components/simcoins/checkout-rewards";
 import type { SimcoinsCheckoutQuote } from "@/lib/simcoins/checkout";
@@ -40,6 +47,13 @@ export function Checkout({
   initial?: CartLine;
 }) {
   const es = locale === "es";
+  const form = useRef<HTMLFormElement>(null);
+  const paymentFields = useRef<PaymentFieldsHandle>(null);
+  const checkoutSdk = useRef<{
+    secret: string;
+    sdk: StripeCheckoutElementsSdk;
+  } | null>(null);
+  const [fieldsReady, setFieldsReady] = useState(false);
   const cart = useCart();
   const pricing = useCurrency();
   const initialized = useRef(false);
@@ -188,6 +202,10 @@ export function Checkout({
     rewardsQuote?.id ?? null,
   ]);
   const activePayment = payment?.key === checkoutKey ? payment : null;
+  const latestCheckoutKey = useRef(checkoutKey);
+  useEffect(() => {
+    latestCheckoutKey.current = checkoutKey;
+  }, [checkoutKey]);
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (rewardsQuote && Date.parse(rewardsQuote.expiresAt) <= Date.now()) {
@@ -212,7 +230,8 @@ export function Checkout({
       cart.loading ||
       cart.error ||
       !compatible ||
-      !terms
+      !terms ||
+      !fieldsReady
     )
       return;
     if (
@@ -236,7 +255,14 @@ export function Checkout({
     submitting.current = true;
     setBusy(true);
     setError("");
+    pricing.setPaymentBusy(true);
+    let collected:
+      Awaited<ReturnType<PaymentFieldsHandle["collect"]>> | undefined;
     try {
+      collected = await paymentFields.current?.collect();
+      if (!collected) throw Error("Payment fields unavailable");
+      if (latestCheckoutKey.current !== key)
+        throw Error("Checkout changed during payment collection");
       const response = await fetch("/api/checkout/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -261,6 +287,7 @@ export function Checkout({
       });
       const data = await response.json();
       if (!response.ok) {
+        collected.fail();
         if (
           [
             "checkout_expired",
@@ -338,7 +365,8 @@ export function Checkout({
           data.paymentTotal ?? (pricing.currency === "USD" ? total : null);
         if (
           confirmedCurrency !== pricing.currency ||
-          confirmedTotal !== paymentTotal
+          confirmedTotal !== paymentTotal ||
+          latestCheckoutKey.current !== key
         )
           throw Error("Payment total mismatch");
         setPayment({
@@ -350,15 +378,41 @@ export function Checkout({
           buyer: buyerEmail.trim(),
           recipient,
         });
+        if (checkoutSdk.current?.secret !== data.clientSecret)
+          checkoutSdk.current = {
+            secret: data.clientSecret,
+            sdk: collected.stripe.initCheckoutElementsSdk({
+              clientSecret: data.clientSecret,
+            }),
+          };
+        const sdk = checkoutSdk.current?.sdk;
+        if (!sdk) throw Error("Payment initialization unavailable");
+        const result = await confirmPreparedPayment(
+          sdk,
+          {
+            live: !testMode,
+            currency: confirmedCurrency,
+            total: confirmedTotal,
+          },
+          collected.paymentMethod,
+        );
+        if (result.type === "error") {
+          collected.fail();
+          setError(result.error.message);
+        }
       }
-    } catch {
+    } catch (error) {
+      collected?.fail();
       setError(
-        es
-          ? "No pudimos conectar con el pago. Tu carrito sigue guardado. Vuelve a intentarlo."
-          : "We couldn’t connect to payment. Your cart is saved. Please try again.",
+        error instanceof PaymentDetailsError
+          ? error.message
+          : es
+            ? "No pudimos conectar con el pago. Tu carrito sigue guardado. Vuelve a intentarlo."
+            : "We couldn’t connect to payment. Your cart is saved. Please try again.",
       );
     } finally {
       submitting.current = false;
+      pricing.setPaymentBusy(false);
       setBusy(false);
     }
   }
@@ -422,306 +476,316 @@ export function Checkout({
                 </div>
               </div>
             )}
-            {activePayment ? (
-              <EmbeddedPayment
-                orderId={activePayment.orderId}
-                key={activePayment.orderId}
-                clientSecret={activePayment.clientSecret}
-                publishableKey={publishableKey}
-                total={activePayment.total}
-                currency={activePayment.currency}
-                locale={locale}
-                buyer={activePayment.buyer}
-                recipient={activePayment.recipient}
-                onBack={() => {
-                  setPayment(null);
-                  setError("");
-                }}
-              />
-            ) : (
-              <form className="commerce-card checkout-form" onSubmit={pay}>
-                <header>
-                  <span className="commerce-badge">
-                    <Mail size={22} />
-                  </span>
-                  <div>
-                    <h2>{es ? "Datos de tu pedido" : "Your order details"}</h2>
-                    <p>
-                      {es
-                        ? "Solo necesitamos tu correo. No hace falta una cuenta."
-                        : "Your email is all we need. No account required."}
-                    </p>
-                  </div>
-                </header>
-                <label htmlFor="checkout-email">
-                  {es ? "Correo electrónico" : "Email address"}
-                  <span className="account-input">
-                    <Mail size={18} aria-hidden="true" />
-                    <input
-                      id="checkout-email"
-                      name="email"
-                      type="email"
-                      inputMode="email"
-                      autoComplete="email"
-                      maxLength={254}
-                      required
-                      value={buyerEmail}
-                      onChange={(event) => setBuyerEmail(event.target.value)}
-                      disabled={busy}
-                      readOnly={!!email}
-                      aria-describedby="checkout-email-hint"
-                      placeholder={es ? "tu@correo.com" : "you@example.com"}
-                    />
-                  </span>
-                </label>
-                <p id="checkout-email-hint" className="commerce-muted">
-                  {email
-                    ? es
-                      ? "Estás usando el correo verificado de tu cuenta."
-                      : "You’re using your account’s verified email."
-                    : es
-                      ? "Comprueba que esté bien escrito: recibirás aquí el QR y la guía después del pago."
-                      : "Double-check the spelling: your QR and guide will arrive here after payment."}
-                </p>
-                {email && (
-                  <Link
-                    href={experiencePath(locale, "wallet")}
-                    className="checkout-session"
-                  >
-                    <BadgeCheck size={16} />
+            <form
+              ref={form}
+              className="commerce-card checkout-form"
+              onSubmit={pay}
+            >
+              <header>
+                <span className="commerce-badge">
+                  <Mail size={22} />
+                </span>
+                <div>
+                  <h2>{es ? "Datos de tu pedido" : "Your order details"}</h2>
+                  <p>
                     {es
-                      ? "Sesión iniciada · Ir a Mis TripSim"
-                      : "Signed in · Go to My TripSim"}
-                  </Link>
-                )}
-                <label className="commerce-checkbox checkout-marketing">
+                      ? "Solo necesitamos tu correo. No hace falta una cuenta."
+                      : "Your email is all we need. No account required."}
+                  </p>
+                </div>
+              </header>
+              <label htmlFor="checkout-email">
+                {es ? "Correo electrónico" : "Email address"}
+                <span className="account-input">
+                  <Mail size={18} aria-hidden="true" />
+                  <input
+                    id="checkout-email"
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    maxLength={254}
+                    required
+                    value={buyerEmail}
+                    onChange={(event) => setBuyerEmail(event.target.value)}
+                    disabled={busy}
+                    readOnly={!!email}
+                    aria-describedby="checkout-email-hint"
+                    placeholder={es ? "tu@correo.com" : "you@example.com"}
+                  />
+                </span>
+              </label>
+              <p id="checkout-email-hint" className="commerce-muted">
+                {email
+                  ? es
+                    ? "Estás usando el correo verificado de tu cuenta."
+                    : "You’re using your account’s verified email."
+                  : es
+                    ? "Comprueba que esté bien escrito: recibirás aquí el QR y la guía después del pago."
+                    : "Double-check the spelling: your QR and guide will arrive here after payment."}
+              </p>
+              {email && (
+                <Link
+                  href={experiencePath(locale, "wallet")}
+                  className="checkout-session"
+                >
+                  <BadgeCheck size={16} />
+                  {es
+                    ? "Sesión iniciada · Ir a Mis TripSim"
+                    : "Signed in · Go to My TripSim"}
+                </Link>
+              )}
+              <label className="commerce-checkbox checkout-marketing">
+                <input
+                  type="checkbox"
+                  name="marketingOptIn"
+                  checked={marketingOptIn}
+                  onChange={(event) => setMarketingOptIn(event.target.checked)}
+                  disabled={busy}
+                />
+                <span>
+                  {es
+                    ? "Quiero recibir novedades y ofertas de MyTripSim por correo. (Opcional)"
+                    : "I’d like to receive MyTripSim news and offers by email. (Optional)"}
+                </span>
+              </label>
+              <section
+                className="checkout-beneficiary"
+                aria-labelledby="checkout-beneficiary-title"
+              >
+                <h2 id="checkout-beneficiary-title">
+                  <Gift size={19} />
+                  {es ? "Beneficiario" : "Recipient"}
+                </h2>
+                <p className="commerce-muted">
+                  {es
+                    ? "Las instrucciones de la eSIM se enviarán a"
+                    : "The eSIM instructions will be sent to"}{" "}
+                  <strong>
+                    {differentRecipient
+                      ? recipientEmail ||
+                        (es
+                          ? "el correo del beneficiario"
+                          : "the recipient’s email")
+                      : buyerEmail ||
+                        (es ? "tu correo electrónico" : "your email address")}
+                  </strong>
+                  .
+                </p>
+                <label className="commerce-checkbox">
                   <input
                     type="checkbox"
-                    name="marketingOptIn"
-                    checked={marketingOptIn}
+                    name="differentRecipient"
+                    checked={differentRecipient}
                     onChange={(event) =>
-                      setMarketingOptIn(event.target.checked)
+                      setDifferentRecipient(event.target.checked)
                     }
                     disabled={busy}
                   />
                   <span>
                     {es
-                      ? "Quiero recibir novedades y ofertas de MyTripSim por correo. (Opcional)"
-                      : "I’d like to receive MyTripSim news and offers by email. (Optional)"}
+                      ? "Enviar la eSIM a un correo electrónico diferente"
+                      : "Send the eSIM to a different email address"}
                   </span>
                 </label>
-                <section
-                  className="checkout-beneficiary"
-                  aria-labelledby="checkout-beneficiary-title"
-                >
-                  <h2 id="checkout-beneficiary-title">
-                    <Gift size={19} />
-                    {es ? "Beneficiario" : "Recipient"}
-                  </h2>
-                  <p className="commerce-muted">
-                    {es
-                      ? "Las instrucciones de la eSIM se enviarán a"
-                      : "The eSIM instructions will be sent to"}{" "}
-                    <strong>
-                      {differentRecipient
-                        ? recipientEmail ||
-                          (es
-                            ? "el correo del beneficiario"
-                            : "the recipient’s email")
-                        : buyerEmail ||
-                          (es ? "tu correo electrónico" : "your email address")}
-                    </strong>
-                    .
-                  </p>
-                  <label className="commerce-checkbox">
-                    <input
-                      type="checkbox"
-                      name="differentRecipient"
-                      checked={differentRecipient}
-                      onChange={(event) =>
-                        setDifferentRecipient(event.target.checked)
-                      }
-                      disabled={busy}
-                    />
-                    <span>
-                      {es
-                        ? "Enviar la eSIM a un correo electrónico diferente"
-                        : "Send the eSIM to a different email address"}
+                {differentRecipient && (
+                  <label htmlFor="checkout-recipient-email">
+                    {es ? "Correo del beneficiario" : "Recipient email"}
+                    <span className="account-input">
+                      <Mail size={18} aria-hidden="true" />
+                      <input
+                        id="checkout-recipient-email"
+                        name="recipientEmail"
+                        type="email"
+                        inputMode="email"
+                        autoComplete="section-beneficiary email"
+                        maxLength={254}
+                        value={recipientEmail}
+                        onChange={(event) =>
+                          setRecipientEmail(event.target.value)
+                        }
+                        disabled={busy}
+                        required
+                        placeholder={
+                          es
+                            ? "beneficiario@correo.com"
+                            : "recipient@example.com"
+                        }
+                      />
                     </span>
                   </label>
-                  {differentRecipient && (
-                    <label htmlFor="checkout-recipient-email">
-                      {es ? "Correo del beneficiario" : "Recipient email"}
-                      <span className="account-input">
-                        <Mail size={18} aria-hidden="true" />
-                        <input
-                          id="checkout-recipient-email"
-                          name="recipientEmail"
-                          type="email"
-                          inputMode="email"
-                          autoComplete="section-beneficiary email"
-                          maxLength={254}
-                          value={recipientEmail}
-                          onChange={(event) =>
-                            setRecipientEmail(event.target.value)
-                          }
-                          disabled={busy}
-                          required
-                          placeholder={
-                            es
-                              ? "beneficiario@correo.com"
-                              : "recipient@example.com"
-                          }
-                        />
-                      </span>
-                    </label>
-                  )}
-                </section>
-                <div className="checkout-payment">
-                  <span className="commerce-badge">
-                    <CreditCard size={22} />
-                  </span>
-                  <div>
-                    <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
-                    <p>
-                      {es
-                        ? enabled
-                          ? "En el siguiente paso introduces tu tarjeta aquí mismo, con la protección de Stripe."
-                          : "Revisa tu correo y los detalles de tu pedido antes de continuar al pago."
-                        : enabled
-                          ? "Enter your card in the next step, right here, protected by Stripe."
-                          : "Review your email and order details before continuing to payment."}
-                    </p>
-                    <span className="checkout-pending">
-                      <LockKeyhole size={14} />
-                      {es
-                        ? enabled
-                          ? testMode
-                            ? "Modo de pruebas · sin cargos reales"
-                            : "Pago protegido por Stripe"
-                          : "Conectando con el pago seguro"
-                        : enabled
-                          ? testMode
-                            ? "Test mode · no real charges"
-                            : "Payment protected by Stripe"
-                          : "Connecting to secure payment"}
-                    </span>
-                  </div>
-                </div>
-                <label className="commerce-checkbox">
-                  <input
-                    type="checkbox"
-                    name="compatible"
-                    required
-                    disabled={busy}
-                    checked={compatible}
-                    onChange={(e) => setCompatible(e.target.checked)}
-                  />
-                  <span>
+                )}
+              </section>
+              {activePayment && (
+                <PreparedPaymentHold
+                  orderId={activePayment.orderId}
+                  locale={locale}
+                />
+              )}
+              <div className="checkout-payment">
+                <span className="commerce-badge">
+                  <CreditCard size={22} />
+                </span>
+                <div>
+                  <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
+                  <p>
                     {es
-                      ? "Mi dispositivo es compatible con eSIM y está desbloqueado."
-                      : "My device supports eSIM and is carrier-unlocked."}{" "}
-                    <Link href={pathFor(locale, "compatibility")}>
-                      {es ? "Comprobar" : "Check"}
-                    </Link>
-                  </span>
-                </label>
-                <label className="commerce-checkbox">
-                  <input
-                    type="checkbox"
-                    name="terms"
-                    required
-                    disabled={busy}
-                    checked={terms}
-                    onChange={(e) => setTerms(e.target.checked)}
-                  />
-                  <span>
-                    {es ? "Acepto los" : "I agree to the"}{" "}
-                    <Link href={pathFor(locale, "terms")}>
-                      {es ? "términos" : "terms"}
-                    </Link>{" "}
-                    {es ? "y la" : "and"}{" "}
-                    <Link href={pathFor(locale, "refunds")}>
-                      {es ? "política de reembolsos" : "refund policy"}
-                    </Link>
-                    {es ? " y he leído el " : " and have read the "}
-                    <Link href={pathFor(locale, "privacy")}>
-                      {es ? "aviso de privacidad" : "privacy notice"}
-                    </Link>
-                    .
-                  </span>
-                </label>
-                <button
-                  type="submit"
-                  className="button button-primary checkout-pay"
-                  disabled={
-                    !enabled ||
-                    busy ||
-                    cart.loading ||
-                    cart.error ||
-                    total == null ||
-                    paymentTotal == null ||
-                    !pricing.ready ||
-                    !!pricing.busy ||
-                    !compatible ||
-                    !terms
-                  }
-                  aria-describedby="checkout-payment-note"
-                >
-                  {busy ? (
-                    <LoaderCircle size={17} className="payment-spinner" />
-                  ) : (
-                    <LockKeyhole size={17} />
-                  )}
-                  {busy
-                    ? es
-                      ? "Preparando tu pago…"
-                      : "Preparing payment…"
-                    : enabled
-                      ? es
-                        ? testMode
-                          ? "Continuar al pago de prueba"
-                          : "Continuar al pago"
-                        : testMode
-                          ? "Continue to test payment"
-                          : "Continue to payment"
-                      : es
-                        ? "Continuar al pago"
-                        : "Continue to payment"}
-                </button>
-                {pricing.error && (
-                  <div className="checkout-error" role="alert">
-                    <p>
-                      {es
-                        ? "No pudimos actualizar los precios en esta moneda. Reintenta o elige USD en el selector."
-                        : "We could not update prices in this currency. Retry or choose USD in the selector."}
-                    </p>
-                    <button
-                      type="button"
-                      className="commerce-link"
-                      disabled={!!pricing.busy}
-                      onClick={() => void pricing.select(pricing.currency)}
-                    >
-                      {es ? "Actualizar moneda" : "Refresh currency"}
-                    </button>
-                  </div>
-                )}
-                {error && (
-                  <p className="checkout-error" role="alert">
-                    {error}
+                      ? enabled
+                        ? "Elige tu método de pago. Stripe muestra las opciones compatibles contigo."
+                        : "Revisa tu correo y los detalles de tu pedido antes de continuar al pago."
+                      : enabled
+                        ? "Choose your payment method. Stripe shows the options available to you."
+                        : "Review your email and order details before continuing to payment."}
                   </p>
+                  <span className="checkout-pending">
+                    <LockKeyhole size={14} />
+                    {es
+                      ? enabled
+                        ? testMode
+                          ? "Modo de pruebas · sin cargos reales"
+                          : "Pago protegido por Stripe"
+                        : "Conectando con el pago seguro"
+                      : enabled
+                        ? testMode
+                          ? "Test mode · no real charges"
+                          : "Payment protected by Stripe"
+                        : "Connecting to secure payment"}
+                  </span>
+                </div>
+              </div>
+              {enabled &&
+                publishableKey &&
+                paymentTotal != null &&
+                pricing.ready && (
+                  <CheckoutPaymentFields
+                    key={pricing.currency + ":" + paymentTotal}
+                    ref={paymentFields}
+                    publishableKey={publishableKey}
+                    locale={locale}
+                    total={paymentTotal}
+                    currency={pricing.currency}
+                    email={buyerEmail}
+                    canPay={
+                      terms &&
+                      compatible &&
+                      !busy &&
+                      !rewardsBusy &&
+                      !cart.loading &&
+                      !cart.error &&
+                      !pricing.busy
+                    }
+                    onReady={setFieldsReady}
+                    onSubmit={() => {
+                      if (!form.current?.reportValidity()) return false;
+                      form.current.requestSubmit();
+                      return true;
+                    }}
+                  />
                 )}
-                <p id="checkout-payment-note" className="commerce-muted">
-                  {enabled && testMode
-                    ? es
-                      ? "Esta compra es de prueba: no se harán cargos ni se enviarán QR de eSIM reales."
-                      : "This is a test purchase: no real charges or eSIM QR codes will be sent."
-                    : es
-                      ? "El QR y las instrucciones se enviarán al correo del beneficiario tras confirmar el pago y preparar la eSIM."
-                      : "The QR code and instructions will be sent to the recipient after payment is confirmed and the eSIM is ready."}
+              <label className="commerce-checkbox">
+                <input
+                  type="checkbox"
+                  name="compatible"
+                  required
+                  disabled={busy}
+                  checked={compatible}
+                  onChange={(e) => setCompatible(e.target.checked)}
+                />
+                <span>
+                  {es
+                    ? "Mi dispositivo es compatible con eSIM y está desbloqueado."
+                    : "My device supports eSIM and is carrier-unlocked."}{" "}
+                  <Link href={pathFor(locale, "compatibility")}>
+                    {es ? "Comprobar" : "Check"}
+                  </Link>
+                </span>
+              </label>
+              <label className="commerce-checkbox">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  required
+                  disabled={busy}
+                  checked={terms}
+                  onChange={(e) => setTerms(e.target.checked)}
+                />
+                <span>
+                  {es ? "Acepto los" : "I agree to the"}{" "}
+                  <Link href={pathFor(locale, "terms")}>
+                    {es ? "términos" : "terms"}
+                  </Link>{" "}
+                  {es ? "y la" : "and"}{" "}
+                  <Link href={pathFor(locale, "refunds")}>
+                    {es ? "política de reembolsos" : "refund policy"}
+                  </Link>
+                  {es ? " y he leído el " : " and have read the "}
+                  <Link href={pathFor(locale, "privacy")}>
+                    {es ? "aviso de privacidad" : "privacy notice"}
+                  </Link>
+                  .
+                </span>
+              </label>
+              <button
+                type="submit"
+                className="button button-primary checkout-pay"
+                disabled={
+                  !enabled ||
+                  busy ||
+                  cart.loading ||
+                  cart.error ||
+                  total == null ||
+                  paymentTotal == null ||
+                  !pricing.ready ||
+                  !!pricing.busy ||
+                  !compatible ||
+                  !terms ||
+                  !fieldsReady
+                }
+                aria-describedby="checkout-payment-note"
+              >
+                {busy ? (
+                  <LoaderCircle size={17} className="payment-spinner" />
+                ) : (
+                  <LockKeyhole size={17} />
+                )}
+                {busy
+                  ? es
+                    ? "Preparando tu pago…"
+                    : "Preparing payment…"
+                  : `${es ? "Pagar" : "Pay"} ${paymentTotal == null ? "" : formatMoney(paymentTotal, pricing.currency, locale)}${testMode ? (es ? " (prueba)" : " (test)") : ""}`}
+              </button>
+              {pricing.error && (
+                <div className="checkout-error" role="alert">
+                  <p>
+                    {es
+                      ? "No pudimos actualizar los precios en esta moneda. Reintenta o elige USD en el selector."
+                      : "We could not update prices in this currency. Retry or choose USD in the selector."}
+                  </p>
+                  <button
+                    type="button"
+                    className="commerce-link"
+                    disabled={!!pricing.busy}
+                    onClick={() => void pricing.select(pricing.currency)}
+                  >
+                    {es ? "Actualizar moneda" : "Refresh currency"}
+                  </button>
+                </div>
+              )}
+              {error && (
+                <p className="checkout-error" role="alert">
+                  {error}
                 </p>
-              </form>
-            )}
+              )}
+              <p id="checkout-payment-note" className="commerce-muted">
+                {enabled && testMode
+                  ? es
+                    ? "Esta compra es de prueba: no se harán cargos ni se enviarán QR de eSIM reales."
+                    : "This is a test purchase: no real charges or eSIM QR codes will be sent."
+                  : es
+                    ? "El QR y las instrucciones se enviarán al correo del beneficiario tras confirmar el pago y preparar la eSIM."
+                    : "The QR code and instructions will be sent to the recipient after payment is confirmed and the eSIM is ready."}
+              </p>
+            </form>
             <div className="checkout-help">
               <CircleHelp size={19} />
               <p>
@@ -750,7 +814,9 @@ export function Checkout({
                 {count} {count === 1 ? "eSIM" : "eSIMs"}
               </span>
             </header>
-            <CartItems locale={locale} />
+            <div inert={busy}>
+              <CartItems locale={locale} />
+            </div>
             <div className="checkout-total">
               <span>{es ? "Total" : "Total"}</span>
               <strong>
@@ -783,6 +849,28 @@ export function Checkout({
             </div>
           </aside>
         </div>
+      )}
+    </div>
+  );
+}
+
+function PreparedPaymentHold({
+  orderId,
+  locale,
+}: {
+  orderId: string;
+  locale: Locale;
+}) {
+  const root = useRef<HTMLDivElement>(null);
+  const presence = usePaymentPresence(orderId, root);
+  return (
+    <div ref={root}>
+      {presence.state?.holdExpiresAt && (
+        <HoldCountdown
+          deadline={presence.state.holdExpiresAt}
+          serverTime={presence.state.serverTime}
+          locale={locale}
+        />
       )}
     </div>
   );

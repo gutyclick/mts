@@ -12,15 +12,22 @@ export const expressWalletOptions: StripeCheckoutExpressCheckoutElementOptions =
       applePay: "auto",
       googlePay: "auto",
       link: "auto",
-      paypal: "never",
-      amazonPay: "never",
-      klarna: "never",
+      paypal: "auto",
+      amazonPay: "auto",
+      klarna: "auto",
     },
   };
 // `ready` reports booleans; availability changes report {available: boolean}.
 export function hasExpressWallet(methods: unknown): boolean {
   if (!methods || typeof methods !== "object") return false;
-  return ["applePay", "googlePay", "link"].some((key) => {
+  return [
+    "applePay",
+    "googlePay",
+    "link",
+    "paypal",
+    "amazonPay",
+    "klarna",
+  ].some((key) => {
     const value = (methods as Record<string, unknown>)[key];
     return (
       value === true ||

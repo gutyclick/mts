@@ -19,7 +19,7 @@ test("wallet options use official button variants and automatic eligibility", ()
   for (const method of ["applePay", "googlePay", "link"])
     assert.equal(expressWalletOptions.paymentMethods[method], "auto");
   for (const method of ["paypal", "amazonPay", "klarna"])
-    assert.equal(expressWalletOptions.paymentMethods[method], "never");
+    assert.equal(expressWalletOptions.paymentMethods[method], "auto");
   assert.equal(expressWalletOptions.layout.maxColumns, 2);
 });
 test("express section appears only for affirmative Stripe wallet availability", () => {
@@ -30,11 +30,17 @@ test("express section appears only for affirmative Stripe wallet availability", 
     false,
     { applePay: false, googlePay: false, link: false },
     { googlePay: { available: false } },
-    { paypal: true },
     { applePay: "true" },
   ])
     assert.equal(hasExpressWallet(methods), false);
-  for (const method of ["applePay", "googlePay", "link"]) {
+  for (const method of [
+    "applePay",
+    "googlePay",
+    "link",
+    "paypal",
+    "amazonPay",
+    "klarna",
+  ]) {
     assert.equal(hasExpressWallet({ [method]: true }), true);
     assert.equal(hasExpressWallet({ [method]: { available: true } }), true);
   }

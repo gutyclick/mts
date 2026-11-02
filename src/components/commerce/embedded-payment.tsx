@@ -261,7 +261,9 @@ function PaymentForm({
                 }}
               />
               <div className="checkout-payment-divider">
-                <span>{es ? "o paga con tarjeta" : "or pay by card"}</span>
+                <span>
+                  {es ? "u otro método de pago" : "or another payment method"}
+                </span>
               </div>
             </div>
             {(!ready || state.type === "loading") && (
@@ -273,12 +275,6 @@ function PaymentForm({
             <PaymentElement
               options={{
                 layout: "tabs",
-                paymentMethodOrder: ["card"],
-                wallets: {
-                  applePay: "never",
-                  googlePay: "never",
-                  link: "never",
-                },
               }}
               onReady={() => setReady(true)}
               onLoadError={() =>

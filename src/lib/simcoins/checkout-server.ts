@@ -3,9 +3,8 @@ import { z } from "zod";
 import { checkoutDatabase } from "../payments/checkout-server";
 import { sha256 } from "../payments/checkout-core";
 import { convertUsdMinor, usdRate, currencies } from "../currency";
-import { esimAccess } from "../integrations/esimaccess-server";
+import { refreshPromotionCosts } from "../payments/promotion-costs";
 import { paymentMode } from "../payments/checkout-mode";
-import { compareProviderCatalog } from "../integrations/esimaccess-catalog";
 import { buildSimcoinsQuote } from "./engine";
 import { simcoinsFlags } from "./config";
 import { getCustomerSimcoins, getSimcoinsSettings } from "./server";
@@ -167,69 +166,11 @@ export async function createSimcoinsCheckoutQuote(
   )
     throw Error("unavailable_plan");
   let costs = z.array(costSchema).parse(costsResult.data);
-  const freshAfter = Date.now() - config.settings.costsMaxAgeSeconds * 1000;
-  if (
-    plans
-      .filter((plan) => participatingIds.has(plan.id))
-      .some(
-        (plan) =>
-          !costs.some(
-            (cost) =>
-              cost.plan_id === plan.id &&
-              Date.parse(cost.observed_at) > freshAfter,
-          ),
-      )
-  ) {
-    let refreshToken: string | null = null;
-    try {
-      const claim = await db.rpc("simcoins_claim_cost_refresh");
-      refreshToken = claim.error ? null : z.uuid().nullable().parse(claim.data);
-      if (!refreshToken) throw Error("refresh_deferred");
-      const remote = await esimAccess().privateCostPackages();
-      const identity = compareProviderCatalog(
-        plans.map((plan) => ({
-          id: plan.id,
-          allowance: plan.allowance,
-          days: plan.days,
-          coverageCode: plan.coverage_code,
-        })),
-        remote,
-      );
-      const observedAt = new Date().toISOString();
-      const refreshed = identity.matches.flatMap((match) => {
-        const item = remote.find((entry) => entry.slug === match.providerSlug);
-        return item?.wholesaleUnitUnits != null
-          ? [
-              {
-                plan_id: match.planId,
-                wholesale_unit_units: item.wholesaleUnitUnits,
-                observed_at: observedAt,
-                source_ref: "esimaccess:package/list",
-              },
-            ]
-          : [];
-      });
-      if (refreshed.length) {
-        const saved = await db
-          .from("simcoins_private_costs")
-          .upsert(refreshed, { onConflict: "plan_id" });
-        if (!saved.error)
-          costs = costs
-            .filter(
-              (cost) =>
-                !refreshed.some((fresh) => fresh.plan_id === cost.plan_id),
-            )
-            .concat(refreshed);
-      }
-    } catch {
-      /* Missing fresh verified costs make affected lines ineligible. */
-    } finally {
-      if (refreshToken)
-        await db.rpc("simcoins_release_cost_refresh", {
-          p_token: refreshToken,
-        });
-    }
-  }
+  costs = await refreshPromotionCosts(
+    plans.filter((plan) => participatingIds.has(plan.id)),
+    costs,
+    config.settings.costsMaxAgeSeconds,
+  );
   const engineInput = {
     lines: input.lines.map((line) => {
       const plan = plans.find((item) => item.id === line.planId)!;

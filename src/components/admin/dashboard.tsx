@@ -21,6 +21,7 @@ import {
   RotateCcw,
   Search,
   ShieldCheck,
+  TicketPercent,
   Users,
   Wifi,
   X,
@@ -43,6 +44,7 @@ import { SimMascot } from "@/components/sim-mascot";
 import { LanguageSwitcher } from "@/components/site-navigation";
 import { signOut } from "@/lib/account-actions";
 import { formatUSD } from "@/lib/retail-prices";
+import { formatMoney } from "@/lib/currency";
 import { authPath } from "@/lib/auth-routes";
 type PageData = {
   rows: (AdminPlan | AdminUser | AdminOrder)[];
@@ -320,6 +322,13 @@ export function AdminDashboard({
           {es ? "ADMINISTRACIÓN" : "ADMINISTRATION"}
         </p>
         <nav aria-label={es ? "Administración" : "Administration"}>
+          <Link
+            className="admin-support-link"
+            href={`/${locale}/admin/coupons`}
+          >
+            <TicketPercent size={20} />
+            {es ? "Cupones" : "Coupons"}
+          </Link>
           {sections.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
@@ -880,7 +889,15 @@ export function AdminDashboard({
                     </div>
                     <Badge state={o.status} es={es} />
                     <div className="admin-order-amount">
-                      <strong>{formatUSD(o.amount_total, locale)}</strong>
+                      <strong>
+                        {o.payment_total != null && o.payment_currency != null
+                          ? formatMoney(
+                              o.payment_total,
+                              o.payment_currency,
+                              locale,
+                            )
+                          : formatUSD(o.amount_total, locale)}
+                      </strong>
                       <small>
                         {o.livemode
                           ? es

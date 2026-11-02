@@ -11,6 +11,7 @@ export const checkoutRequestSchema = z
     currency: z.enum(currencies.map((c) => c.code)).default("USD"),
     fxQuoteId: z.uuid().nullable().default(null),
     simcoinsQuoteId: z.uuid().optional(),
+    couponQuoteId: z.uuid().optional(),
     expectedPaymentTotal: z.number().int().min(1).max(99999999).optional(),
     email: z.email().max(254),
     differentRecipient: z.boolean().default(false),
@@ -24,6 +25,9 @@ export const checkoutRequestSchema = z
     legalVersion: z.literal(legalVersion),
   })
   .strict()
+  .refine((body) => !body.simcoinsQuoteId || !body.couponQuoteId, {
+    message: "Choose either SimCoins or a coupon",
+  })
   .refine((body) => !body.differentRecipient || !!body.recipientEmail, {
     path: ["recipientEmail"],
     message: "Recipient email required",

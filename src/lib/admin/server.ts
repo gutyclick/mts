@@ -60,14 +60,48 @@ export async function adminData(actor: string, filter: AdminFilters) {
   });
   if (error) throw new Error("Admin unavailable");
   const parsed = pageSchema.parse(data);
+  if (filter.tab === "orders") {
+    const orders = z.array(adminOrderSchema).parse(parsed.rows);
+    if (!orders.length) return { ...parsed, rows: orders };
+    const { data: payments, error: paymentError } = await db
+      .from("checkout_orders")
+      .select("id,payment_total,payment_currency")
+      .in(
+        "id",
+        orders.map((order) => order.id),
+      );
+    if (paymentError) throw new Error("Admin payments unavailable");
+    const paymentRows = z
+      .array(
+        adminOrderSchema
+          .pick({
+            id: true,
+            payment_total: true,
+            payment_currency: true,
+          })
+          .required(),
+      )
+      .parse(payments);
+    const byId = new Map(paymentRows.map((payment) => [payment.id, payment]));
+    return {
+      ...parsed,
+      rows: orders.map((order) => {
+        const payment = byId.get(order.id);
+        if (!payment) throw new Error("Admin payment missing");
+        return {
+          ...order,
+          payment_total: payment.payment_total,
+          payment_currency: payment.payment_currency,
+        };
+      }),
+    };
+  }
   return {
     ...parsed,
     rows:
       filter.tab === "users"
         ? z.array(adminUserSchema).parse(parsed.rows)
-        : filter.tab === "orders"
-          ? z.array(adminOrderSchema).parse(parsed.rows)
-          : z.array(adminPlanSchema).parse(parsed.rows),
+        : z.array(adminPlanSchema).parse(parsed.rows),
   };
 }
 export async function syncAdminPlan(actor: string, id: string) {

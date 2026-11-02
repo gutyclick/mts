@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   RotateCcw,
   Coins,
+  TicketPercent,
 } from "lucide-react";
 import { Brand } from "../ui";
 import type { Locale } from "@/lib/i18n";
@@ -33,6 +34,13 @@ export function OperationsShell({
           {es ? "ADMINISTRACIÓN" : "ADMINISTRATION"}
         </p>
         <nav aria-label={es ? "Administración" : "Administration"}>
+          <Link
+            className="admin-support-link"
+            href={`/${locale}/admin/coupons`}
+          >
+            <TicketPercent size={20} />
+            {es ? "Cupones" : "Coupons"}
+          </Link>
           <Link
             className="admin-support-link"
             href={`/${locale}/admin/simcoins`}

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { currencySchema } from "../currency-schema.ts";
 export const adminFilters = z.object({
   tab: z
     .enum(["summary", "users", "plans", "orders", "attention"])
@@ -58,6 +59,8 @@ export const adminOrderSchema = z.object({
   email: z.string().nullable(),
   status: z.string(),
   amount_total: number,
+  payment_total: z.number().int().nonnegative().safe().nullable().optional(),
+  payment_currency: currencySchema.nullable().optional(),
   livemode: z.boolean(),
   created_at: z.string(),
   items: z.array(z.object({ name: z.string(), quantity: number })).nullable(),

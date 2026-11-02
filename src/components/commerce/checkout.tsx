@@ -7,13 +7,10 @@ import {
   ArrowRight,
   BadgeCheck,
   CircleHelp,
-  CreditCard,
   LockKeyhole,
   LoaderCircle,
   Mail,
   ShoppingBag,
-  UserRound,
-  Gift,
 } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 import { pathFor } from "@/lib/i18n";
@@ -36,6 +33,13 @@ import { paymentFormMatchesMode } from "@/lib/payments/checkout-mode";
 import { CheckoutRewards } from "@/components/simcoins/checkout-rewards";
 import type { SimcoinsCheckoutQuote } from "@/lib/simcoins/checkout";
 import { recordSimcoinsStats } from "@/lib/simcoins/analytics-client";
+import { couponQuoteSchema } from "@/lib/payments/coupons";
+import {
+  CheckoutCoupon,
+  couponErrorMessage,
+  type CheckoutCouponQuote,
+} from "./checkout-coupon";
+import "@/app/checkout-coupons.css";
 
 export function Checkout({
   locale,
@@ -66,6 +70,13 @@ export function Checkout({
     quote: SimcoinsCheckoutQuote;
   } | null>(null);
   const [rewardsBusy, setRewardsBusy] = useState(false);
+  const [coupon, setCoupon] = useState<{
+    key: string;
+    quote: CheckoutCouponQuote;
+  } | null>(null);
+  const [couponBusy, setCouponBusy] = useState(false);
+  const [couponError, setCouponError] = useState("");
+  const couponRequest = useRef<AbortController | null>(null);
   const [rewardsRefresh, setRewardsRefresh] = useState(0);
   const [rewardsSettled, setRewardsSettled] = useState("");
   const [publishableKey, setPublishableKey] = useState("");
@@ -125,6 +136,98 @@ export function Checkout({
             quantity: item.quantity,
           })),
         );
+  const couponKey = JSON.stringify([
+    cart.lines,
+    buyerEmail.trim().toLowerCase(),
+    pricing.currency,
+    pricing.quote?.id ?? null,
+    grossPaymentTotal,
+  ]);
+  const latestCouponKey = useRef(couponKey);
+  const couponQuote = coupon?.key === couponKey ? coupon.quote : null;
+  const couponReady =
+    enabled &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim()) &&
+    pricing.ready &&
+    !pricing.busy &&
+    !cart.loading &&
+    !cart.error &&
+    grossPaymentTotal !== null;
+  useEffect(() => {
+    latestCouponKey.current = couponKey;
+    couponRequest.current?.abort();
+    queueMicrotask(() => {
+      setCouponBusy(false);
+      setCoupon((current) => (current?.key === couponKey ? current : null));
+    });
+    return () => couponRequest.current?.abort();
+  }, [couponKey]);
+  useEffect(() => {
+    if (!couponQuote) return;
+    const timeout = window.setTimeout(
+      () => {
+        setCoupon(null);
+        setCouponError(couponErrorMessage("coupon_expired", es));
+      },
+      Math.max(
+        0,
+        Math.min(2147483647, Date.parse(couponQuote.expiresAt) - Date.now()),
+      ),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [couponQuote, es]);
+  async function applyCoupon(code: string) {
+    if (!couponReady || busy || couponBusy || activePayment) return;
+    couponRequest.current?.abort();
+    const controller = new AbortController();
+    couponRequest.current = controller;
+    const key = couponKey;
+    setCouponBusy(true);
+    setCouponError("");
+    try {
+      const response = await fetch("/api/checkout/coupon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          code,
+          email: buyerEmail.trim(),
+          lines: cart.lines,
+          currency: pricing.currency,
+          fxQuoteId: pricing.quote?.id ?? null,
+        }),
+      });
+      const data = await response.json();
+      if (controller.signal.aborted || latestCouponKey.current !== key) return;
+      if (!response.ok || !data.quote) {
+        setCouponError(couponErrorMessage(data.error, es));
+        if (["quote_expired", "coupon_expired"].includes(data.error))
+          await pricing.select(pricing.currency);
+        return;
+      }
+      const parsedQuote = couponQuoteSchema.safeParse(data.quote);
+      if (
+        !parsedQuote.success ||
+        parsedQuote.data.currency !== pricing.currency
+      )
+        throw Error("Invalid coupon quote");
+      if (Date.parse(parsedQuote.data.expiresAt) <= Date.now()) {
+        setCouponError(couponErrorMessage("coupon_expired", es));
+        return;
+      }
+      setUseCoins(false);
+      setCoupon({ key, quote: parsedQuote.data });
+    } catch {
+      if (!controller.signal.aborted)
+        setCouponError(
+          es
+            ? "No pudimos comprobar el código. Vuelve a intentarlo."
+            : "We could not check the code. Try again.",
+        );
+    } finally {
+      if (!controller.signal.aborted) setCouponBusy(false);
+    }
+  }
   const rewardsKey = JSON.stringify([
     cart.lines,
     pricing.currency,
@@ -132,10 +235,16 @@ export function Checkout({
     useCoins,
     rewardsRefresh,
   ]);
-  const rewardsQuote = rewards?.key === rewardsKey ? rewards.quote : null;
-  const paymentTotal = rewardsQuote?.paymentTotal ?? grossPaymentTotal;
+  const rewardsQuote =
+    !couponQuote && rewards?.key === rewardsKey ? rewards.quote : null;
+  const effectiveRewardsBusy = !couponQuote && rewardsBusy;
+  const paymentTotal =
+    couponQuote?.paymentTotal ??
+    rewardsQuote?.paymentTotal ??
+    grossPaymentTotal;
   useEffect(() => {
     if (
+      !!couponQuote ||
       !simcoinsEnabled ||
       !email ||
       !pricing.ready ||
@@ -177,6 +286,7 @@ export function Checkout({
       });
     return () => controller.abort();
   }, [
+    couponQuote,
     simcoinsEnabled,
     email,
     pricing.ready,
@@ -200,6 +310,7 @@ export function Checkout({
     pricing.quote?.id,
     paymentTotal,
     rewardsQuote?.id ?? null,
+    couponQuote?.id ?? null,
   ]);
   const activePayment = payment?.key === checkoutKey ? payment : null;
   const latestCheckoutKey = useRef(checkoutKey);
@@ -208,6 +319,11 @@ export function Checkout({
   }, [checkoutKey]);
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (couponQuote && Date.parse(couponQuote.expiresAt) <= Date.now()) {
+      setCoupon(null);
+      setCouponError(couponErrorMessage("coupon_expired", es));
+      return;
+    }
     if (rewardsQuote && Date.parse(rewardsQuote.expiresAt) <= Date.now()) {
       setRewards(null);
       setRewardsRefresh((value) => value + 1);
@@ -220,8 +336,12 @@ export function Checkout({
     }
     if (
       submitting.current ||
-      rewardsBusy ||
-      (simcoinsEnabled && !!email && rewardsSettled !== rewardsKey) ||
+      couponBusy ||
+      effectiveRewardsBusy ||
+      (!couponQuote &&
+        simcoinsEnabled &&
+        !!email &&
+        rewardsSettled !== rewardsKey) ||
       !enabled ||
       total == null ||
       paymentTotal == null ||
@@ -278,7 +398,11 @@ export function Checkout({
           expectedTotal: total,
           currency: pricing.currency,
           fxQuoteId: pricing.quote?.id ?? null,
-          ...(rewardsQuote ? { simcoinsQuoteId: rewardsQuote.id } : {}),
+          ...(couponQuote
+            ? { couponQuoteId: couponQuote.id }
+            : rewardsQuote
+              ? { simcoinsQuoteId: rewardsQuote.id }
+              : {}),
           expectedPaymentTotal: paymentTotal,
           compatible: true,
           terms: true,
@@ -295,6 +419,9 @@ export function Checkout({
             "attempt_conflict",
             "quote_expired",
             "simcoins_quote_expired",
+            "coupon_quote_expired",
+            "coupon_unavailable",
+            "coupon_limit",
           ].includes(data.error)
         )
           paymentAttempt.current = null;
@@ -302,6 +429,13 @@ export function Checkout({
           cart.retry();
         if (data.error === "quote_expired")
           await pricing.select(pricing.currency);
+        if (
+          typeof data.error === "string" &&
+          data.error.startsWith("coupon_")
+        ) {
+          setCoupon(null);
+          setCouponError(couponErrorMessage(data.error, es));
+        }
         if (data.error === "simcoins_quote_expired") {
           setRewards(null);
           setUseCoins(false);
@@ -417,7 +551,7 @@ export function Checkout({
     }
   }
   return (
-    <div className="container commerce-checkout">
+    <div className="container commerce-checkout checkout-streamlined">
       <Link className="commerce-back" href={pathFor(locale, "destinations")}>
         <ArrowLeft size={16} />
         {es ? "Seguir explorando" : "Keep exploring"}
@@ -427,11 +561,6 @@ export function Checkout({
         <h1>
           {es ? "Tu conexión, a un paso." : "Your connection, one step away."}
         </h1>
-        <p>
-          {es
-            ? "Revisa tus eSIM y el correo donde recibirás las instrucciones."
-            : "Review your eSIMs and the email where you’ll receive your instructions."}
-        </p>
       </header>
       {!count ? (
         <section className="commerce-card">
@@ -440,41 +569,17 @@ export function Checkout({
       ) : (
         <div className="commerce-checkout-grid">
           <section className="commerce-checkout-main">
-            {rewardsQuote && (
-              <CheckoutRewards
-                locale={locale}
-                quote={rewardsQuote}
-                useCoins={useCoins}
-                busy={busy || rewardsBusy || !!activePayment}
-                onUseCoins={(value) => {
-                  setUseCoins(value);
-                  if (value) recordSimcoinsStats("simcoins_checkout_redeem");
-                }}
-              />
-            )}
             {!email && !activePayment && (
-              <div className="checkout-account-offer">
-                <span className="commerce-badge">
-                  <UserRound size={22} />
-                </span>
-                <div>
-                  <h2>{es ? "A tu manera" : "Your trip, your way"}</h2>
-                  <p>
-                    {es
-                      ? "Continúa como invitado o entra para tener tus eSIM siempre a mano."
-                      : "Continue as a guest or sign in to keep your eSIMs in one place."}
-                  </p>
-                  <div>
-                    <Link href={`${authPath(locale, "login")}?next=${next}`}>
-                      {es ? "Iniciar sesión" : "Sign in"}
-                      <ArrowRight size={14} />
-                    </Link>
-                    <Link href={`${authPath(locale, "register")}?next=${next}`}>
-                      {es ? "Crear una cuenta" : "Create an account"}
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <p className="checkout-account-inline">
+                {es ? "¿Ya tienes cuenta?" : "Already have an account?"}{" "}
+                <Link href={authPath(locale, "login") + "?next=" + next}>
+                  {es ? "Inicia sesión" : "Sign in"}
+                </Link>
+                <span aria-hidden="true"> · </span>
+                <Link href={authPath(locale, "register") + "?next=" + next}>
+                  {es ? "Crea una cuenta" : "Create an account"}
+                </Link>
+              </p>
             )}
             <form
               ref={form}
@@ -482,17 +587,7 @@ export function Checkout({
               onSubmit={pay}
             >
               <header>
-                <span className="commerce-badge">
-                  <Mail size={22} />
-                </span>
-                <div>
-                  <h2>{es ? "Datos de tu pedido" : "Your order details"}</h2>
-                  <p>
-                    {es
-                      ? "Solo necesitamos tu correo. No hace falta una cuenta."
-                      : "Your email is all we need. No account required."}
-                  </p>
-                </div>
+                <h2>{es ? "Contacto" : "Contact"}</h2>
               </header>
               <label htmlFor="checkout-email">
                 {es ? "Correo electrónico" : "Email address"}
@@ -518,11 +613,11 @@ export function Checkout({
               <p id="checkout-email-hint" className="commerce-muted">
                 {email
                   ? es
-                    ? "Estás usando el correo verificado de tu cuenta."
-                    : "You’re using your account’s verified email."
+                    ? "Correo verificado de tu cuenta."
+                    : "Your verified account email."
                   : es
-                    ? "Comprueba que esté bien escrito: recibirás aquí el QR y la guía después del pago."
-                    : "Double-check the spelling: your QR and guide will arrive here after payment."}
+                    ? "Aquí recibirás tu QR y las instrucciones."
+                    : "Your QR and instructions will arrive here."}
               </p>
               {email && (
                 <Link
@@ -551,27 +646,8 @@ export function Checkout({
               </label>
               <section
                 className="checkout-beneficiary"
-                aria-labelledby="checkout-beneficiary-title"
+                aria-label={es ? "Beneficiario de la eSIM" : "eSIM recipient"}
               >
-                <h2 id="checkout-beneficiary-title">
-                  <Gift size={19} />
-                  {es ? "Beneficiario" : "Recipient"}
-                </h2>
-                <p className="commerce-muted">
-                  {es
-                    ? "Las instrucciones de la eSIM se enviarán a"
-                    : "The eSIM instructions will be sent to"}{" "}
-                  <strong>
-                    {differentRecipient
-                      ? recipientEmail ||
-                        (es
-                          ? "el correo del beneficiario"
-                          : "the recipient’s email")
-                      : buyerEmail ||
-                        (es ? "tu correo electrónico" : "your email address")}
-                  </strong>
-                  .
-                </p>
                 <label className="commerce-checkbox">
                   <input
                     type="checkbox"
@@ -584,8 +660,8 @@ export function Checkout({
                   />
                   <span>
                     {es
-                      ? "Enviar la eSIM a un correo electrónico diferente"
-                      : "Send the eSIM to a different email address"}
+                      ? "Enviar la eSIM a otra persona"
+                      : "Send the eSIM to someone else"}
                   </span>
                 </label>
                 {differentRecipient && (
@@ -623,35 +699,19 @@ export function Checkout({
                 />
               )}
               <div className="checkout-payment">
-                <span className="commerce-badge">
-                  <CreditCard size={22} />
+                <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
+                <span className="checkout-stripe-note">
+                  <LockKeyhole size={13} aria-hidden="true" />
+                  {enabled
+                    ? testMode
+                      ? es
+                        ? "Modo de pruebas"
+                        : "Test mode"
+                      : "Stripe"
+                    : es
+                      ? "Conectando…"
+                      : "Connecting…"}
                 </span>
-                <div>
-                  <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
-                  <p>
-                    {es
-                      ? enabled
-                        ? "Elige tu método de pago. Stripe muestra las opciones compatibles contigo."
-                        : "Revisa tu correo y los detalles de tu pedido antes de continuar al pago."
-                      : enabled
-                        ? "Choose your payment method. Stripe shows the options available to you."
-                        : "Review your email and order details before continuing to payment."}
-                  </p>
-                  <span className="checkout-pending">
-                    <LockKeyhole size={14} />
-                    {es
-                      ? enabled
-                        ? testMode
-                          ? "Modo de pruebas · sin cargos reales"
-                          : "Pago protegido por Stripe"
-                        : "Conectando con el pago seguro"
-                      : enabled
-                        ? testMode
-                          ? "Test mode · no real charges"
-                          : "Payment protected by Stripe"
-                        : "Connecting to secure payment"}
-                  </span>
-                </div>
               </div>
               {enabled &&
                 publishableKey &&
@@ -669,7 +729,8 @@ export function Checkout({
                       terms &&
                       compatible &&
                       !busy &&
-                      !rewardsBusy &&
+                      !effectiveRewardsBusy &&
+                      !couponBusy &&
                       !cart.loading &&
                       !cart.error &&
                       !pricing.busy
@@ -682,6 +743,19 @@ export function Checkout({
                     }}
                   />
                 )}
+              <CheckoutCoupon
+                locale={locale}
+                quote={couponQuote}
+                busy={couponBusy}
+                disabled={busy || !!activePayment}
+                ready={couponReady}
+                error={couponError}
+                onApply={(code) => void applyCoupon(code)}
+                onRemove={() => {
+                  setCoupon(null);
+                  setCouponError("");
+                }}
+              />
               <label className="commerce-checkbox">
                 <input
                   type="checkbox"
@@ -731,6 +805,8 @@ export function Checkout({
                 disabled={
                   !enabled ||
                   busy ||
+                  couponBusy ||
+                  effectiveRewardsBusy ||
                   cart.loading ||
                   cart.error ||
                   total == null ||
@@ -814,8 +890,49 @@ export function Checkout({
                 {count} {count === 1 ? "eSIM" : "eSIMs"}
               </span>
             </header>
-            <div inert={busy}>
+            <div inert={busy || couponBusy}>
               <CartItems locale={locale} />
+            </div>
+            {rewardsQuote && (
+              <CheckoutRewards
+                locale={locale}
+                quote={rewardsQuote}
+                useCoins={useCoins}
+                busy={busy || rewardsBusy || !!activePayment}
+                onUseCoins={(value) => {
+                  setUseCoins(value);
+                  if (value) recordSimcoinsStats("simcoins_checkout_redeem");
+                }}
+              />
+            )}
+            <div className="checkout-price-breakdown">
+              <div>
+                <span>{es ? "Subtotal" : "Subtotal"}</span>
+                <span>
+                  {grossPaymentTotal == null
+                    ? "—"
+                    : formatMoney(grossPaymentTotal, pricing.currency, locale)}
+                </span>
+              </div>
+              {(couponQuote ||
+                (rewardsQuote &&
+                  rewardsQuote.paymentTotal < (grossPaymentTotal ?? 0))) && (
+                <div className="checkout-discount">
+                  <span>
+                    {couponQuote ? (es ? "Descuento" : "Discount") : "SimCoins"}
+                  </span>
+                  <span>
+                    −
+                    {formatMoney(
+                      couponQuote?.discountTotal ??
+                        (grossPaymentTotal ?? 0) -
+                          (rewardsQuote?.paymentTotal ?? 0),
+                      pricing.currency,
+                      locale,
+                    )}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="checkout-total">
               <span>{es ? "Total" : "Total"}</span>

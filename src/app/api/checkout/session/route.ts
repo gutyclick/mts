@@ -4,6 +4,7 @@ import { authClient } from "@/lib/supabase/auth-server";
 import { holdOrder, reconcileHold } from "@/lib/payments/hold-server";
 import { queueCheckoutMeasurement } from "@/lib/analytics/server";
 import { verifyHoldSession } from "@/lib/payments/hold-policy";
+import { couponFailure } from "@/lib/payments/coupons";
 import {
   reserveSimcoinsCheckout,
   simcoinsCheckoutEnabled,
@@ -36,6 +37,7 @@ const orderSchema = z.object({
   checkout_url: z.string().nullable(),
   expires_at: z.string().nullable(),
   created_at: z.string(),
+  billing_email: z.string(),
 });
 const itemSchema = z.object({
   stripe_price_id: z.string(),
@@ -71,6 +73,8 @@ export async function POST(request: NextRequest) {
     } catch {
       return fail("invalid_request", 400);
     }
+    // Test payments must never reserve or consume a live commercial promotion.
+    if (body.couponQuoteId && !live) return fail("coupon_unavailable", 409);
     const client = await authClient();
     const {
       data: { user },
@@ -104,6 +108,7 @@ export async function POST(request: NextRequest) {
         ...(body.simcoinsQuoteId
           ? { simcoinsQuoteId: body.simcoinsQuoteId }
           : {}),
+        ...(body.couponQuoteId ? { couponQuoteId: body.couponQuoteId } : {}),
         lines: [...body.lines].sort((a, b) => a.planId.localeCompare(b.planId)),
       }),
     );
@@ -192,24 +197,40 @@ export async function POST(request: NextRequest) {
     }
     stage = "prepare_currency";
     const prepared = await db.rpc(
-      body.simcoinsQuoteId && simcoinsCheckoutEnabled()
-        ? "simcoins_prepare_payment"
-        : "prepare_checkout_payment",
-      body.simcoinsQuoteId
+      body.couponQuoteId
+        ? "coupon_prepare_payment"
+        : body.simcoinsQuoteId && simcoinsCheckoutEnabled()
+          ? "simcoins_prepare_payment"
+          : "prepare_checkout_payment",
+      body.couponQuoteId
         ? {
             p_order: order.id,
+            p_identity: privateHash(
+              order.billing_email.trim().toLowerCase(),
+              secret,
+            ),
+            p_quote: body.couponQuoteId,
             p_currency: body.currency,
-            p_quote: body.fxQuoteId,
+            p_fx_quote: body.fxQuoteId,
             p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
           }
-        : {
-            p_id: order.id,
-            p_currency: body.currency,
-            p_quote: body.fxQuoteId,
-            p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
-          },
+        : body.simcoinsQuoteId
+          ? {
+              p_order: order.id,
+              p_currency: body.currency,
+              p_quote: body.fxQuoteId,
+              p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
+            }
+          : {
+              p_id: order.id,
+              p_currency: body.currency,
+              p_quote: body.fxQuoteId,
+              p_expected: body.expectedPaymentTotal ?? body.expectedTotal,
+            },
     );
     if (prepared.error) {
+      if (body.couponQuoteId)
+        return fail(couponFailure(prepared.error.message), 409);
       for (const code of ["quote_expired", "price_changed", "attempt_conflict"])
         if (prepared.error.message.includes(code)) return fail(code, 409);
       console.error("checkout_preparation_failed", {

@@ -14,25 +14,31 @@ import {
   simcoinsPaymentTotal,
 } from "../src/lib/simcoins/checkout.ts";
 import { currencies, convertUsdMinor, usdRate } from "../src/lib/currency.ts";
-const compiled = ts.transpileModule(
-  readFileSync(
-    new URL("../src/lib/simcoins/checkout-server.ts", import.meta.url),
-    "utf8",
-  ),
-  {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2022,
+function compile(path) {
+  return ts.transpileModule(
+    readFileSync(new URL(path, import.meta.url), "utf8"),
+    {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2022,
+      },
     },
-  },
-).outputText;
+  ).outputText;
+}
+const compiled = compile("../src/lib/simcoins/checkout-server.ts");
+const compiledCosts = compile("../src/lib/payments/promotion-costs.ts");
 function harness({
   enabled = true,
   mode = "live",
   cost = true,
   spend = 0,
+  refreshToken = null,
+  providerPackages = null,
+  providerMatches = [],
+  saveError = false,
 } = {}) {
   const calls = [],
+    writes = [],
     exports = {};
   const table = {
     simcoins_program_settings: {
@@ -76,6 +82,13 @@ function harness({
         in() {
           return query;
         },
+        upsert(rows, options) {
+          calls.push("upsert:" + name);
+          writes.push({ name, rows, options });
+          return Promise.resolve({
+            error: saveError ? { message: "fixture failure" } : null,
+          });
+        },
         single() {
           return Promise.resolve({ data: table[name], error: null });
         },
@@ -91,7 +104,7 @@ function harness({
     async rpc(name) {
       calls.push(name);
       return name === "simcoins_claim_cost_refresh"
-        ? { data: null, error: null }
+        ? { data: refreshToken, error: null }
         : {
             data: {
               id: "11111111-1111-4111-8111-111111111111",
@@ -115,12 +128,17 @@ function harness({
     "../currency": { currencies, convertUsdMinor, usdRate },
     "../integrations/esimaccess-server": {
       esimAccess: () => {
-        throw Error("Unexpected provider call");
+        calls.push("provider");
+        if (providerPackages === null) throw Error("Unexpected provider call");
+        return { privateCostPackages: async () => providerPackages };
       },
     },
     "../integrations/esimaccess-catalog": {
-      compareProviderCatalog: () => {
-        throw Error("Unexpected provider match");
+      compareProviderCatalog: (plans, remote) => {
+        calls.push("provider-match");
+        assert.equal(remote, providerPackages);
+        assert.equal(plans[0].coverageCode, "JP");
+        return { matches: providerMatches };
       },
     },
     "./engine": { buildSimcoinsQuote },
@@ -144,6 +162,21 @@ function harness({
     },
     "./checkout": { canonicalSimcoinsCart, simcoinsPaymentTotal },
   };
+  // Execute the real shared implementation with the same database/provider
+  // doubles, so extraction cannot hide missing refreshes or unwanted I/O.
+  const costExports = {};
+  vm.runInNewContext(compiledCosts, {
+    exports: costExports,
+    Date,
+    AbortSignal,
+    require: (name) => {
+      const key =
+        name === "./checkout-server" ? "../payments/checkout-server" : name;
+      assert.ok(key in modules, key);
+      return modules[key];
+    },
+  });
+  modules["../payments/promotion-costs"] = costExports;
   vm.runInNewContext(compiled, {
     exports,
     process: { env: {} },
@@ -154,7 +187,7 @@ function harness({
       return modules[name];
     },
   });
-  return { ...exports, calls };
+  return { ...exports, ...costExports, calls, writes };
 }
 const request = {
   lines: [{ planId: "plan", destination: "japan", quantity: 1 }],
@@ -181,4 +214,90 @@ test("first qualifying zero-rate purchase still receives a progress snapshot", a
   assert.equal(quote.earnedCoins, 0);
   assert.equal(quote.firstPurchase, true);
   assert.ok(api.calls.includes("simcoins_create_quote"));
+  assert.ok(!api.calls.includes("simcoins_claim_cost_refresh"));
+  assert.ok(!api.calls.includes("provider"));
+});
+
+const refreshPlans = [
+  { id: "plan", allowance: "1GB", days: 7, coverage_code: "JP" },
+];
+test("shared cost refresher bypasses all I/O for verified fresh costs", async () => {
+  const api = harness(),
+    costs = [
+      {
+        plan_id: "plan",
+        wholesale_unit_units: 10000,
+        observed_at: new Date().toISOString(),
+      },
+    ];
+  assert.equal(
+    await api.refreshPromotionCosts(refreshPlans, costs, 900),
+    costs,
+  );
+  assert.deepEqual(api.calls, []);
+});
+test("shared cost refresher saves matched provider costs under a lease and keeps unrelated costs", async () => {
+  const token = "11111111-1111-4111-8111-111111111111";
+  const api = harness({
+    refreshToken: token,
+    providerPackages: [{ slug: "JP_1_7", wholesaleUnitUnits: 12000 }],
+    providerMatches: [{ planId: "plan", providerSlug: "JP_1_7" }],
+  });
+  const other = {
+    plan_id: "other",
+    wholesale_unit_units: 12345,
+    observed_at: new Date().toISOString(),
+  };
+  const result = await api.refreshPromotionCosts(refreshPlans, [other], 900);
+  assert.equal(result.length, 2);
+  assert.equal(result[0], other);
+  assert.equal(result[1].plan_id, "plan");
+  assert.equal(result[1].wholesale_unit_units, 12000);
+  assert.ok(Date.parse(result[1].observed_at) > Date.now() - 1000);
+  assert.deepEqual(api.calls, [
+    "database",
+    "simcoins_claim_cost_refresh",
+    "provider",
+    "provider-match",
+    "simcoins_private_costs",
+    "upsert:simcoins_private_costs",
+    "simcoins_release_cost_refresh",
+  ]);
+  assert.equal(api.writes.length, 1);
+  assert.equal(api.writes[0].options.onConflict, "plan_id");
+});
+test("unavailable leases, provider failures, unmatched costs and failed saves never invent verified costs", async () => {
+  for (const options of [
+    {},
+    { refreshToken: "11111111-1111-4111-8111-111111111111" },
+    {
+      refreshToken: "11111111-1111-4111-8111-111111111111",
+      providerPackages: [{ slug: "JP_1_7", wholesaleUnitUnits: null }],
+      providerMatches: [{ planId: "plan", providerSlug: "JP_1_7" }],
+    },
+    {
+      refreshToken: "11111111-1111-4111-8111-111111111111",
+      providerPackages: [{ slug: "JP_1_7", wholesaleUnitUnits: 12000 }],
+      providerMatches: [{ planId: "plan", providerSlug: "JP_1_7" }],
+      saveError: true,
+    },
+  ]) {
+    const api = harness(options),
+      stale = [
+        {
+          plan_id: "plan",
+          wholesale_unit_units: 10000,
+          observed_at: new Date(Date.now() - 901000).toISOString(),
+        },
+      ];
+    assert.equal(
+      await api.refreshPromotionCosts(refreshPlans, stale, 900),
+      stale,
+    );
+    assert.equal(
+      api.calls.includes("simcoins_release_cost_refresh"),
+      Boolean(options.refreshToken),
+    );
+    if (!options.refreshToken) assert.ok(!api.calls.includes("provider"));
+  }
 });

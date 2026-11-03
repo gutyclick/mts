@@ -83,11 +83,13 @@ export function createCatalogAPI(
         rows("catalog_plan_merchandising", {
           select:
             "plan_id,visibility,commercial_category,recommendation_eligible,incident_block,main_priority",
+          order: "plan_id.asc",
         }),
         rows("catalog_destination_merchandising_public", {
           select: "destination_slug,approved_modalities,approval_verified",
+          order: "destination_slug.asc",
         }),
-        rows("catalog_available_plan_ids", { select: "id" }),
+        rows("catalog_available_plan_ids", { select: "id", order: "id.asc" }),
       ]);
       return {
         overrides: z

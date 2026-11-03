@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { CuratedCatalog } from "@/lib/catalog-curation";
 import { OperationsShell } from "./operations-shell";
 import type { Locale } from "@/lib/i18n";
+import { formatMoney } from "@/lib/currency";
 type Plan = {
   id: string;
   name: string;
@@ -14,6 +15,9 @@ type Plan = {
 const modes = ["standard", "premium", "iij", "usip", "nonhkip", "myip"];
 export function CatalogAdmin({ locale }: { locale: Locale }) {
   const es = locale === "es";
+  const categories: Record<string, string> = es
+    ? { basic: "Básico", essential: "Esencial", plus: "Plus", max: "Max" }
+    : { basic: "Basic", essential: "Essential", plus: "Plus", max: "Max" };
   const [destinations, setDestinations] = useState<
     { slug: string; name: Record<string, string> }[]
   >([]);
@@ -172,13 +176,22 @@ export function CatalogAdmin({ locale }: { locale: Locale }) {
                     {mode.plans.map((item) => (
                       <article key={item.plan.id}>
                         <span className="catalog-badge selected">
-                          {item.category}
+                          {categories[item.category]}
                         </span>
                         <strong>
                           {item.plan.dataGb} GB · {item.plan.days}{" "}
                           {es ? "días" : "days"}
                         </strong>
                         <code>{item.plan.id}</code>
+                        {item.plan.retailPriceCents != null && (
+                          <strong>
+                            {formatMoney(
+                              item.plan.retailPriceCents,
+                              "USD",
+                              locale,
+                            )}
+                          </strong>
+                        )}
                         <small>
                           {item.reasons
                             .map((reason) => reasonLabel(reason, es))
@@ -194,6 +207,7 @@ export function CatalogAdmin({ locale }: { locale: Locale }) {
         )}
         {slug && loadedSlug === slug && (
           <form
+            className="catalog-modality-card"
             onSubmit={(e) => {
               e.preventDefault();
               void save("destination", {
@@ -226,7 +240,13 @@ export function CatalogAdmin({ locale }: { locale: Locale }) {
                     )
                   }
                 />
-                {mode}
+                {mode === "standard"
+                  ? es
+                    ? "Estándar"
+                    : "Standard"
+                  : mode === "premium"
+                    ? "Premium"
+                    : mode.toUpperCase()}
               </label>
             ))}
             <p>
@@ -306,7 +326,9 @@ export function CatalogAdmin({ locale }: { locale: Locale }) {
                 >
                   <option value="">Auto</option>
                   {["basic", "essential", "plus", "max"].map((c) => (
-                    <option key={c}>{c}</option>
+                    <option key={c} value={c}>
+                      {categories[c]}
+                    </option>
                   ))}
                 </select>
               </label>{" "}

@@ -27,6 +27,34 @@ const plan = {
   coverageCode: "TEST",
 };
 
+test("merchandising loads the complete provider ID projection in stable pages without requesting private fields", async () => {
+  const seen = [];
+  const client = createCatalogAPI(config, async (url) => {
+    const table = url.pathname.split("/").at(-1);
+    const select = url.searchParams.get("select");
+    assert.doesNotMatch(
+      select,
+      /updated_by|approval_evidence|package_code|volume_bytes|cost/,
+    );
+    if (table === "catalog_available_plan_ids") {
+      assert.equal(url.searchParams.get("order"), "id.asc");
+      const offset = Number(url.searchParams.get("offset"));
+      seen.push(offset);
+      return Response.json(
+        Array.from({ length: Math.min(500, 1201 - offset) }, (_, i) => ({
+          id: `SKU-${String(offset + i).padStart(4, "0")}`,
+        })),
+      );
+    }
+    return Response.json([]);
+  });
+  const result = await client.merchandising();
+  assert.equal(result.availableIds.length, 1201);
+  assert.equal(new Set(result.availableIds).size, 1201);
+  assert.deepEqual(seen, [0, 500, 1000]);
+  assert.equal(result.availableIds.at(-1), "SKU-1200");
+});
+
 test("configuration is explicit, server-only and rejects privileged credentials", () => {
   assert.equal(catalogConfig({}), null);
   assert.throws(() => catalogConfig({ SUPABASE_URL: config.url }));

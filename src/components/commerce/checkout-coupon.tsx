@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ChevronDown, LoaderCircle, X } from "lucide-react";
+import { Check, Tag, LoaderCircle, X } from "lucide-react";
 import { formatMoney } from "@/lib/currency";
 import type { Locale } from "@/lib/i18n";
 import type { CouponQuote } from "@/lib/payments/coupons";
@@ -23,6 +23,14 @@ export function couponErrorMessage(code: string, es: boolean) {
     return es
       ? "Este código ya alcanzó su límite de uso."
       : "This code has reached its usage limit.";
+  if (code === "coupon_margin")
+    return es
+      ? "Este pedido no admite este descuento. Puedes aplicarlo a otra selección de planes."
+      : "This order is not eligible for this discount. You can apply it to a different selection of plans.";
+  if (["coupon_cost_unavailable", "coupon_unavailable"].includes(code))
+    return es
+      ? "No pudimos verificar el descuento en este momento. Espera unos segundos y vuelve a aplicarlo."
+      : "We could not verify the discount right now. Wait a few seconds and apply it again.";
   if (code === "invalid_coupon")
     return es
       ? "Código no válido. Comprueba que esté bien escrito."
@@ -52,10 +60,13 @@ export function CheckoutCoupon({
   onRemove: () => void;
 }) {
   const es = locale === "es";
-  const [open, setOpen] = useState(false);
   const [code, setCode] = useState("");
   return (
     <div className="checkout-coupon" aria-busy={busy}>
+      <div className="checkout-coupon-heading">
+        <Tag size={19} aria-hidden="true" />
+        <strong>{es ? "Código de descuento" : "Discount code"}</strong>
+      </div>
       {quote ? (
         <div role="status">
           <div className="checkout-coupon-applied">
@@ -86,81 +97,81 @@ export function CheckoutCoupon({
         </div>
       ) : (
         <>
-          <button
-            type="button"
-            className="checkout-coupon-toggle"
-            aria-expanded={open}
-            aria-controls="checkout-coupon-fields"
-            disabled={disabled}
-            onClick={() => setOpen(!open)}
-          >
-            {es ? "¿Tienes un código de descuento?" : "Have a discount code?"}
-            <ChevronDown size={16} aria-hidden="true" />
-          </button>
-          {open && (
-            <div id="checkout-coupon-fields" className="checkout-coupon-fields">
-              <label htmlFor="checkout-coupon-code">
-                {es ? "Código de descuento" : "Discount code"}
-              </label>
-              <div>
-                <input
-                  id="checkout-coupon-code"
-                  name="discountCode"
-                  autoComplete="off"
-                  autoCapitalize="characters"
-                  spellCheck={false}
-                  maxLength={40}
-                  value={code}
-                  disabled={disabled || busy}
-                  aria-describedby={!ready ? "checkout-coupon-hint" : undefined}
-                  onChange={(event) => setCode(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      event.preventDefault();
-                      if (ready && !disabled && !busy && code.trim())
-                        onApply(code.trim());
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  disabled={disabled || busy || !ready || !code.trim()}
-                  onClick={() => onApply(code.trim())}
-                >
-                  {busy ? (
-                    <LoaderCircle
-                      size={16}
-                      className="payment-spinner"
-                      aria-hidden="true"
-                    />
-                  ) : null}
-                  {busy
-                    ? es
-                      ? "Aplicando…"
-                      : "Applying…"
-                    : es
-                      ? "Aplicar"
-                      : "Apply"}
-                </button>
-              </div>
-              {!ready && (
-                <p id="checkout-coupon-hint" className="commerce-muted">
-                  {es
-                    ? "Introduce tu correo y espera a que se actualicen los precios."
-                    : "Enter your email and wait for prices to update."}
-                </p>
-              )}
-              <p className="commerce-muted">
-                {es
-                  ? "Los códigos no se combinan con el canje de SimCoins."
-                  : "Discount codes cannot be combined with SimCoins redemption."}
-              </p>
+          <div id="checkout-coupon-fields" className="checkout-coupon-fields">
+            <label className="sr-only" htmlFor="checkout-coupon-code">
+              {es ? "Código de descuento" : "Discount code"}
+            </label>
+            <div>
+              <input
+                id="checkout-coupon-code"
+                name="discountCode"
+                placeholder={es ? "Introduce tu código" : "Enter your code"}
+                aria-invalid={!!error}
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+                maxLength={40}
+                value={code}
+                disabled={disabled || busy}
+                aria-describedby={
+                  [
+                    !ready && "checkout-coupon-hint",
+                    error && "checkout-coupon-error",
+                  ]
+                    .filter(Boolean)
+                    .join(" ") || undefined
+                }
+                onChange={(event) => setCode(event.target.value.toUpperCase())}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    if (ready && !disabled && !busy && code.trim())
+                      onApply(code.trim());
+                  }
+                }}
+              />
+              <button
+                type="button"
+                disabled={disabled || busy || !ready || !code.trim()}
+                onClick={() => onApply(code.trim())}
+              >
+                {busy ? (
+                  <LoaderCircle
+                    size={16}
+                    className="payment-spinner"
+                    aria-hidden="true"
+                  />
+                ) : null}
+                {busy
+                  ? es
+                    ? "Aplicando…"
+                    : "Applying…"
+                  : es
+                    ? "Aplicar"
+                    : "Apply"}
+              </button>
             </div>
-          )}
+            {!ready && (
+              <p id="checkout-coupon-hint" className="commerce-muted">
+                {es
+                  ? "Introduce tu correo arriba para aplicar el descuento."
+                  : "Enter your email above to apply your discount."}
+              </p>
+            )}
+            <p className="commerce-muted">
+              {es
+                ? "Un cupón por compra. No se combina con SimCoins."
+                : "One code per order. Cannot be combined with SimCoins."}
+            </p>
+          </div>
         </>
       )}
       {error && (
-        <p className="checkout-coupon-error" role="alert">
+        <p
+          id="checkout-coupon-error"
+          className="checkout-coupon-error"
+          role="alert"
+        >
           {error}
         </p>
       )}

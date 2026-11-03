@@ -81,6 +81,7 @@ export function couponFailure(error: string): string {
       "invalid_coupon",
       "coupon_limit",
       "coupon_margin",
+      "coupon_cost_unavailable",
       "coupon_expired",
       "quote_expired",
       "rate_limit",

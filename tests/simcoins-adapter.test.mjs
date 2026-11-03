@@ -82,6 +82,12 @@ function harness({
         in() {
           return query;
         },
+        order() {
+          return query;
+        },
+        range() {
+          return query;
+        },
         upsert(rows, options) {
           calls.push("upsert:" + name);
           writes.push({ name, rows, options });
@@ -103,7 +109,7 @@ function harness({
     },
     async rpc(name) {
       calls.push(name);
-      return name === "simcoins_claim_cost_refresh"
+      return name === "promotion_claim_cost_refresh"
         ? { data: refreshToken, error: null }
         : {
             data: {
@@ -169,6 +175,7 @@ function harness({
     exports: costExports,
     Date,
     AbortSignal,
+    setTimeout: (fn) => setTimeout(fn, 0),
     require: (name) => {
       const key =
         name === "./checkout-server" ? "../payments/checkout-server" : name;
@@ -214,7 +221,7 @@ test("first qualifying zero-rate purchase still receives a progress snapshot", a
   assert.equal(quote.earnedCoins, 0);
   assert.equal(quote.firstPurchase, true);
   assert.ok(api.calls.includes("simcoins_create_quote"));
-  assert.ok(!api.calls.includes("simcoins_claim_cost_refresh"));
+  assert.ok(!api.calls.includes("promotion_claim_cost_refresh"));
   assert.ok(!api.calls.includes("provider"));
 });
 
@@ -256,7 +263,8 @@ test("shared cost refresher saves matched provider costs under a lease and keeps
   assert.ok(Date.parse(result[1].observed_at) > Date.now() - 1000);
   assert.deepEqual(api.calls, [
     "database",
-    "simcoins_claim_cost_refresh",
+    "promotion_claim_cost_refresh",
+    "catalog_plans",
     "provider",
     "provider-match",
     "simcoins_private_costs",
@@ -282,7 +290,7 @@ test("unavailable leases, provider failures, unmatched costs and failed saves ne
       saveError: true,
     },
   ]) {
-    const api = harness(options),
+    const api = harness({ ...options, cost: false }),
       stale = [
         {
           plan_id: "plan",

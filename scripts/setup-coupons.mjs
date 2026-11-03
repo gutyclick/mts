@@ -37,6 +37,7 @@ function query(sql, name) {
 const check = `select to_regclass('public.coupon_definitions') is not null as installed,
 exists(select 1 from pg_trigger where tgname='coupon_audit_immutable' and not tgisinternal) as audit_immutable,
 exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname='coupon_prepare_payment' and position('coupon_live_mode_required' in pg_get_functiondef(p.oid))>0) as live_isolated,
+to_regprocedure('public.promotion_claim_cost_refresh()') is not null as promotion_refresh,
 not has_table_privilege('anon','public.checkout_orders','insert') as orders_private;`;
 try {
   if (readFileSync("supabase/.temp/project-ref", "utf8").trim() !== project)
@@ -51,6 +52,9 @@ try {
         ? ["20261101000200_coupon_audit_immutable"]
         : []),
       ...(!state.live_isolated ? ["20261101000300_coupon_live_mode"] : []),
+      ...(!state.promotion_refresh
+        ? ["20261103000100_promotion_cost_refresh"]
+        : []),
     ];
     if (!pending.length) {
       console.log("Coupon migrations already installed. No changes made.");
@@ -82,7 +86,10 @@ try {
     const state = query(check, "check")[0];
     if (!state?.orders_private) throw Error("order_privacy_invariant_failed");
     console.log(
-      state.installed && state.audit_immutable && state.live_isolated
+      state.installed &&
+        state.audit_immutable &&
+        state.live_isolated &&
+        state.promotion_refresh
         ? "Coupon infrastructure installed; order writes and audit history remain protected."
         : "Coupon infrastructure not installed; orders unchanged.",
     );

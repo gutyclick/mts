@@ -26,6 +26,7 @@ async function fixture() {
     "20261101000100_checkout_coupons.sql",
     "20261101000200_coupon_audit_immutable.sql",
     "20261101000300_coupon_live_mode.sql",
+    "20261103000100_promotion_cost_refresh.sql",
   ]) {
     await db.exec(
       readFileSync(
@@ -67,6 +68,39 @@ async function save(
 function cart(quantity = 1) {
   return [{ destination: "japan", planId: "plan", quantity }];
 }
+test("coupon cost refresh works without enabling SimCoins and remains private, leased and throttled", async () => {
+  const { db } = await fixture();
+  try {
+    await db.exec(
+      "update simcoins_program_settings set enabled=false,earn_enabled=false,redeem_enabled=false",
+    );
+    for (const role of ["anon", "authenticated"]) {
+      await db.exec(`set role ${role}`);
+      await assert.rejects(
+        db.query("select promotion_claim_cost_refresh()"),
+        /permission denied/,
+      );
+      await db.exec("reset role");
+    }
+    const token = (
+      await db.query("select promotion_claim_cost_refresh() token")
+    ).rows[0].token;
+    assert.ok(token);
+    assert.equal(
+      (await db.query("select promotion_claim_cost_refresh() token")).rows[0]
+        .token,
+      null,
+    );
+    await db.query("select simcoins_release_cost_refresh($1)", [token]);
+    assert.equal(
+      (await db.query("select promotion_claim_cost_refresh() token")).rows[0]
+        .token,
+      null,
+    );
+  } finally {
+    await db.close();
+  }
+});
 async function quote(db, user, code = "TRAVEL20", options = {}) {
   return (
     await db.query("select coupon_create_quote($1,$2,$3,$4,$5,$6,$7) v", [

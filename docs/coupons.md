@@ -8,7 +8,8 @@ line-item binding and webhook verification used for ordinary orders.
 ## Customer experience
 
 - Two clear sections: contact and payment. Optional recipient and marketing
-  controls remain available. The code field expands near the end of checkout.
+  controls remain available. The code field is always visible in a highlighted
+  blue panel near the end of checkout, above the legal confirmations.
 - One coupon per order. Coupon orders neither earn nor redeem SimCoins.
 - Percentage values use basis points; fixed values and minimums use USD cents.
   Fixed offers convert with the same trusted FX snapshot as the cart.
@@ -46,6 +47,14 @@ and at least 20% contribution. Coupon campaigns can exceed the ordinary 5%
 promotion reference only when this profitability check passes. Prices are never
 raised to fund a coupon. Missing or stale costs fail closed.
 
+The provider refresh verifies all published fixed-plan identities from a single
+supplier catalog response, with paginated reads and batched private cost writes.
+This avoids rejecting the next cart during the shared one-minute refresh cooldown.
+Concurrent checkouts re-read persisted costs for up to 5.5 seconds. The refresh
+lease is independent of SimCoins activation; discounts do not enable rewards.
+No unmatched or unverified price is treated as a verified cost. Customer messages
+distinguish temporary verification failures from margin-based ineligibility.
+
 Order snapshots are immutable. Editing an offer never rewrites historical order
 amounts. Reservations already attached to an order keep their original terms.
 All tables have RLS and all financial RPCs are service-role-only. Admin mutations
@@ -54,7 +63,8 @@ record actor, idempotency reference and before/after values.
 ## Operations
 
 Apply the additive migrations `20261101000100_checkout_coupons.sql`,
-`20261101000200_coupon_audit_immutable.sql` and `20261101000300_coupon_live_mode.sql`
+`20261101000200_coupon_audit_immutable.sql`, `20261101000300_coupon_live_mode.sql`
+and `20261103000100_promotion_cost_refresh.sql`
 before deploying the new UI. They create no live offers and change no existing orders. The operator
 script `scripts/setup-coupons.mjs --apply` verifies the linked Supabase project
 before applying only the missing coupon migrations. `--check` checks installation without writes.

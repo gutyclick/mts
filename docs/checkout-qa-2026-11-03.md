@@ -9,6 +9,14 @@
 - PGlite tests cover coupon minimums, dates, identities, shared rate limits, immutable historical estimates, refund exclusions, consent withdrawal, retention, admin/privacy restrictions, event deduplication and checkout maturity.
 - TypeScript and scoped ESLint passed. Existing checkout, currency, hold, wallet, fulfillment, coupon and analytics regression tests passed.
 
+## Production rollout verification
+
+- Release commit `0b0d4a4` built successfully in Vercel and deployment `dpl_B8YQCc7RC3cN7Br6wGTbUeip4kWx` reached READY, aliased to `www.mytripsim.com`.
+- Additive migrations `20261103000200_checkout_funnel.sql` and `20261103000300_coupon_insights.sql` passed preflight and installation checks and were applied.
+- Authenticated production browser checks: sales analytics and coupon reports load successfully. GUZZ conditions and application on Japan 500 MB/7 days show USD 3.00 subtotal, USD 0.15 discount and USD 2.85 total. Checked mobile layout at 390 CSS pixels.
+- No payment submitted, legal checkboxes left unchecked, no real eSIM issued. Removed the sole QA cart item afterwards, restoring the original empty cart, and reset the viewport override.
+- Existing unrelated working-tree changes were excluded from the deployment archive.
+
 ## Financial and privacy interpretation
 
 Coupon reports show booked USD reference sales and **estimated contribution**, using the immutable wholesale/fee snapshot. Orders with requested, pending or completed refunds are excluded conservatively and reported separately; this is not actual Stripe settlement or accounting profit.

@@ -23,11 +23,11 @@
 
 ## Tasks
 
-- [ ] Extend consent-based checkout events, deduplication and admin stage reporting with database and privacy tests.
-- [ ] Add safe rate-limited coupon review showing minimum, validity and scope before applying; add per-coupon financial insights.
-- [ ] Centralize bilingual payment error guidance, including declines, validation, uncertain status and safe recovery.
-- [ ] Integrate checkout events and coupon review without changing consent or amount validation.
-- [ ] Add authoritative delivery timeline and partial-order progress.
-- [ ] Test mock payment outcomes, guest/verified-user paths, currencies, consent, coupon boundaries and existing purchase security.
-- [ ] Run TypeScript, targeted lint and regression tests; apply additive migrations, build isolated release and verify live responsive UI without paying.
-- [ ] Document results and limitations, preserving unrelated work.
+- [x] Extend consent-based checkout events, deduplication and admin stage reporting with database and privacy tests.
+- [x] Add safe rate-limited coupon review showing minimum, validity and scope before applying; add per-coupon financial insights.
+- [x] Centralize bilingual payment error guidance, including declines, validation, uncertain status and safe recovery.
+- [x] Integrate checkout events and coupon review without changing consent or amount validation.
+- [x] Add authoritative delivery timeline and partial-order progress.
+- [x] Test mock payment outcomes, guest/verified-user paths, currencies, consent, coupon boundaries and existing purchase security.
+- [x] Run TypeScript, targeted lint and regression tests; apply additive migrations, build isolated release and verify live responsive UI without paying.
+- [x] Document results and limitations, preserving unrelated work.

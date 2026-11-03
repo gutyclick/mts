@@ -173,6 +173,11 @@ export function CheckoutCoupon({
           </div>
         </>
       )}
+      <p className="commerce-muted">
+        {es
+          ? "Los cupones están disponibles solo para usuarios con cuenta. Crea una cuenta o inicia sesión."
+          : "Coupons are available only to account holders. Create an account or sign in."}
+      </p>
       {error && (
         <p
           id="checkout-coupon-error"

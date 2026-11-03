@@ -75,11 +75,11 @@ test("unready and busy coupons cannot be submitted, while errors explain transie
   assert.match(html, /role="alert"/);
 });
 
-test("coupon conditions are visible with an applied code and initial action checks before applying", () => {
+test("coupon applies directly without showing conditions", () => {
   const html = renderToStaticMarkup(
     createElement(exports.CheckoutCoupon, { ...props }),
   );
-  assert.match(html, /Consultar código/);
+  assert.match(html, /Aplicar/);
   const applied = renderToStaticMarkup(
     createElement(exports.CheckoutCoupon, {
       ...props,
@@ -94,9 +94,7 @@ test("coupon conditions are visible with an applied code and initial action chec
       },
     }),
   );
-  assert.match(applied, /Compra mínima/);
-  assert.match(applied, /15\.00/);
-  assert.match(applied, /Sin vencimiento/);
-  assert.match(applied, /Planes de datos fijos del catálogo/);
-  assert.match(applied, /se comprobará otra vez al pagar/);
+  assert.doesNotMatch(applied, /Compra mínima|Sin vencimiento|checkout-coupon-details/);
+  assert.match(applied, /VIAJE5/);
+  assert.match(applied, /Ahorras/);
 });

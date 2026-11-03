@@ -53,8 +53,6 @@ export function CheckoutCoupon({
   error,
   onApply,
   onRemove,
-  details,
-  onCheck,
 }: {
   locale: Locale;
   quote: CheckoutCouponQuote | null;
@@ -69,11 +67,7 @@ export function CheckoutCoupon({
 }) {
   const es = locale === "es";
   const [code, setCode] = useState("");
-  const reviewed = !!details && details.code === code.trim();
-  const submitCode = () => {
-    if (reviewed) onApply(code.trim());
-    else onCheck?.(code.trim());
-  };
+  const submitCode = () => onApply(code.trim());
   return (
     <div className="checkout-coupon" aria-busy={busy}>
       <div className="checkout-coupon-heading">
@@ -160,12 +154,8 @@ export function CheckoutCoupon({
                     ? "Verificando…"
                     : "Checking…"
                   : es
-                    ? reviewed
-                      ? "Aplicar"
-                      : "Consultar código"
-                    : reviewed
-                      ? "Apply"
-                      : "Check code"}
+                    ? "Aplicar"
+                    : "Apply"}
               </button>
             </div>
             {!ready && (
@@ -182,56 +172,6 @@ export function CheckoutCoupon({
             </p>
           </div>
         </>
-      )}
-      {details && (quote || reviewed) && (
-        <section
-          className="checkout-coupon-details"
-          aria-label={es ? "Condiciones del cupón" : "Coupon conditions"}
-          aria-live="polite"
-        >
-          <strong>
-            {details.code} · {es ? "Condiciones" : "Conditions"}
-          </strong>
-          <dl>
-            <div>
-              <dt>{es ? "Compra mínima" : "Minimum spend"}</dt>
-              <dd>{formatMoney(details.minimumUsdCents, "USD", locale)}</dd>
-            </div>
-            <div>
-              <dt>{es ? "Vigencia" : "Validity"}</dt>
-              <dd>
-                {details.startsAt
-                  ? new Date(details.startsAt).toLocaleString(locale)
-                  : es
-                    ? "Desde publicación"
-                    : "From publication"}{" "}
-                —{" "}
-                {details.endsAt
-                  ? new Date(details.endsAt).toLocaleString(locale)
-                  : es
-                    ? "Sin vencimiento"
-                    : "No expiry"}
-              </dd>
-            </div>
-            <div>
-              <dt>{es ? "Planes" : "Plans"}</dt>
-              <dd>
-                {es
-                  ? "Planes de datos fijos del catálogo."
-                  : "Fixed-data plans in our catalog."}
-              </dd>
-            </div>
-          </dl>
-          <p>
-            {quote
-              ? es
-                ? "Descuento verificado para esta selección; se comprobará otra vez al pagar."
-                : "Discount verified for this selection; checked again at payment."
-              : es
-                ? "Comprobamos si tu selección admite el descuento al aplicarlo."
-                : "We check whether your selection qualifies when you apply."}
-          </p>
-        </section>
       )}
       {error && (
         <p

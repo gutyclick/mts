@@ -6,6 +6,7 @@ import { experienceCopy } from "@/lib/experience-copy";
 import { experiencePath } from "@/lib/experience-routes";
 import { pathFor, type Locale } from "@/lib/i18n";
 import { ActionLink, BackLink, ExperienceHeading } from "./shared";
+import { InstructionGallery } from "../instruction-gallery";
 export function InstallGuide({
   locale,
   esimId,
@@ -67,6 +68,12 @@ export function InstallGuide({
               Android
             </button>
           </div>
+          <InstructionGallery
+            locale={locale}
+            guides={
+              device === "iphone" ? ["iphone", "data", "roaming"] : ["android"]
+            }
+          />
           <ol className="install-steps">
             {(device === "iphone" ? c.iphoneSteps : c.androidSteps).map(
               (step, index) => (

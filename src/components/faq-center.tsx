@@ -9,6 +9,7 @@ import { isFAQTopic, type FAQTopic } from "@/lib/faq-topics";
 import { faqQuestionPath } from "@/lib/faq-links";
 import { FAQFeedback } from "./faq-feedback";
 import { helpTopicIcons } from "./help-topic-icons";
+import { InstructionGallery } from "./instruction-gallery";
 
 export function FAQCenter({
   locale,
@@ -263,6 +264,24 @@ export function FAQCenter({
                                 </a>
                               ))}
                             </div>
+                          )}
+                          {question.id === "install-esim" && (
+                            <InstructionGallery
+                              locale={locale}
+                              guides={["iphone", "android"]}
+                            />
+                          )}
+                          {question.id === "no-internet" && (
+                            <InstructionGallery
+                              locale={locale}
+                              guides={["data", "roaming"]}
+                            />
+                          )}
+                          {question.id === "data-roaming" && (
+                            <InstructionGallery
+                              locale={locale}
+                              guides={["roaming"]}
+                            />
                           )}
                           <FAQFeedback
                             locale={locale}

@@ -16,6 +16,7 @@ import {
   couponQuoteRequestSchema,
   couponQuoteSchema,
   couponFailure,
+  couponDetailsSchema,
 } from "@/lib/payments/coupons";
 import {
   refreshPromotionCosts,
@@ -77,6 +78,26 @@ export async function POST(request: NextRequest) {
         secret,
       ),
     };
+    if (input.data.action === "details") {
+      const result = await db.rpc("coupon_lookup_details", {
+        p_code: args.p_code,
+        p_identity: args.p_identity,
+        p_user: args.p_user,
+        p_rate_key: args.p_rate_key,
+      });
+      if (result.error || !result.data || result.data.error)
+        return reply(
+          {
+            error: couponFailure(
+              String(
+                result.data?.error ?? result.error?.message ?? "invalid_coupon",
+              ),
+            ),
+          },
+          409,
+        );
+      return reply({ details: couponDetailsSchema.parse(result.data) });
+    }
     let result = await db.rpc("coupon_create_quote", args);
     if (!result.error && result.data?.error === "coupon_cost_unavailable") {
       const ids = input.data.lines.map((line) => line.planId);

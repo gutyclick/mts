@@ -38,6 +38,7 @@ const check = `select to_regclass('public.coupon_definitions') is not null as in
 exists(select 1 from pg_trigger where tgname='coupon_audit_immutable' and not tgisinternal) as audit_immutable,
 exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname='coupon_prepare_payment' and position('coupon_live_mode_required' in pg_get_functiondef(p.oid))>0) as live_isolated,
 to_regprocedure('public.promotion_claim_cost_refresh()') is not null as promotion_refresh,
+to_regprocedure('public.coupon_lookup_details(text,text,uuid,text)') is not null and to_regprocedure('public.coupon_admin_insights(uuid)') is not null as coupon_insights,
 not has_table_privilege('anon','public.checkout_orders','insert') as orders_private;`;
 try {
   if (readFileSync("supabase/.temp/project-ref", "utf8").trim() !== project)
@@ -55,6 +56,7 @@ try {
       ...(!state.promotion_refresh
         ? ["20261103000100_promotion_cost_refresh"]
         : []),
+      ...(!state.coupon_insights ? ["20261103000300_coupon_insights"] : []),
     ];
     if (!pending.length) {
       console.log("Coupon migrations already installed. No changes made.");
@@ -69,7 +71,7 @@ try {
       )
       .join("\n");
     // A schema preflight can always be rolled back; no customer rows are changed.
-    const tail = `do $$ begin if has_function_privilege('anon','public.coupon_create_quote(text,text,uuid,jsonb,text,uuid,text)','execute') or has_table_privilege('service_role','public.coupon_audit_logs','update') then raise exception 'coupon_privacy_invariant';end if;end;$$;
+    const tail = `do $$ begin if has_function_privilege('anon','public.coupon_create_quote(text,text,uuid,jsonb,text,uuid,text)','execute') or has_function_privilege('anon','public.coupon_lookup_details(text,text,uuid,text)','execute') or has_function_privilege('authenticated','public.coupon_admin_insights(uuid)','execute') or has_table_privilege('service_role','public.coupon_audit_logs','update') then raise exception 'coupon_privacy_invariant';end if;end;$$;
       select count(*)::int as offers, true as private_rpc from public.coupon_definitions;`;
     const rows = query(
       `begin;set local lock_timeout='5s';set local statement_timeout='30s';${migration}\n${tail}\n${mode === "--preflight" ? "rollback" : "commit"};`,
@@ -89,7 +91,8 @@ try {
       state.installed &&
         state.audit_immutable &&
         state.live_isolated &&
-        state.promotion_refresh
+        state.promotion_refresh &&
+        state.coupon_insights
         ? "Coupon infrastructure installed; order writes and audit history remain protected."
         : "Coupon infrastructure not installed; orders unchanged.",
     );

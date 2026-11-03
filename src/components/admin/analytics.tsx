@@ -17,6 +17,26 @@ const count = z.number().nonnegative(),
       paid: count,
     }),
     financial: z.object({ orders: count, grossCents: count }),
+    checkoutFunnel: z.object({
+      entry: count,
+      contactReady: count,
+      paymentReady: count,
+      paymentAttempt: count,
+      paymentError: count,
+      couponAttempted: count,
+      couponApplied: count,
+      couponRejected: count,
+      paid: count,
+      incomplete: count,
+      matured: count,
+      maturedUnpaid: count,
+      stopped: z.object({
+        afterAttempt: count,
+        beforeContact: count,
+        formUnavailable: count,
+        beforeAttempt: count,
+      }),
+    }),
     destinations: z.array(
       z.object({
         slug: z.string(),
@@ -180,7 +200,7 @@ export function AnalyticsDashboard({ locale }: { locale: Locale }) {
                   },
                   {
                     key: "checkout",
-                    label: es ? "Inicia el pago" : "Starts payment",
+                    label: es ? "Crea un pedido" : "Creates an order",
                   },
                   {
                     key: "paid",
@@ -210,6 +230,135 @@ export function AnalyticsDashboard({ locale }: { locale: Locale }) {
               {es
                 ? "Cada etapa se cuenta de forma independiente: alguien puede recuperar un carrito o llegar directamente al pago. Los porcentajes usan sesiones registradas, no todos los visitantes. Rechazos, bloqueadores y fallos técnicos pueden reducir los registros."
                 : "Each stage is counted independently: someone may restore a cart or go directly to payment. Percentages use recorded sessions, not all visitors. Refusals, blockers and technical failures may reduce recorded activity."}
+            </p>
+          </section>
+          <section className="analytics-card analytics-checkout">
+            <h2>{es ? "Dentro del checkout" : "Inside checkout"}</h2>
+            <p className="analytics-note">
+              {es
+                ? "Sesiones con consentimiento cuya primera entrada al checkout está en el periodo. Cada etapa se cuenta una vez por sesión, independientemente del orden; no son intentos ni personas únicas. Los pagos proceden del estado confirmado del servidor, después de entrar al checkout y dentro de la sesión original de 30 minutos."
+                : "Consenting sessions whose first checkout entry falls in the period. Each stage counts once per session, independently of sequence; these are not attempt totals or unique people. Paid comes from confirmed server status after checkout entry and within the original 30-minute session."}
+            </p>
+            <ol className="analytics-funnel">
+              {(
+                [
+                  ["entry", es ? "Entra al checkout" : "Enters checkout"],
+                  ["contactReady", es ? "Contacto listo" : "Contact ready"],
+                  [
+                    "paymentReady",
+                    es ? "Formulario de pago listo" : "Payment form ready",
+                  ],
+                  ["paymentAttempt", es ? "Intenta pagar" : "Attempts payment"],
+                  ["paid", es ? "Compra confirmada" : "Confirmed purchase"],
+                ] as const
+              ).map(([key, label]) => (
+                <li key={key}>
+                  <span>{label}</span>
+                  <div className="analytics-bar" aria-hidden="true">
+                    <span
+                      style={{
+                        width: `${data.checkoutFunnel.entry ? Math.min(100, (data.checkoutFunnel[key] / data.checkoutFunnel.entry) * 100) : 0}%`,
+                      }}
+                    />
+                  </div>
+                  <strong>
+                    {data.checkoutFunnel[key]}{" "}
+                    <small>
+                      (
+                      {percent(
+                        data.checkoutFunnel[key],
+                        data.checkoutFunnel.entry,
+                      )}
+                      )
+                    </small>
+                  </strong>
+                </li>
+              ))}
+            </ol>
+            <dl className="analytics-checkout-status">
+              <div>
+                <dt>
+                  {es ? "Incompletas, aún abiertas" : "Incomplete, still open"}
+                </dt>
+                <dd>{data.checkoutFunnel.incomplete}</dd>
+              </div>
+              <div>
+                <dt>
+                  {es
+                    ? "Sin compra al cerrar la ventana"
+                    : "Unpaid after window closes"}
+                </dt>
+                <dd>
+                  {data.checkoutFunnel.maturedUnpaid}{" "}
+                  <small>
+                    (
+                    {percent(
+                      data.checkoutFunnel.maturedUnpaid,
+                      data.checkoutFunnel.matured,
+                    )}
+                    )
+                  </small>
+                </dd>
+              </div>
+              <div>
+                <dt>
+                  {es
+                    ? "Sesiones con error de pago"
+                    : "Sessions with payment error"}
+                </dt>
+                <dd>{data.checkoutFunnel.paymentError}</dd>
+              </div>
+              <div>
+                <dt>
+                  {es
+                    ? "Cupón intentado / aplicado / rechazado"
+                    : "Coupon attempted / applied / rejected"}
+                </dt>
+                <dd>
+                  {data.checkoutFunnel.couponAttempted} /{" "}
+                  {data.checkoutFunnel.couponApplied} /{" "}
+                  {data.checkoutFunnel.couponRejected}
+                </dd>
+              </div>
+            </dl>
+            <h3>
+              {es
+                ? "Última etapa observada sin compra"
+                : "Last observed stage without purchase"}
+            </h3>
+            <dl className="analytics-checkout-status">
+              {(
+                [
+                  [
+                    "beforeContact",
+                    es ? "Sin datos de contacto" : "No contact details",
+                  ],
+                  [
+                    "formUnavailable",
+                    es ? "Formulario no listo" : "Payment form not ready",
+                  ],
+                  [
+                    "beforeAttempt",
+                    es ? "Sin intentar pagar" : "No payment attempt",
+                  ],
+                  [
+                    "afterAttempt",
+                    es
+                      ? "Después de intentar pagar"
+                      : "After a payment attempt",
+                  ],
+                ] as const
+              ).map(([key, label]) => (
+                <div key={key}>
+                  <dt>{label}</dt>
+                  <dd>{data.checkoutFunnel.stopped[key]}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="analytics-note">
+              {es
+                ? "El abandono medido espera 30 minutos desde la primera entrada al checkout, aunque la navegación empezara antes. Las etapas y los pagos solo se observan mientras sigue vigente la sesión original; no se atribuyen compras posteriores. Las cuatro últimas etapas agrupan sin solaparse todas las sesiones maduras sin compra; describen observaciones, no prueban causas. Los grupos de cupón pueden solaparse si alguien corrige un cupón. No se guardan correos, códigos de cupón, datos de pago ni mensajes de error. La medición comienza al activar esta versión y puede ser incompleta por bloqueadores o fallos técnicos."
+                : "Measured abandonment waits 30 minutes after first checkout entry, even if browsing started earlier. Stages and payments are observed only while the original session remains valid; later purchases are not attributed. The four last-stage groups partition all matured unpaid sessions without overlap; observations do not prove causes. Coupon groups can overlap when someone corrects a coupon. No emails, coupon codes, payment details or error messages are stored. Measurement starts when this version is enabled and may be incomplete due to blockers or technical failures."}
             </p>
           </section>
           <section className="analytics-card" style={{ marginTop: 20 }}>

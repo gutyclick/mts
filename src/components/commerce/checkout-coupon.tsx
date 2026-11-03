@@ -4,11 +4,15 @@ import { useState } from "react";
 import { Check, Tag, LoaderCircle, X } from "lucide-react";
 import { formatMoney } from "@/lib/currency";
 import type { Locale } from "@/lib/i18n";
-import type { CouponQuote } from "@/lib/payments/coupons";
+import type { CouponDetails, CouponQuote } from "@/lib/payments/coupons";
 
 export type CheckoutCouponQuote = CouponQuote;
 
 export function couponErrorMessage(code: string, es: boolean) {
+  if (code === "coupon_minimum")
+    return es
+      ? "Tu pedido no alcanza la compra mínima indicada para este cupón."
+      : "Your order does not meet the minimum spend shown for this coupon.";
   if (code === "rate_limit")
     return es
       ? "Espera un momento antes de volver a aplicar el código."
@@ -49,6 +53,8 @@ export function CheckoutCoupon({
   error,
   onApply,
   onRemove,
+  details,
+  onCheck,
 }: {
   locale: Locale;
   quote: CheckoutCouponQuote | null;
@@ -58,9 +64,16 @@ export function CheckoutCoupon({
   error: string;
   onApply: (code: string) => void;
   onRemove: () => void;
+  details?: CouponDetails | null;
+  onCheck?: (code: string) => void;
 }) {
   const es = locale === "es";
   const [code, setCode] = useState("");
+  const reviewed = !!details && details.code === code.trim();
+  const submitCode = () => {
+    if (reviewed) onApply(code.trim());
+    else onCheck?.(code.trim());
+  };
   return (
     <div className="checkout-coupon" aria-busy={busy}>
       <div className="checkout-coupon-heading">
@@ -126,14 +139,14 @@ export function CheckoutCoupon({
                   if (event.key === "Enter") {
                     event.preventDefault();
                     if (ready && !disabled && !busy && code.trim())
-                      onApply(code.trim());
+                      submitCode();
                   }
                 }}
               />
               <button
                 type="button"
                 disabled={disabled || busy || !ready || !code.trim()}
-                onClick={() => onApply(code.trim())}
+                onClick={submitCode}
               >
                 {busy ? (
                   <LoaderCircle
@@ -144,11 +157,15 @@ export function CheckoutCoupon({
                 ) : null}
                 {busy
                   ? es
-                    ? "Aplicando…"
-                    : "Applying…"
+                    ? "Verificando…"
+                    : "Checking…"
                   : es
-                    ? "Aplicar"
-                    : "Apply"}
+                    ? reviewed
+                      ? "Aplicar"
+                      : "Consultar código"
+                    : reviewed
+                      ? "Apply"
+                      : "Check code"}
               </button>
             </div>
             {!ready && (
@@ -165,6 +182,56 @@ export function CheckoutCoupon({
             </p>
           </div>
         </>
+      )}
+      {details && (quote || reviewed) && (
+        <section
+          className="checkout-coupon-details"
+          aria-label={es ? "Condiciones del cupón" : "Coupon conditions"}
+          aria-live="polite"
+        >
+          <strong>
+            {details.code} · {es ? "Condiciones" : "Conditions"}
+          </strong>
+          <dl>
+            <div>
+              <dt>{es ? "Compra mínima" : "Minimum spend"}</dt>
+              <dd>{formatMoney(details.minimumUsdCents, "USD", locale)}</dd>
+            </div>
+            <div>
+              <dt>{es ? "Vigencia" : "Validity"}</dt>
+              <dd>
+                {details.startsAt
+                  ? new Date(details.startsAt).toLocaleString(locale)
+                  : es
+                    ? "Desde publicación"
+                    : "From publication"}{" "}
+                —{" "}
+                {details.endsAt
+                  ? new Date(details.endsAt).toLocaleString(locale)
+                  : es
+                    ? "Sin vencimiento"
+                    : "No expiry"}
+              </dd>
+            </div>
+            <div>
+              <dt>{es ? "Planes" : "Plans"}</dt>
+              <dd>
+                {es
+                  ? "Planes de datos fijos del catálogo."
+                  : "Fixed-data plans in our catalog."}
+              </dd>
+            </div>
+          </dl>
+          <p>
+            {quote
+              ? es
+                ? "Descuento verificado para esta selección; se comprobará otra vez al pagar."
+                : "Discount verified for this selection; checked again at payment."
+              : es
+                ? "Comprobamos si tu selección admite el descuento al aplicarlo."
+                : "We check whether your selection qualifies when you apply."}
+          </p>
+        </section>
       )}
       {error && (
         <p

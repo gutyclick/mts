@@ -402,7 +402,16 @@ export function PaymentResult({
           </p>
         )}
       </section>
-      {paid && <EsimDelivery locale={locale} orderId={orderId} />}
+      {paid && (
+        <EsimDelivery
+          locale={locale}
+          orderId={orderId}
+          expectedUnits={receipt.items.reduce(
+            (sum, item) => sum + item.quantity,
+            0,
+          )}
+        />
+      )}
     </div>
   );
 }

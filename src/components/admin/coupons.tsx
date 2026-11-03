@@ -37,6 +37,18 @@ export type AdminCoupon = {
 };
 export type CouponAdminData = {
   coupons: AdminCoupon[];
+  insights: Record<
+    string,
+    {
+      paidOrders: number;
+      refundExcludedOrders: number;
+      refundExcludedSalesUsdCents: number;
+      salesUsdCents: number;
+      discountUsdCents: number;
+      estimatedOrders: number;
+      estimatedContributionUsdCents: number | null;
+    }
+  >;
   summary: {
     active: number;
     scheduled: number;
@@ -261,6 +273,8 @@ export function CouponsAdmin({ locale }: { locale: Locale }) {
                       es ? "Descuento" : "Discount",
                       es ? "Vigencia" : "Validity",
                       es ? "Uso / límite" : "Uses / limit",
+                      es ? "Ventas (referencia USD)" : "Sales (USD reference)",
+                      es ? "Contribución estimada" : "Estimated contribution",
                       es ? "Estado" : "Status",
                       es ? "Acciones" : "Actions",
                     ].map((x) => (
@@ -315,6 +329,64 @@ export function CouponsAdmin({ locale }: { locale: Locale }) {
                           {es ? "por persona" : "per person"}
                         </span>
                       </td>
+                      <td
+                        data-label={
+                          es
+                            ? "Ventas (referencia USD)"
+                            : "Sales (USD reference)"
+                        }
+                      >
+                        <strong>
+                          {formatUSD(
+                            data?.insights?.[c.id]?.salesUsdCents ?? 0,
+                            locale,
+                          )}
+                        </strong>
+                        <span className="coupon-secondary">
+                          {data?.insights?.[c.id]?.paidOrders ?? 0}{" "}
+                          {es ? "pedidos · descuentos" : "orders · discounts"}{" "}
+                          {formatUSD(
+                            data?.insights?.[c.id]?.discountUsdCents ?? 0,
+                            locale,
+                          )}
+                        </span>
+                      </td>
+                      <td
+                        data-label={
+                          es
+                            ? "Contribución estimada"
+                            : "Estimated contribution"
+                        }
+                      >
+                        <strong>
+                          {data?.insights?.[c.id]
+                            ?.estimatedContributionUsdCents != null
+                            ? formatUSD(
+                                data.insights[c.id]
+                                  .estimatedContributionUsdCents!,
+                                locale,
+                              )
+                            : "—"}
+                        </strong>
+                        <span className="coupon-secondary">
+                          {data?.insights?.[c.id]?.estimatedOrders ?? 0} /{" "}
+                          {data?.insights?.[c.id]?.paidOrders ?? 0}{" "}
+                          {es ? "pedidos estimados" : "orders estimated"}
+                        </span>
+                        {!!data?.insights?.[c.id]?.refundExcludedOrders && (
+                          <span className="coupon-secondary">
+                            {data.insights[c.id].refundExcludedOrders}{" "}
+                            {es
+                              ? "excluidos por reembolso"
+                              : "excluded for refunds"}{" "}
+                            ·{" "}
+                            {formatUSD(
+                              data.insights[c.id].refundExcludedSalesUsdCents,
+                              locale,
+                            )}
+                          </span>
+                        )}
+                      </td>
                       <td>
                         <span
                           className={`coupon-status coupon-status-${status(c)}`}
@@ -361,6 +433,9 @@ export function CouponsAdmin({ locale }: { locale: Locale }) {
           )}
         </section>
         <p className="coupon-footnote">
+          {es
+            ? "Ventas en USD al precio de compra tras el cupón, solo pedidos pagados en producción. Las métricas por oferta excluyen pedidos con reembolsos solicitados, en curso o completados, incluso parciales. La contribución estimada usa cobros conservadores, costos mayoristas y comisiones guardados al comprar; no es beneficio neto ni conciliación de Stripe. Los descuentos del resumen incluyen todos los usos completados. "
+            : "USD sales use checkout prices after the coupon, for paid live orders only. Per-offer metrics exclude orders with requested, ongoing or completed refunds, including partial refunds. Estimated contribution uses conservative receipts, wholesale costs and fees saved at checkout; it is not net profit or Stripe reconciliation. Summary discounts include all completed uses. "}
           {es
             ? "Un cupón por compra. No se combina con SimCoins. Las fechas se muestran en la zona horaria de tu navegador; el cupón deja de ser válido a la hora exacta de vencimiento."
             : "One coupon per purchase. Cannot be combined with SimCoins. Dates use your browser’s time zone; the coupon stops being valid at the exact expiry time."}

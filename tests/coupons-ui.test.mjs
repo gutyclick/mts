@@ -74,3 +74,29 @@ test("unready and busy coupons cannot be submitted, while errors explain transie
   assert.match(html, /aria-describedby="checkout-coupon-error"/);
   assert.match(html, /role="alert"/);
 });
+
+test("coupon conditions are visible with an applied code and initial action checks before applying", () => {
+  const html = renderToStaticMarkup(
+    createElement(exports.CheckoutCoupon, { ...props }),
+  );
+  assert.match(html, /Consultar código/);
+  const applied = renderToStaticMarkup(
+    createElement(exports.CheckoutCoupon, {
+      ...props,
+      quote: { code: "VIAJE5", discountTotal: 200, currency: "USD" },
+      details: {
+        code: "VIAJE5",
+        minimumUsdCents: 1500,
+        startsAt: null,
+        endsAt: null,
+        eligiblePlans: "published_fixed",
+        eligibility: "not_evaluated",
+      },
+    }),
+  );
+  assert.match(applied, /Compra mínima/);
+  assert.match(applied, /15\.00/);
+  assert.match(applied, /Sin vencimiento/);
+  assert.match(applied, /Planes de datos fijos del catálogo/);
+  assert.match(applied, /se comprobará otra vez al pagar/);
+});

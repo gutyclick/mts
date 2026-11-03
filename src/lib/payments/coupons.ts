@@ -57,6 +57,7 @@ export const couponAdminRequestSchema = z.discriminatedUnion("action", [
 ]);
 export const couponQuoteRequestSchema = z
   .object({
+    action: z.enum(["details", "quote"]).optional(),
     code: couponCodeSchema,
     email: z.email().max(254),
     lines: cartSchema.refine((lines) => lines.length > 0),
@@ -75,10 +76,20 @@ export const couponQuoteSchema = z.object({
   expiresAt: z.iso.datetime({ offset: true }),
 });
 export type CouponQuote = z.infer<typeof couponQuoteSchema>;
+export const couponDetailsSchema = z.object({
+  code: couponCodeSchema,
+  minimumUsdCents: money,
+  startsAt: timestamp,
+  endsAt: timestamp,
+  eligiblePlans: z.literal("published_fixed"),
+  eligibility: z.literal("not_evaluated"),
+});
+export type CouponDetails = z.infer<typeof couponDetailsSchema>;
 export function couponFailure(error: string): string {
   return (
     [
       "invalid_coupon",
+      "coupon_minimum",
       "coupon_limit",
       "coupon_margin",
       "coupon_cost_unavailable",

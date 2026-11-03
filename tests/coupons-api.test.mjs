@@ -57,6 +57,7 @@ function harness(kind, options = {}) {
             ? { error: { message: options.rpcError } }
             : {
                 data:
+                  options.rpcByName?.[name] ??
                   options.rpcData ??
                   (kind === "coupon" ? result : { ok: true }),
               };
@@ -203,4 +204,79 @@ test("supplier margin rejections expose no costs and never turn into a discount"
   assert.equal(r.status, 409);
   assert.deepEqual(await r.json(), { error: "coupon_margin" });
   assert.equal(h.calls.length, 1);
+});
+
+test("code-specific condition requests preserve guards and expose only the safe DTO", async () => {
+  const details = {
+    code: "VIAJE5",
+    minimumUsdCents: 1500,
+    startsAt: null,
+    endsAt: null,
+    eligiblePlans: "published_fixed",
+    eligibility: "not_evaluated",
+    wholesaleUnitUnits: 12345,
+  };
+  const h = harness("coupon", { rpcData: details });
+  const response = await h.api.POST(
+    request({ ...quoteBody, action: "details" }),
+  );
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.details.minimumUsdCents, 1500);
+  assert.equal(body.details.eligibility, "not_evaluated");
+  assert.equal(JSON.stringify(body).includes("wholesale"), false);
+  assert.equal(h.calls.length, 1);
+  assert.equal(h.calls[0].name, "coupon_lookup_details");
+  assert.equal(h.calls[0].args.p_user, null);
+  assert.match(h.calls[0].args.p_rate_key, /^[a-f0-9]{64}$/);
+  const unverified = harness("coupon", {
+    user: { id: actor, email: "unverified@example.invalid" },
+  });
+  assert.equal(
+    (await unverified.api.POST(request({ ...quoteBody, action: "details" })))
+      .status,
+    403,
+  );
+  assert.equal(unverified.calls.length, 0);
+  const blocked = harness("coupon", { rpcData: { error: "rate_limit" } });
+  assert.equal(
+    (await blocked.api.POST(request({ ...quoteBody, action: "details" })))
+      .status,
+    409,
+  );
+});
+
+test("admin reporting requires both private reports and never substitutes unavailable insights with zero", async () => {
+  const insights = {
+    [id]: {
+      paidOrders: 1,
+      salesUsdCents: 800,
+      discountUsdCents: 200,
+      estimatedOrders: 1,
+      estimatedContributionUsdCents: 300,
+      refundExcludedOrders: 1,
+      refundExcludedSalesUsdCents: 800,
+    },
+  };
+  const snapshot = { coupons: [], summary: { active: 0 } };
+  const h = harness("admin", {
+    rpcByName: {
+      coupon_admin_snapshot: snapshot,
+      coupon_admin_insights: insights,
+    },
+  });
+  const response = await h.api.GET();
+  assert.equal(response.status, 200);
+  assert.deepEqual((await response.json()).insights, insights);
+  assert.equal(h.calls.length, 2);
+  assert.equal(h.calls[1].args.p_actor, actor);
+  const missing = harness("admin", {
+    rpcByName: {
+      coupon_admin_snapshot: snapshot,
+      coupon_admin_insights: false,
+    },
+    rpcData: null,
+  });
+  // No valid snapshot data yields unavailability, never a fabricated metric.
+  assert.equal((await missing.api.GET()).status, 503);
 });

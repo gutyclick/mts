@@ -15,10 +15,12 @@ export function installationLinks(smdp: string, code: string) {
 export function shouldPollDelivery(
   units: { state: string }[],
   attempts: number,
+  expectedUnits = 0,
 ) {
   return (
     attempts < 120 &&
     (!units.length ||
+      units.length < expectedUnits ||
       units.some((u) =>
         ["queued", "provider_pending", "ready"].includes(u.state),
       ))

@@ -1134,6 +1134,64 @@
   display: grid;
   gap: 16px;
 }
+.delivery-progress {
+  padding: 18px;
+  margin-bottom: 22px;
+  background: #f5f8fe;
+  border: 1px solid #dce7f6;
+  border-radius: 16px;
+}
+.delivery-progress ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.delivery-progress li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #526785;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 650;
+}
+.delivery-progress-marker {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border: 1px solid #a5b4cb;
+  border-radius: 50%;
+}
+.delivery-progress .is-complete {
+  color: #21764c;
+}
+.delivery-progress .is-complete .delivery-progress-marker {
+  background: #21764c;
+  color: #fff;
+  border-color: #21764c;
+}
+.delivery-progress .is-current {
+  color: #154fa2;
+}
+.delivery-progress .is-current .delivery-progress-marker {
+  border: 2px solid #1269ed;
+}
+.esim-delivery .delivery-progress p {
+  margin: 18px 0 0;
+}
+@media (max-width: 650px) {
+  .delivery-progress ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .delivery-progress li {
+    align-items: center;
+  }
+}
 .esim-delivery-unit {
   border: 1px solid #dce7f6;
   border-radius: 18px;
@@ -1162,7 +1220,8 @@
   border-radius: 10px;
   font-size: 12px;
   font-weight: 700;
-  white-space: nowrap;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .delivery-sent,
 .delivery-ready {

@@ -1,6 +1,10 @@
 "use client";
 import { useMemo, useRef, useEffect, useState, type FormEvent } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { paymentFeedback } from "@/lib/payments/payment-feedback";
+import { recordCheckoutStats } from "@/lib/analytics/client";
 import type { StripeExpressCheckoutElementConfirmEvent } from "@stripe/stripe-js";
 import {
   CheckoutElementsProvider,
@@ -119,6 +123,7 @@ export function EmbeddedPayment({
             buyer={buyer}
             recipient={recipient}
             onBack={onBack}
+            orderId={orderId}
           />
         </CheckoutElementsProvider>
       )}
@@ -133,6 +138,7 @@ function PaymentForm({
   buyer,
   recipient,
   onBack,
+  orderId,
 }: {
   live: boolean;
   locale: Locale;
@@ -141,7 +147,9 @@ function PaymentForm({
   buyer: string;
   recipient: string;
   onBack: () => void;
+  orderId: string;
 }) {
+  const router = useRouter();
   const { setPaymentBusy } = useCurrency();
   useEffect(() => () => setPaymentBusy(false), [setPaymentBusy]);
   const es = locale === "es";
@@ -151,6 +159,7 @@ function PaymentForm({
   const [ready, setReady] = useState(false);
   const [walletsAvailable, setWalletsAvailable] = useState(false);
   const submitting = useRef(false);
+  const [verifyOrder, setVerifyOrder] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     heading.current?.focus();
@@ -165,6 +174,7 @@ function PaymentForm({
     if (
       state.type !== "success" ||
       submitting.current ||
+      verifyOrder ||
       (!expressEvent && !ready)
     ) {
       expressEvent?.paymentFailed({ reason: "fail" });
@@ -174,6 +184,8 @@ function PaymentForm({
     setPaymentBusy(true);
     setBusy(true);
     setError("");
+    let confirmationStarted = false;
+    recordCheckoutStats("payment_attempt");
     try {
       if (
         state.checkout.livemode !== live ||
@@ -181,19 +193,30 @@ function PaymentForm({
         state.checkout.total.total.minorUnitsAmount !== total
       )
         throw new Error("Payment environment mismatch");
+      confirmationStarted = true;
       const result = await state.checkout.confirm(
         expressEvent
           ? { expressCheckoutConfirmEvent: expressEvent }
           : undefined,
       );
-      if (result.type === "error") setError(result.error.message);
-    } catch {
+      if (result.type === "error") {
+        recordCheckoutStats("payment_error");
+        const guidance = paymentFeedback(result.error, locale, {
+          confirmationStarted: true,
+        });
+        setError(guidance.message);
+        if (guidance.action === "verify") setVerifyOrder(true);
+      } else {
+        router.push(
+          `/${locale}/checkout/result?order=${encodeURIComponent(orderId)}`,
+        );
+      }
+    } catch (error) {
       expressEvent?.paymentFailed({ reason: "fail" });
-      setError(
-        es
-          ? "No pudimos confirmar el pago. Revisa tu conexión y vuelve a intentarlo."
-          : "We couldn’t confirm payment. Check your connection and try again.",
-      );
+      recordCheckoutStats("payment_error");
+      const guidance = paymentFeedback(error, locale, { confirmationStarted });
+      setError(guidance.message);
+      if (guidance.action === "verify") setVerifyOrder(true);
     } finally {
       submitting.current = false;
       setPaymentBusy(false);
@@ -292,6 +315,14 @@ function PaymentForm({
             {error}
           </p>
         )}
+        {verifyOrder && (
+          <Link
+            className="button button-secondary"
+            href={`/${locale}/checkout/result?order=${encodeURIComponent(orderId)}`}
+          >
+            {es ? "Comprobar estado del pedido" : "Check order status"}
+          </Link>
+        )}
         <p className="embedded-payment-secure">
           <LockKeyhole size={15} />
           {es
@@ -303,6 +334,7 @@ function PaymentForm({
           type="submit"
           disabled={
             busy ||
+            verifyOrder ||
             !ready ||
             state.type !== "success" ||
             (state.type === "success" &&

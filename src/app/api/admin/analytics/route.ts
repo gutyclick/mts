@@ -15,12 +15,13 @@ export async function GET(request: NextRequest) {
     const days = request.nextUrl.searchParams.get("days") ?? "30";
     if (!["1", "7", "30"].includes(days))
       return reply({ error: "invalid" }, 400);
-    const { data, error } = await checkoutDatabase().rpc("admin_analytics", {
-      p_actor: s.user.id,
-      p_days: Number(days),
-    });
-    if (error) throw Error();
-    return reply(data);
+    const args = { p_actor: s.user.id, p_days: Number(days) };
+    const [summary, checkout] = await Promise.all([
+      checkoutDatabase().rpc("admin_analytics", args),
+      checkoutDatabase().rpc("admin_checkout_analytics", args),
+    ]);
+    if (summary.error || checkout.error) throw Error();
+    return reply({ ...summary.data, checkoutFunnel: checkout.data });
   } catch {
     return reply({ error: "unavailable" }, 503);
   }

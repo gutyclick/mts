@@ -1,5 +1,10 @@
 "use client";
-import { publicStatsPath } from "./model";
+import {
+  publicStatsPath,
+  checkoutStatsPath,
+  checkoutEventKinds,
+  type CheckoutEventKind,
+} from "./model";
 let allowed = false;
 export function browserStatsBlocked() {
   return (
@@ -16,6 +21,23 @@ export function setStatsPermission(value: boolean) {
 }
 export function statsPermissionAllowed() {
   return allowed && !browserStatsBlocked();
+}
+// The server deduplicates each stage per short-lived consenting session.
+// No checkout field, coupon code, error text, order or customer identifier is sent.
+export function recordCheckoutStats(kind: CheckoutEventKind) {
+  if (
+    !statsPermissionAllowed() ||
+    typeof window === "undefined" ||
+    !checkoutStatsPath(window.location.pathname) ||
+    !checkoutEventKinds.includes(kind)
+  )
+    return;
+  void fetch("/api/analytics/event", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ kind }),
+    keepalive: true,
+  }).catch(() => {});
 }
 export function recordStats(
   kind: "destination_view" | "add_to_cart",

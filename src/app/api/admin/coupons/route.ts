@@ -31,7 +31,12 @@ export async function GET() {
     );
     if (error || !data || !Array.isArray(data.coupons))
       return reply({ error: "unavailable" }, 503);
-    return reply(data);
+    const insights = await checkoutDatabase().rpc("coupon_admin_insights", {
+      p_actor: session.user!.id,
+    });
+    if (insights.error || !insights.data || typeof insights.data !== "object")
+      return reply({ error: "unavailable" }, 503);
+    return reply({ ...data, insights: insights.data });
   } catch {
     return reply({ error: "unavailable" }, 503);
   }

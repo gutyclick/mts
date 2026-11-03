@@ -19,7 +19,21 @@ export function analyticsAllowed(
 export function validAnalyticsToken(value: unknown): value is string {
   return typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
 }
-export const clientEventSchema = z
+export const checkoutEventKinds = [
+  "checkout_entry",
+  "contact_ready",
+  "payment_ready",
+  "coupon_attempted",
+  "coupon_applied",
+  "coupon_rejected",
+  "payment_attempt",
+  "payment_error",
+] as const;
+export type CheckoutEventKind = (typeof checkoutEventKinds)[number];
+export function checkoutStatsPath(path: string) {
+  return /^\/(?:es\/compra|en\/checkout)\/?$/.test(path);
+}
+const destinationEventSchema = z
   .object({
     kind: z.enum(["destination_view", "add_to_cart"]),
     destination: z
@@ -29,6 +43,10 @@ export const clientEventSchema = z
       .regex(/^[a-z0-9-]+$/),
   })
   .strict();
+export const clientEventSchema = z.union([
+  destinationEventSchema,
+  z.object({ kind: z.enum(checkoutEventKinds) }).strict(),
+]);
 export function destinationFromPath(path: string) {
   const match = /^\/(?:es|en)\/esim\/([a-z0-9-]{1,80})\/?$/.exec(path);
   return match && match[1] !== "access" ? match[1] : null;

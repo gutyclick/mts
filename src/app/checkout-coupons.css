@@ -294,3 +294,30 @@
     padding-inline: 12px;
   }
 }
+.checkout-streamlined .checkout-coupon-details {
+  display: block;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #bed3eb;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--checkout-ink);
+}
+.checkout-streamlined .checkout-coupon-details dl {
+  margin: 10px 0;
+  display: grid;
+  gap: 9px;
+}
+.checkout-streamlined .checkout-coupon-details dt {
+  color: var(--checkout-muted);
+  font-size: 12px;
+}
+.checkout-streamlined .checkout-coupon-details dd {
+  margin: 2px 0 0;
+  line-height: 1.5;
+}
+.checkout-streamlined .checkout-coupon-details p {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+}

@@ -9,12 +9,14 @@ import {
   LoaderCircle,
   ArrowRight,
   RefreshCw,
+  Check,
 } from "lucide-react";
 import { z } from "zod";
 import type { Locale } from "@/lib/i18n";
 import { experiencePath } from "@/lib/experience-routes";
 import { QuickInstall } from "@/components/account/quick-install";
 import { shouldPollDelivery } from "@/lib/esim-installation";
+import { canInstallDelivery, deliveryProgress } from "@/lib/delivery-progress";
 import { CopyValue } from "@/components/account/copy-value";
 const unitSchema = z.object({
   id: z.uuid(),
@@ -40,10 +42,12 @@ export function EsimDelivery({
   locale,
   orderId,
   guest = false,
+  expectedUnits,
 }: {
   locale: Locale;
   orderId?: string;
   guest?: boolean;
+  expectedUnits?: number;
 }) {
   const es = locale === "es";
   const [units, setUnits] = useState<Unit[]>([]),
@@ -96,14 +100,19 @@ export function EsimDelivery({
         );
         setError(false);
         setLoading(false);
-        setPolling(shouldPollDelivery(data.units, attempts + 1));
-        if (shouldPollDelivery(data.units, ++attempts))
-          timer = setTimeout(load, 5000);
+        const keepPolling = shouldPollDelivery(
+          data.units,
+          ++attempts,
+          expectedUnits,
+        );
+        setPolling(keepPolling);
+        if (keepPolling) timer = setTimeout(load, 5000);
         else setPolling(false);
       } catch {
         if (!controller.signal.aborted) {
           setError(true);
           setLoading(false);
+          setPolling(false);
         }
       }
     }
@@ -112,7 +121,13 @@ export function EsimDelivery({
       controller.abort();
       clearTimeout(timer);
     };
-  }, [orderId, guest, retry]);
+  }, [orderId, guest, retry, expectedUnits]);
+  function refresh() {
+    setLoading(true);
+    setPolling(true);
+    setError(false);
+    setRetry((value) => value + 1);
+  }
   async function open(unit: Unit) {
     setOpening(unit.id);
     try {
@@ -134,6 +149,12 @@ export function EsimDelivery({
       setOpening(null);
     }
   }
+  const progress = deliveryProgress(units, expectedUnits);
+  const showProgress = !guest || (!loading && !error);
+  const steps = es
+    ? ["Pago confirmado", "Preparando tu eSIM", "Lista para instalar"]
+    : ["Payment confirmed", "Preparing your eSIM", "Ready to install"];
+  const currentStep = progress.complete ? 2 : 1;
   return (
     <section className="esim-delivery" aria-labelledby="esim-delivery-title">
       <div className="esim-delivery-title">
@@ -153,7 +174,87 @@ export function EsimDelivery({
           </p>
         </div>
       </div>
-      {loading && (
+      {showProgress && (
+        <div className="delivery-progress">
+          <ol aria-label={es ? "Progreso de tu pedido" : "Order progress"}>
+            {steps.map((step, index) => (
+              <li
+                key={step}
+                className={
+                  index < currentStep || progress.complete
+                    ? "is-complete"
+                    : index === currentStep
+                      ? "is-current"
+                      : ""
+                }
+                aria-current={
+                  !error && !progress.testOnly && index === currentStep
+                    ? "step"
+                    : undefined
+                }
+              >
+                <span className="delivery-progress-marker" aria-hidden="true">
+                  {index < currentStep || progress.complete ? (
+                    <Check size={16} />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
+          <p role="status" aria-live="polite" aria-atomic="true">
+            {loading
+              ? es
+                ? "Pago confirmado. Consultando la preparación de tu eSIM…"
+                : "Payment confirmed. Checking your eSIM preparation…"
+              : error
+                ? es
+                  ? "Tu pago sigue confirmado. No pudimos actualizar la preparación; vuelve a intentarlo."
+                  : "Your payment is still confirmed. We couldn’t update preparation; try again."
+                : progress.testOnly
+                  ? es
+                    ? "Pago de prueba: no se emitirá una eSIM real."
+                    : "Test payment: no real eSIM will be issued."
+                  : progress.complete
+                    ? es
+                      ? `${progress.ready} de ${progress.total} eSIM listas para instalar. Abre la instalación debajo.`
+                      : `${progress.ready} of ${progress.total} eSIMs ready to install. Open installation below.`
+                    : progress.partial
+                      ? es
+                        ? `${progress.ready} de ${progress.total} eSIM listas para instalar. Puedes instalarlas mientras completamos las demás.`
+                        : `${progress.ready} of ${progress.total} eSIMs ready to install. You can install them while we finish the others.`
+                      : progress.review
+                        ? es
+                          ? "Tu pedido necesita revisión. Está guardado; no necesitas volver a pagar."
+                          : "Your order needs review. It is saved; you don’t need to pay again."
+                        : es
+                          ? "Estamos preparando tu eSIM. Aparecerá aquí cuando esté lista; no necesitas volver a pagar."
+                          : "We’re preparing your eSIM. It will appear here when ready; you don’t need to pay again."}
+          </p>
+          {progress.partial && progress.review > 0 && (
+            <p>
+              {es
+                ? "Hay eSIM pendientes que necesitan revisión. No vuelvas a comprar los mismos planes."
+                : "Some pending eSIMs need review. Do not purchase the same plans again."}
+            </p>
+          )}
+          {!loading &&
+            !error &&
+            !polling &&
+            !progress.complete &&
+            !progress.testOnly &&
+            !progress.review && (
+              <p>
+                {es
+                  ? "La preparación continúa. Esta página dejó de actualizarse automáticamente; puedes consultar el estado de nuevo o volver más tarde. También recibirás el correo de entrega."
+                  : "Preparation continues. This page has stopped updating automatically; check again or return later. You’ll also receive the delivery email."}
+              </p>
+            )}
+        </div>
+      )}
+      {loading && !showProgress && (
         <p role="status">
           <LoaderCircle size={18} className="payment-spinner" />{" "}
           {es ? "Consultando tu eSIM…" : "Checking your eSIM…"}
@@ -166,33 +267,25 @@ export function EsimDelivery({
               ? "No pudimos abrir la eSIM. Utiliza el enlace completo del correo o el navegador donde hiciste la compra. Si tienes cuenta, inicia sesión."
               : "We couldn’t open your eSIM. Use the complete email link or your purchase browser. Sign in if you have an account."}
           </p>
-          <button
-            className="button button-secondary"
-            onClick={() => setRetry((v) => v + 1)}
-          >
+          <button className="button button-secondary" onClick={refresh}>
             <RefreshCw size={16} />
             {es ? "Reintentar" : "Try again"}
           </button>
         </div>
       )}
-      {!loading && !error && !units.length && (
-        <p>
-          {es
-            ? "Pago confirmado. Estamos iniciando la preparación de tu eSIM; no necesitas volver a pagar. Te avisaremos también por correo."
-            : "Payment confirmed. We’re starting your eSIM preparation; you don’t need to pay again. We’ll also email you."}
-        </p>
-      )}
       {!loading &&
         !error &&
         !polling &&
         (!units.length ||
+          progress.total > units.length ||
+          progress.review > 0 ||
           units.some((u) =>
             ["queued", "provider_pending", "ready"].includes(u.state),
           )) && (
           <button
             type="button"
             className="button button-secondary"
-            onClick={() => setRetry((v) => v + 1)}
+            onClick={refresh}
           >
             <RefreshCw size={16} />
             {es ? "Actualizar preparación" : "Refresh preparation"}
@@ -218,8 +311,20 @@ export function EsimDelivery({
                   {
                     queued: es ? "En preparación" : "Preparing",
                     provider_pending: es ? "Preparando QR" : "Preparing QR",
-                    ready: es ? "Lista para instalar" : "Ready to install",
-                    sent: es ? "Correo enviado" : "Email sent",
+                    ready: canInstallDelivery(unit)
+                      ? es
+                        ? "Lista para instalar"
+                        : "Ready to install"
+                      : es
+                        ? "Preparando instalación"
+                        : "Preparing installation",
+                    sent: canInstallDelivery(unit)
+                      ? es
+                        ? "Lista para instalar · Correo enviado"
+                        : "Ready to install · Email sent"
+                      : es
+                        ? "Correo enviado"
+                        : "Email sent",
                     review: es ? "Requiere revisión" : "Needs review",
                     test_skipped: es ? "Pago de prueba" : "Test payment",
                   }[unit.state]
@@ -232,13 +337,13 @@ export function EsimDelivery({
                   ? "Esta compra de prueba no consume saldo ni emite una eSIM real."
                   : "This test purchase does not consume balance or issue a real eSIM."}
               </p>
-            ) : unit.state === "review" && !unit.installationReady ? (
+            ) : unit.state === "review" && !canInstallDelivery(unit) ? (
               <p>
                 {es
                   ? "Tu pedido está guardado y necesita una revisión. No vuelvas a comprar el mismo plan."
                   : "Your order is saved and needs review. Do not purchase the same plan again."}
               </p>
-            ) : ["queued", "provider_pending"].includes(unit.state) ? (
+            ) : !canInstallDelivery(unit) ? (
               <p role="status">
                 {es
                   ? "Estamos preparando tu eSIM. Aparecerá aquí y la enviaremos al correo del beneficiario."

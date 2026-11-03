@@ -11,6 +11,12 @@ line-item binding and webhook verification used for ordinary orders.
   controls remain available. The code field is always visible in a highlighted
   blue panel near the end of checkout, above the legal confirmations.
 - One coupon per order. Coupon orders neither earn nor redeem SimCoins.
+- Enter a code and choose **Check code** to review its USD minimum, exact validity
+  and published fixed-plan scope before **Apply**. This lookup does not evaluate
+  the selected cart, create a quote or reserve capacity. Eligibility remains
+  unknown until Apply checks verified costs and contribution. Both actions share
+  the same persistent attempt bucket, origin, browser and identity protections;
+  there is no public list of available codes or supplier costs.
 - Percentage values use basis points; fixed values and minimums use USD cents.
   Fixed offers convert with the same trusted FX snapshot as the cart.
 - Equal per-unit discounts round down in USD cents, then the net unit amount is
@@ -60,11 +66,23 @@ amounts. Reservations already attached to an order keep their original terms.
 All tables have RLS and all financial RPCs are service-role-only. Admin mutations
 record actor, idempotency reference and before/after values.
 
+Per-offer reporting counts only live orders whose current status is paid. Sales
+are the immutable post-discount USD checkout reference, not actual Stripe
+settlement receipts. Contribution is estimated from saved conservative cash,
+wholesale and fee units (10,000 units per USD); it is never net profit. Missing
+estimates show a dash and coverage count. Orders with any requested, ongoing or
+successful refund, including partial refunds, are excluded entirely and their
+count and original USD sales value are shown. Failed/rejected refund requests
+do not exclude an order. Supplier cost changes and edits to offers cannot alter
+these historical figures. Lifetime usage/discount summary still includes refunded
+redemptions, consistent with the nonrefundable usage cap.
+
 ## Operations
 
 Apply the additive migrations `20261101000100_checkout_coupons.sql`,
 `20261101000200_coupon_audit_immutable.sql`, `20261101000300_coupon_live_mode.sql`
-and `20261103000100_promotion_cost_refresh.sql`
+`20261103000100_promotion_cost_refresh.sql` and
+`20261103000300_coupon_insights.sql`
 before deploying the new UI. They create no live offers and change no existing orders. The operator
 script `scripts/setup-coupons.mjs --apply` verifies the linked Supabase project
 before applying only the missing coupon migrations. `--check` checks installation without writes.

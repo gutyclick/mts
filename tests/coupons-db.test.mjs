@@ -27,6 +27,7 @@ async function fixture() {
     "20261101000200_coupon_audit_immutable.sql",
     "20261101000300_coupon_live_mode.sql",
     "20261103000100_promotion_cost_refresh.sql",
+    "20261103000300_coupon_insights.sql",
   ]) {
     await db.exec(
       readFileSync(
@@ -586,6 +587,131 @@ test("invalid guesses consume a persistent rate bucket; retrying prepared orders
       (await db.query("select attempts from coupon_rate_limits")).rows[0]
         .attempts,
       1,
+    );
+  } finally {
+    await db.close();
+  }
+});
+
+test("safe conditions lookup does not evaluate a cart or leak costs and shares persistent quote throttling", async () => {
+  const { db, user } = await fixture();
+  try {
+    await save(db, user, { minimum_cents: 2500 });
+    const lookup = async (code = "TRAVEL20") =>
+      (
+        await db.query("select coupon_lookup_details($1,$2,$3,$4) v", [
+          code,
+          identity,
+          user,
+          identity,
+        ])
+      ).rows[0].v;
+    const d = await lookup();
+    assert.deepEqual(d, {
+      code: "TRAVEL20",
+      minimumUsdCents: 2500,
+      startsAt: null,
+      endsAt: null,
+      eligiblePlans: "published_fixed",
+      eligibility: "not_evaluated",
+    });
+    assert.equal((await quote(db, user)).error, "coupon_minimum");
+    assert.equal(
+      (await db.query("select count(*) n from coupon_quotes")).rows[0].n,
+      0,
+    );
+    for (let n = 0; n < 18; n++)
+      assert.equal((await lookup("GUESSED")).error, "invalid_coupon");
+    assert.equal((await quote(db, user)).error, "rate_limit");
+    assert.equal(
+      (await db.query("select attempts from coupon_rate_limits")).rows[0]
+        .attempts,
+      21,
+    );
+    for (const role of ["anon", "authenticated"]) {
+      await db.exec(`set role ${role}`);
+      await assert.rejects(lookup(), /permission denied/);
+      await assert.rejects(
+        db.query("select coupon_admin_insights($1)", [user]),
+        /permission denied/,
+      );
+      await db.exec("reset role");
+    }
+  } finally {
+    await db.close();
+  }
+});
+
+test("promotion reporting uses paid live immutable snapshots and excludes all refund-affected orders", async () => {
+  const { db, user } = await fixture();
+  try {
+    const c = await save(db, user);
+    const q = await quote(db, user);
+    const paid = await order(db, user),
+      pending = await order(db, user),
+      refunded = await order(db, user);
+    for (const id of [paid, pending, refunded])
+      await prepare(db, id, await quote(db, user));
+    await db.query(
+      "update checkout_orders set status='paid' where id=any($1::uuid[])",
+      [[paid, refunded]],
+    );
+    await db.query(
+      "insert into refund_requests(id,order_id,state,amount,currency)values($1,$2,'succeeded',100,'usd')",
+      [randomUUID(), refunded],
+    );
+    const snapshot = (
+      await db.query(
+        "select snapshot from coupon_order_snapshots where order_id=$1",
+        [paid],
+      )
+    ).rows[0].snapshot;
+    // Later offer edits and provider costs must not rewrite historical contribution.
+    await save(db, user, { id: c.id, value: 500 });
+    await db.exec(
+      "update simcoins_private_costs set wholesale_unit_units=999999",
+    );
+    const report = (
+      await db.query("select coupon_admin_insights($1) v", [user])
+    ).rows[0].v[c.id];
+    assert.equal(report.paidOrders, 1);
+    assert.equal(report.refundExcludedOrders, 1);
+    assert.equal(report.refundExcludedSalesUsdCents, snapshot.netCents);
+    assert.equal(report.salesUsdCents, snapshot.netCents);
+    assert.equal(report.discountUsdCents, snapshot.discountUsdCents);
+    assert.equal(report.estimatedOrders, 1);
+    assert.equal(
+      report.estimatedContributionUsdCents,
+      Math.floor(
+        (snapshot.cashUnits - snapshot.costUnits - snapshot.feeUnits) / 100,
+      ),
+    );
+    await db.query("update checkout_orders set livemode=false where id=$1", [
+      paid,
+    ]);
+    const excluded = (
+      await db.query("select coupon_admin_insights($1) v", [user])
+    ).rows[0].v[c.id];
+    assert.equal(excluded.paidOrders, 0);
+    assert.equal(excluded.estimatedContributionUsdCents, null);
+    const uncovered = await order(db, user);
+    const missingEstimate = { ...snapshot, feeUnits: null };
+    await db.query(
+      "insert into coupon_order_snapshots(order_id,quote_id,coupon_id,coupon_version,code,identity_hash,snapshot)values($1,$2,$3,1,'TRAVEL20',$4,$5)",
+      [uncovered, q.id, c.id, identity, missingEstimate],
+    );
+    await db.query("update checkout_orders set status='paid' where id=$1", [
+      uncovered,
+    ]);
+    const uncoveredReport = (
+      await db.query("select coupon_admin_insights($1) v", [user])
+    ).rows[0].v[c.id];
+    assert.equal(uncoveredReport.paidOrders, 1);
+    assert.equal(uncoveredReport.estimatedOrders, 0);
+    assert.equal(uncoveredReport.estimatedContributionUsdCents, null);
+    await assert.rejects(
+      db.query("select coupon_admin_insights($1)", [randomUUID()]),
+      /admin_required/,
     );
   } finally {
     await db.close();

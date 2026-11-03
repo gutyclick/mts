@@ -502,10 +502,10 @@
     grid-column: 1 / -1;
     grid-row: 3;
   }
-  .coupon-table td:nth-child(6) {
+  .coupon-table td:last-child {
     justify-self: end;
   }
-  .coupon-table td:nth-child(5) {
+  .coupon-table td:nth-last-child(2) {
     align-self: center;
   }
   .coupon-dialog {

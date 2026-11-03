@@ -25,7 +25,8 @@ import {
   expressWalletOptions,
   hasExpressWallet,
 } from "@/lib/payments/wallet-options";
-export class PaymentDetailsError extends Error {}
+import { PaymentDetailsError } from "@/lib/payments/payment-feedback";
+export { PaymentDetailsError } from "@/lib/payments/payment-feedback";
 export type PaymentFieldsHandle = {
   collect: () => Promise<{
     stripe: Stripe;
@@ -98,7 +99,7 @@ const Fields = forwardRef<PaymentFieldsHandle, Props>(
         const submitted = await elements.submit();
         if (submitted.error) {
           fail();
-          throw new PaymentDetailsError(submitted.error.message);
+          throw new PaymentDetailsError(submitted.error);
         }
         const result = await stripe.createPaymentMethod({
           elements,
@@ -106,7 +107,7 @@ const Fields = forwardRef<PaymentFieldsHandle, Props>(
         });
         if (result.error) {
           fail();
-          throw new PaymentDetailsError(result.error.message);
+          throw new PaymentDetailsError(result.error);
         }
         return { stripe, paymentMethod: result.paymentMethod.id, fail };
       },

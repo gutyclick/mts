@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { legalVersion } from "@/lib/legal-version";
 import {
   ArrowLeft,
@@ -33,7 +34,13 @@ import { paymentFormMatchesMode } from "@/lib/payments/checkout-mode";
 import { CheckoutRewards } from "@/components/simcoins/checkout-rewards";
 import type { SimcoinsCheckoutQuote } from "@/lib/simcoins/checkout";
 import { recordSimcoinsStats } from "@/lib/simcoins/analytics-client";
-import { couponQuoteSchema } from "@/lib/payments/coupons";
+import {
+  couponQuoteSchema,
+  couponDetailsSchema,
+  type CouponDetails,
+} from "@/lib/payments/coupons";
+import { paymentFeedback } from "@/lib/payments/payment-feedback";
+import { recordCheckoutStats } from "@/lib/analytics/client";
 import {
   CheckoutCoupon,
   couponErrorMessage,
@@ -51,6 +58,7 @@ export function Checkout({
   initial?: CartLine;
 }) {
   const es = locale === "es";
+  const router = useRouter();
   const form = useRef<HTMLFormElement>(null);
   const paymentFields = useRef<PaymentFieldsHandle>(null);
   const checkoutSdk = useRef<{
@@ -75,6 +83,10 @@ export function Checkout({
     quote: CheckoutCouponQuote;
   } | null>(null);
   const [couponBusy, setCouponBusy] = useState(false);
+  const [reviewedCoupon, setReviewedCoupon] = useState<{
+    key: string;
+    details: CouponDetails;
+  } | null>(null);
   const [couponError, setCouponError] = useState("");
   const couponRequest = useRef<AbortController | null>(null);
   const [rewardsRefresh, setRewardsRefresh] = useState(0);
@@ -95,6 +107,9 @@ export function Checkout({
   } | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [verificationOrder, setVerificationOrder] = useState<string | null>(
+    null,
+  );
   const [compatible, setCompatible] = useState(false);
   const [terms, setTerms] = useState(false);
   const paymentAttempt = useRef<{ key: string; id: string } | null>(null);
@@ -145,6 +160,8 @@ export function Checkout({
   ]);
   const latestCouponKey = useRef(couponKey);
   const couponQuote = coupon?.key === couponKey ? coupon.quote : null;
+  const couponDetails =
+    reviewedCoupon?.key === couponKey ? reviewedCoupon.details : null;
   const couponReady =
     enabled &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim()) &&
@@ -159,6 +176,9 @@ export function Checkout({
     queueMicrotask(() => {
       setCouponBusy(false);
       setCoupon((current) => (current?.key === couponKey ? current : null));
+      setReviewedCoupon((current) =>
+        current?.key === couponKey ? current : null,
+      );
     });
     return () => couponRequest.current?.abort();
   }, [couponKey]);
@@ -176,7 +196,10 @@ export function Checkout({
     );
     return () => window.clearTimeout(timeout);
   }, [couponQuote, es]);
-  async function applyCoupon(code: string) {
+  async function applyCoupon(
+    code: string,
+    action: "quote" | "details" = "quote",
+  ) {
     if (!couponReady || busy || couponBusy || activePayment) return;
     couponRequest.current?.abort();
     const controller = new AbortController();
@@ -184,12 +207,14 @@ export function Checkout({
     const key = couponKey;
     setCouponBusy(true);
     setCouponError("");
+    if (action === "quote") recordCheckoutStats("coupon_attempted");
     try {
       const response = await fetch("/api/checkout/coupon", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
         body: JSON.stringify({
+          action,
           code,
           email: buyerEmail.trim(),
           lines: cart.lines,
@@ -199,10 +224,18 @@ export function Checkout({
       });
       const data = await response.json();
       if (controller.signal.aborted || latestCouponKey.current !== key) return;
-      if (!response.ok || !data.quote) {
+      if (!response.ok || !(action === "details" ? data.details : data.quote)) {
+        if (action === "quote") recordCheckoutStats("coupon_rejected");
         setCouponError(couponErrorMessage(data.error, es));
         if (["quote_expired", "coupon_expired"].includes(data.error))
           await pricing.select(pricing.currency);
+        return;
+      }
+      if (action === "details") {
+        setReviewedCoupon({
+          key,
+          details: couponDetailsSchema.parse(data.details),
+        });
         return;
       }
       const parsedQuote = couponQuoteSchema.safeParse(data.quote);
@@ -217,13 +250,16 @@ export function Checkout({
       }
       setUseCoins(false);
       setCoupon({ key, quote: parsedQuote.data });
+      recordCheckoutStats("coupon_applied");
     } catch {
-      if (!controller.signal.aborted)
+      if (!controller.signal.aborted) {
+        if (action === "quote") recordCheckoutStats("coupon_rejected");
         setCouponError(
           es
             ? "No pudimos comprobar el código. Vuelve a intentarlo."
             : "We could not check the code. Try again.",
         );
+      }
     } finally {
       if (!controller.signal.aborted) setCouponBusy(false);
     }
@@ -313,6 +349,17 @@ export function Checkout({
     couponQuote?.id ?? null,
   ]);
   const activePayment = payment?.key === checkoutKey ? payment : null;
+  useEffect(() => {
+    const measure = () => {
+      if (!count) return;
+      recordCheckoutStats("checkout_entry");
+      if (couponReady) recordCheckoutStats("contact_ready");
+      if (fieldsReady && enabled) recordCheckoutStats("payment_ready");
+    };
+    measure();
+    window.addEventListener("mts:stats-permission", measure);
+    return () => window.removeEventListener("mts:stats-permission", measure);
+  }, [count, couponReady, fieldsReady, enabled]);
   const latestCheckoutKey = useRef(checkoutKey);
   useEffect(() => {
     latestCheckoutKey.current = checkoutKey;
@@ -336,6 +383,7 @@ export function Checkout({
     }
     if (
       submitting.current ||
+      !!verificationOrder ||
       couponBusy ||
       effectiveRewardsBusy ||
       (!couponQuote &&
@@ -378,6 +426,8 @@ export function Checkout({
     pricing.setPaymentBusy(true);
     let collected:
       Awaited<ReturnType<PaymentFieldsHandle["collect"]>> | undefined;
+    let confirmingOrder: string | null = null;
+    recordCheckoutStats("payment_attempt");
     try {
       collected = await paymentFields.current?.collect();
       if (!collected) throw Error("Payment fields unavailable");
@@ -411,6 +461,7 @@ export function Checkout({
       });
       const data = await response.json();
       if (!response.ok) {
+        recordCheckoutStats("payment_error");
         collected.fail();
         if (
           [
@@ -435,6 +486,8 @@ export function Checkout({
         ) {
           setCoupon(null);
           setCouponError(couponErrorMessage(data.error, es));
+          setError(couponErrorMessage(data.error, es));
+          return;
         }
         if (data.error === "simcoins_quote_expired") {
           setRewards(null);
@@ -521,6 +574,7 @@ export function Checkout({
           };
         const sdk = checkoutSdk.current?.sdk;
         if (!sdk) throw Error("Payment initialization unavailable");
+        confirmingOrder = data.orderId;
         const result = await confirmPreparedPayment(
           sdk,
           {
@@ -532,18 +586,29 @@ export function Checkout({
         );
         if (result.type === "error") {
           collected.fail();
-          setError(result.error.message);
+          recordCheckoutStats("payment_error");
+          const guidance = paymentFeedback(result.error, locale, {
+            confirmationStarted: true,
+          });
+          setError(guidance.message);
+          if (guidance.action === "verify") setVerificationOrder(data.orderId);
+        } else {
+          router.push(
+            `/${locale}/checkout/result?order=${encodeURIComponent(data.orderId)}`,
+          );
         }
       }
     } catch (error) {
       collected?.fail();
-      setError(
-        error instanceof PaymentDetailsError
-          ? error.message
-          : es
-            ? "No pudimos conectar con el pago. Tu carrito sigue guardado. Vuelve a intentarlo."
-            : "We couldn’t connect to payment. Your cart is saved. Please try again.",
+      recordCheckoutStats("payment_error");
+      const guidance = paymentFeedback(
+        error instanceof PaymentDetailsError ? error.details : error,
+        locale,
+        { confirmationStarted: !!confirmingOrder },
       );
+      setError(guidance.message);
+      if (guidance.action === "verify" && confirmingOrder)
+        setVerificationOrder(confirmingOrder);
     } finally {
       submitting.current = false;
       pricing.setPaymentBusy(false);
@@ -729,6 +794,7 @@ export function Checkout({
                       terms &&
                       compatible &&
                       !busy &&
+                      !verificationOrder &&
                       !effectiveRewardsBusy &&
                       !couponBusy &&
                       !cart.loading &&
@@ -746,6 +812,8 @@ export function Checkout({
               <CheckoutCoupon
                 locale={locale}
                 quote={couponQuote}
+                details={couponDetails}
+                onCheck={(code) => void applyCoupon(code, "details")}
                 busy={couponBusy}
                 disabled={busy || !!activePayment}
                 ready={couponReady}
@@ -805,6 +873,7 @@ export function Checkout({
                 disabled={
                   !enabled ||
                   busy ||
+                  !!verificationOrder ||
                   couponBusy ||
                   effectiveRewardsBusy ||
                   cart.loading ||
@@ -851,6 +920,15 @@ export function Checkout({
                 <p className="checkout-error" role="alert">
                   {error}
                 </p>
+              )}
+              {verificationOrder && (
+                <Link
+                  className="button button-secondary"
+                  href={`/${locale}/checkout/result?order=${encodeURIComponent(verificationOrder)}`}
+                >
+                  {es ? "Comprobar estado del pedido" : "Check order status"}{" "}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </Link>
               )}
               <p id="checkout-payment-note" className="commerce-muted">
                 {enabled && testMode

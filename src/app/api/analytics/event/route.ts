@@ -27,11 +27,17 @@ export async function POST(request: NextRequest) {
     const response = reply(200),
       cohort = await ensureStatsSession(request, response);
     if (!cohort) return response;
-    const result = await checkoutDatabase().rpc("analytics_record_client", {
-      p_hash: cohort,
-      p_kind: body.kind,
-      p_destination: body.destination,
-    });
+    const result =
+      "destination" in body
+        ? await checkoutDatabase().rpc("analytics_record_client", {
+            p_hash: cohort,
+            p_kind: body.kind,
+            p_destination: body.destination,
+          })
+        : await checkoutDatabase().rpc("analytics_record_checkout_stage", {
+            p_hash: cohort,
+            p_kind: body.kind,
+          });
     if (result.error) return reply(503);
     return response;
   } catch {

@@ -414,6 +414,14 @@
   margin-block: 10px;
 }
 @media (max-width: 380px) {
+  .curated-plan-browser .plan-essential-facts > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+  .curated-plan-browser .plan-essential-facts dd {
+    padding-left: 23px;
+    text-align: left;
+  }
   .plan-coverage-list {
     grid-template-columns: 1fr;
   }
@@ -1033,4 +1041,188 @@
   .destination-benefits {
     grid-template-columns: 1fr;
   }
+}
+/* Curated destination choices share the existing purchase panel. */
+.curated-plan-browser .curated-mode-switch {
+  border: 0;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.curated-plan-browser .curated-mode-switch legend {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.curated-plan-browser .curated-mode-switch label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #dbe5ef;
+  border-radius: 24px;
+  padding: 10px 13px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.curated-plan-browser .curated-mode-switch label[data-selected="true"] {
+  background: #edf5ff;
+  border-color: #175ca6;
+  color: #175ca6;
+}
+.curated-plan-browser .curated-mode-switch input {
+  accent-color: #175ca6;
+}
+.curated-plan-browser .curated-mode-description {
+  color: #56677e;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+.curated-plan-browser .curated-plan-options {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.curated-plan-browser .curated-plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 17px;
+  border: 1px solid #dbe5ef;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #fff;
+  min-width: 0;
+}
+.curated-plan-browser .curated-plan-card[data-selected="true"] {
+  border-color: #175ca6;
+  box-shadow: inset 0 0 0 1px #175ca6;
+  background: #f7faff;
+}
+.curated-plan-browser .curated-plan-card > input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.curated-plan-browser .curated-plan-card:has(input:focus-visible),
+.curated-plan-browser .curated-mode-switch label:has(input:focus-visible) {
+  outline: 3px solid #175ca6;
+  outline-offset: 3px;
+}
+.curated-plan-browser .curated-plan-card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 31px;
+  font-size: 14px;
+}
+.curated-plan-browser .curated-recommendation {
+  font-size: 10px;
+  color: #175ca6;
+  background: #edf5ff;
+  border-radius: 12px;
+  padding: 3px 7px;
+  font-weight: 600;
+}
+.curated-plan-browser .curated-plan-allowance {
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 10px;
+  letter-spacing: -0.7px;
+}
+.curated-plan-browser .curated-plan-duration {
+  font-size: 13px;
+  color: #56677e;
+  margin-top: 3px;
+}
+.curated-plan-browser .curated-plan-description {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #56677e;
+  margin: 13px 0 17px;
+  flex: 1;
+}
+.curated-plan-browser .curated-plan-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 19px;
+  font-weight: 700;
+}
+.curated-plan-browser
+  .curated-plan-card[data-selected="true"]
+  .plan-option-check {
+  background: #175ca6;
+  color: #fff;
+}
+@media (max-width: 380px) {
+  .curated-plan-browser .curated-plan-options {
+    gap: 8px;
+  }
+  .curated-plan-browser .curated-plan-card {
+    padding: 12px;
+  }
+  .curated-plan-browser .curated-plan-price {
+    font-size: 16px;
+  }
+  .curated-plan-browser .curated-plan-price .plan-option-check {
+    display: none;
+  }
+  .curated-plan-browser .curated-plan-card-heading {
+    min-height: 51px;
+    align-content: start;
+  }
+}
+.curated-plan-browser .curated-long-stays {
+  margin-top: 17px;
+  border-top: 1px solid #dbe5ef;
+  padding-top: 5px;
+}
+.curated-plan-browser .curated-long-stays summary {
+  padding: 13px 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #175ca6;
+}
+.curated-plan-browser .curated-long-stays fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 7px;
+}
+.curated-plan-browser .curated-long-stay-option {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid #dbe5ef;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.curated-plan-browser .curated-long-stay-option input {
+  accent-color: #175ca6;
+}
+.curated-plan-browser .curated-long-stay-option[data-selected="true"] {
+  border-color: #175ca6;
+  background: #f7faff;
+}
+.curated-plan-browser .curated-long-stay-price {
+  margin-left: auto;
+}
+.curated-plan-browser .curated-long-stay-option:has(input:focus-visible) {
+  outline: 3px solid #175ca6;
+  outline-offset: 2px;
 }

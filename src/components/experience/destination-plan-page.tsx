@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 import { pathFor, type Locale } from "@/lib/i18n";
 import type { Destination } from "@/lib/catalog";
-import { getPublishedPlans } from "@/lib/catalog-server";
+import { getCuratedCatalog } from "@/lib/catalog-server";
 import { PlanBrowser } from "@/components/plan-browser";
 import { DestinationArtwork } from "@/components/illustrations";
 import { DestinationFlag } from "@/components/destination-flag";
@@ -22,7 +22,11 @@ export async function DestinationPlanPage({
   initialPlanId?: string;
 }) {
   const es = locale === "es";
-  const plans = await getPublishedPlans(destination);
+  const curatedCatalog = await getCuratedCatalog(destination);
+  const plans = curatedCatalog.modes.flatMap((mode) => [
+    ...mode.plans.map((item) => item.plan),
+    ...mode.secondaryPlans,
+  ]);
   return (
     <div className="container destination-page destination-product-page">
       <JsonLd
@@ -111,6 +115,10 @@ export async function DestinationPlanPage({
         locale={locale}
         destination={destination}
         availablePlans={plans}
+        curatedCatalog={{
+          modes: curatedCatalog.modes,
+          defaultMode: curatedCatalog.defaultMode,
+        }}
         initialDays={initialDays}
         initialPlanId={initialPlanId}
       />

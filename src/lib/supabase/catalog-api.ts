@@ -1,4 +1,5 @@
 import { parseDestinationRow, parsePlanRow } from "./catalog-schema.ts";
+import { z } from "zod";
 
 type Config = { url: string; key: string };
 export function catalogConfig(
@@ -77,6 +78,47 @@ export function createCatalogAPI(
     }
   }
   return {
+    async merchandising() {
+      const [planRows, destinationRows, availableRows] = await Promise.all([
+        rows("catalog_plan_merchandising", {
+          select:
+            "plan_id,visibility,commercial_category,recommendation_eligible,incident_block,main_priority",
+        }),
+        rows("catalog_destination_merchandising_public", {
+          select: "destination_slug,approved_modalities,approval_verified",
+        }),
+        rows("catalog_available_plan_ids", { select: "id" }),
+      ]);
+      return {
+        overrides: z
+          .array(
+            z.object({
+              plan_id: z.string(),
+              visibility: z.enum(["auto", "show", "hide"]),
+              commercial_category: z
+                .enum(["basic", "essential", "plus", "max"])
+                .nullable(),
+              recommendation_eligible: z.boolean(),
+              incident_block: z.boolean(),
+              main_priority: z.number().int().min(1).max(100).nullable(),
+            }),
+          )
+          .parse(planRows),
+        destinations: z
+          .array(
+            z.object({
+              destination_slug: z.string(),
+              approved_modalities: z.array(z.string()).max(3),
+              approval_verified: z.boolean(),
+            }),
+          )
+          .parse(destinationRows),
+        availableIds: z
+          .array(z.object({ id: z.string() }))
+          .parse(availableRows)
+          .map((r) => r.id),
+      };
+    },
     async destinations() {
       const data = await rows("published_catalog_destinations", {
         select:

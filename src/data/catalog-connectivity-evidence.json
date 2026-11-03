@@ -1,0 +1,5107 @@
+{
+  "AD_10_30": {
+    "packageCode": "POLBMAOKK",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AD_1_7": {
+    "packageCode": "PQPMBOQKQ",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AD_20_30": {
+    "packageCode": "PKS714EFL",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AD_3_15": {
+    "packageCode": "PA4P0E9PP",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AD_3_30": {
+    "packageCode": "P6PTLNQKG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AD_5_30": {
+    "packageCode": "PU43QJFLK",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AE_0.1_7": {
+    "packageCode": "PFI5O971X",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_0.5_7": {
+    "packageCode": "P0B2MJ9JR",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_10_30": {
+    "packageCode": "PQHJ267ZM",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_10_60": {
+    "packageCode": "CKH694",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_1_7": {
+    "packageCode": "CKH527",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_20_30": {
+    "packageCode": "P0LWCN1S2",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_3_15": {
+    "packageCode": "CKH692",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_3_30": {
+    "packageCode": "CKH031",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_50_180": {
+    "packageCode": "PBJCBSZU1",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AE_5_30": {
+    "packageCode": "CKH693",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "AF_10_30": {
+    "packageCode": "PN41KUBY9",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AF_1_7": {
+    "packageCode": "PC2G2GAZG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AF_20_30": {
+    "packageCode": "P859ELARY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AF_3_15": {
+    "packageCode": "PH204G43G",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AF_3_30": {
+    "packageCode": "P7PPTTG21",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AF_5_30": {
+    "packageCode": "PFNZN562P",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AG_10_30": {
+    "packageCode": "PMCFR1TVV",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AG_1_7": {
+    "packageCode": "PPWK55U51",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AG_20_30": {
+    "packageCode": "PQY7SKU59",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AG_3_15": {
+    "packageCode": "PLT3KKIDO",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AG_3_30": {
+    "packageCode": "P8PU77FZP",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AG_5_30": {
+    "packageCode": "PSUM1WZK9",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AI_10_30": {
+    "packageCode": "PEUQVTLSB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AI_1_7": {
+    "packageCode": "PE3R2NYQX",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AI_20_30": {
+    "packageCode": "P8GAESAYL",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AI_3_15": {
+    "packageCode": "P2ECNC4CU",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AI_3_30": {
+    "packageCode": "PEG44RAO5",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AI_5_30": {
+    "packageCode": "P0NWS57PC",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AL_0.1_7": {
+    "packageCode": "PFRQ8FIBC",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_0.1_7": {
+    "packageCode": "PZBBJD4HG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_0.5_7": {
+    "packageCode": "PUCP0HJ3Z",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_10_30": {
+    "packageCode": "CKH775",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_1_7": {
+    "packageCode": "CKH514",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_20_30": {
+    "packageCode": "CKH776",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_3_15": {
+    "packageCode": "CKH555",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_3_30": {
+    "packageCode": "CKH030",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AM_5_30": {
+    "packageCode": "CKH556",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AO_10_30": {
+    "packageCode": "PCTHRRV31",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "AO_1_7": {
+    "packageCode": "PYO3XIDG4",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "AO_3_15": {
+    "packageCode": "P1OKIKO93",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "AO_3_30": {
+    "packageCode": "PNHUEN0ZW",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "AO_5_30": {
+    "packageCode": "PO7O41OJI",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "AR_0.1_7": {
+    "packageCode": "PHDE7ZP42",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-12_10_30": {
+    "packageCode": "P32JCTKR0",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-12_1_7": {
+    "packageCode": "PMWKBKC8Q",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-12_20_30": {
+    "packageCode": "PWXD16M3T",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-12_3_15": {
+    "packageCode": "PDX275FW0",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-12_3_30": {
+    "packageCode": "PTHP265BC",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-12_5_30": {
+    "packageCode": "P9ESS1C2D",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_10_30": {
+    "packageCode": "JC180",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_1_30": {
+    "packageCode": "JC177",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_1_7": {
+    "packageCode": "JC183",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_20_30": {
+    "packageCode": "PALTQIBLC",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_20_90": {
+    "packageCode": "JC181",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_3_15": {
+    "packageCode": "JC179",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_3_30": {
+    "packageCode": "PTPN61LUV",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_50_180": {
+    "packageCode": "JC182",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-20_5_30": {
+    "packageCode": "JC178",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_10_30": {
+    "packageCode": "JC168",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_1_7": {
+    "packageCode": "JC165",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_20_30": {
+    "packageCode": "JC169",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_3_15": {
+    "packageCode": "JC166",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_3_30": {
+    "packageCode": "P0523NZM8",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_50_180": {
+    "packageCode": "P4GNDNA36",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AS-7_5_30": {
+    "packageCode": "JC167",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "AU_0.1_7": {
+    "packageCode": "PGWEQ1CSB",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_0.5_7": {
+    "packageCode": "PI27MAKKL",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_10_30": {
+    "packageCode": "JC101",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_10_30_nonhkip": {
+    "packageCode": "PN9GT8RR1",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_1_7": {
+    "packageCode": "JC018",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_1_7_nonhkip": {
+    "packageCode": "PBNG7JU46",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_20_30": {
+    "packageCode": "JC102",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_20_30_nonhkip": {
+    "packageCode": "P1B5ZKL9Y",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_3_15": {
+    "packageCode": "JC019",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_3_15_nonhkip": {
+    "packageCode": "PMJWN96M5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_3_30": {
+    "packageCode": "PM2ZWH3G5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_3_30_nonhkip": {
+    "packageCode": "P5WU3XAH8",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_50_180": {
+    "packageCode": "POU9P9TSZ",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_50_30": {
+    "packageCode": "PQGQ6Y07S",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_5_30": {
+    "packageCode": "JC020",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AU_5_30_nonhkip": {
+    "packageCode": "PTV5G02KL",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AW_10_30": {
+    "packageCode": "P2ALZ6B4P",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AW_1_7": {
+    "packageCode": "P6ZPW9SU5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AW_20_30": {
+    "packageCode": "P9LT8LCF5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AW_3_15": {
+    "packageCode": "P6A8JC0ST",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AW_3_30": {
+    "packageCode": "PR4RAZ72V",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AW_5_30": {
+    "packageCode": "PQMJF478J",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "AX_10_30": {
+    "packageCode": "CKH258",
+    "breakoutIp": "NL/FR/US",
+    "source": "supplier-audit-2026"
+  },
+  "AX_1_7": {
+    "packageCode": "CKH256",
+    "breakoutIp": "NL/FR/US",
+    "source": "supplier-audit-2026"
+  },
+  "AX_20_30": {
+    "packageCode": "CKH740",
+    "breakoutIp": "NL/FR/US",
+    "source": "supplier-audit-2026"
+  },
+  "AX_3_15": {
+    "packageCode": "CKH257",
+    "breakoutIp": "NL/FR/US",
+    "source": "supplier-audit-2026"
+  },
+  "AX_3_30": {
+    "packageCode": "CKH105",
+    "breakoutIp": "NL/FR/US",
+    "source": "supplier-audit-2026"
+  },
+  "AX_5_30": {
+    "packageCode": "CKH144",
+    "breakoutIp": "NL/FR/US",
+    "source": "supplier-audit-2026"
+  },
+  "AZ_0.1_7": {
+    "packageCode": "PLYTQ0XIR",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_10_30": {
+    "packageCode": "CKH1034",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_1_7": {
+    "packageCode": "CKH531",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_20_30": {
+    "packageCode": "CKH1035",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_3_15": {
+    "packageCode": "CKH563",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_3_30": {
+    "packageCode": "PM8VIQATX",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_50_30": {
+    "packageCode": "CKH1036",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BA_5_30": {
+    "packageCode": "CKH564",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BB_10_30": {
+    "packageCode": "PHCT7N07V",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BB_1_7": {
+    "packageCode": "PATBRUYGO",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BB_20_30": {
+    "packageCode": "PKKFL6PNY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BB_3_15": {
+    "packageCode": "P9UHHY3H1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BB_3_30": {
+    "packageCode": "PXXTRECLK",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BB_5_30": {
+    "packageCode": "PB38F80U9",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BD_10_30": {
+    "packageCode": "JC155",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BD_1_7": {
+    "packageCode": "JC110",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BD_20_30": {
+    "packageCode": "JC156",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BD_3_15": {
+    "packageCode": "JC112",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BD_3_30": {
+    "packageCode": "PKR3FXF16",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BD_5_30": {
+    "packageCode": "JC113",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BF_10_30": {
+    "packageCode": "CKH868",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BF_1_7": {
+    "packageCode": "CKH521",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BF_20_30": {
+    "packageCode": "CKH869",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BF_3_15": {
+    "packageCode": "CKH572",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BF_3_30": {
+    "packageCode": "PPXAIOHF3",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BF_5_30": {
+    "packageCode": "CKH573",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BH_10_30": {
+    "packageCode": "PTV3DH12J",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BH_1_7": {
+    "packageCode": "CKH289",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BH_20_30": {
+    "packageCode": "PJQM9ZN72",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BH_3_15": {
+    "packageCode": "CKH290",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BH_3_30": {
+    "packageCode": "CKH035",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BH_5_30": {
+    "packageCode": "PK0N3UZV9",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BJ_10_30": {
+    "packageCode": "PW2P30T72",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BJ_1_7": {
+    "packageCode": "P1RCD3ZM2",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BJ_20_30": {
+    "packageCode": "P5QJHCC43",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BJ_3_15": {
+    "packageCode": "P8C6VKPG7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BJ_3_30": {
+    "packageCode": "PLT2KL4J3",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BJ_5_30": {
+    "packageCode": "P4QNZ1HB6",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BL_10_30": {
+    "packageCode": "P3V06DJGB",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "BL_1_7": {
+    "packageCode": "PXRPD543Z",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "BL_20_30": {
+    "packageCode": "PCH7S1EK6",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "BL_3_15": {
+    "packageCode": "P3DX2BGG4",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "BL_3_30": {
+    "packageCode": "PT94J3FBY",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "BL_5_30": {
+    "packageCode": "P5J6RHBC1",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "BM_10_30": {
+    "packageCode": "P97UG1JXH",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "BM_1_7": {
+    "packageCode": "PFUN50P1N",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "BM_20_30": {
+    "packageCode": "PHDYBU21J",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "BM_3_15": {
+    "packageCode": "PJ7T1JPBT",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "BM_3_30": {
+    "packageCode": "PVIRT3263",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "BM_5_30": {
+    "packageCode": "PCQNFKWJY",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "BN_10_30": {
+    "packageCode": "CKH836",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BN_1_7": {
+    "packageCode": "CKH833",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BN_20_30": {
+    "packageCode": "CKH837",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BN_3_15": {
+    "packageCode": "CKH834",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BN_3_30": {
+    "packageCode": "P5X4PKYN3",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BO_0.1_7": {
+    "packageCode": "PWB2NZA39",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BO_0.5_7": {
+    "packageCode": "P3TUFRWYX",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BO_10_30": {
+    "packageCode": "CKH300",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BO_1_7": {
+    "packageCode": "CKH297",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BO_20_30": {
+    "packageCode": "CKH831",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BO_3_15": {
+    "packageCode": "CKH298",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BO_5_30": {
+    "packageCode": "CKH299",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BR_0.1_7": {
+    "packageCode": "PTN42GL18",
+    "breakoutIp": "BR",
+    "source": "supplier-audit-2026"
+  },
+  "BS_10_30": {
+    "packageCode": "PZJMU5LA1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BS_1_7": {
+    "packageCode": "P5ZAV03DT",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BS_20_30": {
+    "packageCode": "P3JOVV8MI",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BS_3_15": {
+    "packageCode": "PDAVLCGIM",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BS_3_30": {
+    "packageCode": "PWQAOABDB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BS_5_30": {
+    "packageCode": "PLWOMX7F6",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "BT_10_30": {
+    "packageCode": "PHCVBE7X1",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BT_1_7": {
+    "packageCode": "PIH4IAK40",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BT_20_30": {
+    "packageCode": "PJVCOS3XN",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BT_3_15": {
+    "packageCode": "PIXK1CZDV",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BT_3_30": {
+    "packageCode": "P1P2MPX64",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BT_5_30": {
+    "packageCode": "PLDY0SQ8J",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "BZ_10_30": {
+    "packageCode": "P1PAXM6TE",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "BZ_1_7": {
+    "packageCode": "PCB5J6S8Q",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "BZ_20_30": {
+    "packageCode": "PUK4NO827",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "BZ_3_15": {
+    "packageCode": "P8O5873OG",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "BZ_3_30": {
+    "packageCode": "P5NO2E4YJ",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "BZ_5_30": {
+    "packageCode": "P774SBVHY",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "CA_0.1_7": {
+    "packageCode": "PT73ZDYVK",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_0.5_7": {
+    "packageCode": "PIORZG0R5",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_10_30": {
+    "packageCode": "CKH778",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_1_7": {
+    "packageCode": "CKH516",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_20_30": {
+    "packageCode": "CKH779",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_3_15": {
+    "packageCode": "CKH578",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_3_30": {
+    "packageCode": "PJYU684PF",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_50_30": {
+    "packageCode": "PJV1FP85S",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_5_30": {
+    "packageCode": "CKH579",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CA_75_30": {
+    "packageCode": "PMJ9AFZEP",
+    "breakoutIp": "CA",
+    "source": "supplier-audit-2026"
+  },
+  "CD_10_30": {
+    "packageCode": "CKH460",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CD_1_7": {
+    "packageCode": "CKH373",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CD_20_30": {
+    "packageCode": "PLH4XD0VN",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CD_3_15": {
+    "packageCode": "CKH402",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CD_3_30": {
+    "packageCode": "PM7TZQIMF",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CD_5_30": {
+    "packageCode": "CKH431",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CF_1_7": {
+    "packageCode": "CKH370",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CF_3_15": {
+    "packageCode": "CKH399",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CF_5_30": {
+    "packageCode": "CKH428",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CG_10_30": {
+    "packageCode": "MB038",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CG_1_7": {
+    "packageCode": "MB023",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CG_20_30": {
+    "packageCode": "MB059",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CG_3_15": {
+    "packageCode": "MB028",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CG_3_30": {
+    "packageCode": "PLF4J2VKM",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CG_5_30": {
+    "packageCode": "MB033",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CH_0.1_7": {
+    "packageCode": "P4PQQ616Q",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "CI_10_30": {
+    "packageCode": "CKH461",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CI_1_7": {
+    "packageCode": "CKH374",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CI_20_30": {
+    "packageCode": "CKH881",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CI_3_15": {
+    "packageCode": "CKH403",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CI_5_30": {
+    "packageCode": "CKH432",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_0.1_7": {
+    "packageCode": "PMQYGG8GO",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_0.5_7": {
+    "packageCode": "PPOB1J6C1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_10_30": {
+    "packageCode": "CKH350",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_1_7": {
+    "packageCode": "CKH302",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_20_30": {
+    "packageCode": "CKH875",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_3_15": {
+    "packageCode": "CKH318",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_3_30": {
+    "packageCode": "PE362ZII0",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CL_5_30": {
+    "packageCode": "CKH334",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CM_10_30": {
+    "packageCode": "P3LARHL75",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CM_1_7": {
+    "packageCode": "CKH526",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CM_20_30": {
+    "packageCode": "PTIWPH4RV",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CM_3_15": {
+    "packageCode": "CKH575",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CM_3_30": {
+    "packageCode": "P71XOQE6V",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CM_5_30": {
+    "packageCode": "CKH576",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CNJPKR-3_10_30": {
+    "packageCode": "P5JHQ39EE",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CNJPKR-3_1_7": {
+    "packageCode": "P4XU0X3CX",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CNJPKR-3_20_30": {
+    "packageCode": "P93F7ZCSY",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CNJPKR-3_3_15": {
+    "packageCode": "P9Q0XP8HU",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CNJPKR-3_3_30": {
+    "packageCode": "P64BPV0PR",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CNJPKR-3_5_30": {
+    "packageCode": "P5KZF2WY6",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_0.1_7": {
+    "packageCode": "PLSSSXN2L",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_0.5_7": {
+    "packageCode": "PW9DB7WEK",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_10_30": {
+    "packageCode": "JC055",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_1_7": {
+    "packageCode": "JC052",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_20_30": {
+    "packageCode": "JC090",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_3_15": {
+    "packageCode": "JC053",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_3_30": {
+    "packageCode": "P0R7HML2W",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_50_180": {
+    "packageCode": "PXI7MA5MW",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_50_30": {
+    "packageCode": "JC091",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CN_5_30": {
+    "packageCode": "JC054",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "CO_0.1_7": {
+    "packageCode": "PPHO2UDYS",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_0.5_7": {
+    "packageCode": "PB36IRVNM",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_10_30": {
+    "packageCode": "CKH351",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_1_7": {
+    "packageCode": "CKH303",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_20_30": {
+    "packageCode": "CKH877",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_3_15": {
+    "packageCode": "CKH319",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_3_30": {
+    "packageCode": "PHX3BYM8E",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CO_5_30": {
+    "packageCode": "CKH335",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "CR_10_30": {
+    "packageCode": "CKH352",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CR_1_7": {
+    "packageCode": "CKH304",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CR_20_30": {
+    "packageCode": "CKH940",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CR_3_15": {
+    "packageCode": "CKH320",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CR_3_30": {
+    "packageCode": "PGHZVEQV6",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CR_5_30": {
+    "packageCode": "CKH336",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "CV_10_30": {
+    "packageCode": "PVRB9RMW5",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CV_1_7": {
+    "packageCode": "PPFATGR3K",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CV_20_30": {
+    "packageCode": "PUE31Z9U2",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CV_3_15": {
+    "packageCode": "P39WF0WX1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CV_3_30": {
+    "packageCode": "PXFRDYGZJ",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "CV_5_30": {
+    "packageCode": "PSX4ME2H6",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DM_10_30": {
+    "packageCode": "P6S2XR3BP",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DM_1_7": {
+    "packageCode": "PQT943NBY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DM_20_30": {
+    "packageCode": "PVNJC0R7M",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DM_3_15": {
+    "packageCode": "P9TQ8Q5ER",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DM_3_30": {
+    "packageCode": "P29OESJ5J",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DM_5_30": {
+    "packageCode": "P0927KK7J",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "DO_0.1_7": {
+    "packageCode": "PSW0PJJ42",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_0.5_7": {
+    "packageCode": "P1P67TYB0",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_10_30": {
+    "packageCode": "JC161",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_1_7": {
+    "packageCode": "JC158",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_20_30": {
+    "packageCode": "JC162",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_3_15": {
+    "packageCode": "JC159",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_3_30": {
+    "packageCode": "PVH90GG32",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DO_5_30": {
+    "packageCode": "JC160",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "DZ_0.1_7": {
+    "packageCode": "PJVN54W3O",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "EC_10_30": {
+    "packageCode": "CKH353",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "EC_1_7": {
+    "packageCode": "CKH305",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "EC_20_30": {
+    "packageCode": "CKH883",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "EC_3_15": {
+    "packageCode": "CKH321",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "EC_3_30": {
+    "packageCode": "P46CMFX3N",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "EC_5_30": {
+    "packageCode": "CKH337",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "EG_0.1_7": {
+    "packageCode": "PXG3YL37H",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "ET_10_30": {
+    "packageCode": "PEWK0U5G3",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "ET_1_7": {
+    "packageCode": "PVM58KDD7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "ET_20_30": {
+    "packageCode": "PPQE362LT",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "ET_3_15": {
+    "packageCode": "P2FGK60LA",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "ET_3_30": {
+    "packageCode": "P13VZWW4P",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "ET_5_30": {
+    "packageCode": "PYJD74BY1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "EU-31_10_31": {
+    "packageCode": "POF6NNANW",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "EU-31_20_31": {
+    "packageCode": "PDZ5ACWPU",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "EU-31_50_31": {
+    "packageCode": "PJK22JOHT",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "FI_10_30": {
+    "packageCode": "CKH216",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FI_1_7": {
+    "packageCode": "CKH214",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FI_20_30": {
+    "packageCode": "CKH712",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FI_3_15": {
+    "packageCode": "CKH215",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FI_3_30": {
+    "packageCode": "CKH084",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FI_50_180": {
+    "packageCode": "PU4UANEPA",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FI_5_30": {
+    "packageCode": "CKH123",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "FJ_10_30": {
+    "packageCode": "PIDA61NK7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "FJ_1_7": {
+    "packageCode": "P59BYMRLZ",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "FJ_20_30": {
+    "packageCode": "PWEH3U319",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "FJ_3_15": {
+    "packageCode": "P8WXIS960",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "FJ_3_30": {
+    "packageCode": "P6TD84VEY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "FJ_5_30": {
+    "packageCode": "P6MX0CDB4",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "FO_10_30": {
+    "packageCode": "PZR8PWMR8",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "FO_1_7": {
+    "packageCode": "P2EFNHGYX",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "FO_20_30": {
+    "packageCode": "PJZLJ0Q0C",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "FO_3_15": {
+    "packageCode": "PI3V1NAAD",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "FO_3_30": {
+    "packageCode": "PWFJ559XB",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "FO_5_30": {
+    "packageCode": "PIMAPSJ1X",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "FR_0.1_7": {
+    "packageCode": "PJSV39OVZ",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_10_30": {
+    "packageCode": "CKH992",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_1_7": {
+    "packageCode": "CKH990",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_20_30": {
+    "packageCode": "CKH1005",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_3_15": {
+    "packageCode": "CKH991",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_3_30": {
+    "packageCode": "CKH977",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_50_180": {
+    "packageCode": "P5ML89XJG",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_50_30": {
+    "packageCode": "CKH1006",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "FR_5_30": {
+    "packageCode": "CKH983",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "GA_10_30": {
+    "packageCode": "CKH463",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GA_1_7": {
+    "packageCode": "CKH376",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GA_20_30": {
+    "packageCode": "CKH889",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GA_3_15": {
+    "packageCode": "CKH405",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GA_3_30": {
+    "packageCode": "PRLT0NF12",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GA_5_30": {
+    "packageCode": "CKH434",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GB_0.1_7": {
+    "packageCode": "PBV0LO9CW",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GD_10_30": {
+    "packageCode": "POK07FKSG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GD_1_7": {
+    "packageCode": "PR3Z1VRWG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GD_20_30": {
+    "packageCode": "PANC5HIS7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GD_3_15": {
+    "packageCode": "PWWBPR5YF",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GD_3_30": {
+    "packageCode": "PCXLLEW41",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GD_5_30": {
+    "packageCode": "P40F5FMJB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GF_10_30": {
+    "packageCode": "PWUGI70CL",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GF_1_7": {
+    "packageCode": "P2G3RJAE4",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GF_20_30": {
+    "packageCode": "PU57Y6G43",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GF_3_15": {
+    "packageCode": "PTJY0WZ1M",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GF_3_30": {
+    "packageCode": "P0UUN03L5",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GF_5_30": {
+    "packageCode": "POCQGJIWH",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GG_1_7": {
+    "packageCode": "CKH608",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GG_20_30": {
+    "packageCode": "CKH788",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GG_3_15": {
+    "packageCode": "CKH609",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GG_3_30": {
+    "packageCode": "CKH109",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GG_5_30": {
+    "packageCode": "CKH148",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GH_10_30": {
+    "packageCode": "MB040",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "GH_1_7": {
+    "packageCode": "MB025",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "GH_20_30": {
+    "packageCode": "MB057",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "GH_3_15": {
+    "packageCode": "MB030",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "GH_3_30": {
+    "packageCode": "PMKKKP7KY",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "GH_5_30": {
+    "packageCode": "MB035",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "GI_10_30": {
+    "packageCode": "CKH483",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "GI_1_7": {
+    "packageCode": "CKH481",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "GI_20_30": {
+    "packageCode": "PYS0XSK73",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "GI_3_15": {
+    "packageCode": "CKH482",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "GI_3_30": {
+    "packageCode": "CKH114",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "GI_5_30": {
+    "packageCode": "CKH153",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "GL_10_30": {
+    "packageCode": "CKH356",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GL_1_7": {
+    "packageCode": "CKH308",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GL_20_30": {
+    "packageCode": "CKH891",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GL_3_15": {
+    "packageCode": "CKH324",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GL_3_30": {
+    "packageCode": "PGH88LGZ9",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GL_5_30": {
+    "packageCode": "CKH340",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GM_10_30": {
+    "packageCode": "PG2QVD6FH",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GM_1_7": {
+    "packageCode": "PTR35EVY3",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GM_20_30": {
+    "packageCode": "PMKMSXOBE",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GM_3_15": {
+    "packageCode": "PA9YEKA9H",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GM_3_30": {
+    "packageCode": "PTTE4FNEW",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GM_5_30": {
+    "packageCode": "P0H5TRHS1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "GN_10_30": {
+    "packageCode": "PRVRT5SW3",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GN_1_7": {
+    "packageCode": "P20Y3092Z",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GN_20_30": {
+    "packageCode": "P1YVMQ3UG",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GN_3_15": {
+    "packageCode": "P8MA887CP",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GN_3_30": {
+    "packageCode": "PCFALDCWL",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GN_5_30": {
+    "packageCode": "PVK94ZGS1",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GP_10_30": {
+    "packageCode": "CKH815",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GP_1_7": {
+    "packageCode": "CKH812",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GP_20_30": {
+    "packageCode": "CKH816",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GP_3_15": {
+    "packageCode": "CKH813",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GP_3_30": {
+    "packageCode": "PC5F0KFU8",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GP_5_30": {
+    "packageCode": "CKH814",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GR_0.1_7": {
+    "packageCode": "PFUXC3Q25",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "GT_0.1_7": {
+    "packageCode": "PAQGBYCEU",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GU_10_30": {
+    "packageCode": "PMYQIPASB",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GU_1_7": {
+    "packageCode": "PNCYQZAZN",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GU_20_30": {
+    "packageCode": "P04857JJB",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GU_3_15": {
+    "packageCode": "PKEMRQFAC",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GU_3_30": {
+    "packageCode": "PEOWI61PF",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GU_5_30": {
+    "packageCode": "PIN2SHYSA",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "GW_10_30": {
+    "packageCode": "CKH465",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GW_1_7": {
+    "packageCode": "CKH378",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GW_20_30": {
+    "packageCode": "CKH893",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GW_3_15": {
+    "packageCode": "CKH407",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GW_3_30": {
+    "packageCode": "PV3BLERJV",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GW_5_30": {
+    "packageCode": "CKH436",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GY_10_30": {
+    "packageCode": "P4RTE57XZ",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GY_1_7": {
+    "packageCode": "P3EC48ZGD",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GY_20_30": {
+    "packageCode": "PQ85ODHNS",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GY_3_15": {
+    "packageCode": "PEN95605C",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GY_3_30": {
+    "packageCode": "PE83R4EUD",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "GY_5_30": {
+    "packageCode": "PJXY9HN50",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HK_0.1_7": {
+    "packageCode": "P8TY7BI5M",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "HN_0.1_7": {
+    "packageCode": "P3WDTMWGS",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_0.5_7": {
+    "packageCode": "PUVM8ICPC",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_10_30": {
+    "packageCode": "CKH358",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_1_7": {
+    "packageCode": "CKH310",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_20_30": {
+    "packageCode": "CKH895",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_3_15": {
+    "packageCode": "CKH326",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_3_30": {
+    "packageCode": "PMVR6J422",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HN_5_30": {
+    "packageCode": "CKH342",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "HT_10_30": {
+    "packageCode": "P0EXB2KV5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "HT_1_7": {
+    "packageCode": "PVJ9X10BN",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "HT_20_30": {
+    "packageCode": "P30YBHRE4",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "HT_3_15": {
+    "packageCode": "PG3HA8A5U",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "HT_3_30": {
+    "packageCode": "P0VS5T6FL",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "HT_5_30": {
+    "packageCode": "PZNH935JA",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ID_0.1_7": {
+    "packageCode": "P402OGJG8",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IE_10_30": {
+    "packageCode": "CKH222",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_1_7": {
+    "packageCode": "CKH220",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_20_30": {
+    "packageCode": "CKH720",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_3_15": {
+    "packageCode": "CKH221",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_3_30": {
+    "packageCode": "CKH090",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_500M_3": {
+    "packageCode": "PC3TTT87P",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_50_180": {
+    "packageCode": "PJVVSY6IR",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IE_5_30": {
+    "packageCode": "CKH129",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "IM_10_30": {
+    "packageCode": "CKH261",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "IM_1_7": {
+    "packageCode": "CKH259",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "IM_20_30": {
+    "packageCode": "CKH745",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "IM_3_15": {
+    "packageCode": "CKH260",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "IM_3_30": {
+    "packageCode": "CKH106",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "IM_5_30": {
+    "packageCode": "CKH145",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "IN_0.1_7": {
+    "packageCode": "PNJCUC29S",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_0.5_7": {
+    "packageCode": "P6YUDXUN4",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_10_30": {
+    "packageCode": "JC140",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_1_7": {
+    "packageCode": "JC060",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_20_30": {
+    "packageCode": "JC141",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_3_15": {
+    "packageCode": "JC061",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_3_30": {
+    "packageCode": "PJV33QPAB",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_50_30": {
+    "packageCode": "JC142",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IN_5_30": {
+    "packageCode": "JC062",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IQ_10_30": {
+    "packageCode": "PXN1G3M0J",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IQ_1_7": {
+    "packageCode": "PYWYI9SF9",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IQ_20_30": {
+    "packageCode": "PL9XC4P2C",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IQ_3_15": {
+    "packageCode": "PTNYXA9SL",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IQ_3_30": {
+    "packageCode": "PZ946KWYR",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "IQ_5_30": {
+    "packageCode": "PDWAU6W53",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "JE_10_30": {
+    "packageCode": "CKH264",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "JE_1_7": {
+    "packageCode": "CKH262",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "JE_20_30": {
+    "packageCode": "CKH753",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "JE_3_15": {
+    "packageCode": "CKH263",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "JE_3_30": {
+    "packageCode": "CKH107",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "JE_5_30": {
+    "packageCode": "CKH146",
+    "breakoutIp": "UK/NO",
+    "source": "supplier-audit-2026"
+  },
+  "JM_0.1_7": {
+    "packageCode": "PTFBO8IJH",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_0.5_7": {
+    "packageCode": "PQEWVNTV7",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_10_30": {
+    "packageCode": "PMB6QS4ZN",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_1_7": {
+    "packageCode": "P0CM6KM7E",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_20_30": {
+    "packageCode": "PLKIA6PIQ",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_3_15": {
+    "packageCode": "P5KF3LWV4",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_3_30": {
+    "packageCode": "PTJ9SYG69",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JM_5_30": {
+    "packageCode": "PPDAG2ZLG",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "JO_0.1_7": {
+    "packageCode": "PF8LJK42E",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_0.5_7": {
+    "packageCode": "PJMMVWOED",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_10_30": {
+    "packageCode": "CKH272",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_1_7": {
+    "packageCode": "CKH269",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_20_30": {
+    "packageCode": "CKH790",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_3_15": {
+    "packageCode": "CKH270",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_3_30": {
+    "packageCode": "CKH026",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JO_5_30": {
+    "packageCode": "CKH271",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "JP_0.1_7": {
+    "packageCode": "P6ZMSDS1G",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_0.5_7": {
+    "packageCode": "PVDISIFP6",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_10_30": {
+    "packageCode": "JC066",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_10_30_IIJ": {
+    "packageCode": "PAK783GRS",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_1_7": {
+    "packageCode": "JC063",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_1_7_IIJ": {
+    "packageCode": "PK3VHQ9T6",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_20_30": {
+    "packageCode": "JC145",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_20_30_IIJ": {
+    "packageCode": "PMR7KU23C",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_3_15": {
+    "packageCode": "JC064",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_3_15_IIJ": {
+    "packageCode": "PR8JET2E0",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_3_30": {
+    "packageCode": "P2AJZD4YX",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_3_30_IIJ": {
+    "packageCode": "P2P4EE3TH",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_50_180": {
+    "packageCode": "PL4E7JOWX",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_50_30": {
+    "packageCode": "P98RPDQR0",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_50_30_IIJ": {
+    "packageCode": "PE5N02WZA",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "JP_5_30": {
+    "packageCode": "JC065",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "JP_5_30_IIJ": {
+    "packageCode": "PYTKZG843",
+    "breakoutIp": "JP",
+    "source": "supplier-audit-2026"
+  },
+  "KE_0.1_7": {
+    "packageCode": "P9A3DBLOA",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_0.5_7": {
+    "packageCode": "PCL9P1W3O",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_10_30": {
+    "packageCode": "CKH466",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_1_7": {
+    "packageCode": "CKH379",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_20_30": {
+    "packageCode": "CKH897",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_3_15": {
+    "packageCode": "CKH408",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_3_30": {
+    "packageCode": "PEH7HFFBP",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KE_5_30": {
+    "packageCode": "CKH437",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "KG_10_30": {
+    "packageCode": "CKH758",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KG_1_7": {
+    "packageCode": "CKH755",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KG_20_30": {
+    "packageCode": "CKH759",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KG_3_15": {
+    "packageCode": "CKH756",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KG_3_30": {
+    "packageCode": "PNSXFJGWM",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KG_5_30": {
+    "packageCode": "CKH757",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KH_0.1_7": {
+    "packageCode": "P04JLSJF8",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "KN_10_30": {
+    "packageCode": "PIOTCX57N",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KN_1_7": {
+    "packageCode": "PECCJ8VHG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KN_20_30": {
+    "packageCode": "P4UUTRATY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KN_3_15": {
+    "packageCode": "PR2166FUS",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KN_3_30": {
+    "packageCode": "PGF5RPEQK",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KN_5_30": {
+    "packageCode": "PJ7H5YMP7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KR_0.1_7": {
+    "packageCode": "PKLF9M3N7",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "KW_0.1_7": {
+    "packageCode": "PDM89TRPE",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KY_10_30": {
+    "packageCode": "PCE87XXRF",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KY_1_7": {
+    "packageCode": "PK93SBDBR",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KY_20_30": {
+    "packageCode": "PXR6X2UVA",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KY_3_15": {
+    "packageCode": "P8VDKKJSB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KY_3_30": {
+    "packageCode": "PNXH8MHBY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KY_5_30": {
+    "packageCode": "P7SKZOMJ1",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_0.1_7": {
+    "packageCode": "PHGAWJM6O",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_0.5_7": {
+    "packageCode": "PDM9Z6FE4",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_10_30": {
+    "packageCode": "CKH750",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_1_7": {
+    "packageCode": "CKH1030",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_20_30": {
+    "packageCode": "CKH751",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_3_15": {
+    "packageCode": "CKH1031",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_3_30": {
+    "packageCode": "PY58ICLPM",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "KZ_5_30": {
+    "packageCode": "CKH1032",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LA_10_30": {
+    "packageCode": "PMEU46PCP",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_10_30_Premium": {
+    "packageCode": "PDHX8VL03",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_1_7": {
+    "packageCode": "PRJRJMRWG",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_1_7_Premium": {
+    "packageCode": "PS7K14MMT",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_20_30": {
+    "packageCode": "P816U71A8",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_20_30_Premium": {
+    "packageCode": "P8AV4Z9PW",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_3_15": {
+    "packageCode": "PG7RIWZSN",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_3_15_Premium": {
+    "packageCode": "P6SMYT71Z",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_3_30": {
+    "packageCode": "P7L62EHQA",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_3_30_Premium": {
+    "packageCode": "PFP7Q13LN",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_5_30": {
+    "packageCode": "P1XP4UNRX",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LA_5_30_Premium": {
+    "packageCode": "PNK9PR1D5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "LC_10_30": {
+    "packageCode": "P8DILQOKD",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LC_1_7": {
+    "packageCode": "P2PHWVGFB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LC_20_30": {
+    "packageCode": "PHXR1IHRM",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LC_3_15": {
+    "packageCode": "PWHLYGLB7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LC_3_30": {
+    "packageCode": "P192ET9VH",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LC_5_30": {
+    "packageCode": "P4UWZXF2G",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "LK_0.1_7": {
+    "packageCode": "PWJT28BG0",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_0.5_7": {
+    "packageCode": "PXGSZ3M1M",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_10_30": {
+    "packageCode": "JC085",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_1_7": {
+    "packageCode": "JC042",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_20_30": {
+    "packageCode": "JC086",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_3_15": {
+    "packageCode": "JC043",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_3_30": {
+    "packageCode": "PTSKLWZVK",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_50_180": {
+    "packageCode": "PVCA0JAXV",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_50_30": {
+    "packageCode": "JC087",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LK_5_30": {
+    "packageCode": "JC044",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "LR_1_7": {
+    "packageCode": "CKH380",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LR_3_15": {
+    "packageCode": "CKH409",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LR_3_30": {
+    "packageCode": "P55TYKDMT",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LR_5_30": {
+    "packageCode": "CKH438",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LS_10_30": {
+    "packageCode": "P1J0YS5GU",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "LS_1_7": {
+    "packageCode": "PX67WKND2",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "LS_20_30": {
+    "packageCode": "PF8GBS9T6",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "LS_3_15": {
+    "packageCode": "PRB512NXG",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "LS_3_30": {
+    "packageCode": "P8VFMP3Z7",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "LS_5_30": {
+    "packageCode": "PEA5PL94U",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "LY_10_30": {
+    "packageCode": "P7XR92D1X",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LY_1_7": {
+    "packageCode": "PJQLC84FB",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LY_20_30": {
+    "packageCode": "PFO0HXTRD",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LY_3_15": {
+    "packageCode": "PXO5MHYTD",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LY_3_30": {
+    "packageCode": "P5KF3WQHZ",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "LY_5_30": {
+    "packageCode": "PDR7MHIJ6",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "MA_0.1_7": {
+    "packageCode": "PNQOJTLBQ",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_0.5_7": {
+    "packageCode": "PQOD5XI4W",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_10_30": {
+    "packageCode": "PO5WKZOPV",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_1_7": {
+    "packageCode": "CKH382",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_20_30": {
+    "packageCode": "CKH829",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_3_15": {
+    "packageCode": "CKH411",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_3_30": {
+    "packageCode": "PPHIWSELT",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_50_30": {
+    "packageCode": "CKH830",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MA_5_30": {
+    "packageCode": "P7BXAR31R",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "MC_10_30": {
+    "packageCode": "CKH947",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MC_1_7": {
+    "packageCode": "CKH524",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MC_20_30": {
+    "packageCode": "CKH948",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MC_3_15": {
+    "packageCode": "CKH650",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MC_3_30": {
+    "packageCode": "PJY8XW71J",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MC_5_30": {
+    "packageCode": "CKH651",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MD_10_30": {
+    "packageCode": "CKH944",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MD_1_7": {
+    "packageCode": "CKH523",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MD_20_30": {
+    "packageCode": "CKH945",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MD_3_15": {
+    "packageCode": "CKH647",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MD_3_30": {
+    "packageCode": "PJQKPDV5E",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MD_5_30": {
+    "packageCode": "CKH648",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MF_10_30": {
+    "packageCode": "PVA498ZCJ",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MF_1_7": {
+    "packageCode": "P12ECZP9F",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MF_20_30": {
+    "packageCode": "PUS1Z94SD",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MF_3_15": {
+    "packageCode": "PG4DZM52Z",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MF_3_30": {
+    "packageCode": "PF23GU4ZH",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MF_5_30": {
+    "packageCode": "P2A56ENGE",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MG_10_30": {
+    "packageCode": "CKH453",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "MG_1_7": {
+    "packageCode": "CKH366",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "MG_3_15": {
+    "packageCode": "CKH395",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "MG_5_30": {
+    "packageCode": "CKH424",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "MK_10_30": {
+    "packageCode": "PJ7N7OVRF",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "MK_1_7": {
+    "packageCode": "CKH517",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "MK_20_30": {
+    "packageCode": "PXAIUDUP2",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "MK_3_15": {
+    "packageCode": "CKH637",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "MK_3_30": {
+    "packageCode": "PW1Z8C2HA",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "MK_5_30": {
+    "packageCode": "CKH638",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "MN_10_30": {
+    "packageCode": "MB020",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MN_1_7": {
+    "packageCode": "MB004",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MN_20_30": {
+    "packageCode": "CKH844",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MN_3_15": {
+    "packageCode": "MB010",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MN_3_30": {
+    "packageCode": "P4FQZ1WAH",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MN_5_30": {
+    "packageCode": "MB011",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MO_10_30": {
+    "packageCode": "JC026",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_10_30_nonhkip": {
+    "packageCode": "PEM0EL2D9",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MO_1_7": {
+    "packageCode": "JC024",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_1_7_nonhkip": {
+    "packageCode": "PNLL0N5F4",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MO_20_30": {
+    "packageCode": "JC106",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_20_30_nonhkip": {
+    "packageCode": "PYY68S4KT",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MO_3_15": {
+    "packageCode": "JC025",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_3_15_nonhkip": {
+    "packageCode": "PTJM6R2V5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MO_3_30": {
+    "packageCode": "JC010",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_3_30_nonhkip": {
+    "packageCode": "P16G3BBDH",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MO_50_180": {
+    "packageCode": "PDRBEISAJ",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_50_30": {
+    "packageCode": "JC107",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_5_30": {
+    "packageCode": "JC011",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "MO_5_30_nonhkip": {
+    "packageCode": "PBR7AJ6V0",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MQ_10_30": {
+    "packageCode": "P7UW5CBN8",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MQ_1_7": {
+    "packageCode": "PR6PWD0D3",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MQ_20_30": {
+    "packageCode": "P6A7G9CXC",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MQ_3_15": {
+    "packageCode": "P5SFT2B3L",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MQ_3_30": {
+    "packageCode": "PNNB4CW53",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MQ_5_30": {
+    "packageCode": "PE95P8FWD",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "MR_10_30": {
+    "packageCode": "P9G8FUAH0",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MR_1_7": {
+    "packageCode": "PFEZLE208",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MR_20_30": {
+    "packageCode": "PE8QH35RN",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MR_3_15": {
+    "packageCode": "PX7VRX93A",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MR_3_30": {
+    "packageCode": "P4X7DCJ1X",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MR_5_30": {
+    "packageCode": "PKH762CHC",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MS_10_30": {
+    "packageCode": "P3XPDNQF3",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MS_1_7": {
+    "packageCode": "PM0FO254E",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MS_20_30": {
+    "packageCode": "PNX0RSDT7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MS_3_15": {
+    "packageCode": "PLTLUIF4P",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MS_3_30": {
+    "packageCode": "PKIHTUJQF",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MS_5_30": {
+    "packageCode": "PCMOKD56V",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "MV_10_30": {
+    "packageCode": "PK9JVIKVM",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "MV_1_7": {
+    "packageCode": "P7DC2DM7H",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "MV_20_30": {
+    "packageCode": "PXL4ZM3IY",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "MV_3_15": {
+    "packageCode": "P9KIVYTAJ",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "MV_3_30": {
+    "packageCode": "PPLHDC5E8",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "MV_5_30": {
+    "packageCode": "PAEOVF1UW",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "MW_10_30": {
+    "packageCode": "CKH454",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MW_1_7": {
+    "packageCode": "CKH367",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MW_20_30": {
+    "packageCode": "CKH903",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MW_3_15": {
+    "packageCode": "CKH396",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MW_3_30": {
+    "packageCode": "PWWH5GS8N",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MW_5_30": {
+    "packageCode": "CKH425",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MX_0.1_7": {
+    "packageCode": "PF4COP483",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MY_0.1_7": {
+    "packageCode": "PT4RIB8UL",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "MY_20_15_myip": {
+    "packageCode": "P3H0KLEL8",
+    "breakoutIp": "MY",
+    "source": "supplier-audit-2026"
+  },
+  "MY_40_15_myip": {
+    "packageCode": "P8TY75UYQ",
+    "breakoutIp": "MY",
+    "source": "supplier-audit-2026"
+  },
+  "MZ_10_30": {
+    "packageCode": "MB054",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "MZ_1_7": {
+    "packageCode": "MB043",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "MZ_20_30": {
+    "packageCode": "MB055",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "MZ_3_15": {
+    "packageCode": "MB047",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "MZ_3_30": {
+    "packageCode": "PA9FOA9CF",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "MZ_5_30": {
+    "packageCode": "MB048",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NC_10_30": {
+    "packageCode": "P1Z9AU8TZ",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "NC_1_7": {
+    "packageCode": "P14PRMT2K",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "NC_20_30": {
+    "packageCode": "P6MHG8N3Y",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "NC_3_15": {
+    "packageCode": "PZF1Q82BM",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "NC_3_30": {
+    "packageCode": "PX5E8SGD4",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "NC_5_30": {
+    "packageCode": "P6WX0P1MW",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "NE_10_30": {
+    "packageCode": "CKH470",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NE_1_7": {
+    "packageCode": "CKH383",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NE_20_30": {
+    "packageCode": "CKH909",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NE_3_15": {
+    "packageCode": "CKH412",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NE_3_30": {
+    "packageCode": "PUU7X34HV",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NE_5_30": {
+    "packageCode": "CKH441",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NG_0.1_7": {
+    "packageCode": "P0Q24KI1C",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_0.5_7": {
+    "packageCode": "PYNQZM3O7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_10_30": {
+    "packageCode": "CKH471",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_1_7": {
+    "packageCode": "CKH384",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_20_30": {
+    "packageCode": "CKH911",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_3_15": {
+    "packageCode": "CKH413",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_3_30": {
+    "packageCode": "P6DFLYG3M",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NG_5_30": {
+    "packageCode": "CKH442",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NI_0.1_7": {
+    "packageCode": "PUHSFBY6P",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_0.5_7": {
+    "packageCode": "PM77ZUQ9Y",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_10_30": {
+    "packageCode": "CKH359",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_1_7": {
+    "packageCode": "CKH311",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_20_30": {
+    "packageCode": "CKH907",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_3_15": {
+    "packageCode": "CKH327",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_3_30": {
+    "packageCode": "PNAKSTOUJ",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NI_5_30": {
+    "packageCode": "CKH343",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "NR_10_30": {
+    "packageCode": "P3F28UYWU",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NR_1_7": {
+    "packageCode": "P89ZFJLV3",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NR_20_30": {
+    "packageCode": "P8DYYZ5J9",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NR_3_15": {
+    "packageCode": "PR0D4UFE2",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NR_3_30": {
+    "packageCode": "PGV659WYH",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NR_5_30": {
+    "packageCode": "PEGHPD928",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_0.1_7": {
+    "packageCode": "PLTOJ7B6Z",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_0.5_7": {
+    "packageCode": "PE96WYIJD",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_10_30": {
+    "packageCode": "JC082",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_1_7": {
+    "packageCode": "JC031",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_20_30": {
+    "packageCode": "JC083",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_3_15": {
+    "packageCode": "JC032",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_3_30": {
+    "packageCode": "PHX1H7KZ5",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_50_180": {
+    "packageCode": "PEIHJAQVY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "NZ_5_30": {
+    "packageCode": "JC033",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "OM_10_30": {
+    "packageCode": "CKH276",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "OM_1_7": {
+    "packageCode": "CKH273",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "OM_20_30": {
+    "packageCode": "CKH807",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "OM_3_15": {
+    "packageCode": "CKH274",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "OM_3_30": {
+    "packageCode": "CKH028",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "OM_50_30": {
+    "packageCode": "CKH808",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "OM_5_30": {
+    "packageCode": "CKH275",
+    "breakoutIp": "Europe",
+    "source": "supplier-audit-2026"
+  },
+  "PA_0.1_7": {
+    "packageCode": "P76PJ8WFO",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_0.5_7": {
+    "packageCode": "PO7L569RE",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_10_30": {
+    "packageCode": "CKH360",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_1_7": {
+    "packageCode": "CKH312",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_20_30": {
+    "packageCode": "CKH913",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_3_15": {
+    "packageCode": "CKH328",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_3_30": {
+    "packageCode": "PL85BR1W4",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PA_5_30": {
+    "packageCode": "CKH344",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PE_0.1_7": {
+    "packageCode": "PZ5R7GI4K",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_0.5_7": {
+    "packageCode": "PZ8KWP0BH",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_10_30": {
+    "packageCode": "CKH362",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_1_7": {
+    "packageCode": "CKH314",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_20_30": {
+    "packageCode": "CKH862",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_3_15": {
+    "packageCode": "CKH330",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_3_30": {
+    "packageCode": "PW1MQDJDN",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_50_30": {
+    "packageCode": "CKH863",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PE_5_30": {
+    "packageCode": "CKH346",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PF_10_30": {
+    "packageCode": "PZVLN2TLE",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PF_1_7": {
+    "packageCode": "PATHIF7L0",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PF_20_30": {
+    "packageCode": "PNK2J4QS9",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PF_3_15": {
+    "packageCode": "POSUPIE55",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PF_3_30": {
+    "packageCode": "PVA98D4RD",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PF_5_30": {
+    "packageCode": "P68RHABE0",
+    "breakoutIp": "IL",
+    "source": "supplier-audit-2026"
+  },
+  "PG_10_30": {
+    "packageCode": "PF06A2VCJ",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PG_1_7": {
+    "packageCode": "P69R5QLKY",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PG_20_30": {
+    "packageCode": "PNCZ90ZS6",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PG_3_15": {
+    "packageCode": "P09WJSB4S",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PG_3_30": {
+    "packageCode": "PF6BKU1U4",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PG_5_30": {
+    "packageCode": "PZP780ZCL",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PH_0.1_7": {
+    "packageCode": "PXB3QI9EJ",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "PK_0.1_7": {
+    "packageCode": "P96CDAE48",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_0.5_7": {
+    "packageCode": "PTOLC574D",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_10_30": {
+    "packageCode": "JC152",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_1_7": {
+    "packageCode": "JC111",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_20_30": {
+    "packageCode": "JC153",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_3_15": {
+    "packageCode": "JC129",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_3_30": {
+    "packageCode": "P70ZZFLRP",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PK_5_30": {
+    "packageCode": "JC130",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "PR_1_7": {
+    "packageCode": "CKH315",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PR_3_15": {
+    "packageCode": "CKH331",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PR_3_30": {
+    "packageCode": "PBWRVU4SY",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PR_5_30": {
+    "packageCode": "CKH347",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_0.1_7": {
+    "packageCode": "P0112XJDY",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_0.5_7": {
+    "packageCode": "P1WIRJJCB",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_10_30": {
+    "packageCode": "CKH361",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_1_7": {
+    "packageCode": "CKH313",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_20_30": {
+    "packageCode": "CKH915",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_3_15": {
+    "packageCode": "CKH329",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_3_30": {
+    "packageCode": "PNF73FQGH",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "PY_5_30": {
+    "packageCode": "CKH345",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "QA_0.1_7": {
+    "packageCode": "PIPAFTMRE",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_0.5_7": {
+    "packageCode": "PWZ5FXSJ3",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_10_30": {
+    "packageCode": "CKH761",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_1_7": {
+    "packageCode": "CKH513",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_20_30": {
+    "packageCode": "CKH762",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_3_15": {
+    "packageCode": "CKH667",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_3_30": {
+    "packageCode": "CKH029",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "QA_5_30": {
+    "packageCode": "CKH668",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "RE_0.1_7": {
+    "packageCode": "PN1JR359K",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_0.5_7": {
+    "packageCode": "PVXXCK4BJ",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_10_30": {
+    "packageCode": "CKH452",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_1_7": {
+    "packageCode": "CKH365",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_20_30": {
+    "packageCode": "CKH919",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_3_15": {
+    "packageCode": "CKH394",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_3_30": {
+    "packageCode": "PP1AUEE94",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RE_5_30": {
+    "packageCode": "CKH423",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "RS_0.1_7": {
+    "packageCode": "PHLQ4R8Z8",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_0.5_7": {
+    "packageCode": "P5VCERVEZ",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_10_30": {
+    "packageCode": "CKH802",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_1_7": {
+    "packageCode": "CKH1016",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_20_30": {
+    "packageCode": "CKH803",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_3_15": {
+    "packageCode": "CKH677",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_3_30": {
+    "packageCode": "CKH113",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RS_5_30": {
+    "packageCode": "CKH152",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "RU_0.1_7": {
+    "packageCode": "PVP4RSUMR",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "RW_10_30": {
+    "packageCode": "PB0RN5PCO",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "RW_1_7": {
+    "packageCode": "PZC8WGKPY",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "RW_20_30": {
+    "packageCode": "PAPU0Z4LJ",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "RW_3_15": {
+    "packageCode": "P1G277YTH",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "RW_3_30": {
+    "packageCode": "PVKGG2PY0",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "RW_5_30": {
+    "packageCode": "PC2RLNRIZ",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SA_10_30": {
+    "packageCode": "CKH280",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SA_1_7": {
+    "packageCode": "CKH277",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SA_20_30": {
+    "packageCode": "CKH800",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SA_3_15": {
+    "packageCode": "CKH278",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SA_3_30": {
+    "packageCode": "CKH036",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SA_50_30": {
+    "packageCode": "CKH801",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SA_5_30": {
+    "packageCode": "CKH279",
+    "breakoutIp": "BE",
+    "source": "supplier-audit-2026"
+  },
+  "SC_10_30": {
+    "packageCode": "CKH473",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SC_1_7": {
+    "packageCode": "CKH386",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SC_20_30": {
+    "packageCode": "CKH926",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SC_3_15": {
+    "packageCode": "CKH415",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SC_3_30": {
+    "packageCode": "PXDKMMGM7",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SC_5_30": {
+    "packageCode": "CKH444",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SD_1_7": {
+    "packageCode": "CKH388",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SD_3_15": {
+    "packageCode": "CKH417",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SD_5_30": {
+    "packageCode": "CKH446",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SGMYTH-3_10_30": {
+    "packageCode": "PY5TK3XX6",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SGMYTH-3_1_7": {
+    "packageCode": "P86Y3TMFZ",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SGMYTH-3_20_30": {
+    "packageCode": "P9NV1LJN6",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SGMYTH-3_3_15": {
+    "packageCode": "P71Q4REAB",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SGMYTH-3_3_30": {
+    "packageCode": "PZ8NV3QK9",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SGMYTH-3_5_30": {
+    "packageCode": "PYX2W95MR",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_0.1_7": {
+    "packageCode": "PS67RZTVO",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_0.5_7": {
+    "packageCode": "PXJ279C0P",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_10_30": {
+    "packageCode": "JC041",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_10_30_nonhkip": {
+    "packageCode": "PWX40HHM7",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SG_1_7": {
+    "packageCode": "JC038",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_1_7_nonhkip": {
+    "packageCode": "PMYUL0A89",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SG_20_30": {
+    "packageCode": "JC092",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_20_30_nonhkip": {
+    "packageCode": "PN0S4RKN6",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SG_3_15": {
+    "packageCode": "JC039",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_3_15_nonhkip": {
+    "packageCode": "P8FS5BQQ7",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SG_3_30": {
+    "packageCode": "PR2GUXUD5",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_3_30_nonhkip": {
+    "packageCode": "P2MYA87RF",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SG_50_30": {
+    "packageCode": "JC093",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_5_30": {
+    "packageCode": "JC040",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "SG_5_30_nonhkip": {
+    "packageCode": "P74SEFQ1M",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "SL_10_30": {
+    "packageCode": "P4HXQKXHB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "SL_1_7": {
+    "packageCode": "PWY0ALRDW",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "SL_20_30": {
+    "packageCode": "P4ZJ4LIT0",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "SL_3_15": {
+    "packageCode": "P8U9S59QX",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "SL_3_30": {
+    "packageCode": "P88MEKNY7",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "SL_5_30": {
+    "packageCode": "PVKJQQHDR",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "SN_0.1_7": {
+    "packageCode": "PBBWJ5ZI6",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_0.5_7": {
+    "packageCode": "PDW064AF9",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_10_30": {
+    "packageCode": "CKH472",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_1_7": {
+    "packageCode": "CKH385",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_20_30": {
+    "packageCode": "CKH924",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_3_15": {
+    "packageCode": "CKH414",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_3_30": {
+    "packageCode": "P175YDXW9",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SN_5_30": {
+    "packageCode": "CKH443",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "SR_10_30": {
+    "packageCode": "PMN3ILB5V",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SR_1_7": {
+    "packageCode": "PSYB8Z63F",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SR_20_30": {
+    "packageCode": "P2MYYWL84",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SR_3_15": {
+    "packageCode": "PWH0HX1FG",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SR_3_30": {
+    "packageCode": "PERHGUYXM",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SR_5_30": {
+    "packageCode": "PYRRS4001",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SS_10_30": {
+    "packageCode": "P8HFS9X7J",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SS_1_7": {
+    "packageCode": "P23HLS8GW",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SS_20_30": {
+    "packageCode": "P82SBAEH3",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SS_3_15": {
+    "packageCode": "P9KEV2Z7W",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SS_3_30": {
+    "packageCode": "PB8C7W6RM",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SS_5_30": {
+    "packageCode": "PWM7VV0C8",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SV_0.1_7": {
+    "packageCode": "P5LC2VD5D",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SV_0.5_7": {
+    "packageCode": "PNPJOTSWS",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SV_1_7": {
+    "packageCode": "CKH306",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SV_3_15": {
+    "packageCode": "CKH322",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SV_3_30": {
+    "packageCode": "PMQK9CXAF",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SV_5_30": {
+    "packageCode": "CKH338",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SZ_10_30": {
+    "packageCode": "CKH476",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SZ_1_7": {
+    "packageCode": "CKH389",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SZ_20_30": {
+    "packageCode": "CKH930",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SZ_3_15": {
+    "packageCode": "CKH418",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SZ_3_30": {
+    "packageCode": "PJ6IFTM00",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "SZ_5_30": {
+    "packageCode": "CKH447",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TC_10_30": {
+    "packageCode": "P40NDUO6U",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TC_1_7": {
+    "packageCode": "PZBYZYFCI",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TC_20_30": {
+    "packageCode": "P6ZCADK5L",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TC_3_15": {
+    "packageCode": "PVNG67NVW",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TC_3_30": {
+    "packageCode": "PHYK1897W",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TC_5_30": {
+    "packageCode": "PA7PWXBHH",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TD_10_30": {
+    "packageCode": "CKH458",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TD_1_7": {
+    "packageCode": "CKH371",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TD_20_30": {
+    "packageCode": "CKH873",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TD_3_15": {
+    "packageCode": "CKH400",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TD_3_30": {
+    "packageCode": "PINU8CQ2D",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TD_5_30": {
+    "packageCode": "CKH429",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TG_10_30": {
+    "packageCode": "P9TQ5F1YX",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TG_1_7": {
+    "packageCode": "PTJ23BN5U",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TG_20_30": {
+    "packageCode": "PYN437XQW",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TG_3_15": {
+    "packageCode": "P34L7ECJT",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TG_3_30": {
+    "packageCode": "PEFH180VT",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TG_5_30": {
+    "packageCode": "P4WEM8AT3",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TH_0.1_7": {
+    "packageCode": "PQ2I5PFIT",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_0.5_7": {
+    "packageCode": "PLBDYMED4",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_10_30": {
+    "packageCode": "JC047",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_1_7": {
+    "packageCode": "JC045",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_20_30": {
+    "packageCode": "JC080",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_3_15": {
+    "packageCode": "JC046",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_3_30": {
+    "packageCode": "JC013",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_50_10": {
+    "packageCode": "PMNNJOETO",
+    "breakoutIp": "TH",
+    "source": "supplier-audit-2026"
+  },
+  "TH_50_180": {
+    "packageCode": "PNJW9PBXH",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_50_30": {
+    "packageCode": "JC081",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TH_5_30": {
+    "packageCode": "JC014",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_0.1_7": {
+    "packageCode": "PMJ2GNEEK",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_0.5_7": {
+    "packageCode": "PCFHVT6UG",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_10_30": {
+    "packageCode": "KR004",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_1_7": {
+    "packageCode": "KR001",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_20_30": {
+    "packageCode": "KR006",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_3_15": {
+    "packageCode": "KR002",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_3_30": {
+    "packageCode": "PXX3PDGRD",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TN_5_30": {
+    "packageCode": "KR003",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "TO_10_30": {
+    "packageCode": "P9JVCN2F1",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TO_1_7": {
+    "packageCode": "P71FUM8ZX",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TO_20_30": {
+    "packageCode": "PN0RGHG86",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TO_3_15": {
+    "packageCode": "P1MSX3JU6",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TO_3_30": {
+    "packageCode": "PWMCD9T03",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TO_5_30": {
+    "packageCode": "P9H4VH0ME",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TR_0.1_7": {
+    "packageCode": "PL0M7ICXR",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_0.5_1": {
+    "packageCode": "P99PK3JV6",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_0.5_7": {
+    "packageCode": "PRC9WA4Z0",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_10_30": {
+    "packageCode": "CKH268",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_1_7": {
+    "packageCode": "CKH265",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_20_30": {
+    "packageCode": "CKH738",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_3_15": {
+    "packageCode": "CKH266",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_3_30": {
+    "packageCode": "CKH025",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_50_180": {
+    "packageCode": "PAV5NMZ28",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_50_30": {
+    "packageCode": "CKH739",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TR_5_30": {
+    "packageCode": "CKH267",
+    "breakoutIp": "NL",
+    "source": "supplier-audit-2026"
+  },
+  "TT_10_30": {
+    "packageCode": "PR6UOTLZ5",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TT_1_7": {
+    "packageCode": "PJULNG1M8",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TT_20_30": {
+    "packageCode": "PH7DVKMPI",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TT_3_15": {
+    "packageCode": "P6913H9NR",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TT_3_30": {
+    "packageCode": "PY8W3G7O2",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TT_5_30": {
+    "packageCode": "P7UL8BAKK",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_0.1_7": {
+    "packageCode": "P1W5NQVN1",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_0.5_7": {
+    "packageCode": "PQ01XX4IY",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_10_30": {
+    "packageCode": "MB042",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_1_7": {
+    "packageCode": "MB027",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_20_30": {
+    "packageCode": "MB063",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_3_15": {
+    "packageCode": "MB032",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "TZ_5_30": {
+    "packageCode": "MB037",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "UG_10_30": {
+    "packageCode": "CKH479",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "UG_1_7": {
+    "packageCode": "CKH392",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "UG_20_30": {
+    "packageCode": "CKH934",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "UG_3_15": {
+    "packageCode": "CKH421",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "UG_3_30": {
+    "packageCode": "PF6UW7E4N",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "UG_5_30": {
+    "packageCode": "CKH450",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "US_0.1_7": {
+    "packageCode": "P3YTYXBRV",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "UY_0.1_7": {
+    "packageCode": "PDPRP70HM",
+    "breakoutIp": "AT",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_0.1_7": {
+    "packageCode": "P5N4RG08H",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_0.5_7": {
+    "packageCode": "P1UNFUJLH",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_10_30": {
+    "packageCode": "CKH766",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_1_7": {
+    "packageCode": "CKH1017",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_20_30": {
+    "packageCode": "CKH767",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_3_15": {
+    "packageCode": "CKH1028",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_3_30": {
+    "packageCode": "PCHMVSA0P",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "UZ_5_30": {
+    "packageCode": "CKH1029",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VC_10_30": {
+    "packageCode": "P8P0PBMWE",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VC_1_7": {
+    "packageCode": "P6I5M6WI2",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VC_20_30": {
+    "packageCode": "PCPLFUL4X",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VC_3_15": {
+    "packageCode": "PEPJ9PAUI",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VC_3_30": {
+    "packageCode": "P0529EJIK",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VC_5_30": {
+    "packageCode": "PXMSIV20Z",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VE_10_30": {
+    "packageCode": "PJXYHUMSY",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VE_1_7": {
+    "packageCode": "PBD8Z1KBA",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VE_20_30": {
+    "packageCode": "P61DXGAW2",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VE_3_15": {
+    "packageCode": "PBU0O44ME",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VE_3_30": {
+    "packageCode": "PMHX674AW",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VE_5_30": {
+    "packageCode": "PMCNSQYNB",
+    "breakoutIp": "UK",
+    "source": "supplier-audit-2026"
+  },
+  "VG_10_30": {
+    "packageCode": "P14WHSYK1",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "VG_1_7": {
+    "packageCode": "POGFJFQ58",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "VG_20_30": {
+    "packageCode": "PNHNK1K75",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "VG_3_15": {
+    "packageCode": "PLC8UXEF8",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "VG_3_30": {
+    "packageCode": "PVD70SK8K",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "VG_5_30": {
+    "packageCode": "PZFX1LHCF",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "VN_0.1_7": {
+    "packageCode": "PIK0SW14Q",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_0.5_7": {
+    "packageCode": "P2DH4RPAS",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_10_30": {
+    "packageCode": "JC051",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_1_7": {
+    "packageCode": "JC048",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_20_30": {
+    "packageCode": "JC088",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_3_15": {
+    "packageCode": "JC049",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_3_30": {
+    "packageCode": "PYHXG02NQ",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_50_180": {
+    "packageCode": "PU3OJKPFD",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VN_5_30": {
+    "packageCode": "JC050",
+    "breakoutIp": "HK",
+    "source": "supplier-audit-2026"
+  },
+  "VU_10_30": {
+    "packageCode": "CKH839",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "VU_1_7": {
+    "packageCode": "CKH529",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "VU_20_30": {
+    "packageCode": "CKH840",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "VU_3_15": {
+    "packageCode": "CKH697",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "VU_3_30": {
+    "packageCode": "PCX72Z6DP",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "VU_5_30": {
+    "packageCode": "CKH698",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "WS_10_30": {
+    "packageCode": "CKH921",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "WS_1_7": {
+    "packageCode": "CKH528",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "WS_20_30": {
+    "packageCode": "CKH922",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "WS_3_15": {
+    "packageCode": "CKH672",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "WS_3_30": {
+    "packageCode": "PCNVLYZCY",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "WS_5_30": {
+    "packageCode": "CKH673",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "XK_10_30": {
+    "packageCode": "CKH964",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "XK_1_7": {
+    "packageCode": "CKH530",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "XK_20_30": {
+    "packageCode": "CKH965",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "XK_3_15": {
+    "packageCode": "CKH625",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "XK_3_30": {
+    "packageCode": "P6QQ216QM",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "XK_5_30": {
+    "packageCode": "CKH626",
+    "breakoutIp": "US",
+    "source": "supplier-audit-2026"
+  },
+  "YE_10_30": {
+    "packageCode": "CKH288",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "YE_1_7": {
+    "packageCode": "CKH285",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "YE_20_30": {
+    "packageCode": "CKH842",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "YE_3_15": {
+    "packageCode": "CKH286",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "YE_3_30": {
+    "packageCode": "CKH034",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "YE_5_30": {
+    "packageCode": "CKH287",
+    "breakoutIp": "PL",
+    "source": "supplier-audit-2026"
+  },
+  "YT_10_30": {
+    "packageCode": "PU34HHX2M",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "YT_1_7": {
+    "packageCode": "PJ2U15XKF",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "YT_20_30": {
+    "packageCode": "PM03PD2BN",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "YT_3_15": {
+    "packageCode": "PQCD5S6L3",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "YT_3_30": {
+    "packageCode": "PH5G1C0ZH",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "YT_5_30": {
+    "packageCode": "PLD7DWV14",
+    "breakoutIp": "FR/NL/UK",
+    "source": "supplier-audit-2026"
+  },
+  "ZA_0.1_7": {
+    "packageCode": "PJ91RFXJL",
+    "breakoutIp": "FR/DE",
+    "source": "supplier-audit-2026"
+  },
+  "ZM_10_30": {
+    "packageCode": "CKH480",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZM_1_7": {
+    "packageCode": "CKH393",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZM_20_30": {
+    "packageCode": "CKH938",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZM_3_15": {
+    "packageCode": "CKH422",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZM_3_30": {
+    "packageCode": "PL9TGMXD6",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZM_5_30": {
+    "packageCode": "CKH451",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZW_10_30": {
+    "packageCode": "P9N1CARH6",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZW_1_7": {
+    "packageCode": "P1CV9XPM5",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZW_20_30": {
+    "packageCode": "PPG57ZB4J",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZW_3_15": {
+    "packageCode": "PP1HB0QX4",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZW_3_30": {
+    "packageCode": "P981LFMDB",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  },
+  "ZW_5_30": {
+    "packageCode": "PD0E82NTA",
+    "breakoutIp": "SG",
+    "source": "supplier-audit-2026"
+  }
+}

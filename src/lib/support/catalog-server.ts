@@ -1,5 +1,5 @@
 import "server-only";
-import { getDestinations, getPublishedPlans } from "../catalog-server";
+import { getDestinations, getCuratedCatalog } from "../catalog-server";
 import { findChatDestination, selectChatPlans } from "./chat-catalog";
 export async function supportCatalog(texts: string[], topic: string) {
   if (
@@ -13,7 +13,9 @@ export async function supportCatalog(texts: string[], topic: string) {
   const destination = findChatDestination(texts, destinations);
   if (!destination) return null;
   const plans = selectChatPlans(
-    await getPublishedPlans(destination),
+    (await getCuratedCatalog(destination)).modes.flatMap((mode) =>
+      mode.plans.map((item) => item.plan),
+    ),
     texts.slice(-3).join("\n"),
   );
   return { destination, plans };

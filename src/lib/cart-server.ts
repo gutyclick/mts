@@ -1,5 +1,5 @@
 import "server-only";
-import { getDestinations, getPublishedPlans } from "./catalog-server";
+import { getDestinations, getCommercialPlans } from "./catalog-server";
 import type { CartLine, ResolvedCart } from "./cart";
 
 export async function resolveCart(lines: CartLine[]): Promise<ResolvedCart> {
@@ -10,7 +10,7 @@ export async function resolveCart(lines: CartLine[]): Promise<ResolvedCart> {
       return {
         slug,
         destination,
-        plans: destination ? await getPublishedPlans(destination) : [],
+        plans: destination ? await getCommercialPlans(destination) : [],
       };
     }),
   );

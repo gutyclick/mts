@@ -1,0 +1,15 @@
+# Catalog merchandising governance
+
+Additive migrations `20261103000400_catalog_merchandising.sql` and `20261103000500_catalog_simcoins_guard.sql` were verified against the actual schema in rollback transactions and applied on 2026-11-03. The setup independently compared every catalog SKU and retail price before and after each installation. No prices, provider SKUs, published flags, checkout history or fulfillment records were changed.
+
+`SUPABASE_CLI_PATH` must point to the installed official Supabase executable. `node scripts/setup-catalog-curation.mjs --check` checks installation without changes; `--preflight` verifies missing migrations and rolls back; `--apply` installs only missing migrations. Run `node --experimental-strip-types --test tests/catalog-merchandising.test.mjs tests/catalog-simcoins-guard.test.mjs` for isolated database and request validation coverage.
+
+Administrators use `/es/admin/catalog` or `/en/admin/catalog`; confirmed admin membership and MFA are required. Select a destination, set per-plan overrides, and save each form. The API permits only merchandising fields, requires same-origin JSON writes, and records the actor and before/after values atomically. Direct writes by public, authenticated and service roles are denied; the admin RPC is the write boundary. Audit rows cannot be mutated through granted roles.
+
+`catalog_plan_merchandising` is keyed by the existing `plan_id`. Defaults for an absent row are visibility `auto`, no category, recommendation eligible, no incident block, and no main priority. Priority 1 is highest. Explicit `hide` and incident blocks prevent new checkout items and payment preparation, including old carts. Changes do not interrupt webhook settlement or existing fulfillment.
+
+`catalog_destination_merchandising` is keyed by `destination_slug`. An absent row approves only `standard`. Explicit approvals allow one to three distinct values from `standard`, `premium`, `iij`, `usip`, `nonhkip`, `myip`, and require a technical evidence/source note of 10–2000 characters. Approval is permission to consider a modality, not a claim of superior service or coverage. Daily packages remain outside this configuration.
+
+Public reads follow the published plan/destination RLS boundary. Both override tables remain independent of provider refresh tables. The foreign keys restrict deletion of referenced catalog rows. Visibility `show` does not override technical eligibility, availability, daily-package exclusion, or the commercial maximum of four options.
+
+The administration page previews the same current curation engine, with published technical details, existing retail prices and provider availability, plus selection/exclusion reasons. Saving reloads both configuration and preview. Public destination configuration is exposed only through catalog_destination_merchandising_public (destination_slug, approved_modalities, approval_verified); evidence notes and editor identities remain private. Public plan reads grant only the six fields needed for curation.

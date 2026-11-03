@@ -10,7 +10,250 @@ import { PlanPurchaseSummary } from "./experience/plan-purchase-summary";
 import { planVariant } from "@/lib/plan-variants";
 import { Price } from "@/components/price";
 
-export function PlanBrowser({
+export type CuratedBrowserCatalog = {
+  modes: Array<{
+    id: string;
+    label: { es: string; en: string };
+    description: { es: string; en: string };
+    secondaryPlans?: Plan[];
+    plans: Array<{
+      plan: Plan;
+      category: "basic" | "essential" | "plus" | "max";
+      recommended: boolean;
+      reasons: string[];
+    }>;
+  }>;
+  defaultMode: string;
+};
+type BrowserProps = {
+  locale: Locale;
+  destination: Destination;
+  availablePlans: Plan[];
+  initialDays?: string;
+  initialPlanId?: string;
+  curatedCatalog?: CuratedBrowserCatalog;
+};
+export function PlanBrowser(props: BrowserProps) {
+  return props.curatedCatalog ? (
+    <CuratedPlanBrowser {...props} catalog={props.curatedCatalog} />
+  ) : (
+    <LegacyPlanBrowser {...props} />
+  );
+}
+function CuratedPlanBrowser({
+  locale,
+  destination,
+  initialPlanId = "",
+  catalog,
+}: BrowserProps & { catalog: CuratedBrowserCatalog }) {
+  const es = locale === "es";
+  const id = useId();
+  const initialMode =
+    catalog.modes.find(
+      (mode) =>
+        mode.plans.some(({ plan }) => plan.id === initialPlanId) ||
+        mode.secondaryPlans?.some((plan) => plan.id === initialPlanId),
+    ) ??
+    catalog.modes.find((mode) => mode.id === catalog.defaultMode) ??
+    catalog.modes[0];
+  const [modeId, setModeId] = useState(initialMode?.id ?? "");
+  const [selectedId, setSelectedId] = useState(initialPlanId);
+  const mode = catalog.modes.find((item) => item.id === modeId) ?? initialMode;
+  const candidates = mode?.plans ?? [];
+  const secondaryPlans = mode?.secondaryPlans ?? [];
+  const selectedEntry = candidates.find(({ plan }) => plan.id === selectedId);
+  const selected =
+    selectedEntry?.plan ??
+    secondaryPlans.find((plan) => plan.id === selectedId) ??
+    candidates[0]?.plan ??
+    secondaryPlans[0];
+  const labels = es
+    ? { basic: "Básico", essential: "Esencial", plus: "Plus", max: "Max" }
+    : { basic: "Basic", essential: "Essential", plus: "Plus", max: "Max" };
+  const descriptions = es
+    ? {
+        basic: "Para mapas y mensajes",
+        essential: "Para tu día a día de viaje",
+        plus: "Para compartir más momentos",
+        max: "Para un uso más intenso",
+      }
+    : {
+        basic: "For maps and messages",
+        essential: "For everyday travel",
+        plus: "For sharing more moments",
+        max: "For heavier data use",
+      };
+  function choose(plan: Plan | undefined) {
+    setSelectedId(plan?.id ?? "");
+    const query = new URLSearchParams(window.location.search);
+    if (plan) query.set("plan", plan.id);
+    else query.delete("plan");
+    query.delete("days");
+    const suffix = query.toString();
+    window.history.replaceState(
+      null,
+      "",
+      pathFor(locale, undefined, destination.slug) +
+        (suffix ? "?" + suffix : ""),
+    );
+  }
+  return (
+    <section
+      className="plan-browser curated-plan-browser"
+      aria-label={es ? "Planes y ficha completa" : "Plans and full details"}
+    >
+      <div className="plan-workspace">
+        <div className="plan-selector">
+          <header className="plan-selector-heading">
+            <h2>{es ? "Elige tu plan" : "Choose your plan"}</h2>
+          </header>
+          {catalog.modes.length > 1 && (
+            <fieldset className="curated-mode-switch">
+              <legend>{es ? "Tipo de plan" : "Plan type"}</legend>
+              {catalog.modes.map((item) => (
+                <label key={item.id} data-selected={item.id === mode?.id}>
+                  <input
+                    type="radio"
+                    name={id + "-mode"}
+                    value={item.id}
+                    checked={item.id === mode?.id}
+                    onChange={() => {
+                      const next =
+                        item.plans.find(
+                          (entry) => entry.category === selectedEntry?.category,
+                        ) ?? item.plans[0];
+                      setModeId(item.id);
+                      choose(next?.plan ?? item.secondaryPlans?.[0]);
+                    }}
+                  />
+                  <span>{item.label[locale]}</span>
+                </label>
+              ))}
+            </fieldset>
+          )}
+          {mode && (
+            <p className="curated-mode-description">
+              {mode.description[locale]}
+            </p>
+          )}
+          <fieldset className="curated-plan-options">
+            <legend className="sr-only">
+              {es ? "Selecciona tu plan" : "Select your plan"}
+            </legend>
+            {candidates.map(({ plan, category, recommended }) => (
+              <label
+                className="curated-plan-card"
+                key={plan.id}
+                data-plan-id={plan.id}
+                data-selected={plan.id === selected?.id}
+              >
+                <input
+                  type="radio"
+                  name={id + "-plan"}
+                  value={plan.id}
+                  checked={plan.id === selected?.id}
+                  aria-controls={id + "-details"}
+                  onChange={() => choose(plan)}
+                />
+                <span className="curated-plan-card-heading">
+                  <strong>{labels[category]}</strong>
+                  {recommended && category === "essential" && (
+                    <span className="curated-recommendation">
+                      {es ? "Recomendado" : "Recommended"}
+                    </span>
+                  )}
+                </span>
+                <span className="curated-plan-allowance">{plan.allowance}</span>
+                <span className="curated-plan-duration">
+                  {plan.days}{" "}
+                  {es
+                    ? plan.days === 1
+                      ? "día"
+                      : "días"
+                    : plan.days === 1
+                      ? "day"
+                      : "days"}
+                </span>
+                <span className="curated-plan-description">
+                  {descriptions[category]}
+                </span>
+                <span className="curated-plan-price">
+                  {plan.retailPriceCents != null && (
+                    <Price cents={plan.retailPriceCents} locale={locale} />
+                  )}
+                  <span className="plan-option-check" aria-hidden="true">
+                    {selected?.id === plan.id && <Check size={14} />}
+                  </span>
+                </span>
+              </label>
+            ))}
+          </fieldset>
+          {secondaryPlans.length > 0 && (
+            <details className="curated-long-stays" key={mode?.id}>
+              <summary>{es ? "Estancias largas" : "Longer stays"}</summary>
+              <fieldset>
+                <legend className="sr-only">
+                  {es
+                    ? "Planes para estancias largas"
+                    : "Plans for longer stays"}
+                </legend>
+                {secondaryPlans.map((plan) => (
+                  <label
+                    className="curated-long-stay-option"
+                    key={plan.id}
+                    data-plan-id={plan.id}
+                    data-selected={plan.id === selected?.id}
+                  >
+                    <input
+                      type="radio"
+                      name={id + "-plan"}
+                      value={plan.id}
+                      checked={plan.id === selected?.id}
+                      aria-controls={id + "-details"}
+                      onChange={() => choose(plan)}
+                    />
+                    <strong>{plan.allowance}</strong>
+                    <span>
+                      {plan.days} {es ? "días" : "days"}
+                    </span>
+                    {plan.retailPriceCents != null && (
+                      <strong className="curated-long-stay-price">
+                        <Price cents={plan.retailPriceCents} locale={locale} />
+                      </strong>
+                    )}
+                  </label>
+                ))}
+              </fieldset>
+            </details>
+          )}
+          {!candidates.length && !secondaryPlans.length && (
+            <p className="empty-state">
+              {es
+                ? "No hay planes disponibles en este momento."
+                : "No plans are available right now."}
+            </p>
+          )}
+        </div>
+        <div
+          id={id + "-details"}
+          className="selected-plan-panel"
+          role={selected ? "region" : undefined}
+          aria-label={es ? "Ficha completa del plan" : "Full plan details"}
+        >
+          {selected && (
+            <PlanPurchaseSummary
+              locale={locale}
+              destination={destination}
+              plan={selected}
+            />
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LegacyPlanBrowser({
   locale,
   destination,
   availablePlans,

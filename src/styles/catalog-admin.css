@@ -1,0 +1,231 @@
+.catalog-admin {
+  max-width: 1360px;
+  padding: 36px;
+  min-width: 0;
+}
+.catalog-admin > h1 {
+  font-size: 30px;
+  margin: 0 0 10px;
+}
+.catalog-admin > p {
+  max-width: 850px;
+  line-height: 1.6;
+  color: #596b83;
+}
+.catalog-admin label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #344761;
+}
+.catalog-admin select,
+.catalog-admin input[type="number"],
+.catalog-admin textarea {
+  display: inline-block;
+  padding: 10px 12px;
+  border: 1px solid #ccd8e6;
+  border-radius: 9px;
+  background: #fff;
+  color: #15223b;
+  font: inherit;
+  max-width: 100%;
+}
+.catalog-admin select:focus-visible,
+.catalog-admin input:focus-visible,
+.catalog-admin textarea:focus-visible,
+.catalog-admin button:focus-visible {
+  outline: 3px solid #96c3ff;
+  outline-offset: 2px;
+}
+.catalog-admin > label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0 12px;
+}
+.catalog-admin > label select {
+  min-width: 250px;
+}
+.catalog-admin button,
+.catalog-preview-link {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: #1269ed;
+  color: #fff;
+  padding: 11px 18px;
+  font-weight: 650;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+.catalog-admin button:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+.catalog-preview-link {
+  background: #e7effb;
+  color: #1758af;
+  margin: 0 0 20px;
+}
+.catalog-plan-card,
+.catalog-modality-card,
+.catalog-preview {
+  background: #fff;
+  border: 1px solid #dfe8f4;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 0 18px;
+  box-shadow: 0 4px 16px #142a4610;
+}
+.catalog-admin h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+.catalog-admin h3 {
+  font-size: 15px;
+  margin: 16px 0 10px;
+}
+.catalog-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.catalog-card-heading h2 {
+  margin: 0;
+}
+.catalog-plan-card > label {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0 18px 12px 0;
+  min-width: 160px;
+}
+.catalog-plan-card > p {
+  font-size: 13px;
+  color: #5d6d83;
+  overflow-wrap: anywhere;
+}
+.catalog-plan-card > p label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 4px 20px 4px 0;
+}
+.catalog-admin input[type="checkbox"] {
+  accent-color: #1269ed;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.catalog-modality-card textarea {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  margin-top: 8px;
+}
+.catalog-mode-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  margin: 0 8px 8px 0;
+  background: #f3f7fc;
+  border-radius: 8px;
+}
+.catalog-badge {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #eef2f7;
+  color: #516176;
+}
+.catalog-badge.selected {
+  background: #e5f7ef;
+  color: #176847;
+}
+.catalog-badge.hidden {
+  background: #fff0d9;
+  color: #825515;
+}
+.catalog-badge.blocked {
+  background: #fce7e9;
+  color: #a1263b;
+}
+.catalog-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.catalog-preview-grid article {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #dfe8f4;
+  border-radius: 12px;
+  background: #f8fbff;
+}
+.catalog-preview-grid code {
+  font-size: 10px;
+  word-break: break-all;
+}
+.catalog-preview-grid small {
+  color: #596b83;
+  line-height: 1.5;
+}
+.catalog-decision {
+  border-left: 3px solid #ccd8e6;
+  padding-left: 9px;
+}
+.catalog-admin [role="status"]:empty {
+  display: none;
+}
+@media (max-width: 1050px) {
+  .catalog-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .catalog-admin {
+    padding: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .catalog-admin {
+    padding: 18px;
+  }
+  .catalog-admin > label {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .catalog-admin > label select {
+    min-width: 0;
+    width: 100%;
+  }
+  .catalog-plan-card,
+  .catalog-modality-card,
+  .catalog-preview {
+    padding: 17px;
+    border-radius: 12px;
+  }
+  .catalog-plan-card > label {
+    display: flex;
+    min-width: 0;
+    margin-right: 0;
+  }
+  .catalog-card-heading {
+    align-items: flex-start;
+  }
+  .catalog-preview-grid {
+    grid-template-columns: 1fr;
+  }
+  .catalog-admin > h1 {
+    font-size: 25px;
+  }
+}

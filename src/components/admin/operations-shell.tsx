@@ -36,6 +36,13 @@ export function OperationsShell({
         <nav aria-label={es ? "Administración" : "Administration"}>
           <Link
             className="admin-support-link"
+            href={`/${locale}/admin/catalog`}
+          >
+            <LayoutDashboard size={20} />
+            {es ? "Catálogo" : "Catalog"}
+          </Link>
+          <Link
+            className="admin-support-link"
             href={`/${locale}/admin/coupons`}
           >
             <TicketPercent size={20} />

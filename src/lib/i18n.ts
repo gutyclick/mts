@@ -28,7 +28,7 @@ export function equivalentPath(path: string, locale: Locale) {
   if (section === "simcoins") return `/${locale}/simcoins`;
   if (section === "account" && slug === "simcoins") return `/${locale}/account/simcoins`;
   if (section === "admin")
-    return `/${locale}/admin${["tickets", "analytics", "operations", "refunds", "security", "simcoins"].includes(slug) ? `/${slug}` : ""}`;
+    return `/${locale}/admin${["tickets", "analytics", "operations", "refunds", "security", "simcoins", "catalog"].includes(slug) ? `/${slug}` : ""}`;
   if (section === "support") return `/${locale}/support`;
   if (section === "checkout" && slug === "result")
     return `/${locale}/checkout/result`;

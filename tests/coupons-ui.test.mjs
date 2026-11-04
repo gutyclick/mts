@@ -94,7 +94,31 @@ test("coupon applies directly without showing conditions", () => {
       },
     }),
   );
-  assert.doesNotMatch(applied, /Compra mínima|Sin vencimiento|checkout-coupon-details/);
+  assert.doesNotMatch(
+    applied,
+    /Compra mínima|Sin vencimiento|checkout-coupon-details/,
+  );
   assert.match(applied, /VIAJE5/);
   assert.match(applied, /Ahorras/);
+});
+
+test("account links return to localized checkout and account errors require verification", () => {
+  for (const locale of ["es", "en"]) {
+    const html = renderToStaticMarkup(
+      createElement(exports.CheckoutCoupon, { ...props, locale }),
+    );
+    const es = locale === "es";
+    assert.ok(
+      html.includes(
+        `/${locale}/${es ? "iniciar-sesion" : "sign-in"}?next=${encodeURIComponent(`/${locale}/${es ? "compra" : "checkout"}`)}`,
+      ),
+    );
+    assert.ok(
+      html.includes(`/${locale}/${es ? "crear-cuenta" : "sign-up"}?next=`),
+    );
+    assert.match(
+      exports.couponErrorMessage("account_required", es),
+      es ? /verificada/ : /verified/,
+    );
+  }
 });

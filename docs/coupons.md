@@ -11,11 +11,16 @@ line-item binding and webhook verification used for ordinary orders.
   controls remain available. The code field is always visible in a highlighted
   blue panel near the end of checkout, above the legal confirmations.
 - One coupon per order. Coupon orders neither earn nor redeem SimCoins.
-- Enter a code and choose **Check code** to review its USD minimum, exact validity
-  and published fixed-plan scope before **Apply**. This lookup does not evaluate
-  the selected cart, create a quote or reserve capacity. Eligibility remains
-  unknown until Apply checks verified costs and contribution. Both actions share
-  the same persistent attempt bucket, origin, browser and identity protections;
+- Enter a code and choose **Apply**. Conditions are validated on the server and
+  are not displayed as a separate checkout panel. Apply checks current verified
+  costs, availability, limits and contribution before showing the actual saving.
+- Coupons require an authenticated MyTripSim account with a confirmed email.
+  Guest checkout remains available without coupons. Localized sign-in and
+  registration links return to checkout while the browser keeps its cart.
+- Both the details endpoint and quote/payment RPCs enforce account eligibility.
+  Old guest quotes and cross-account quotes cannot prepare new payments. Historic
+  guest paid reservations still finalize, and their email-based usage still counts.
+  Details lookup and quote attempts retain the same persistent rate bucket;
   there is no public list of available codes or supplier costs.
 - Percentage values use basis points; fixed values and minimums use USD cents.
   Fixed offers convert with the same trusted FX snapshot as the cart.
@@ -41,7 +46,7 @@ reconcile abandoned sessions before release. A refunded purchase still counts as
 a used promotion, preventing repeated buy/refund reuse.
 
 Individual caps combine verified user ID and a keyed hash of billing email.
-Guest caps are email-based; they do not prove real-world identity. Delivery to
+Legacy guest usage remains email-based; it does not prove real-world identity. Delivery to
 another recipient does not grant another coupon allowance. Invalid code attempts
 are rate-limited by a private IP hash. Raw email and IP never appear in coupon
 tables or public errors.

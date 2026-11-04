@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
       return fail("account_unavailable", 503);
     if (user && (!user.email_confirmed_at || !user.email))
       return fail("verify_email", 403);
+    if (body.couponQuoteId && !user) return fail("account_required", 403);
     const email = user?.email ?? body.email.trim().toLowerCase();
     const recipient = body.differentRecipient
       ? body.recipientEmail!.trim().toLowerCase()

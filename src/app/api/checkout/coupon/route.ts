@@ -55,15 +55,15 @@ export async function POST(request: NextRequest) {
     } = await (await authClient()).auth.getUser();
     if (authError && authError.name !== "AuthSessionMissingError")
       return reply({ error: "coupon_unavailable" }, 503);
-    if (user && (!user.email_confirmed_at || !user.email))
-      return reply({ error: "invalid_request" }, 403);
+    if (!user?.email_confirmed_at || !user.email)
+      return reply({ error: "account_required" }, 403);
     const secret = process.env.CHECKOUT_REQUEST_SECRET!;
-    const email = (user?.email ?? input.data.email).trim().toLowerCase();
+    const email = user.email.trim().toLowerCase();
     const db = checkoutDatabase();
     const args = {
       p_code: input.data.code,
       p_identity: privateHash(email, secret),
-      p_user: user?.id ?? null,
+      p_user: user.id,
       p_lines: input.data.lines,
       p_currency: input.data.currency,
       p_fx_quote: input.data.fxQuoteId,

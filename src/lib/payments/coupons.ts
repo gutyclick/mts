@@ -88,6 +88,7 @@ export type CouponDetails = z.infer<typeof couponDetailsSchema>;
 export function couponFailure(error: string): string {
   return (
     [
+      "account_required",
       "invalid_coupon",
       "coupon_minimum",
       "coupon_limit",

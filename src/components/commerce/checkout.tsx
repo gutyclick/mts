@@ -480,6 +480,13 @@ export function Checkout({
           cart.retry();
         if (data.error === "quote_expired")
           await pricing.select(pricing.currency);
+        if (data.error === "account_required") {
+          paymentAttempt.current = null;
+          setCoupon(null);
+          setCouponError(couponErrorMessage(data.error, es));
+          setError(couponErrorMessage(data.error, es));
+          return;
+        }
         if (
           typeof data.error === "string" &&
           data.error.startsWith("coupon_")

@@ -40,7 +40,16 @@ function harness(kind, options = {}) {
       authClient: async () => ({
         auth: {
           getUser: async () => ({
-            data: { user: options.user ?? null },
+            data: {
+              user:
+                options.user === null
+                  ? null
+                  : (options.user ?? {
+                      id: actor,
+                      email: "verified@example.invalid",
+                      email_confirmed_at: new Date().toISOString(),
+                    }),
+            },
             error: options.authError ?? null,
           }),
         },
@@ -227,7 +236,7 @@ test("code-specific condition requests preserve guards and expose only the safe 
   assert.equal(JSON.stringify(body).includes("wholesale"), false);
   assert.equal(h.calls.length, 1);
   assert.equal(h.calls[0].name, "coupon_lookup_details");
-  assert.equal(h.calls[0].args.p_user, null);
+  assert.equal(h.calls[0].args.p_user, actor);
   assert.match(h.calls[0].args.p_rate_key, /^[a-f0-9]{64}$/);
   const unverified = harness("coupon", {
     user: { id: actor, email: "unverified@example.invalid" },
@@ -279,4 +288,18 @@ test("admin reporting requires both private reports and never substitutes unavai
   });
   // No valid snapshot data yields unavailability, never a fabricated metric.
   assert.equal((await missing.api.GET()).status, 503);
+});
+
+test("guests and unverified accounts cannot inspect or quote coupons, including spoofed verified emails", async () => {
+  for (const user of [null, { id: actor, email: "verified@example.invalid" }]) {
+    for (const action of ["details", "quote"]) {
+      const h = harness("coupon", { user });
+      const response = await h.api.POST(
+        request({ ...quoteBody, email: "verified@example.invalid", action }),
+      );
+      assert.equal(response.status, 403);
+      assert.deepEqual(await response.json(), { error: "account_required" });
+      assert.equal(h.calls.length, 0);
+    }
+  }
 });

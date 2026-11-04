@@ -36,9 +36,10 @@ function query(sql, name) {
 }
 const check = `select to_regclass('public.coupon_definitions') is not null as installed,
 exists(select 1 from pg_trigger where tgname='coupon_audit_immutable' and not tgisinternal) as audit_immutable,
-exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname='coupon_prepare_payment' and position('coupon_live_mode_required' in pg_get_functiondef(p.oid))>0) as live_isolated,
+exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname in ('coupon_prepare_payment','catalog_original_coupon_prepare_payment','accounts_original_coupon_prepare_payment') and position('coupon_live_mode_required' in pg_get_functiondef(p.oid))>0) as live_isolated,
 to_regprocedure('public.promotion_claim_cost_refresh()') is not null as promotion_refresh,
 to_regprocedure('public.coupon_lookup_details(text,text,uuid,text)') is not null and to_regprocedure('public.coupon_admin_insights(uuid)') is not null as coupon_insights,
+to_regprocedure('public.coupon_assert_account(uuid)') is not null as accounts_required,
 not has_table_privilege('anon','public.checkout_orders','insert') as orders_private;`;
 try {
   if (readFileSync("supabase/.temp/project-ref", "utf8").trim() !== project)
@@ -57,6 +58,7 @@ try {
         ? ["20261103000100_promotion_cost_refresh"]
         : []),
       ...(!state.coupon_insights ? ["20261103000300_coupon_insights"] : []),
+      ...(!state.accounts_required ? ["20261104000100_coupon_accounts"] : []),
     ];
     if (!pending.length) {
       console.log("Coupon migrations already installed. No changes made.");
@@ -92,7 +94,8 @@ try {
         state.audit_immutable &&
         state.live_isolated &&
         state.promotion_refresh &&
-        state.coupon_insights
+        state.coupon_insights &&
+        state.accounts_required
         ? "Coupon infrastructure installed; order writes and audit history remain protected."
         : "Coupon infrastructure not installed; orders unchanged.",
     );

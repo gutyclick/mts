@@ -9,6 +9,10 @@ import type { CouponDetails, CouponQuote } from "@/lib/payments/coupons";
 export type CheckoutCouponQuote = CouponQuote;
 
 export function couponErrorMessage(code: string, es: boolean) {
+  if (code === "account_required")
+    return es
+      ? "Inicia sesión con una cuenta de correo verificada para usar cupones."
+      : "Sign in with a verified email account to use coupons.";
   if (code === "coupon_minimum")
     return es
       ? "Tu pedido no alcanza la compra mínima indicada para este cupón."
@@ -175,8 +179,21 @@ export function CheckoutCoupon({
       )}
       <p className="commerce-muted">
         {es
-          ? "Los cupones están disponibles solo para usuarios con cuenta. Crea una cuenta o inicia sesión."
-          : "Coupons are available only to account holders. Create an account or sign in."}
+          ? "Los cupones requieren una cuenta con correo verificado. Crea una cuenta o inicia sesión."
+          : "Coupons require an account with a verified email. Create an account or sign in."}
+      </p>
+      <p className="commerce-muted">
+        <a
+          href={`/${locale}/${es ? "iniciar-sesion" : "sign-in"}?next=${encodeURIComponent(`/${locale}/${es ? "compra" : "checkout"}`)}`}
+        >
+          {es ? "Inicia sesión" : "Sign in"}
+        </a>
+        {" · "}
+        <a
+          href={`/${locale}/${es ? "crear-cuenta" : "sign-up"}?next=${encodeURIComponent(`/${locale}/${es ? "compra" : "checkout"}`)}`}
+        >
+          {es ? "Crea una cuenta" : "Create an account"}
+        </a>
       </p>
       {error && (
         <p

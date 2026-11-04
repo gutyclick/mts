@@ -9,7 +9,7 @@ const otherIdentity = "b".repeat(64);
 async function fixture() {
   const db = new PGlite();
   await db.exec(`create role anon;create role authenticated;create role service_role bypassrls;
-    create schema auth;create table auth.users(id uuid primary key);create function auth.uid()returns uuid language sql as 'select null::uuid';
+    create schema auth;create table auth.users(id uuid primary key,email text default 'verified@example.invalid',email_confirmed_at timestamptz default now());create function auth.uid()returns uuid language sql as 'select null::uuid';
     create table catalog_destinations(slug text primary key,is_published bool default true);insert into catalog_destinations values('japan',true);
     create table catalog_plans(id text primary key,destination_slug text default 'japan',retail_price_cents int,is_published bool default true,kind text default 'fixed');
     create table admin_memberships(user_id uuid primary key);
@@ -28,6 +28,7 @@ async function fixture() {
     "20261101000300_coupon_live_mode.sql",
     "20261103000100_promotion_cost_refresh.sql",
     "20261103000300_coupon_insights.sql",
+    "20261104000100_coupon_accounts.sql",
   ]) {
     await db.exec(
       readFileSync(
@@ -37,7 +38,7 @@ async function fixture() {
     );
   }
   const user = randomUUID();
-  await db.query("insert into auth.users values($1);", [user]);
+  await db.query("insert into auth.users(id) values($1);", [user]);
   await db.query("insert into admin_memberships values($1)", [user]);
   await db.exec(
     "insert into catalog_plans(id,retail_price_cents)values('plan',1000);insert into simcoins_private_costs values('plan',10000,now(),null)",
@@ -416,7 +417,7 @@ test("quotes bind identity, user, exact cart, current version, dates and expirat
       id = await order(db, user);
     await assert.rejects(prepare(db, id, q, otherIdentity), /coupon_identity/);
     const wrongOwner = await order(db, null);
-    await assert.rejects(prepare(db, wrongOwner, q), /coupon_identity/);
+    await assert.rejects(prepare(db, wrongOwner, q), /account_required/);
     const wrongCart = await order(db, user, 2);
     await assert.rejects(prepare(db, wrongCart, q), /coupon_cart_changed/);
     await save(db, user, { id: c.id, value: 1900 });
@@ -533,17 +534,17 @@ test("reservations enforce global and customer limits, preserve snapshots, relea
   }
 });
 
-test("global caps serialize distinct guest attempts and released slots become available", async () => {
+test("global caps serialize distinct account attempts and released slots become available", async () => {
   const { db, user } = await fixture();
   try {
     await save(db, user, { max_uses: 1 });
-    const q1 = await quote(db, null),
-      q2 = await quote(db, null, "TRAVEL20", {
+    const q1 = await quote(db, user),
+      q2 = await quote(db, user, "TRAVEL20", {
         identity: otherIdentity,
         rateKey: otherIdentity,
       });
-    const o1 = await order(db, null),
-      o2 = await order(db, null);
+    const o1 = await order(db, user),
+      o2 = await order(db, user);
     await prepare(db, o1, q1);
     await assert.rejects(
       prepare(db, o2, q2, otherIdentity),
@@ -556,7 +557,7 @@ test("global caps serialize distinct guest attempts and released slots become av
     await db.query("update checkout_orders set status='paid' where id=$1", [
       o2,
     ]);
-    assert.equal((await quote(db, null)).error, "coupon_limit");
+    assert.equal((await quote(db, user)).error, "coupon_limit");
   } finally {
     await db.close();
   }
@@ -712,6 +713,110 @@ test("promotion reporting uses paid live immutable snapshots and excludes all re
     await assert.rejects(
       db.query("select coupon_admin_insights($1)", [randomUUID()]),
       /admin_required/,
+    );
+  } finally {
+    await db.close();
+  }
+});
+
+test("account RPC guards reject guest quotes, old guest quote payment and cross-account replay without rewriting history", async () => {
+  const { db, user } = await fixture();
+  try {
+    await save(db, user, { max_uses_per_customer: 1 });
+    await assert.rejects(quote(db, null), /account_required/);
+    await assert.rejects(
+      db.query("select coupon_lookup_details('TRAVEL20',$1,null,$1)", [
+        identity,
+      ]),
+      /account_required/,
+    );
+    const unverified = randomUUID();
+    await db.query(
+      "insert into auth.users(id,email_confirmed_at)values($1,null)",
+      [unverified],
+    );
+    await assert.rejects(quote(db, unverified), /account_required/);
+    await assert.rejects(quote(db, randomUUID()), /account_required/);
+    // Existing guest quotes remain intact but cannot be prepared, even for a new account.
+    const legacy = (
+      await db.query(
+        "select accounts_original_coupon_create_quote('TRAVEL20',$1,null,$2,'USD',null,$1) v",
+        [identity, cart()],
+      )
+    ).rows[0].v;
+    const guestOrder = await order(db, null);
+    await assert.rejects(prepare(db, guestOrder, legacy), /account_required/);
+    const accountOrder = await order(db, user);
+    await assert.rejects(prepare(db, accountOrder, legacy), /account_required/);
+    const q = await quote(db, user);
+    await prepare(db, accountOrder, q);
+    await db.query("update checkout_orders set status='paid' where id=$1", [
+      accountOrder,
+    ]);
+    // Historic email identity still enforces the cap even if account linkage differs.
+    const secondUser = randomUUID();
+    await db.query("insert into auth.users(id)values($1)", [secondUser]);
+    assert.equal((await quote(db, secondUser)).error, "coupon_limit");
+    assert.equal(
+      (
+        await db.query("select user_id from coupon_quotes where id=$1", [
+          legacy.id,
+        ])
+      ).rows[0].user_id,
+      null,
+    );
+    const otherOrder = await order(db, secondUser);
+    await assert.rejects(prepare(db, otherOrder, q), /account_required/);
+    await db.query(
+      "update auth.users set email_confirmed_at=null where id=$1",
+      [user],
+    );
+    await assert.rejects(prepare(db, accountOrder, q), /account_required/);
+    await db.exec("set role service_role");
+    await assert.rejects(
+      db.query(
+        "select accounts_original_coupon_create_quote('TRAVEL20',$1,null,$2,'USD',null,$1)",
+        [identity, cart()],
+      ),
+      /permission denied/,
+    );
+  } finally {
+    await db.close();
+  }
+});
+
+test("historical guest coupon payments still finalize and count toward a new account's email usage cap", async () => {
+  const { db, user } = await fixture();
+  try {
+    await save(db, user, { max_uses_per_customer: 1 });
+    const q = (
+      await db.query(
+        "select accounts_original_coupon_create_quote('TRAVEL20',$1,null,$2,'USD',null,$1) v",
+        [identity, cart()],
+      )
+    ).rows[0].v;
+    const id = await order(db, null);
+    await db.query(
+      "select accounts_original_coupon_prepare_payment($1,$2,$3,'USD',null,$4)",
+      [id, identity, q.id, q.paymentTotal],
+    );
+    await db.query("update checkout_orders set status='paid' where id=$1", [
+      id,
+    ]);
+    assert.equal(
+      (
+        await db.query(
+          "select state from coupon_usage_reservations where order_id=$1",
+          [id],
+        )
+      ).rows[0].state,
+      "redeemed",
+    );
+    assert.equal((await quote(db, user)).error, "coupon_limit");
+    assert.equal(
+      (await db.query("select user_id from checkout_orders where id=$1", [id]))
+        .rows[0].user_id,
+      null,
     );
   } finally {
     await db.close();

@@ -167,6 +167,29 @@
   min-height: 70px;
   background: #fcfdff;
 }
+.business-admin-card input,
+.business-admin-card select {
+  font: inherit;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #dce5ef;
+  border-radius: 9px;
+  background: #fcfdff;
+}
+.business-admin-card form > button {
+  margin-top: 16px;
+}
+.business-admin-card form {
+  padding-block: 15px;
+  border-block: 1px solid #e3eaf2;
+}
+.business-admin-create {
+  margin-bottom: 24px;
+}
+.business-admin-card h3 {
+  font-size: 14px;
+}
 .business-admin-actions {
   display: flex;
   gap: 10px;

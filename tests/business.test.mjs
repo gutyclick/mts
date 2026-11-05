@@ -46,7 +46,7 @@ test("business payloads never accept a spoofed actor or client-computed fulfillm
     false,
   );
 });
-test("finance cannot mutate trips; owners alone manage invitations", () => {
+test("finance cannot mutate trips; owners can manage existing members", () => {
   assert.equal(canManageTrips("owner"), true);
   assert.equal(canManageTrips("coordinator"), true);
   assert.equal(canManageTrips("finance"), false);

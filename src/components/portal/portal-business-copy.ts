@@ -4,6 +4,12 @@ export function businessMessage(code: string, locale: PortalLocale) {
   return (
     (
       {
+        verified_account_required: es
+          ? "El correo debe corresponder a una cuenta MyTripSim existente y verificada."
+          : "The email must belong to an existing verified MyTripSim account.",
+        admin_only: es
+          ? "Solo la administración puede crear empresas y habilitar accesos."
+          : "Only administration can create companies and enable access.",
         unauthorized: es
           ? "Inicia sesión para continuar."
           : "Sign in to continue.",

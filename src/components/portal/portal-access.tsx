@@ -3,8 +3,6 @@ import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import {
   ArrowRight,
-  Building2,
-  CheckCircle2,
   LockKeyhole,
   Mail,
   ShieldCheck,
@@ -13,7 +11,6 @@ import {
   EyeOff,
 } from "lucide-react";
 import { portalHref, type PortalLocale } from "@/lib/portal/copy";
-import type { BusinessWorkspace } from "@/lib/portal/business";
 import { businessMessage } from "./portal-business-copy";
 
 export async function portalPost(body: unknown, auth = false) {
@@ -188,8 +185,8 @@ export function PortalAccess({
               ? "Introduce el código de tu autenticador."
               : "Enter the code from your authenticator."
             : es
-              ? "Usa tu cuenta verificada de MyTripSim. El acceso a cada empresa requiere aprobación o invitación."
-              : "Use your verified MyTripSim account. Company access requires approval or an invitation."}
+              ? "Usa tu cuenta verificada de MyTripSim. El administrador debe habilitar tu acceso empresarial."
+              : "Use your verified MyTripSim account. Your administrator must enable business access."}
         </p>
         {needsMfa ? (
           <label>
@@ -266,13 +263,6 @@ export function PortalAccess({
         {!needsMfa && (
           <div className="bp-auth-links">
             <a
-              href={`https://www.mytripsim.com/${locale}/${es ? "crear-cuenta" : "sign-up"}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {es ? "Crear cuenta" : "Create account"}
-            </a>
-            <a
               href={`https://www.mytripsim.com/${locale}/${es ? "recuperar-contrasena" : "forgot-password"}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -289,151 +279,32 @@ export function PortalAccess({
 export function PortalApplication({
   locale,
   base,
-  workspace,
 }: {
   locale: PortalLocale;
   base: string;
-  workspace: BusinessWorkspace;
 }) {
   const es = locale === "es";
-  const [busy, setBusy] = useState(false),
-    [error, setError] = useState("");
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (busy) return;
-    setBusy(true);
-    setError("");
-    const data = new FormData(event.currentTarget);
-    try {
-      await portalPost({
-        action: "apply",
-        name: String(data.get("name")).trim(),
-        website: String(data.get("website")).trim(),
-        note: String(data.get("note")).trim(),
-      });
-      window.location.reload();
-    } catch (value) {
-      setError(
-        businessMessage(
-          value instanceof Error ? value.message : "unavailable",
-          locale,
-        ),
-      );
-      setBusy(false);
-    }
-  }
-  async function accept(id: string) {
-    if (busy) return;
-    setBusy(true);
-    setError("");
-    try {
-      await portalPost({ action: "accept_invitation", id });
-      window.location.assign(portalHref(locale, base, "home"));
-    } catch (value) {
-      setError(
-        businessMessage(
-          value instanceof Error ? value.message : "unavailable",
-          locale,
-        ),
-      );
-      setBusy(false);
-    }
-  }
   return (
     <AccessFrame locale={locale}>
       <div className="bp-panel bp-form">
         <span className="bp-icon">
-          <Building2 size={24} />
+          <ShieldCheck size={24} />
         </span>
-        <h2>{es ? "Tu empresa en MyTripSim" : "Your company on MyTripSim"}</h2>
-        {workspace.incoming.map((invitation) => (
-          <section className="bp-invitation" key={invitation.id}>
-            <h3>{invitation.company_name}</h3>
-            <p>
-              {es
-                ? "Tienes una invitación para unirte al equipo."
-                : "You have an invitation to join this team."}
-            </p>
-            <button
-              type="button"
-              className="bp-button"
-              disabled={busy}
-              onClick={() => accept(invitation.id)}
-            >
-              {es ? "Aceptar invitación" : "Accept invitation"}
-              <ArrowRight size={17} />
-            </button>
-          </section>
-        ))}
-        {workspace.application?.status === "pending" ? (
-          <div className="bp-empty">
-            <CheckCircle2 size={30} />
-            <h3>{es ? "Solicitud recibida" : "Application received"}</h3>
-            <p>
-              {es
-                ? "Revisaremos el alta de tu empresa. Cuando se apruebe, podrás entrar y crear tus viajes."
-                : "We will review your company application. Once approved, you can access your workspace and create trips."}
-            </p>
-            <button
-              className="bp-button bp-button-secondary"
-              type="button"
-              onClick={() => window.location.reload()}
-            >
-              {es ? "Comprobar estado" : "Check status"}
-            </button>
-          </div>
-        ) : workspace.application?.status === "approved" ||
-          workspace.restricted ? (
-          <p>
-            {es
-              ? "Tu acceso necesita revisión. Contacta con el propietario de la empresa o con MyTripSim."
-              : "Your access needs review. Contact the company owner or MyTripSim."}
-          </p>
-        ) : (
-          <form className="bp-form" onSubmit={submit}>
-            {workspace.application?.review_note && (
-              <p>{workspace.application.review_note}</p>
-            )}
-            <p>
-              {es
-                ? "Solicita el alta de tu empresa. Un administrador revisará la solicitud antes de dar acceso."
-                : "Apply for a company workspace. An administrator reviews the application before granting access."}
-            </p>
-            <label>
-              {es ? "Nombre de la empresa" : "Company name"}
-              <input
-                name="name"
-                required
-                maxLength={120}
-                autoComplete="organization"
-              />
-            </label>
-            <label>
-              {es ? "Sitio web (opcional)" : "Website (optional)"}
-              <input
-                name="website"
-                type="url"
-                maxLength={300}
-                placeholder="https://"
-              />
-            </label>
-            <label>
-              {es
-                ? "Cuéntanos qué viajes organizas (opcional)"
-                : "Tell us about your trips (optional)"}
-              <textarea name="note" rows={3} maxLength={1000} />
-            </label>
-            <button className="bp-button" disabled={busy} type="submit">
-              {es ? "Solicitar acceso" : "Request access"}
-              <ArrowRight size={17} />
-            </button>
-          </form>
-        )}
-        {error && (
-          <p className="bp-error" role="alert">
-            {error}
-          </p>
-        )}
+        <h2>
+          {es ? "Acceso por administración" : "Administrator-managed access"}
+        </h2>
+        <p>
+          {es
+            ? "Las cuentas empresariales son creadas y habilitadas exclusivamente por el administrador de MyTripSim. Tu cuenta todavía no tiene acceso a una empresa activa."
+            : "Business accounts are created and enabled exclusively by the MyTripSim administrator. Your account does not currently have access to an active company."}
+        </p>
+        <button
+          className="bp-button bp-button-secondary"
+          type="button"
+          onClick={() => window.location.reload()}
+        >
+          {es ? "Comprobar acceso" : "Check access"}
+        </button>
         <PortalLogout locale={locale} base={base} />
       </div>
     </AccessFrame>

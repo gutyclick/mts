@@ -2,13 +2,13 @@
 
 ## Operating scope
 
-The portal now supports verified account access, approved company onboarding, accepted team invitations, durable trips, real catalog plan requests and administrative review. It **does not charge, quote a final B2B price, issue eSIMs, send invitation emails, create traveler records or deliver QR codes** in this phase. Approval records commercial review only. Assignment/delivery/activation counters remain zero until their actual integrations exist.
+The portal now supports verified account access, administrator-created companies and administrator-assigned memberships, durable trips, real catalog plan requests and administrative review. It **does not charge, quote a final B2B price, issue eSIMs, send invitation emails, create traveler records or deliver QR codes** in this phase. Approval records commercial review only. Assignment/delivery/activation counters remain zero until their actual integrations exist.
 
 ## How to use it
 
-1. Open `https://portal.mytripsim.com/es` or `/en`. Sign in using a verified MyTripSim account. Registration/password recovery link to the existing storefront flows; portal cookies are host-only, so sign in again on the portal afterward. Existing TOTP MFA is enforced.
-2. A new company owner submits an application. A platform administrator opens `/es/admin/companies` or `/en/admin/companies` on **www**, completes existing admin MFA and approves the application. This creates a company and its owner membership exactly once.
-3. The company owner can create coordinator/finance invitations in **Team**. No automatic email is sent: share the portal URL with the intended recipient. They must sign in with the exact verified email and accept the pending invitation (7-day lifetime).
+1. A platform administrator opens `/es/admin/companies` or `/en/admin/companies` on **www**, completes existing admin MFA and chooses **Create company**. Enter the company name and the email of an existing verified MyTripSim account. No password is changed and no Auth account is silently created or confirmed.
+2. The administrator enables additional users from the company card, choosing owner/coordinator/finance. Company creation and access assignment are idempotent, audited and service-only.
+3. Users sign in at `https://portal.mytripsim.com/es` or `/en`. There is no signup link, application form or invitation acceptance. Accounts without an active membership see an administrator-managed-access notice. Existing TOTP MFA is enforced; password recovery remains available.
 4. Owners/coordinators create trips with destination, dates, group size and model. The package model requests one eSIM per traveler; individual sales can request fewer. The plan must be a currently requestable fixed catalog SKU covering all trip dates. Exact plan IDs, names, capacity and duration are snapshotted.
 5. Submitting saves a request in the protected administrator queue. The administrator approves it or requests changes with a visible note. Stale versions fail rather than overwriting a newer review. Changes can be resubmitted with a new attempt ID. Approved requests never call Stripe, eSIM Access or Resend.
 6. Users belonging to several companies can switch company in **Team**; a full navigation prevents stale workspace data being reused. Owners can remove non-owner members. Pending invitations matching the removed user's email are revoked in the same transaction.
@@ -19,15 +19,15 @@ The portal now supports verified account access, approved company onboarding, ac
 | ------------------------------------- | ----- | ----------- | ------- |
 | Read company trips and request status | Yes   | Yes         | Yes     |
 | Create trips and submit requests      | Yes   | Yes         | No      |
-| Invite/revoke teammates               | Yes   | No          | No      |
+| Create companies / add new members    | No    | No          | No      |
 | Read full member email list           | Yes   | No          | No      |
 | Approve company/order requests        | No    | No          | No      |
 
-Only existing platform administrators with verified MFA can approve applications, review requests or suspend/restore company access. Ordinary retail accounts, user metadata, supplied role names and company IDs do not grant company access. Suspension is checked on the next request. A revoked session cannot reuse an old invitation to regain membership.
+Only existing platform administrators with verified MFA can create companies, assign members, review requests or suspend/restore company access. Ordinary retail accounts, user metadata, supplied role names and company IDs do not grant company access. Suspension is checked on the next request. A revoked session cannot reuse an old invitation to regain membership.
 
 ## Security and persistence
 
-Additive migration: `supabase/migrations/20261105000100_business_portal.sql`.
+Additive migrations: `20261105000100_business_portal.sql` and `20261105000200_business_admin_only.sql`. The second disables/revokes public application, invitation creation and acceptance. Historical application/invitation rows are retained for audit, not reused to grant access. Legacy approval RPCs are inaccessible even to service-role callers.
 
 Tables: `b2b_organizations`, `b2b_memberships`, `b2b_applications`, `b2b_invitations`, `b2b_trips`, `b2b_order_requests`, `b2b_audit_logs`, `b2b_auth_limits`.
 
@@ -36,7 +36,7 @@ Tables: `b2b_organizations`, `b2b_memberships`, `b2b_applications`, `b2b_invitat
 - JSON schemas reject supplied actor IDs, computed fulfillment, client prices and unknown keys. JSON body reads are bounded to 8 KiB, including streamed bodies. Login attempts use database throttles keyed by HMAC, without storing raw IPs or passwords.
 - Trip/request replay uses UUID attempt IDs, row locks and version checks, including explicit SQL NULL rejection. No historic retail order, amount, cost or catalog price is changed.
 - Audit is append-only through application operations; no admin history editing endpoint exists. Service-role UPDATE/DELETE/TRUNCATE on the audit table is revoked.
-- Company-only support is loaded from server environment variables only after active membership is established. Public login/application pages and JavaScript bundles contain no private contact values. Local setup input remains outside Git at `private-data/business-portal/contact.json`.
+- Company-only support is loaded from server environment variables only after active membership is established. Public login/access-notice pages and JavaScript bundles contain no private contact values. Local setup input remains outside Git at `private-data/business-portal/contact.json`.
 
 ## Host separation
 
@@ -61,4 +61,4 @@ Browser runtime initialization currently fails (`failed to write kernel assets`,
 
 ## Next commercial phase
 
-Agree B2B pricing/taxes/payment or credit policy, quote snapshots and contract conditions before linking approval to issuance. Then integrate existing idempotent Stripe/eSIM Access fulfillment behind explicit payment/credit gates, add recipient records and audit-protected QR delivery/ZIP downloads, and display provider-confirmed activation. Add invitation/approval notifications with delivery tracking when authorized. Removing copy alone must never activate issuance.
+Agree B2B pricing/taxes/payment or credit policy, quote snapshots and contract conditions before linking approval to issuance. Then integrate existing idempotent Stripe/eSIM Access fulfillment behind explicit payment/credit gates, add recipient records and audit-protected QR delivery/ZIP downloads, and display provider-confirmed activation. Add administrator-triggered account provisioning/notifications with delivery tracking when authorized. Removing copy alone must never activate issuance.

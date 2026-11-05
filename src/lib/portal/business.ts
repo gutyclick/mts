@@ -21,31 +21,6 @@ const date = z
 export const businessAction = z.discriminatedUnion("action", [
   z
     .object({
-      action: z.literal("apply"),
-      name: text(120),
-      website: z
-        .union([
-          z.literal(""),
-          z
-            .url()
-            .max(300)
-            .refine((value) => /^https?:\/\//.test(value)),
-        ])
-        .default(""),
-      note: z.string().trim().max(1000).default(""),
-    })
-    .strict(),
-  z.object({ action: z.literal("accept_invitation"), id: z.uuid() }).strict(),
-  z
-    .object({
-      action: z.literal("invite"),
-      companyId: z.uuid(),
-      email: z.email().max(254),
-      role: z.enum(["coordinator", "finance"]),
-    })
-    .strict(),
-  z
-    .object({
       action: z.literal("revoke_invitation"),
       companyId: z.uuid(),
       id: z.uuid(),
@@ -87,9 +62,18 @@ export const businessAction = z.discriminatedUnion("action", [
 export const businessAdminAction = z.discriminatedUnion("action", [
   z
     .object({
-      action: z.enum(["approve_application", "reject_application"]),
+      action: z.literal("create_company"),
       id: z.uuid(),
-      note: z.string().trim().max(1000).default(""),
+      name: text(120),
+      email: z.email().max(254),
+    })
+    .strict(),
+  z
+    .object({
+      action: z.literal("add_member"),
+      companyId: z.uuid(),
+      email: z.email().max(254),
+      role: businessRole,
     })
     .strict(),
   z

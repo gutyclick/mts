@@ -72,6 +72,11 @@ for (const path of pages) {
   assert.doesNotMatch(response.body, /mts-google-consent-default/, path);
   assert.doesNotMatch(
     response.body,
+    /href="https:\/\/www\.mytripsim\.com\/(?:es\/crear-cuenta|en\/sign-up)/,
+    "No public signup link in the business portal",
+  );
+  assert.doesNotMatch(
+    response.body,
     /mailto:|wa\.me\//,
     "No private business contacts in public preview",
   );

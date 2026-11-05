@@ -90,26 +90,6 @@ export async function POST(request: NextRequest) {
     let name: string;
     let args: Record<string, unknown>;
     switch (body.action) {
-      case "apply":
-        name = "b2b_apply";
-        args = {
-          p_name: body.name,
-          p_website: body.website,
-          p_note: body.note,
-        };
-        break;
-      case "accept_invitation":
-        name = "b2b_accept_invitation";
-        args = { p_id: body.id };
-        break;
-      case "invite":
-        name = "b2b_invite";
-        args = {
-          p_company: body.companyId,
-          p_email: body.email,
-          p_role: body.role,
-        };
-        break;
       case "revoke_invitation":
         name = "b2b_revoke_invitation";
         args = { p_company: body.companyId, p_id: body.id };

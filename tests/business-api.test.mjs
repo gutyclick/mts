@@ -122,6 +122,21 @@ test("anonymous and MFA-incomplete company mutations cannot reach any RPC", asyn
     assert.equal(h.calls.length, 0);
   }
 });
+test("signed-in retail and company users cannot submit legacy onboarding actions", async () => {
+  const h = harness();
+  for (const body of [
+    { action: "apply", name: "Company", website: "", note: "" },
+    {
+      action: "invite",
+      companyId: company,
+      email: "person@example.invalid",
+      role: "finance",
+    },
+    { action: "accept_invitation", id: company },
+  ])
+    assert.equal((await h.exports.POST(request(body))).status, 400);
+  assert.equal(h.calls.length, 0);
+});
 test("authenticated requests use the user client, strict payload and DB permission errors", async () => {
   const body = {
     action: "request",
@@ -188,7 +203,12 @@ test("administrator endpoints deny missing identity, role or MFA before service 
   }
 });
 test("administrator writes require same origin and bind the server-verified actor", async () => {
-  const body = { action: "approve_application", id: company, note: "" };
+  const body = {
+    action: "create_company",
+    id: company,
+    name: "Company",
+    email: "owner@example.invalid",
+  };
   const h = harness(true);
   const bad = request(body);
   assert.equal((await h.exports.POST(bad)).status, 403);

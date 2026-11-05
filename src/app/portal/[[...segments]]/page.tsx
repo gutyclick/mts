@@ -53,9 +53,7 @@ export default async function PortalPage({
     return <PortalAccess locale={locale} base={base} mfa={identity.needsMfa} />;
   const workspace = await businessWorkspace(identity.client);
   if (!workspace.company)
-    return (
-      <PortalApplication locale={locale} base={base} workspace={workspace} />
-    );
+    return <PortalApplication locale={locale} base={base} />;
   if (
     ["new", "request"].includes(route.view) &&
     !canManageTrips(workspace.company.role)

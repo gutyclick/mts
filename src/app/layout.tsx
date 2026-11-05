@@ -54,14 +54,20 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const requestHeaders = await headers();
   const locale =
-    (await headers()).get("x-mytripsim-locale") === "es" ? "es" : "en";
+    requestHeaders.get("x-mytripsim-locale") === "es" ? "es" : "en";
+  const isPortal = requestHeaders
+    .get("x-mytripsim-surface")
+    ?.startsWith("portal");
   return (
     <html lang={locale} className={`${inter.variable} ${jakarta.variable}`}>
       <body>
-        <Script id="mts-google-consent-default" strategy="beforeInteractive">
-          {googleAdsBootstrap}
-        </Script>
+        {!isPortal && (
+          <Script id="mts-google-consent-default" strategy="beforeInteractive">
+            {googleAdsBootstrap}
+          </Script>
+        )}
         {children}
       </body>
     </html>

@@ -13,7 +13,18 @@ export type PortalTrip = {
   delivered: number;
   activated: number;
   sold: number;
-  request?: { id: string; quantity: number; plan: string };
+  version?: number;
+  destinationSlug?: string;
+  request?: {
+    id: string;
+    quantity: number;
+    plan: string;
+    planName?: string;
+    days?: number;
+    dataGb?: number;
+    version?: number;
+    reviewNote?: string | null;
+  };
 };
 export type NewTrip = Pick<
   PortalTrip,

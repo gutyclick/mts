@@ -43,6 +43,7 @@ export function safeAccountNext(value: unknown, locale: Locale) {
         `/${locale}/account/simcoins`,
         `/${locale}/admin`,
         `/${locale}/admin/security`,
+        `/${locale}/admin/companies`,
         `/${locale}/admin/simcoins`,
         `/${locale}/admin/operations`,
         `/${locale}/admin/refunds`,

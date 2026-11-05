@@ -17,6 +17,13 @@ export async function proxy(request: NextRequest) {
     "x-mytripsim-surface",
     portal ? "portal" : preview ? "portal-preview" : "store",
   );
+  if (portal && /^\/api\/portal(?:\/|$)/.test(request.nextUrl.pathname)) {
+    const response = await sessionResponse(request, headers);
+    response.headers.set("Cache-Control", "private, no-store, max-age=0");
+    response.headers.set("Referrer-Policy", "no-referrer");
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
   if (portal || preview) {
     const path = portal
       ? portalRewrite(request.nextUrl.pathname)
@@ -25,6 +32,12 @@ export async function proxy(request: NextRequest) {
       "x-mytripsim-locale",
       path.split("/")[2] === "en" ? "en" : "es",
     );
+    const refreshed =
+      !/^\/(?:api(?:\/|$)|_next(?:\/|$)|images(?:\/|$)|icons(?:\/|$)|flags(?:\/|$)|illustrations(?:\/|$)|robots\.txt|sitemap\.xml|manifest\.webmanifest|favicon\.ico|icon\.png|apple-icon\.png|logomytripsim\.png|opengraph-image)/.test(
+        request.nextUrl.pathname,
+      )
+        ? await sessionResponse(request, headers)
+        : null;
     let result: NextResponse;
     if (portal && request.nextUrl.pathname === "/robots.txt") {
       result = new NextResponse("User-agent: *\nDisallow: /\n", {
@@ -54,6 +67,7 @@ export async function proxy(request: NextRequest) {
     result.headers.set("Cache-Control", "private, no-store, max-age=0");
     result.headers.set("Referrer-Policy", "no-referrer");
     result.headers.set("X-Robots-Tag", "noindex, nofollow");
+    refreshed?.cookies.getAll().forEach((cookie) => result.cookies.set(cookie));
     return result;
   }
   headers.set(

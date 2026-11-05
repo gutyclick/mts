@@ -8,6 +8,7 @@ import {
   RotateCcw,
   Coins,
   TicketPercent,
+  Building2,
 } from "lucide-react";
 import { Brand } from "../ui";
 import type { Locale } from "@/lib/i18n";
@@ -34,6 +35,13 @@ export function OperationsShell({
           {es ? "ADMINISTRACIÓN" : "ADMINISTRATION"}
         </p>
         <nav aria-label={es ? "Administración" : "Administration"}>
+          <Link
+            className="admin-support-link"
+            href={`/${locale}/admin/companies`}
+          >
+            <Building2 size={20} />
+            {es ? "Empresas B2B" : "B2B companies"}
+          </Link>
           <Link
             className="admin-support-link"
             href={`/${locale}/admin/catalog`}

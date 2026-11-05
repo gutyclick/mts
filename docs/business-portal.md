@@ -1,54 +1,64 @@
-# MyTripSim Business — visual foundation
+# MyTripSim Business — accounts, trips and requests
 
-## Scope
+## Operating scope
 
-This first phase is a bilingual, navigable **prototype**, not an operating B2B order system. All seeded trips, references, sales and activation counts are fictional. Creating a trip, submitting a request or approving it changes only the React state of the currently open page session. Refreshing starts again with the examples. There are no new database tables, payment intents, emails, provider requests or generated QR codes.
+The portal now supports verified account access, approved company onboarding, accepted team invitations, durable trips, real catalog plan requests and administrative review. It **does not charge, quote a final B2B price, issue eSIMs, send invitation emails, create traveler records or deliver QR codes** in this phase. Approval records commercial review only. Assignment/delivery/activation counters remain zero until their actual integrations exist.
 
-## Addresses and separation
+## How to use it
 
-- Intended address: `https://portal.mytripsim.com/es` (also `/en`).
-- Local inspection: `http://127.0.0.1:3005/portal/es`.
-- `src/proxy.ts` rewrites exact portal-host requests into the separate `src/app/portal` tree. No retail SiteFrame, cart, support messenger or advertising consent bootstrap is mounted there.
-- The existing storefront still uses its normal locale layout/session refresh. The portal-host retail/API paths respond 404; no checkout or admin API is exposed through this prototype host.
-- Internal Next rewrites may normalize Host to localhost in development. The original forwarded host plus surface marker preserve clean portal links on that second pass. These are **presentation hints only**, never organization membership or administrative authorization.
-- Portal pages return `private, no-store` and `noindex, nofollow`. The portal-host robots file disallows crawling; its sitemap is not the storefront sitemap. Do not add prototype URLs to Search Console.
+1. Open `https://portal.mytripsim.com/es` or `/en`. Sign in using a verified MyTripSim account. Registration/password recovery link to the existing storefront flows; portal cookies are host-only, so sign in again on the portal afterward. Existing TOTP MFA is enforced.
+2. A new company owner submits an application. A platform administrator opens `/es/admin/companies` or `/en/admin/companies` on **www**, completes existing admin MFA and approves the application. This creates a company and its owner membership exactly once.
+3. The company owner can create coordinator/finance invitations in **Team**. No automatic email is sent: share the portal URL with the intended recipient. They must sign in with the exact verified email and accept the pending invitation (7-day lifetime).
+4. Owners/coordinators create trips with destination, dates, group size and model. The package model requests one eSIM per traveler; individual sales can request fewer. The plan must be a currently requestable fixed catalog SKU covering all trip dates. Exact plan IDs, names, capacity and duration are snapshotted.
+5. Submitting saves a request in the protected administrator queue. The administrator approves it or requests changes with a visible note. Stale versions fail rather than overwriting a newer review. Changes can be resubmitted with a new attempt ID. Approved requests never call Stripe, eSIM Access or Resend.
+6. Users belonging to several companies can switch company in **Team**; a full navigation prevents stale workspace data being reused. Owners can remove non-owner members. Pending invitations matching the removed user's email are revoked in the same transaction.
 
-## Screens
+## Roles
 
-| Screen          | Spanish path                | English path             |
-| --------------- | --------------------------- | ------------------------ |
-| Overview        | `/es`                       | `/en`                    |
-| Trips           | `/es/viajes`                | `/en/trips`              |
-| New trip        | `/es/viajes/nuevo`          | `/en/trips/new`          |
-| Trip detail     | `/es/viajes/{id}`           | `/en/trips/{id}`         |
-| Request eSIMs   | `/es/viajes/{id}/solicitar` | `/en/trips/{id}/request` |
-| Example review  | `/es/revision`              | `/en/review`             |
-| Team roles      | `/es/equipo`                | `/en/team`               |
-| Billing outline | `/es/facturacion`           | `/en/billing`            |
-| Support outline | `/es/soporte`               | `/en/support`            |
-| Access outline  | `/es/acceso`                | `/en/access`             |
+| Capability                            | Owner | Coordinator | Finance |
+| ------------------------------------- | ----- | ----------- | ------- |
+| Read company trips and request status | Yes   | Yes         | Yes     |
+| Create trips and submit requests      | Yes   | Yes         | No      |
+| Invite/revoke teammates               | Yes   | No          | No      |
+| Read full member email list           | Yes   | No          | No      |
+| Approve company/order requests        | No    | No          | No      |
 
-Trip detail separates overview, travelers/eSIMs and orders. Traveler lists paginate by 50 after the first ten; their CSV export includes fictional references/status only. The package model requests one eSIM per traveler. Individual-sale requests can cover a subset. Deliveries and activations do not advance merely because a request is approved.
+Only existing platform administrators with verified MFA can approve applications, review requests or suspend/restore company access. Ordinary retail accounts, user metadata, supplied role names and company IDs do not grant company access. Suspension is checked on the next request. A revoked session cannot reuse an old invitation to regain membership.
 
-## Private business support
+## Security and persistence
 
-The owner's company-only support details are stored **locally and outside Git** in `private-data/business-portal/contact.json`. This file is not imported into the application or deployment. The preview deliberately exposes neither the number nor the business email.
+Additive migration: `supabase/migrations/20261105000100_business_portal.sql`.
 
-In the transactional phase, migrate the configuration into a server-only environment or protected settings table, then disclose it only after checking current organization membership. Do not put these contacts in NEXT_PUBLIC variables, static JSX, browser fixtures, public metadata or client bundles. The general storefront support configuration must remain unchanged.
+Tables: `b2b_organizations`, `b2b_memberships`, `b2b_applications`, `b2b_invitations`, `b2b_trips`, `b2b_order_requests`, `b2b_audit_logs`, `b2b_auth_limits`.
 
-## Next implementation phases
+- Authenticated user RPCs derive identity from `auth.uid()`, require confirmed email, enforce existing MFA and check active membership/role. They use RLS; direct authenticated table mutations are denied.
+- Administrator RPCs are service-only and verify actual admin membership; HTTP routes additionally require existing admin session/MFA and same-origin writes.
+- JSON schemas reject supplied actor IDs, computed fulfillment, client prices and unknown keys. JSON body reads are bounded to 8 KiB, including streamed bodies. Login attempts use database throttles keyed by HMAC, without storing raw IPs or passwords.
+- Trip/request replay uses UUID attempt IDs, row locks and version checks, including explicit SQL NULL rejection. No historic retail order, amount, cost or catalog price is changed.
+- Audit is append-only through application operations; no admin history editing endpoint exists. Service-role UPDATE/DELETE/TRUNCATE on the audit table is revoked.
+- Company-only support is loaded from server environment variables only after active membership is established. Public login/application pages and JavaScript bundles contain no private contact values. Local setup input remains outside Git at `private-data/business-portal/contact.json`.
 
-1. Organizations and membership: approved company onboarding, verified login, company roles, invitations and RLS. Existing retail login alone must not grant company access.
-2. Trips and requests: durable server-side records, travelers, selected real plan IDs and commercial quote snapshots. User/company association must come from the session, not request payloads.
-3. Administrative review: extend the existing protected admin area with audit trails. A company coordinator must never approve provider issuance. Separate requested, approved, awaiting payment, paid/authorized credit, provisioning and delivered states.
-4. Fulfillment: reuse the existing idempotent eSIM Access issuance/Resend infrastructure. Emit only after explicit commercial gates, with per-item retries and correct provider-confirmed activation.
-5. Distribution: recipient-scoped, revocable private links; on-demand individual download/ZIP; company-initiated WhatsApp sharing. Never expose all company eSIMs through a traveler link. QR access/download needs auditing and authorization.
+## Host separation
 
-No commercial B2B service should be enabled by merely removing the preview banner.
+The portal uses its own route tree under `src/app/portal`. Exact-host requests for `portal.mytripsim.com` are rewritten there; `/portal/es` and `/portal/en` on www also enforce company access. The portal mounts no retail SiteFrame, cart or optional advertising bootstrap. It exposes only its `/api/portal` endpoints; storefront checkout/admin APIs remain blocked on that host. Platform administration remains on **www**.
 
-## Verification
+Surface/forwarded-host hints select presentation only, never authorization. Cookies stay host-only. All portal pages/API responses are private/no-store/noindex. Its robots file disallows crawling and it has no storefront sitemap. Do not submit portal URLs to Search Console.
 
-- `node --experimental-strip-types --test tests/portal.test.mjs`: routing, dates/capacity validation, package/individual request rules, request state transitions and no fabricated fulfillment.
-- `node scripts/test-portal-web.mjs`: read-only local HTTP smoke test with actual Host headers, 20 localized screens, blocked retail routes, noindex/cache controls, private-contact absence and ordinary-store preservation. Default port 3005; override `PORTAL_TEST_URL` if needed. This is not a browser interaction test.
-- TypeScript, lint and production build should pass before deployment.
-- Visual interaction testing at mobile/desktop sizes remains necessary. If the computer-use runtime cannot start, report that limitation instead of claiming screenshots or device checks were completed.
+## Setup and checks
+
+Set `SUPABASE_CLI_PATH` to the installed CLI binary (never print credentials).
+
+- `node scripts/setup-business.mjs --preflight`: create schema inside a transaction, run synthetic tenant/RLS/invitation/MFA/idempotency fixtures and roll everything back.
+- `node scripts/setup-business.mjs --apply`: install the additive schema after the same tests pass; synthetic auth/company records are rolled back before committing schema changes.
+- `node scripts/setup-business.mjs --test`: rerun the rollback-only tests against the installed schema.
+- `node scripts/setup-business.mjs --check`: report whether installed, without returning personal rows.
+- `node scripts/configure-business-contact.mjs`: read the private local support input and write only `B2B_SUPPORT_EMAIL` / `B2B_SUPPORT_WHATSAPP` to ignored `.env.local`.
+- Add `--deploy` with `VERCEL_CLI_PATH` to upload those **two values only** to Vercel as sensitive server variables. No production secrets are downloaded; values never appear in command arguments or output.
+- `node --experimental-strip-types --test tests/business*.test.mjs tests/portal.test.mjs`: validation, endpoint, identity, MFA, rate, origin, privacy and domain tests, using mocks for authentication responses.
+- `node scripts/test-portal-web.mjs`: read-only local HTTP smoke checks for anonymous ES/EN access, no fixture/contact exposure, protected APIs and storefront separation. Default port 3005; override `PORTAL_TEST_URL` when checking compiled mode.
+
+Browser runtime initialization currently fails (`failed to write kernel assets`, OS error 3). HTTP/source/SQL tests are not a substitute for interactive mobile/browser acceptance; do not claim that review has been performed.
+
+## Next commercial phase
+
+Agree B2B pricing/taxes/payment or credit policy, quote snapshots and contract conditions before linking approval to issuance. Then integrate existing idempotent Stripe/eSIM Access fulfillment behind explicit payment/credit gates, add recipient records and audit-protected QR delivery/ZIP downloads, and display provider-confirmed activation. Add invitation/approval notifications with delivery tracking when authorized. Removing copy alone must never activate issuance.

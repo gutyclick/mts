@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Activity,
+  Building2,
   ArrowLeft,
   ArrowRight,
   Check,
@@ -322,6 +323,13 @@ export function AdminDashboard({
           {es ? "ADMINISTRACIÓN" : "ADMINISTRATION"}
         </p>
         <nav aria-label={es ? "Administración" : "Administration"}>
+          <Link
+            className="admin-support-link"
+            href={`/${locale}/admin/companies`}
+          >
+            <Building2 size={20} />
+            {es ? "Empresas B2B" : "B2B companies"}
+          </Link>
           <Link
             className="admin-support-link"
             href={`/${locale}/admin/coupons`}

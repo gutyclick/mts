@@ -17,8 +17,6 @@ import {
   Luggage,
   Plus,
   Search,
-  ShieldCheck,
-  Sparkles,
   Users,
   Wallet,
 } from "lucide-react";
@@ -37,11 +35,16 @@ import {
   type PortalProps,
 } from "./portal-ui";
 import { PortalTripForm } from "./portal-trip-form";
-import { PortalTripDetail, PortalRequest, PortalReview } from "./portal-trip";
+import { PortalTripDetail } from "./portal-trip";
+import { PortalRequest } from "./portal-request";
+import { PortalTeam, PortalSupport } from "./portal-team";
+import { PortalLogout } from "./portal-access";
+import { canManageTrips } from "@/lib/portal/business";
+import { roleLabel } from "./portal-business-copy";
 
 function Overview({ locale, base }: PortalProps) {
   const t = portalCopy[locale];
-  const { trips } = usePortal();
+  const { trips, company } = usePortal();
   const totals = summarizeTrips(trips);
   const upcoming = [...trips]
     .sort((a, b) => a.departure.localeCompare(b.departure))
@@ -53,10 +56,12 @@ function Overview({ locale, base }: PortalProps) {
           <span className="bp-eyebrow">MYTRIPSIM BUSINESS</span>
           <h1>{t.headline}</h1>
           <p>{t.welcome}</p>
-          <PortalButton href={portalHref(locale, base, "new")}>
-            <Plus size={18} />
-            {t.new}
-          </PortalButton>
+          {canManageTrips(company.role) && (
+            <PortalButton href={portalHref(locale, base, "new")}>
+              <Plus size={18} />
+              {t.new}
+            </PortalButton>
+          )}
         </div>
         <Image
           src="/images/sim/sim_traveler.png"
@@ -108,11 +113,31 @@ function Overview({ locale, base }: PortalProps) {
             <ArrowRight size={16} />
           </Link>
         </div>
-        <div className="bp-trip-grid">
-          {upcoming.map((trip) => (
-            <TripCard key={trip.id} trip={trip} locale={locale} base={base} />
-          ))}
-        </div>
+        {upcoming.length ? (
+          <div className="bp-trip-grid">
+            {upcoming.map((trip) => (
+              <TripCard key={trip.id} trip={trip} locale={locale} base={base} />
+            ))}
+          </div>
+        ) : (
+          <div className="bp-panel bp-empty">
+            <Luggage size={28} />
+            <h2>
+              {locale === "es"
+                ? "Tu primer viaje empieza aquí"
+                : "Your first trip starts here"}
+            </h2>
+            <p>
+              {canManageTrips(company.role)
+                ? locale === "es"
+                  ? "Crea un viaje para organizar el grupo y preparar su solicitud de eSIM."
+                  : "Create a trip to organize the group and prepare its eSIM request."
+                : locale === "es"
+                  ? "El coordinador de tu empresa añadirá los próximos viajes."
+                  : "Your company coordinator will add upcoming trips."}
+            </p>
+          </div>
+        )}
       </section>
       <section className="bp-bottom-grid">
         <div className="bp-panel">
@@ -150,7 +175,7 @@ function Overview({ locale, base }: PortalProps) {
 }
 
 function Trips({ locale, base }: PortalProps) {
-  const { trips } = usePortal();
+  const { trips, company } = usePortal();
   const [query, setQuery] = useState("");
   const t = portalCopy[locale];
   const normalize = (value: string) =>
@@ -171,10 +196,12 @@ function Trips({ locale, base }: PortalProps) {
             : "A place for every group. Find your next trip."
         }
       >
-        <PortalButton href={portalHref(locale, base, "new")}>
-          <Plus size={18} />
-          {t.new}
-        </PortalButton>
+        {canManageTrips(company.role) && (
+          <PortalButton href={portalHref(locale, base, "new")}>
+            <Plus size={18} />
+            {t.new}
+          </PortalButton>
+        )}
       </PageHeading>
       <label className="bp-search">
         <Search size={19} />
@@ -209,91 +236,19 @@ function SupportingPage({
   view,
 }: PortalProps & { view: PortalView }) {
   const t = portalCopy[locale];
-  if (view === "access")
-    return (
-      <section className="bp-access">
-        <Image
-          src="/images/sim/sim_traveler.png"
-          width={180}
-          height={180}
-          alt="SIM"
-        />
-        <span className="bp-eyebrow">MYTRIPSIM BUSINESS</span>
-        <h1>{t.accessTitle}</h1>
-        <p>{t.accessInfo}</p>
-        <PortalButton href={portalHref(locale, base, "home")}>
-          {t.explore}
-          <ArrowRight size={18} />
-        </PortalButton>
-        <small>{t.accessNote}</small>
-      </section>
-    );
-  if (view === "team")
-    return (
-      <>
-        <PageHeading title={t.teamTitle} description={t.teamInfo} />
-        <div className="bp-trip-grid">
-          {[
-            { icon: ShieldCheck, title: t.role1, info: t.role1Info },
-            { icon: Luggage, title: t.role2, info: t.role2Info },
-            { icon: Wallet, title: t.role3, info: t.role3Info },
-          ].map(({ icon: Icon, title, info }) => (
-            <div className="bp-panel bp-role" key={title}>
-              <span className="bp-icon">
-                <Icon size={23} />
-              </span>
-              <h2>{title}</h2>
-              <p>{info}</p>
-            </div>
-          ))}
-        </div>
-        <div className="bp-detail-actions">
-          <PortalButton href={portalHref(locale, base, "billing")} secondary>
-            <Wallet size={17} />
-            {t.billing}
-          </PortalButton>
-        </div>
-      </>
-    );
-  if (view === "billing")
-    return (
-      <>
-        <PageHeading title={t.billingTitle} description={t.billingInfo} />
-        <div className="bp-panel bp-empty">
-          <Wallet size={35} />
-          <h2>{t.billing}</h2>
-          <p>{t.billingNote}</p>
-          <PortalButton href={portalHref(locale, base, "trips")} secondary>
-            {t.trips}
-            <ArrowRight size={17} />
-          </PortalButton>
-        </div>
-      </>
-    );
+  if (view === "team") return <PortalTeam locale={locale} base={base} />;
+  if (view === "help") return <PortalSupport locale={locale} base={base} />;
   return (
     <>
-      <PageHeading title={t.helpTitle} />
-      <section className="bp-help">
-        <Image
-          src="/images/sim/sim_help.png"
-          width={190}
-          height={190}
-          alt="SIM"
-        />
-        <div>
-          <span className="bp-eyebrow">{t.business}</span>
-          <h2>{t.contact}</h2>
-          <p>
-            {locale === "es"
-              ? "El WhatsApp y el correo de atención empresarial se mostrarán únicamente a miembros autenticados de cada empresa."
-              : "Business WhatsApp and email will only be shown to authenticated company members."}
-          </p>
-          <PortalButton href={portalHref(locale, base, "access")} secondary>
-            <ShieldCheck size={18} />
-            {t.access}
-          </PortalButton>
-          <small>{t.accessNote}</small>
-        </div>
+      <PageHeading title={t.billingTitle} description={t.billingInfo} />
+      <section className="bp-panel bp-empty">
+        <Wallet size={32} />
+        <h2>{t.billing}</h2>
+        <p>
+          {locale === "es"
+            ? "Los presupuestos y documentos se asociarán a cada solicitud. Todavía no se han generado documentos de facturación en este portal."
+            : "Quotes and documents will be linked to each request. No billing documents have been generated in this portal yet."}
+        </p>
       </section>
     </>
   );
@@ -305,7 +260,7 @@ export function PortalApp({
   base,
 }: PortalProps & { route: PortalRoute }) {
   const t = portalCopy[locale];
-  const { trips } = usePortal();
+  const { trips, company } = usePortal();
   const trip = trips.find((value) => value.id === route.tripId);
   const nav = [
     { view: "home", icon: House },
@@ -343,8 +298,8 @@ export function PortalApp({
             <Building2 size={19} />
           </span>
           <div>
-            <strong>{t.company}</strong>
-            <small>{t.workspace}</small>
+            <strong>{company.name}</strong>
+            <small>{roleLabel(company.role, locale)}</small>
           </div>
         </div>
         <nav aria-label={t.menu}>
@@ -361,16 +316,7 @@ export function PortalApp({
           ))}
         </nav>
         <div className="bp-sidebar-bottom">
-          <Link
-            href={portalHref(locale, base, "review")}
-            className={route.view === "review" ? "bp-nav-active" : ""}
-          >
-            <ClipboardCheck size={19} />
-            <span>{t.review}</span>
-            <span className="bp-mini-tag">
-              {locale === "es" ? "Ejemplo" : "Example"}
-            </span>
-          </Link>
+          <PortalLogout locale={locale} base={base} />
           <a
             href={`https://www.mytripsim.com/${locale}`}
             target="_blank"
@@ -403,26 +349,22 @@ export function PortalApp({
               aria-label={t.team}
               href={portalHref(locale, base, "team")}
             >
-              AE
+              {company.name
+                .split(/\s+/)
+                .map((word) => word[0])
+                .slice(0, 2)
+                .join("")
+                .toUpperCase()}
             </Link>
           </div>
         </header>
         <main id="portal-content" className="bp-main" tabIndex={-1}>
-          <div className="bp-preview">
-            <Sparkles size={16} />
-            <div>
-              <strong>{t.preview}</strong>
-              <span>{t.previewDetail}</span>
-            </div>
-          </div>
           {route.view === "home" ? (
             <Overview locale={locale} base={base} />
           ) : route.view === "trips" ? (
             <Trips locale={locale} base={base} />
           ) : route.view === "new" ? (
             <PortalTripForm locale={locale} base={base} />
-          ) : route.view === "review" ? (
-            <PortalReview locale={locale} base={base} />
           ) : route.view === "trip" || route.view === "request" ? (
             trip ? (
               route.view === "trip" ? (
@@ -462,29 +404,39 @@ export function PortalApp({
           </footer>
         </main>
       </div>
-      <nav className="bp-mobile-nav" aria-label={t.menu}>
+      <nav
+        className="bp-mobile-nav"
+        aria-label={t.menu}
+        style={{
+          gridTemplateColumns: `repeat(${canManageTrips(company.role) ? 5 : 4},minmax(0,1fr))`,
+        }}
+      >
         {[
           { view: "home", icon: House },
           { view: "trips", icon: Luggage },
           { view: "new", icon: Plus },
-          { view: "review", icon: ClipboardCheck },
+          { view: "team", icon: Users },
           { view: "help", icon: Headphones },
-        ].map(({ view, icon: Icon }) => (
-          <Link
-            key={view}
-            href={portalHref(locale, base, view as PortalView)}
-            className={
-              route.view === view ||
-              (view === "trips" && ["trip", "request"].includes(route.view))
-                ? "bp-nav-active"
-                : ""
-            }
-            aria-current={route.view === view ? "page" : undefined}
-          >
-            <Icon size={21} />
-            <span>{t[view as PortalView]}</span>
-          </Link>
-        ))}
+        ]
+          .filter((item) => canManageTrips(company.role) || item.view !== "new")
+          .map(({ view, icon: Icon }) => (
+            <Link
+              key={view}
+              href={portalHref(locale, base, view as PortalView)}
+              className={
+                route.view === view ||
+                (view === "trips" && ["trip", "request"].includes(route.view))
+                  ? `bp-nav-active ${view === "new" ? "bp-mobile-create" : ""}`
+                  : view === "new"
+                    ? "bp-mobile-create"
+                    : ""
+              }
+              aria-current={route.view === view ? "page" : undefined}
+            >
+              <Icon size={21} />
+              <span>{t[view as PortalView]}</span>
+            </Link>
+          ))}
       </nav>
     </div>
   );

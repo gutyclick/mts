@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -12,35 +12,50 @@ import {
   Ticket,
 } from "lucide-react";
 import { portalCopy, portalHref } from "@/lib/portal/copy";
-import { createTrip, type TripMode } from "@/lib/portal/model";
+import { type TripMode } from "@/lib/portal/model";
+import { destinations } from "@/lib/catalog";
+import { businessMessage } from "./portal-business-copy";
 import { usePortal } from "./portal-state";
 import { PageHeading, type PortalProps } from "./portal-ui";
 
 export function PortalTripForm({ locale, base }: PortalProps) {
   const t = portalCopy[locale];
   const router = useRouter();
-  const { update } = usePortal();
+  const { mutate, company } = usePortal();
   const [mode, setMode] = useState<TripMode>("package");
-  const [error, setError] = useState(false);
-  function submit(event: FormEvent<HTMLFormElement>) {
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const attempt = useRef<string | null>(null);
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (busy) return;
+    setBusy(true);
+    setError("");
     const data = new FormData(event.currentTarget);
+    attempt.current ??= crypto.randomUUID();
     try {
-      const trip = createTrip(
-        {
-          name: String(data.get("name") ?? ""),
-          destination: String(data.get("destination") ?? ""),
-          departure: String(data.get("departure") ?? ""),
-          returning: String(data.get("returning") ?? ""),
-          travelers: Number(data.get("travelers")),
-          mode,
-        },
-        `trip-${crypto.randomUUID()}`,
+      const id = await mutate({
+        action: "create_trip",
+        companyId: company.id,
+        id: attempt.current,
+        name: String(data.get("name") ?? ""),
+        destination: String(data.get("destination") ?? ""),
+        departure: String(data.get("departure") ?? ""),
+        returning: String(data.get("returning") ?? ""),
+        travelers: Number(data.get("travelers")),
+        mode,
+      });
+      if (!id) throw Error("unavailable");
+      router.push(portalHref(locale, base, "trip", id));
+      router.refresh();
+    } catch (value) {
+      setError(
+        businessMessage(
+          value instanceof Error ? value.message : "unavailable",
+          locale,
+        ),
       );
-      update(trip);
-      router.push(portalHref(locale, base, "trip", trip.id));
-    } catch {
-      setError(true);
+      setBusy(false);
     }
   }
   return (
@@ -71,13 +86,22 @@ export function PortalTripForm({ locale, base }: PortalProps) {
           </label>
           <label>
             {t.destination}
-            <input
-              name="destination"
-              required
-              maxLength={80}
-              placeholder={t.destinationPlaceholder}
-              autoComplete="off"
-            />
+            <select name="destination" required defaultValue="">
+              <option value="" disabled>
+                {locale === "es"
+                  ? "Selecciona un destino"
+                  : "Select a destination"}
+              </option>
+              {[...destinations]
+                .sort((a, b) =>
+                  a.name[locale].localeCompare(b.name[locale], locale),
+                )
+                .map((value) => (
+                  <option key={value.slug} value={value.slug}>
+                    {value.name[locale]}
+                  </option>
+                ))}
+            </select>
           </label>
           <div className="bp-form-row">
             <label>
@@ -134,11 +158,11 @@ export function PortalTripForm({ locale, base }: PortalProps) {
           </fieldset>
           {error && (
             <p role="alert" className="bp-error">
-              {t.error}
+              {error}
             </p>
           )}
-          <button className="bp-button" type="submit">
-            {t.create}
+          <button className="bp-button" type="submit" disabled={busy}>
+            {busy ? (locale === "es" ? "Guardando…" : "Saving…") : t.create}
             <ArrowRight size={18} />
           </button>
         </form>

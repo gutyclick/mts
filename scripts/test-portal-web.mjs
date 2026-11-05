@@ -60,6 +60,15 @@ for (const path of pages) {
   assert.match(response.headers["x-robots-tag"] ?? "", /noindex/, path);
   assert.match(response.headers["cache-control"] ?? "", /no-store/, path);
   assert.match(response.body, /bp-app/, path);
+  assert.match(
+    response.body,
+    /bp-access-shell/,
+    "Anonymous users see access, never company data",
+  );
+  assert.doesNotMatch(
+    response.body,
+    /EX-001|Agencia de ejemplo|Example agency/,
+  );
   assert.doesNotMatch(response.body, /mts-google-consent-default/, path);
   assert.doesNotMatch(
     response.body,
@@ -90,6 +99,15 @@ for (const path of [
   console.log(`PASS isolated ${path}`);
 }
 assert.match((await read("/robots.txt")).body, /Disallow: \//);
+assert.equal((await read("/api/portal")).status, 401);
+assert.equal(
+  (
+    await read(
+      "/api/portal?company=11111111-1111-4111-8111-111111111111&catalog=japan",
+    )
+  ).status,
+  401,
+);
 assert.equal((await read("/logomytripsim.png")).status, 200);
 const entry = await read("/");
 assert.match(entry.body, /bp-app/);
@@ -101,7 +119,7 @@ assert.match(store.body, /mts-google-consent-default/);
 assert.doesNotMatch(store.body, /bp-app/);
 const preview = await read("/portal/es", target.host);
 assert.equal(preview.status, 200);
-assert.match(preview.body, /href="\/portal\/es\/viajes/);
+assert.match(preview.body, /bp-access-shell/);
 console.log(
   "PASS robots, logo, root rewrite, spoofed surface header and ordinary store",
 );

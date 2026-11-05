@@ -3,6 +3,19 @@ import { notFound, redirect } from "next/navigation";
 import { PortalApp } from "@/components/portal/portal-app";
 import { portalScreen, portalCopy } from "@/lib/portal/copy";
 import type { Metadata } from "next";
+import {
+  businessIdentity,
+  businessWorkspace,
+  businessSupport,
+} from "@/lib/portal/server";
+import { toPortalTrip, canManageTrips } from "@/lib/portal/business";
+import { PortalProvider } from "@/components/portal/portal-state";
+import {
+  PortalAccess,
+  PortalApplication,
+} from "@/components/portal/portal-access";
+import { destinations } from "@/lib/catalog";
+import { portalHref } from "@/lib/portal/copy";
 
 export async function generateMetadata({
   params,
@@ -34,11 +47,37 @@ export default async function PortalPage({
   if (locale !== "es" && locale !== "en") notFound();
   const route = portalScreen(locale, path);
   if (!route) notFound();
+  const base = subdomain ? "" : "/portal";
+  const identity = await businessIdentity();
+  if (!identity.user || identity.needsMfa)
+    return <PortalAccess locale={locale} base={base} mfa={identity.needsMfa} />;
+  const workspace = await businessWorkspace(identity.client);
+  if (!workspace.company)
+    return (
+      <PortalApplication locale={locale} base={base} workspace={workspace} />
+    );
+  if (
+    ["new", "request"].includes(route.view) &&
+    !canManageTrips(workspace.company.role)
+  )
+    redirect(portalHref(locale, base, "trips"));
+  if (route.view === "access" || route.view === "review")
+    redirect(portalHref(locale, base, "home"));
+  const trips = workspace.trips.map((trip) =>
+    toPortalTrip(
+      trip,
+      destinations.find((value) => value.slug === trip.destination_slug)?.name[
+        locale
+      ] ?? trip.destination_slug,
+    ),
+  );
   return (
-    <PortalApp
-      locale={locale}
-      route={route}
-      base={subdomain ? "" : "/portal"}
-    />
+    <PortalProvider
+      trips={trips}
+      workspace={workspace}
+      support={businessSupport()}
+    >
+      <PortalApp locale={locale} route={route} base={base} />
+    </PortalProvider>
   );
 }

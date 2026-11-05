@@ -1,12 +1,6 @@
 "use client";
 import Link from "next/link";
-import {
-  ArrowDownToLine,
-  ArrowUpRight,
-  CalendarDays,
-  Globe2,
-  Users,
-} from "lucide-react";
+import { ArrowUpRight, CalendarDays, Globe2, Users } from "lucide-react";
 import { portalCopy, portalHref, type PortalLocale } from "@/lib/portal/copy";
 import type { PortalTrip } from "@/lib/portal/model";
 export type PortalProps = { locale: PortalLocale; base: string };
@@ -121,57 +115,5 @@ export function PageHeading({
       </div>
       {children}
     </div>
-  );
-}
-
-export function downloadTravelers(trip: PortalTrip, locale: PortalLocale) {
-  const t = portalCopy[locale];
-  const rows = [
-    [t.reference, t.state],
-    ...Array.from({ length: trip.travelers }, (_, index) => [
-      `EX-${String(index + 1).padStart(3, "0")}`,
-      index < trip.activated
-        ? t.activeState
-        : index < trip.delivered
-          ? t.deliveredState
-          : index < trip.assigned
-            ? t.assignedState
-            : t.unassigned,
-    ]),
-  ];
-  const csv =
-    "\uFEFF" +
-    rows
-      .map((row) =>
-        row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","),
-      )
-      .join("\r\n");
-  const url = URL.createObjectURL(
-    new Blob([csv], { type: "text/csv;charset=utf-8" }),
-  );
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = "mytripsim-example-travelers.csv";
-  anchor.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-export function ExportButton({
-  trip,
-  locale,
-}: {
-  trip: PortalTrip;
-  locale: PortalLocale;
-}) {
-  const t = portalCopy[locale];
-  return (
-    <button
-      type="button"
-      className="bp-button bp-button-secondary"
-      onClick={() => downloadTravelers(trip, locale)}
-    >
-      <ArrowDownToLine size={17} />
-      {t.export}
-    </button>
   );
 }

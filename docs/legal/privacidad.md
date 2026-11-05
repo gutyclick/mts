@@ -86,3 +86,12 @@ Aplicamos medidas de control de acceso y separación de cuentas, comunicaciones 
 El servicio no está dirigido a menores de 13 años y no solicitamos deliberadamente sus datos. Para comprar debes tener capacidad legal o actuar con la autorización de un representante cuando corresponda. Si crees que un menor nos ha facilitado datos indebidamente, contacta para que podamos investigarlo y actuar conforme a la ley.
 
 Los cambios relevantes se reflejarán con fecha y versión nuevas y con los avisos o permisos adicionales que correspondan. Las políticas de los proveedores enlazadas explican sus propios tratamientos; no sustituyen las obligaciones de MyTripSim.
+
+
+## Medición publicitaria opcional con Google Ads
+
+Utilizamos Google Ads AW-653792266 en modo de consentimiento avanzado en páginas públicas. La etiqueta carga con almacenamiento publicitario, datos publicitarios, personalización y almacenamiento analítico denegados por defecto. Antes de aceptar o al rechazar puede enviar a Google señales sin cookies para medir y modelar publicidad. Solo al seleccionar expresamente las cookies publicitarias en Preferencias de privacidad se habilitan el almacenamiento y los datos publicitarios. El permiso de estadísticas internas o de correos comerciales no concede ese permiso. No activamos anuncios personalizados ni conversiones mejoradas. Puedes retirarlo desde el pie de página sin afectar tu compra.
+
+Google recibe información técnica asociada a estas solicitudes, como la dirección IP y datos del navegador. Con permisos denegados no se habilitan cookies publicitarias; se aplica la redacción de datos de Ads. Do Not Track y Global Privacy Control impiden conceder permisos publicitarios. La etiqueta no se configura en cuentas, administración, soporte privado, checkout ni instalación. No le enviamos correos, QR, códigos de instalación, tarjetas ni saldos. Más información: https://policies.google.com/technologies/partner-sites.
+
+Guardamos únicamente tu elección publicitaria, sin identificador de persona, en el almacenamiento local mts_google_ads_consent_v1 durante un máximo de 180 días. Al retirar el permiso comunicamos el rechazo a Google; la etiqueta puede seguir enviando señales sin cookies. El permiso de estadísticas internas se gestiona por separado.

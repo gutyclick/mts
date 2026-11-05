@@ -43,3 +43,12 @@ Los métodos de pago y carteras digitales pueden ofrecer controles propios. Cons
 ## 5. Cambios
 
 La versión definitiva mostrará fecha de actualización. Cuando se introduzca una finalidad opcional nueva, se facilitará la información y la elección que correspondan antes de activarla.
+
+
+## Medición publicitaria opcional con Google Ads
+
+Utilizamos Google Ads AW-653792266 en modo de consentimiento avanzado en páginas públicas. La etiqueta carga con almacenamiento publicitario, datos publicitarios, personalización y almacenamiento analítico denegados por defecto. Antes de aceptar o al rechazar puede enviar a Google señales sin cookies para medir y modelar publicidad. Solo al seleccionar expresamente las cookies publicitarias en Preferencias de privacidad se habilitan el almacenamiento y los datos publicitarios. El permiso de estadísticas internas o de correos comerciales no concede ese permiso. No activamos anuncios personalizados ni conversiones mejoradas. Puedes retirarlo desde el pie de página sin afectar tu compra.
+
+Google recibe información técnica asociada a estas solicitudes, como la dirección IP y datos del navegador. Con permisos denegados no se habilitan cookies publicitarias; se aplica la redacción de datos de Ads. Do Not Track y Global Privacy Control impiden conceder permisos publicitarios. La etiqueta no se configura en cuentas, administración, soporte privado, checkout ni instalación. No le enviamos correos, QR, códigos de instalación, tarjetas ni saldos. Más información: https://policies.google.com/technologies/partner-sites.
+
+Guardamos únicamente tu elección publicitaria, sin identificador de persona, en el almacenamiento local mts_google_ads_consent_v1 durante un máximo de 180 días. Al retirar el permiso comunicamos el rechazo a Google; la etiqueta puede seguir enviando señales sin cookies. El permiso de estadísticas internas se gestiona por separado.

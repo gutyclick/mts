@@ -44,6 +44,7 @@ export function safeAccountNext(value: unknown, locale: Locale) {
         `/${locale}/admin`,
         `/${locale}/admin/security`,
         `/${locale}/admin/companies`,
+        `/${locale}/admin/business-commerce`,
         `/${locale}/admin/simcoins`,
         `/${locale}/admin/operations`,
         `/${locale}/admin/refunds`,

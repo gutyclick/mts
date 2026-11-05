@@ -1,0 +1,240 @@
+.bc-workspace,
+.bc-portal {
+  --bc-accent: #126de8;
+  --bc-line: #e3eaf2;
+  --bc-muted: #63738a;
+  color: #122139;
+  line-height: 1.55;
+}
+.bc-workspace {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 28px 80px;
+}
+.bc-workspace h1 {
+  font-size: clamp(1.8rem, 4vw, 2.65rem);
+  letter-spacing: -0.04em;
+  margin: 4px 0 8px;
+}
+.bc-workspace h2,
+.bc-portal h2 {
+  font-size: 1.35rem;
+  margin: 24px 0 12px;
+}
+.bc-workspace h3,
+.bc-portal h3 {
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+.bc-workspace header p,
+.bc-portal header p {
+  max-width: 70ch;
+}
+.bc-eyebrow {
+  font-size: 0.73rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bc-accent);
+}
+.bc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--bc-line);
+  padding: 20px 0;
+}
+.bc-workspace button,
+.bc-portal button,
+.bc-button {
+  border: 1px solid var(--bc-accent);
+  border-radius: 12px;
+  background: var(--bc-accent);
+  color: white;
+  padding: 10px 15px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 650;
+  cursor: pointer;
+  text-decoration: none;
+}
+.bc-tabs button {
+  background: transparent;
+  color: var(--bc-accent);
+  border-color: transparent;
+}
+.bc-tabs button[aria-pressed="true"] {
+  background: #edf5ff;
+  border-color: #c4dcff;
+}
+.bc-workspace button:disabled,
+.bc-portal button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.bc-workspace :focus-visible,
+.bc-portal :focus-visible {
+  outline: 3px solid #4e9dcb;
+  outline-offset: 3px;
+}
+.bc-content {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.bc-card {
+  border: 1px solid var(--bc-line);
+  border-radius: 20px;
+  background: #fff;
+  padding: 22px;
+  margin: 16px 0;
+  box-shadow: 0 3px 0 #12213905;
+}
+.bc-card p {
+  color: var(--bc-muted);
+}
+.bc-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+.bc-form h2,
+.bc-form h3,
+.bc-form > p,
+.bc-form > small {
+  grid-column: 1/-1;
+}
+.bc-form label {
+  display: grid;
+  gap: 7px;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+.bc-form input,
+.bc-form select,
+.bc-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  border: 1px solid #cadcf2;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px 12px;
+  font: inherit;
+  color: #122139;
+}
+.bc-form textarea {
+  resize: vertical;
+}
+.bc-form .bc-check {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 42px;
+}
+.bc-check input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--bc-accent);
+}
+.bc-check small {
+  font-weight: 400;
+  color: var(--bc-muted);
+}
+.bc-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+.bc-actions a:not(.bc-button) {
+  color: var(--bc-accent);
+  text-underline-offset: 3px;
+}
+.bc-error,
+.bc-notice {
+  padding: 12px 16px;
+  border-radius: 9px;
+}
+.bc-error {
+  background: #fff0ef;
+  color: #9a2824;
+  border: 1px solid #f0c2bf;
+}
+.bc-notice {
+  background: #eaf6ef;
+  color: #245d3d;
+}
+.bc-portal {
+  margin-top: 24px;
+}
+.bc-order-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.bc-badge {
+  font-size: 0.76rem;
+  font-weight: 650;
+  padding: 5px 10px;
+  border-radius: 30px;
+  background: #edf5ff;
+  color: var(--bc-accent);
+}
+.bc-totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 18px;
+  margin: 22px 0;
+}
+.bc-totals dt {
+  font-size: 0.8rem;
+  color: var(--bc-muted);
+}
+.bc-totals dd {
+  margin: 3px 0;
+  font-size: 1.15rem;
+}
+.bc-bank {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 16px;
+  background: #f4f8fc;
+  border-radius: 9px;
+}
+.bc-portal progress {
+  display: block;
+  width: 100%;
+  height: 10px;
+  accent-color: var(--bc-accent);
+}
+@media (max-width: 600px) {
+  .bc-workspace {
+    padding: 24px 16px 48px;
+  }
+  .bc-card {
+    padding: 17px;
+  }
+  .bc-form {
+    grid-template-columns: 1fr;
+  }
+  .bc-tabs {
+    gap: 3px;
+  }
+  .bc-tabs button {
+    padding: 9px;
+  }
+  .bc-order-heading {
+    align-items: flex-start;
+  }
+  .bc-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,4 +1,5 @@
 import { runFulfillmentWorker } from "@/lib/fulfillment/server";
+import { handleBusinessStripeEvent } from "@/lib/portal/commerce-payments";
 import { after, NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { recordStripeRefund, refundStripe } from "@/lib/payments/refund-server";
@@ -47,6 +48,11 @@ export async function POST(request: NextRequest) {
     if (!event) return reply(400);
   } catch {
     return reply(400);
+  }
+  try {
+    if (await handleBusinessStripeEvent(event)) return reply(200);
+  } catch {
+    return reply(503);
   }
   if (
     ["refund.created", "refund.updated", "refund.failed"].includes(event.type)

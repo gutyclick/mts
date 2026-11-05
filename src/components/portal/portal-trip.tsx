@@ -18,6 +18,8 @@ import { portalCopy, portalHref } from "@/lib/portal/copy";
 import type { PortalTrip } from "@/lib/portal/model";
 import { canManageTrips } from "@/lib/portal/business";
 import { usePortal } from "./portal-state";
+import { PortalCommerce } from "./portal-commerce";
+import "@/styles/business-commerce.css";
 import {
   PageHeading,
   PortalButton,
@@ -138,6 +140,9 @@ export function PortalTripDetail({
           </p>
         )}
       </div>
+      {trip.request && (
+        <PortalCommerce trip={trip} locale={locale} base={base} />
+      )}
       <div className="bp-segments" aria-label={t.trip}>
         {(["overview", "people", "orders"] as const).map((view) => (
           <button
@@ -159,8 +164,8 @@ export function PortalTripDetail({
             </div>
             <p>
               {es
-                ? "Todavía no se han emitido eSIM para este viaje. La asignación, los QR y las activaciones aparecerán cuando se conecte la entrega."
-                : "No eSIMs have been issued for this trip yet. Assignments, QR codes and activations will appear when delivery is connected."}
+                ? "Consulta el progreso y descarga los QR disponibles en Pago y entrega. Descargar un QR no significa que la eSIM esté instalada o activada."
+                : "Check progress and download available QR files under Payment and delivery. Downloading a QR does not mean the eSIM is installed or activated."}
             </p>
             <p className="bp-note">
               <Info size={16} />
@@ -204,8 +209,8 @@ export function PortalTripDetail({
           </h2>
           <p>
             {es
-              ? "Esta fase guarda y revisa tus solicitudes. No realiza cobros ni emite eSIM automáticamente."
-              : "This phase saves and reviews requests. It does not charge you or automatically issue eSIMs."}
+              ? "Revisa la cotización de tu viaje y elige un método de pago habilitado. Tras verificar los fondos, nuestro equipo autoriza la preparación de tus eSIM."
+              : "Review your trip quote and choose an enabled payment method. Once funds are verified, our team authorizes preparation of your eSIMs."}
           </p>
           <Link
             className="bp-text-link"

@@ -82,3 +82,12 @@ We use access controls, separation of accounts, encrypted communications and lim
 The service is not directed to children under thirteen and we do not knowingly seek their information. Purchasers must have legal capacity or appropriate representative authorization. Contact us if a child may have provided information improperly so we can investigate and act under applicable law.
 
 Material changes will carry a new date and version, with any additional notices or permissions required. Provider policies describe their own processing and do not replace MyTripSim's obligations.
+
+
+## Optional advertising measurement with Google Ads
+
+We use Google Ads AW-653792266 in advanced consent mode on public pages. The tag loads with advertising storage, advertising data, personalization and analytics storage denied by default. Before acceptance or following refusal, it may send cookieless signals to Google for advertising measurement and modeling. Advertising storage and data are enabled only when you explicitly select advertising cookies in Privacy preferences. Internal statistics or email marketing permission does not grant this permission. We do not enable personalized ads or enhanced conversions. You can withdraw permission through the footer without affecting your purchase.
+
+Google receives technical information associated with these requests, such as IP address and browser information. Denied consent does not enable advertising cookies; Ads data redaction applies. Do Not Track and Global Privacy Control prevent advertising consent from being granted. The tag is not configured on account, administration, private support, checkout or installation pages. We do not send it emails, QR codes, installation codes, card details or balances. More information: https://policies.google.com/technologies/partner-sites.
+
+We store only your advertising choice, with no personal identifier, in mts_google_ads_consent_v1 local storage for up to 180 days. Withdrawal signals denied consent to Google; the tag may continue sending cookieless signals. Internal statistics permission is managed separately.

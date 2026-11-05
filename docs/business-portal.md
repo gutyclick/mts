@@ -2,7 +2,7 @@
 
 ## Operating scope
 
-The portal now supports verified account access, administrator-created companies and administrator-assigned memberships, durable trips, real catalog plan requests and administrative review. It **does not charge, quote a final B2B price, issue eSIMs, send invitation emails, create traveler records or deliver QR codes** in this phase. Approval records commercial review only. Assignment/delivery/activation counters remain zero until their actual integrations exist.
+The portal supports verified account access, administrator-created companies and memberships, durable trips, catalog requests and administrative review. The additive commercial workflow adds quotes, verified payments, controlled issuance and protected QR downloads; see [B2B commercial operations](business-commerce.md) for configuration and activation requirements. Approval alone never charges or issues. Traveler assignment, resale tracking and activation counters remain separate from delivered company QR files.
 
 ## How to use it
 

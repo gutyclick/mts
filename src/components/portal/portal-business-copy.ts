@@ -4,6 +4,39 @@ export function businessMessage(code: string, locale: PortalLocale) {
   return (
     (
       {
+        stale_cost: es
+          ? "No pudimos verificar el coste actual del plan. Actualiza antes de continuar."
+          : "We could not verify the current plan cost. Refresh before continuing.",
+        no_tariff: es
+          ? "Configura una tarifa B2B o indica un precio para esta cotización."
+          : "Configure a B2B rate or enter a price for this quote.",
+        insufficient_margin: es
+          ? "La tarifa no alcanza la contribución mínima del 20%. Revisa el precio y las reservas."
+          : "The rate does not meet the 20% minimum contribution. Review the price and reserves.",
+        payment_pending: es
+          ? "Hay un pago en verificación. Actualiza su estado antes de elegir otro método."
+          : "A payment is being verified. Refresh its status before choosing another method.",
+        quote_expired: es
+          ? "La cotización requiere renovación. Contacta con el equipo antes de pagar."
+          : "The quote needs renewal. Contact the team before paying.",
+        not_configured: es
+          ? "Esta opción requiere configuración de la administración."
+          : "This option requires administrator configuration.",
+        batch_limit: es
+          ? "Divide este pedido en grupos de hasta 1.000 eSIM."
+          : "Split this order into groups of up to 1,000 eSIMs.",
+        reference_used: es
+          ? "Esta referencia bancaria ya está registrada. Comprueba el movimiento recibido."
+          : "This bank reference is already recorded. Verify the received transfer.",
+        review_required: es
+          ? "El pedido necesita revisión del equipo antes de continuar."
+          : "The order needs team review before continuing.",
+        test_payment_not_fulfillable: es
+          ? "Los pagos de prueba no permiten emitir eSIM reales."
+          : "Test payments cannot issue real eSIMs.",
+        quote_fee_mismatch: es
+          ? "Las comisiones cambiaron. Revisa la cotización antes de cobrar."
+          : "Fees changed. Review the quote before collecting payment.",
         verified_account_required: es
           ? "El correo debe corresponder a una cuenta MyTripSim existente y verificada."
           : "The email must belong to an existing verified MyTripSim account.",

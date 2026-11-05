@@ -37,6 +37,13 @@ export function OperationsShell({
         <nav aria-label={es ? "Administración" : "Administration"}>
           <Link
             className="admin-support-link"
+            href={`/${locale}/admin/business-commerce`}
+          >
+            <Building2 size={20} />
+            {es ? "Pedidos y tarifas B2B" : "B2B orders and rates"}
+          </Link>
+          <Link
+            className="admin-support-link"
             href={`/${locale}/admin/companies`}
           >
             <Building2 size={20} />

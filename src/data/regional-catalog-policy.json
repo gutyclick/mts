@@ -1,0 +1,151 @@
+{
+  "version": 2,
+  "groups": [
+    {
+      "group": "europe",
+      "category": "region",
+      "canonicalSlugs": [
+        "europe",
+        "europe-30-areas",
+        "europe-31-areas",
+        "europe-33-areas",
+        "europe-35-areas",
+        "europe-40-areas-and-morocco"
+      ],
+      "sourceSlug": "europe-33-areas",
+      "displayName": {
+        "es": "Europa",
+        "en": "Europe"
+      },
+      "searchAliases": ["Europa", "Europe"],
+      "reason": "Core European destinations including France, Spain, Italy, Germany and UK; EU-35 omits France in registered coverage. 10GB/30d $11 and 3GB/15d $4. EU-31 is cheaper for its only 10GB/31d SKU but has no allowance/duration range."
+    },
+    {
+      "group": "asia",
+      "category": "region",
+      "canonicalSlugs": [
+        "asia-12-areas",
+        "asia-14-areas",
+        "asia-20",
+        "asia-20-areas",
+        "asia-7-areas"
+      ],
+      "sourceSlug": "asia-14-areas",
+      "displayName": {
+        "es": "Asia",
+        "en": "Asia"
+      },
+      "searchAliases": ["Asia", "Asia"],
+      "reason": "Affordable core itinerary: Japan, Korea, Thailand, Vietnam, Indonesia, Malaysia, India and others. 10GB/30d $13 vs AS-20 $26. Does not include mainland China or Singapore; never imply whole-continent coverage."
+    },
+    {
+      "group": "africa",
+      "category": "region",
+      "canonicalSlugs": ["africa", "africa-21-areas"],
+      "sourceSlug": "africa-21-areas",
+      "displayName": {
+        "es": "África",
+        "en": "Africa"
+      },
+      "searchAliases": ["África", "Africa"],
+      "reason": "21 areas and up to 20GB with 3GB/15d. AF-29 has 29 areas but only up to 5GB; exact 1GB/7d $11 vs selected $7; 5GB/30d $34 vs $26. Eight fewer areas is a coverage tradeoff."
+    },
+    {
+      "group": "central-asia",
+      "category": "region",
+      "canonicalSlugs": ["central-asia", "central-asia-4-areas"],
+      "sourceSlug": "central-asia",
+      "displayName": {
+        "es": "Asia Central",
+        "en": "Central Asia"
+      },
+      "searchAliases": ["Asia Central", "Central Asia"],
+      "reason": "Five areas, 1–20GB; 3GB/15d $6 vs CA-4 $8 and 10GB/30d $17 vs $21. CA-4 has four areas and exclusive 50GB/180d $150; selected loses that long-stay tier."
+    },
+    {
+      "group": "south-america",
+      "category": "region",
+      "canonicalSlugs": ["south-america", "south-america-6-areas"],
+      "sourceSlug": "south-america-6-areas",
+      "displayName": {
+        "es": "Sudamérica",
+        "en": "South America"
+      },
+      "searchAliases": ["Sudamérica", "South America"],
+      "reason": "Six areas, up to 50GB/180d. SA-18 actually covers 20 areas; exact 3GB/15d $23 vs $12 and 10GB/30d $59 vs $34. Selected sacrifices 14 areas for capacity range and value; not coverage-equivalent."
+    },
+    {
+      "group": "middle-east",
+      "category": "region",
+      "canonicalSlugs": ["middle-east", "middle-east-5-areas"],
+      "sourceSlug": "middle-east-5-areas",
+      "displayName": {
+        "es": "Oriente Medio",
+        "en": "Middle East"
+      },
+      "searchAliases": ["Oriente Medio", "Middle East"],
+      "reason": "Five areas, up to 20GB, includes 3GB/15d $10. ME-13 actually covers 11 areas and max 5GB; exact 5GB/30d $29 vs $14. Six fewer areas; not equivalent coverage."
+    },
+    {
+      "group": "global",
+      "category": "region",
+      "canonicalSlugs": ["global-120-areas", "global139"],
+      "sourceSlug": "global-120-areas",
+      "displayName": {
+        "es": "Global",
+        "en": "Global"
+      },
+      "searchAliases": ["Global", "Global"],
+      "reason": "117 actual areas and 20GB/30d available. GL-139 actually covers 127 areas: 10GB/30d $59 vs selected $54; 20GB/90d $99 vs selected $105. Selected loses ten areas and is not cheapest at every basket."
+    },
+    {
+      "group": "gulf",
+      "category": "region",
+      "canonicalSlugs": ["gcc", "gulf-region"],
+      "sourceSlug": "gulf-region",
+      "displayName": {
+        "es": "Golfo",
+        "en": "Gulf"
+      },
+      "searchAliases": ["Golfo", "Gulf"],
+      "reason": "Six areas in both catalogs, but different coverage: selected ME-6 includes Iraq and excludes Oman; GCC includes Oman and excludes Iraq. Exact 1GB/7d $6 vs GCC $8, 3GB/30d $12 vs $20, 5GB/30d $18 vs $29, 10GB/30d $35 vs $52. Value choice is not a coverage-equivalent cheapest claim. No 15-day offering."
+    },
+    {
+      "group": "north-america",
+      "category": "region",
+      "canonicalSlugs": ["north-america"],
+      "sourceSlug": "north-america",
+      "displayName": {
+        "es": "Norteamérica",
+        "en": "North America"
+      },
+      "searchAliases": ["Norteamérica", "North America"],
+      "reason": "Single regional offering covering US, Canada and Mexico."
+    },
+    {
+      "group": "oceania",
+      "category": "region",
+      "canonicalSlugs": ["oceania-8-areas"],
+      "sourceSlug": "oceania-8-areas",
+      "displayName": {
+        "es": "Oceanía",
+        "en": "Oceania"
+      },
+      "searchAliases": ["Oceanía", "Oceania"],
+      "reason": "Single broad Oceania family; includes Australia and New Zealand, unlike a route-only bundle."
+    },
+    {
+      "group": "caribbean",
+      "category": "region",
+      "canonicalSlugs": ["caribbean-20-areas"],
+      "sourceSlug": "caribbean-20-areas",
+      "displayName": {
+        "es": "Caribe",
+        "en": "Caribbean"
+      },
+      "searchAliases": ["Caribe", "Caribbean"],
+      "reason": "Only available broad Caribbean family; actual coverage is listed explicitly, not inferred from its legacy count label."
+    }
+  ],
+  "discoveryMode": "selected-regions-only"
+}

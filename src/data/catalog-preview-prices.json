@@ -1,0 +1,1427 @@
+{
+  "version": 1,
+  "sourceSnapshot": "2026-11-06T04:54:55.956Z",
+  "sourceSha256": "827626322ec786b32f93dda3acc7e6fef8d13520cdfa166d879a8d587dcc6142",
+  "prices": {
+    "AD_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "AE_3_30": {
+      "previousCents": 1000,
+      "proposedCents": 1300
+    },
+    "AF_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "AF-21_3_30": {
+      "previousCents": 1800,
+      "proposedCents": 2200
+    },
+    "AG_3_30": {
+      "previousCents": 2600,
+      "proposedCents": 3000
+    },
+    "AI_3_30": {
+      "previousCents": 2200,
+      "proposedCents": 2800
+    },
+    "AL_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "AL_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "AL_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "AM_3_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "AO_3_30": {
+      "previousCents": 4200,
+      "proposedCents": 5000
+    },
+    "AR_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "AS-12_3_30": {
+      "previousCents": 1200,
+      "proposedCents": 1500
+    },
+    "AS-14_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "AS-14_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "AS-20_1_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "AS-20_3_30": {
+      "previousCents": 1200,
+      "proposedCents": 1500
+    },
+    "AS-21_3_30": {
+      "previousCents": 1600,
+      "proposedCents": 1900
+    },
+    "AS-5_3_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "AS-7_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "AT_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "AT_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "AU_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "AU_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "AU_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "AU_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "AU_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "AUNZ-2_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "AW_3_30": {
+      "previousCents": 3800,
+      "proposedCents": 4500
+    },
+    "AX_3_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "AZ_3_30": {
+      "previousCents": 1000,
+      "proposedCents": 1200
+    },
+    "BA_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "BB_3_30": {
+      "previousCents": 2300,
+      "proposedCents": 2800
+    },
+    "BD_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "BD_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "BE_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "BE_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "BF_3_30": {
+      "previousCents": 2100,
+      "proposedCents": 2400
+    },
+    "BG_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "BG_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "BH_3_30": {
+      "previousCents": 800,
+      "proposedCents": 1000
+    },
+    "BJ_3_30": {
+      "previousCents": 1900,
+      "proposedCents": 2300
+    },
+    "BL_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "BL_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "BM_3_30": {
+      "previousCents": 2500,
+      "proposedCents": 2900
+    },
+    "BQ_3_30": {
+      "previousCents": 2400,
+      "proposedCents": 2800
+    },
+    "BR_3_30": {
+      "previousCents": 800,
+      "proposedCents": 1000
+    },
+    "BS_3_30": {
+      "previousCents": 3200,
+      "proposedCents": 3800
+    },
+    "BT_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1500
+    },
+    "BW_3_30": {
+      "previousCents": 2200,
+      "proposedCents": 2700
+    },
+    "BY_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "BZ_3_30": {
+      "previousCents": 3700,
+      "proposedCents": 4500
+    },
+    "CA_3_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "CA_3_30_Premium": {
+      "previousCents": 1400,
+      "proposedCents": 1700
+    },
+    "CA-4_3_30": {
+      "previousCents": 800,
+      "proposedCents": 1000
+    },
+    "CD_3_30": {
+      "previousCents": 1400,
+      "proposedCents": 1700
+    },
+    "CG_3_30": {
+      "previousCents": 2100,
+      "proposedCents": 2700
+    },
+    "CH_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "CH_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "CH_3_30": {
+      "previousCents": 400,
+      "proposedCents": 700
+    },
+    "CH_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "CL_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "CM_3_30": {
+      "previousCents": 2100,
+      "proposedCents": 2500
+    },
+    "CN_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "CN_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "CN_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "CN_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "CN_5_30_nonhkip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "CN-3_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "CN-3_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "CNJPKR-3_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1200
+    },
+    "CO_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "CR_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "CV_3_30": {
+      "previousCents": 4000,
+      "proposedCents": 4700
+    },
+    "CW_3_30": {
+      "previousCents": 2300,
+      "proposedCents": 2700
+    },
+    "CY_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "CY_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "CZ_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "CZ_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "DE_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "DE_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "DK_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "DK_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "DM_3_30": {
+      "previousCents": 2400,
+      "proposedCents": 2900
+    },
+    "DO_1_7": {
+      "previousCents": 500,
+      "proposedCents": 800
+    },
+    "DO_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "DZ_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "DZ_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "EC_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "EE_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "EE_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "EG_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "ES_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "ET_3_30": {
+      "previousCents": 1800,
+      "proposedCents": 2200
+    },
+    "EU-30_3_30": {
+      "previousCents": 800,
+      "proposedCents": 1000
+    },
+    "EU-33_3_30": {
+      "previousCents": 500,
+      "proposedCents": 600
+    },
+    "EU-33_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "EU-35_3_30": {
+      "previousCents": 500,
+      "proposedCents": 600
+    },
+    "EU-35_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "EU-7_3_30": {
+      "previousCents": 1200,
+      "proposedCents": 1500
+    },
+    "FI_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "FI_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "FJ_3_30": {
+      "previousCents": 1000,
+      "proposedCents": 1200
+    },
+    "FO_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "GA_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    },
+    "GB_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "GB_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "GB_3_30": {
+      "previousCents": 400,
+      "proposedCents": 700
+    },
+    "GB_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "GD_3_30": {
+      "previousCents": 2800,
+      "proposedCents": 3300
+    },
+    "GE_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "GE_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "GF_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "GF_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "GG_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1500
+    },
+    "GH_3_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "GI_3_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "GI_5_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "GM_3_30": {
+      "previousCents": 4200,
+      "proposedCents": 5000
+    },
+    "GN_3_30": {
+      "previousCents": 2100,
+      "proposedCents": 2500
+    },
+    "GP_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "GP_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "GR_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "GR_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "GR_3_30": {
+      "previousCents": 400,
+      "proposedCents": 700
+    },
+    "GR_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "GU_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1500
+    },
+    "GW_3_30": {
+      "previousCents": 2100,
+      "proposedCents": 2400
+    },
+    "GY_3_30": {
+      "previousCents": 2200,
+      "proposedCents": 2700
+    },
+    "HK_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "HK_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "HK_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "HK_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "HK_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "HK_5_30_nonhkip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "HN_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "HN_5_30": {
+      "previousCents": 1400,
+      "proposedCents": 1500
+    },
+    "HR_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "HR_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "HT_3_30": {
+      "previousCents": 3600,
+      "proposedCents": 4300
+    },
+    "HU_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "HU_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "ID_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "ID_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "ID_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "ID_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "ID_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "IE_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "IE_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "IE_3_30": {
+      "previousCents": 400,
+      "proposedCents": 700
+    },
+    "IE_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "IL_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "IM_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "IN_3_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "IQ_3_30": {
+      "previousCents": 800,
+      "proposedCents": 1000
+    },
+    "IS_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "IS_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "IT_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "JE_3_30": {
+      "previousCents": 500,
+      "proposedCents": 600
+    },
+    "JE_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "JM_3_30": {
+      "previousCents": 2400,
+      "proposedCents": 2900
+    },
+    "JO_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "JO_5_30": {
+      "previousCents": 1300,
+      "proposedCents": 1400
+    },
+    "JP_3_30_IIJ": {
+      "previousCents": 500,
+      "proposedCents": 600
+    },
+    "JP_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "JP_5_30_IIJ": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "JP_5_30_nonhkip": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "JPKR-2_3_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "KE_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "KG_3_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "KG_5_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "KH_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "KH_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "KH_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "KN_3_30": {
+      "previousCents": 2800,
+      "proposedCents": 3300
+    },
+    "KR_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "KR_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "KR_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "KR_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "KR_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "KR_5_30_nonhkip": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "KW_3_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "KY_3_30": {
+      "previousCents": 2600,
+      "proposedCents": 3000
+    },
+    "KZ_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "KZ_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "KZ_5_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "LA_3_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "LA_3_30_Premium": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "LC_3_30": {
+      "previousCents": 2800,
+      "proposedCents": 3300
+    },
+    "LI_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "LK_3_30": {
+      "previousCents": 600,
+      "proposedCents": 1000
+    },
+    "LK_5_30": {
+      "previousCents": 900,
+      "proposedCents": 1100
+    },
+    "LR_3_30": {
+      "previousCents": 2100,
+      "proposedCents": 2400
+    },
+    "LS_3_30": {
+      "previousCents": 2900,
+      "proposedCents": 3400
+    },
+    "LT_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "LT_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "LU_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "LU_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "LV_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "LV_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "LY_3_30": {
+      "previousCents": 3300,
+      "proposedCents": 3900
+    },
+    "MA_3_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "MD_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "MD_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "ME_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "ME_5_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "ME-12_3_30": {
+      "previousCents": 2900,
+      "proposedCents": 3500
+    },
+    "ME-5_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "MF_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "MF_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "MK_3_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "MN_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1700
+    },
+    "MO_3_30": {
+      "previousCents": 500,
+      "proposedCents": 600
+    },
+    "MO_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "MO_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "MO_5_30_nonhkip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "MQ_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "MQ_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "MR_3_30": {
+      "previousCents": 3600,
+      "proposedCents": 4300
+    },
+    "MS_3_30": {
+      "previousCents": 2500,
+      "proposedCents": 2900
+    },
+    "MT_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "MT_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "MU_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1300
+    },
+    "MV_3_30": {
+      "previousCents": 3200,
+      "proposedCents": 3800
+    },
+    "MW_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    },
+    "MX_3_30": {
+      "previousCents": 1000,
+      "proposedCents": 1200
+    },
+    "MY_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "MY_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "MY_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "MY_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "MY_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "MY_5_30_nonhkip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "MZ_3_30": {
+      "previousCents": 2000,
+      "proposedCents": 2400
+    },
+    "NA-3_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "NC_3_30": {
+      "previousCents": 10200,
+      "proposedCents": 12000
+    },
+    "NE_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    },
+    "NG_3_30": {
+      "previousCents": 1400,
+      "proposedCents": 1700
+    },
+    "NI_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "NI_5_30": {
+      "previousCents": 1400,
+      "proposedCents": 1500
+    },
+    "NL_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "NL_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "NO_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "NO_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "NP_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "NR_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "NZ_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "NZ_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "NZ_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "OCE-8_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1500
+    },
+    "OM_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "PA_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    },
+    "PE_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "PE_5_30": {
+      "previousCents": 1400,
+      "proposedCents": 1500
+    },
+    "PF_3_30": {
+      "previousCents": 5800,
+      "proposedCents": 6900
+    },
+    "PG_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1700
+    },
+    "PH_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "PH_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "PH_5_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "PK_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "PK_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "PK_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "PL_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "PL_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "PR_3_30": {
+      "previousCents": 1000,
+      "proposedCents": 1200
+    },
+    "PT_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "PT_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "PY_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "PY_5_30": {
+      "previousCents": 1400,
+      "proposedCents": 1500
+    },
+    "QA_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1000
+    },
+    "RE_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "RE_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "RO_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "RO_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "RS_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "RS_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "RS_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "RU_3_30": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "RW_3_30": {
+      "previousCents": 1900,
+      "proposedCents": 2300
+    },
+    "SA_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1200
+    },
+    "SA-18_3_30": {
+      "previousCents": 2300,
+      "proposedCents": 2900
+    },
+    "SA-6_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1500
+    },
+    "SAS-6_3_30": {
+      "previousCents": 900,
+      "proposedCents": 1200
+    },
+    "SC_3_30": {
+      "previousCents": 1500,
+      "proposedCents": 1800
+    },
+    "SE_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "SE_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "SEA-8_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "SG_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "SG_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "SG_3_30": {
+      "previousCents": 400,
+      "proposedCents": 700
+    },
+    "SG_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "SG_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "SG_5_30_nonhkip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "SGMYTH-3_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "SI_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "SI_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "SK_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "SK_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "SL_3_30": {
+      "previousCents": 2500,
+      "proposedCents": 3000
+    },
+    "SM_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "SM_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "SN_3_30": {
+      "previousCents": 1200,
+      "proposedCents": 1400
+    },
+    "SR_3_30": {
+      "previousCents": 2000,
+      "proposedCents": 2400
+    },
+    "SS_3_30": {
+      "previousCents": 4700,
+      "proposedCents": 5700
+    },
+    "SV_3_30": {
+      "previousCents": 1200,
+      "proposedCents": 1500
+    },
+    "SZ_3_30": {
+      "previousCents": 3700,
+      "proposedCents": 4500
+    },
+    "TC_3_30": {
+      "previousCents": 2200,
+      "proposedCents": 2800
+    },
+    "TD_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    },
+    "TG_3_30": {
+      "previousCents": 7900,
+      "proposedCents": 9400
+    },
+    "TH_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "TH_3_15": {
+      "previousCents": 400,
+      "proposedCents": 500
+    },
+    "TH_3_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "TH_3_30_nonhkip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "TH_5_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "TH_5_30_nonhkip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "TJ_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "TN_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "TN_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "TO_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1700
+    },
+    "TR_0.5_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "TR_1_7": {
+      "previousCents": 300,
+      "proposedCents": 500
+    },
+    "TR_10_30": {
+      "previousCents": 700,
+      "proposedCents": 1000
+    },
+    "TR_3_15": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "TR_3_30": {
+      "previousCents": 400,
+      "proposedCents": 800
+    },
+    "TR_3_30_Premium": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "TR_5_30": {
+      "previousCents": 600,
+      "proposedCents": 900
+    },
+    "TR_5_30_Premium": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "TT_3_30": {
+      "previousCents": 2200,
+      "proposedCents": 2700
+    },
+    "UA_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "UA_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "UG_3_30": {
+      "previousCents": 1900,
+      "proposedCents": 2300
+    },
+    "US_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "US_3_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "US_3_30_usip": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "US_5_30": {
+      "previousCents": 800,
+      "proposedCents": 900
+    },
+    "US_5_30_usip": {
+      "previousCents": 700,
+      "proposedCents": 900
+    },
+    "USCA-2_3_30": {
+      "previousCents": 1100,
+      "proposedCents": 1400
+    },
+    "UY_3_30": {
+      "previousCents": 1200,
+      "proposedCents": 1500
+    },
+    "UZ_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "UZ_3_30": {
+      "previousCents": 500,
+      "proposedCents": 700
+    },
+    "UZ_5_30": {
+      "previousCents": 600,
+      "proposedCents": 800
+    },
+    "VA_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "VA_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "VC_3_30": {
+      "previousCents": 3400,
+      "proposedCents": 4000
+    },
+    "VE_3_30": {
+      "previousCents": 3500,
+      "proposedCents": 4200
+    },
+    "VG_3_30": {
+      "previousCents": 2800,
+      "proposedCents": 3300
+    },
+    "VN_1_7": {
+      "previousCents": 300,
+      "proposedCents": 400
+    },
+    "VN_3_30_nonhkip": {
+      "previousCents": 800,
+      "proposedCents": 1000
+    },
+    "VU_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1700
+    },
+    "WS_3_30": {
+      "previousCents": 1300,
+      "proposedCents": 1700
+    },
+    "XK_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    },
+    "YE_3_30": {
+      "previousCents": 5900,
+      "proposedCents": 7000
+    },
+    "YT_3_30": {
+      "previousCents": 400,
+      "proposedCents": 600
+    },
+    "YT_5_30": {
+      "previousCents": 600,
+      "proposedCents": 700
+    },
+    "ZA_3_30": {
+      "previousCents": 700,
+      "proposedCents": 800
+    },
+    "ZM_3_30": {
+      "previousCents": 1700,
+      "proposedCents": 2000
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { catalogPreviewEnabled } from "@/lib/catalog-preview";
 import { authClient } from "@/lib/supabase/auth-server";
 import { holdOrder, reconcileHold } from "@/lib/payments/hold-server";
 import { queueCheckoutMeasurement } from "@/lib/analytics/server";
@@ -52,6 +53,9 @@ export async function POST(request: NextRequest) {
   let stage = "request";
   const fail = (error: string, status: number) =>
     NextResponse.json({ error }, { status, headers: paymentHeaders });
+  // Preview prices are intentionally not synchronized with live payment records.
+  if (catalogPreviewEnabled(process.env))
+    return fail("catalog_preview_only", 409);
   if (!checkoutConfigured()) return fail("payments_unavailable", 503);
   try {
     const origin = paymentOrigin();

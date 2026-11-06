@@ -1,12 +1,12 @@
 import "server-only";
-import { getDestinations, getCommercialPlans } from "./catalog-server";
+import { getDestination, getCommercialPlans } from "./catalog-server";
 import type { CartLine, ResolvedCart } from "./cart";
 
 export async function resolveCart(lines: CartLine[]): Promise<ResolvedCart> {
-  const catalog = await getDestinations();
   const destinations = await Promise.all(
     [...new Set(lines.map((l) => l.destination))].map(async (slug) => {
-      const destination = catalog.find((item) => item.slug === slug);
+      // Saved carts retain their exact SKU/coverage even when a family leaves discovery.
+      const destination = await getDestination(slug);
       return {
         slug,
         destination,

@@ -503,6 +503,8 @@ export function Checkout({
         }
         const messages: Record<string, string> = es
           ? {
+              catalog_preview_only:
+                "Esta vista local muestra las nuevas tarifas. Los pagos estarán disponibles cuando se publiquen los precios aprobados.",
               quote_expired:
                 "La cotización ha vencido. Revisa el total actualizado y vuelve a continuar.",
               price_changed:
@@ -517,6 +519,8 @@ export function Checkout({
                 "Permite las cookies necesarias y recarga esta página para continuar.",
             }
           : {
+              catalog_preview_only:
+                "This local preview shows the new prices. Payments will be available once the approved prices are published.",
               quote_expired:
                 "The exchange quote expired. Review the updated total and continue again.",
               price_changed:

@@ -6,6 +6,7 @@ import {
   createYappyOrder,
   verifyYappyIpn,
   yappyScriptUrl,
+  YappyRequestError,
 } from "../src/lib/integrations/yappy.ts";
 
 const secret = Buffer.from("fixture-key.metadata").toString("base64");
@@ -19,6 +20,27 @@ const input = {
   taxCents: 71,
   ipnUrl: `${config.origin}/api/yappy/ipn`,
 };
+test("provider rejection preserves only safe stage, status and code for diagnosis", async () => {
+  let count = 0;
+  await assert.rejects(
+    createYappyOrder(config, input, async () => {
+      if (++count === 1)
+        return Response.json({
+          body: { token: "fixture-token", epochTime: 1730000000 },
+        });
+      return Response.json(
+        { status: { code: "YAPPY-004", description: secret }, body: null },
+        { status: 400 },
+      );
+    }),
+    (e) =>
+      e instanceof YappyRequestError &&
+      e.stage === "order" &&
+      e.httpStatus === 400 &&
+      e.providerCode === "YAPPY-004" &&
+      !JSON.stringify(e).includes(secret),
+  );
+});
 const sign = (orderId, status, domain) =>
   createHmac("sha256", "fixture-key")
     .update(orderId + status + domain)

@@ -103,6 +103,22 @@ export function yappyScriptUrl(live: boolean): string {
     : "https://bt-cdn-uat.yappycloud.com/v1/cdn/web-component-btn-yappy.js";
 }
 
+export class YappyRequestError extends Error {
+  readonly stage: "authorization" | "order";
+  readonly httpStatus: number | null;
+  readonly providerCode: string | null;
+  constructor(
+    stage: "authorization" | "order",
+    httpStatus: number | null,
+    providerCode: string | null,
+  ) {
+    super("Yappy service request failed");
+    this.stage = stage;
+    this.httpStatus = httpStatus;
+    this.providerCode = providerCode;
+  }
+}
+
 async function post(
   live: boolean,
   path: string,
@@ -112,6 +128,10 @@ async function post(
 ): Promise<Record<string, unknown>> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10_000);
+  const stage =
+    path === "/payments/validate/merchant" ? "authorization" : "order";
+  let httpStatus: number | null = null;
+  let providerCode: string | null = null;
   try {
     const response = await fetchImpl(
       `${live ? endpoints.live : endpoints.test}${path}`,
@@ -127,7 +147,8 @@ async function post(
         signal: controller.signal,
       },
     );
-    if (!response.ok || !response.body) throw new Error();
+    httpStatus = response.status;
+    if (!response.body) throw new Error();
     const reader = response.body.getReader();
     const chunks: Uint8Array[] = [];
     let size = 0;
@@ -146,6 +167,11 @@ async function post(
       reader.releaseLock();
     }
     const json = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+    const code = json?.status?.code;
+    // Preserve only bounded machine codes; never log raw provider messages or bodies.
+    if (typeof code === "string" && /^(?:YAPPY-\d{3}|E\d{3}|\d{4})$/.test(code))
+      providerCode = code;
+    if (!response.ok) throw new Error();
     if (
       !json ||
       typeof json.body !== "object" ||
@@ -155,7 +181,11 @@ async function post(
       throw new Error();
     return json.body;
   } catch {
-    throw new Error("Yappy service request failed");
+    console.error(
+      "yappy_provider_failure",
+      JSON.stringify({ stage, httpStatus, providerCode }),
+    );
+    throw new YappyRequestError(stage, httpStatus, providerCode);
   } finally {
     clearTimeout(timeout);
   }

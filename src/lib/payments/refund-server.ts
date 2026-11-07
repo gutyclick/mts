@@ -35,7 +35,17 @@ export async function adminRefundView(actor: string, order: string | null) {
     p_order: order,
   });
   if (r.error) throw Error("Refund view unavailable");
-  return refundView.parse(r.data);
+  const view = refundView.parse(r.data);
+  if (order && process.env.YAPPY_RETAIL_PERSISTENCE_READY === "true") {
+    const method = await checkoutDatabase()
+      .from("checkout_yappy_attempts")
+      .select("order_id")
+      .eq("order_id", order)
+      .maybeSingle();
+    if (method.error) throw Error("Payment method unavailable");
+    if (method.data) view.paymentMethod = "yappy";
+  }
+  return view;
 }
 export async function recordStripeRefund(
   refund: Stripe.Refund,

@@ -85,7 +85,12 @@
     "simcoins:setup": "node --experimental-strip-types scripts/setup-simcoins.mjs",
     "yappy:configure": "node scripts/configure-yappy.mjs",
     "dev:catalog": "node scripts/dev-catalog.mjs",
-    "test:catalog-selector": "node --experimental-strip-types --test tests/plan-selection.test.mjs tests/regional-catalog-policy.test.mjs tests/catalog-preview.test.mjs tests/catalog-preview-server.test.mjs"
+    "test:catalog-selector": "node --experimental-strip-types --test tests/plan-selection.test.mjs tests/regional-catalog-policy.test.mjs tests/catalog-preview.test.mjs tests/catalog-preview-server.test.mjs",
+    "yappy:check": "node --experimental-strip-types scripts/check-yappy.mjs",
+    "yappy:setup": "node scripts/setup-yappy.mjs",
+    "yappy:deploy": "node --experimental-strip-types scripts/deploy-yappy-env.mjs",
+    "test:yappy": "node --experimental-strip-types --test tests/yappy.test.mjs tests/yappy-retail.test.mjs tests/yappy-checkout-db.test.mjs tests/yappy-checkout-api.test.mjs tests/yappy-refund-db.test.mjs",
+    "yappy:fees": "node scripts/configure-yappy-fees.mjs"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^7.0.0",

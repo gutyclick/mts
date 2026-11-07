@@ -8,6 +8,7 @@ import { randomUUID } from "node:crypto";
 import * as core from "../src/lib/payments/checkout-core.ts";
 import { legalVersion } from "../src/lib/legal-version.ts";
 import { couponFailure } from "../src/lib/payments/coupons.ts";
+import { catalogPreviewEnabled } from "../src/lib/catalog-preview.ts";
 
 function harness(user = null) {
   const calls = [];
@@ -18,6 +19,7 @@ function harness(user = null) {
       },
     },
     zod: { z },
+    "@/lib/catalog-preview": { catalogPreviewEnabled },
     "@/lib/supabase/auth-server": {
       authClient: async () => ({
         auth: { getUser: async () => ({ data: { user }, error: null }) },

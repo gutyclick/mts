@@ -51,20 +51,28 @@ export function YappyPayment({
   live,
   locale,
   onRefresh,
+  onCreate,
+  disabled = false,
 }: {
   orderId: string;
   live: boolean;
   locale: Locale;
   onRefresh: () => void;
+  onCreate?: (signal: AbortSignal) => Promise<PaymentParameters>;
+  disabled?: boolean;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const refresh = useRef(onRefresh);
+  const create = useRef(onCreate);
+  const blocked = useRef(disabled);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const es = locale === "es";
   useEffect(() => {
     refresh.current = onRefresh;
-  }, [onRefresh]);
+    create.current = onCreate;
+    blocked.current = disabled;
+  }, [onRefresh, onCreate, disabled]);
   useEffect(() => {
     const container = host.current;
     if (!container) return;
@@ -95,20 +103,25 @@ export function YappyPayment({
       refresh.current();
     };
     const clicked = async () => {
-      if (disposed || active || !button) return;
+      if (disposed || active || !button || blocked.current) return;
       active = true;
       button.isButtonLoading = true;
       setError("");
       setNotice("");
       try {
-        const response = await fetch("/api/portal/commerce", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "yappy", orderId }),
-          signal: controller.signal,
-        });
-        const value = await response.json();
-        if (!response.ok) throw Error(value.error ?? "unavailable");
+        let value: PaymentParameters;
+        if (create.current) value = await create.current(controller.signal);
+        else {
+          const response = await fetch("/api/portal/commerce", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "yappy", orderId }),
+            signal: controller.signal,
+          });
+          const payload = await response.json();
+          if (!response.ok) throw Error(payload.error ?? "unavailable");
+          value = payload;
+        }
         const valid = (value: unknown): value is string =>
           typeof value === "string" && value.length > 0 && value.length <= 4096;
         if (
@@ -168,7 +181,12 @@ export function YappyPayment({
   }, [orderId, live, locale, es]);
   return (
     <div>
-      <div ref={host} aria-label={es ? "Pagar con Yappy" : "Pay with Yappy"} />
+      <div
+        ref={host}
+        inert={disabled}
+        aria-disabled={disabled}
+        aria-label={es ? "Pagar con Yappy" : "Pay with Yappy"}
+      />
       {error && (
         <p className="bc-error" role="alert">
           {error}

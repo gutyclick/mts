@@ -56,11 +56,26 @@ function httpsUrl(value: string): URL | null {
 export function yappyConfig(
   env: Record<string, string | undefined>,
   live: boolean,
+  site: "business" | "retail" = "business",
 ): YappyConfig | null {
-  const prefix = live ? "YAPPY_LIVE_" : "YAPPY_TEST_";
+  const scope = `YAPPY_${site.toUpperCase()}_`;
+  const scopedPrefix = `${scope}${live ? "LIVE" : "TEST"}_`;
+  // Legacy credentials belong only to the business portal; never mix domains.
+  const prefix =
+    site === "business" &&
+    !env[`${scopedPrefix}MERCHANT_ID`] &&
+    !env[`${scopedPrefix}SECRET`]
+      ? live
+        ? "YAPPY_LIVE_"
+        : "YAPPY_TEST_"
+      : scopedPrefix;
   const merchantId = env[`${prefix}MERCHANT_ID`];
   const secret = env[`${prefix}SECRET`];
-  const domain = env.YAPPY_DOMAIN ?? "https://portal.mytripsim.com";
+  const domain =
+    env[`${scope}DOMAIN`] ??
+    (site === "business"
+      ? (env.YAPPY_DOMAIN ?? "https://portal.mytripsim.com")
+      : "https://www.mytripsim.com");
   const url = httpsUrl(domain);
   const aliasYappy = env[`${prefix}ALIAS_YAPPY`];
   if (
@@ -222,6 +237,29 @@ export async function createYappyOrder(
     token: result.token,
     documentName: result.documentName,
   };
+}
+
+/** Read-only authorization check: never creates a payment order. */
+export async function validateYappyMerchant(
+  config: YappyConfig,
+  fetchImpl: typeof fetch = fetch,
+) {
+  const auth = await post(
+    config.live,
+    "/payments/validate/merchant",
+    {
+      merchantId: config.merchantId,
+      urlDomain: config.domain,
+    },
+    fetchImpl,
+  );
+  if (
+    !safeString(auth.token) ||
+    !Number.isSafeInteger(auth.epochTime) ||
+    (auth.epochTime as number) <= 0
+  )
+    throw Error("Invalid Yappy authorization response");
+  return true;
 }
 
 export function verifyYappyIpn(

@@ -42,6 +42,16 @@ export async function GET(request: NextRequest) {
 const schema = z.discriminatedUnion("action", [
   z
     .object({
+      action: z.literal("record_yappy"),
+      order: z.uuid(),
+      units: z.array(z.uuid()).min(1).max(200),
+      reason: z.string().trim().min(10).max(1000),
+      reference: z.string().trim().min(3).max(200),
+      ack: z.literal(true),
+    })
+    .strict(),
+  z
+    .object({
       action: z.literal("request"),
       order: z.uuid(),
       units: z.array(z.uuid()).min(1).max(200),
@@ -78,6 +88,26 @@ export async function POST(request: NextRequest) {
     const body = parsed.data,
       actor = s.user!.id,
       db = checkoutDatabase();
+    if (body.action === "record_yappy") {
+      const result = await db.rpc("admin_record_yappy_refund", {
+        p_actor: actor,
+        p_order: body.order,
+        p_units: body.units,
+        p_reason: body.reason,
+        p_reference: body.reference,
+        p_ack: body.ack,
+      });
+      if (result.error)
+        return reply(
+          {
+            error: result.error.message.includes("fulfillment_busy")
+              ? "fulfillment_busy"
+              : "conflict",
+          },
+          409,
+        );
+      return reply({ ok: true, id: result.data });
+    }
     if (body.action === "request") {
       const r = await db.rpc("admin_refund_request", {
         p_actor: actor,

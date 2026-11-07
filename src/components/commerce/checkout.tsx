@@ -47,6 +47,7 @@ import {
   type CheckoutCouponQuote,
 } from "./checkout-coupon";
 import "@/app/checkout-coupons.css";
+import { YappyPayment } from "@/components/portal/yappy-payment";
 
 export function Checkout({
   locale,
@@ -71,6 +72,12 @@ export function Checkout({
   const initialized = useRef(false);
   const [testMode, setTestMode] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  const [yappyEnabled, setYappyEnabled] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "yappy">(
+    "stripe",
+  );
+  const yappyAttempt = useRef<{ key: string; id: string } | null>(null);
+  const yappyOrder = useRef<string | null>(null);
   const [simcoinsEnabled, setSimcoinsEnabled] = useState(false);
   const [useCoins, setUseCoins] = useState(false);
   const [rewards, setRewards] = useState<{
@@ -124,6 +131,8 @@ export function Checkout({
         if (response.ok) {
           const data = await response.json();
           setEnabled(data.enabled === true);
+          setYappyEnabled(data.yappyEnabled === true);
+          if (!data.enabled && data.yappyEnabled) setPaymentMethod("yappy");
           setSimcoinsEnabled(data.simcoinsEnabled === true);
           setTestMode(data.mode === "test");
           setPublishableKey(
@@ -163,7 +172,7 @@ export function Checkout({
   const couponDetails =
     reviewedCoupon?.key === couponKey ? reviewedCoupon.details : null;
   const couponReady =
-    enabled &&
+    (enabled || yappyEnabled) &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim()) &&
     pricing.ready &&
     !pricing.busy &&
@@ -366,6 +375,7 @@ export function Checkout({
   }, [checkoutKey]);
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (paymentMethod === "yappy") return;
     if (couponQuote && Date.parse(couponQuote.expiresAt) <= Date.now()) {
       setCoupon(null);
       setCouponError(couponErrorMessage("coupon_expired", es));
@@ -778,18 +788,65 @@ export function Checkout({
                 <h2>{es ? "Pago seguro" : "Secure payment"}</h2>
                 <span className="checkout-stripe-note">
                   <LockKeyhole size={13} aria-hidden="true" />
-                  {enabled
-                    ? testMode
-                      ? es
-                        ? "Modo de pruebas"
-                        : "Test mode"
-                      : "Stripe"
-                    : es
-                      ? "Conectando…"
-                      : "Connecting…"}
+                  {paymentMethod === "yappy"
+                    ? "Yappy"
+                    : enabled
+                      ? testMode
+                        ? es
+                          ? "Modo de pruebas"
+                          : "Test mode"
+                        : "Stripe"
+                      : es
+                        ? "Conectando…"
+                        : "Connecting…"}
                 </span>
               </div>
-              {enabled &&
+              {yappyEnabled && (
+                <fieldset className="checkout-payment-methods">
+                  <legend>{es ? "Método de pago" : "Payment method"}</legend>
+                  <label>
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="stripe"
+                      checked={paymentMethod === "stripe"}
+                      disabled={busy || !!verificationOrder || !enabled}
+                      onChange={() => {
+                        setFieldsReady(false);
+                        setPaymentMethod("stripe");
+                      }}
+                    />{" "}
+                    {es ? "Tarjeta y otros métodos" : "Card and other methods"}
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="yappy"
+                      checked={paymentMethod === "yappy"}
+                      disabled={
+                        busy ||
+                        !!verificationOrder ||
+                        pricing.currency !== "USD"
+                      }
+                      onChange={() => {
+                        setFieldsReady(false);
+                        setPaymentMethod("yappy");
+                      }}
+                    />{" "}
+                    Yappy · Panamá (USD)
+                  </label>
+                  {pricing.currency !== "USD" && (
+                    <small>
+                      {es
+                        ? "Selecciona USD para pagar con Yappy."
+                        : "Select USD to pay with Yappy."}
+                    </small>
+                  )}
+                </fieldset>
+              )}
+              {paymentMethod === "stripe" &&
+                enabled &&
                 publishableKey &&
                 paymentTotal != null &&
                 pricing.ready && (
@@ -878,38 +935,157 @@ export function Checkout({
                   .
                 </span>
               </label>
-              <button
-                type="submit"
-                className="button button-primary checkout-pay"
-                disabled={
-                  !enabled ||
-                  busy ||
-                  !!verificationOrder ||
-                  couponBusy ||
-                  effectiveRewardsBusy ||
-                  cart.loading ||
-                  cart.error ||
-                  total == null ||
-                  paymentTotal == null ||
-                  !pricing.ready ||
-                  !!pricing.busy ||
-                  !compatible ||
-                  !terms ||
-                  !fieldsReady
-                }
-                aria-describedby="checkout-payment-note"
-              >
-                {busy ? (
-                  <LoaderCircle size={17} className="payment-spinner" />
-                ) : (
-                  <LockKeyhole size={17} />
-                )}
-                {busy
-                  ? es
-                    ? "Preparando tu pago…"
-                    : "Preparing payment…"
-                  : `${es ? "Pagar" : "Pay"} ${paymentTotal == null ? "" : formatMoney(paymentTotal, pricing.currency, locale)}${testMode ? (es ? " (prueba)" : " (test)") : ""}`}
-              </button>
+              {paymentMethod === "yappy" && yappyEnabled && (
+                <div className="checkout-yappy">
+                  <YappyPayment
+                    orderId="retail"
+                    live={!testMode}
+                    locale={locale}
+                    disabled={
+                      !terms ||
+                      !compatible ||
+                      pricing.currency !== "USD" ||
+                      cart.loading ||
+                      cart.error ||
+                      couponBusy ||
+                      effectiveRewardsBusy ||
+                      !pricing.ready ||
+                      !!pricing.busy
+                    }
+                    onRefresh={() => {
+                      if (yappyOrder.current)
+                        router.push(
+                          `/${locale}/checkout/result?order=${encodeURIComponent(yappyOrder.current)}`,
+                        );
+                    }}
+                    onCreate={async (signal) => {
+                      if (
+                        !form.current?.reportValidity() ||
+                        !terms ||
+                        !compatible ||
+                        paymentTotal == null ||
+                        total == null ||
+                        pricing.currency !== "USD"
+                      )
+                        throw Error("invalid");
+                      const key = checkoutKey;
+                      if (yappyAttempt.current?.key !== key)
+                        yappyAttempt.current = { key, id: crypto.randomUUID() };
+                      setBusy(true);
+                      setError("");
+                      try {
+                        const response = await fetch("/api/checkout/yappy", {
+                          method: "POST",
+                          headers: { "content-type": "application/json" },
+                          signal,
+                          body: JSON.stringify({
+                            attemptId: yappyAttempt.current.id,
+                            locale,
+                            email: buyerEmail.trim(),
+                            differentRecipient,
+                            ...(differentRecipient
+                              ? { recipientEmail: recipientEmail.trim() }
+                              : {}),
+                            marketingOptIn,
+                            lines: cart.lines,
+                            expectedTotal: total,
+                            currency: "USD",
+                            fxQuoteId: null,
+                            expectedPaymentTotal: paymentTotal,
+                            ...(couponQuote
+                              ? { couponQuoteId: couponQuote.id }
+                              : rewardsQuote
+                                ? { simcoinsQuoteId: rewardsQuote.id }
+                                : {}),
+                            compatible: true,
+                            terms: true,
+                            legalVersion,
+                          }),
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                          if (data.error === "yappy_payment_pending") {
+                            setVerificationOrder(yappyAttempt.current.id);
+                            setError(
+                              es
+                                ? "Este pago necesita verificación. Consulta su estado antes de volver a pagar."
+                                : "This payment needs verification. Check its status before paying again.",
+                            );
+                          } else
+                            setError(
+                              data.error === "yappy_insufficient_margin"
+                                ? es
+                                  ? "Yappy no está disponible para esta combinación. Puedes usar otro método de pago."
+                                  : "Yappy is unavailable for this combination. You can use another payment method."
+                                : es
+                                  ? "No pudimos preparar Yappy. Revisa el carrito y vuelve a intentarlo."
+                                  : "We could not prepare Yappy. Review your cart and try again.",
+                            );
+                          if (data.error !== "yappy_payment_pending")
+                            yappyAttempt.current = null;
+                          throw Error("unavailable");
+                        }
+                        if (data.url) {
+                          router.push(data.url);
+                          throw Error("payment_pending");
+                        }
+                        if (latestCheckoutKey.current !== key)
+                          throw Error("attempt_conflict");
+                        yappyOrder.current = data.orderId;
+                        setVerificationOrder(data.orderId);
+                        return {
+                          transactionId: data.transactionId,
+                          token: data.token,
+                          documentName: data.documentName,
+                        };
+                      } finally {
+                        setBusy(false);
+                      }
+                    }}
+                  />
+                  {(!terms || !compatible) && (
+                    <p className="commerce-muted">
+                      {es
+                        ? "Confirma la compatibilidad y acepta las condiciones para habilitar Yappy."
+                        : "Confirm compatibility and accept the terms to enable Yappy."}
+                    </p>
+                  )}
+                </div>
+              )}
+              {paymentMethod === "stripe" && (
+                <button
+                  type="submit"
+                  className="button button-primary checkout-pay"
+                  disabled={
+                    !enabled ||
+                    busy ||
+                    !!verificationOrder ||
+                    couponBusy ||
+                    effectiveRewardsBusy ||
+                    cart.loading ||
+                    cart.error ||
+                    total == null ||
+                    paymentTotal == null ||
+                    !pricing.ready ||
+                    !!pricing.busy ||
+                    !compatible ||
+                    !terms ||
+                    !fieldsReady
+                  }
+                  aria-describedby="checkout-payment-note"
+                >
+                  {busy ? (
+                    <LoaderCircle size={17} className="payment-spinner" />
+                  ) : (
+                    <LockKeyhole size={17} />
+                  )}
+                  {busy
+                    ? es
+                      ? "Preparando tu pago…"
+                      : "Preparing payment…"
+                    : `${es ? "Pagar" : "Pay"} ${paymentTotal == null ? "" : formatMoney(paymentTotal, pricing.currency, locale)}${testMode ? (es ? " (prueba)" : " (test)") : ""}`}
+                </button>
+              )}
               {pricing.error && (
                 <div className="checkout-error" role="alert">
                   <p>

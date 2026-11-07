@@ -23,6 +23,7 @@ export const refundRecord = z.object({
   stripe_refund_id: z.string().nullable(),
 });
 export const refundView = z.object({
+  paymentMethod: z.enum(["stripe", "yappy"]).default("stripe"),
   audit: z.array(
     z.object({
       request_id: z.uuid(),

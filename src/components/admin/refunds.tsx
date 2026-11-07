@@ -21,6 +21,10 @@ import {
 } from "@/lib/payments/refund-model";
 import { OperationsShell } from "./operations-shell";
 const auditNames: Record<string, [string, string]> = {
+  yappy_external_refund_verified: [
+    "Devolución externa Yappy verificada y registrada",
+    "External Yappy refund verified and recorded",
+  ],
   requested: ["Solicitud creada", "Request created"],
   approved_provider_cancellation_not_included: [
     "Reembolso autorizado; gestión del proveedor por separado",
@@ -69,6 +73,8 @@ export function RefundsDashboard({
     [data, setData] = useState<RefundView | null>(initialData),
     [selected, setSelected] = useState<string[]>([]),
     [reason, setReason] = useState(""),
+    [manualReference, setManualReference] = useState(""),
+    [manualAck, setManualAck] = useState(false),
     [confirm, setConfirm] = useState<string | null>(null),
     [ack, setAck] = useState(false),
     [busy, setBusy] = useState(false),
@@ -135,15 +141,24 @@ export function RefundsDashboard({
       setConfirm(null);
       setAck(false);
       setSelected([]);
-      if (body.action === "request") setReason("");
+      if (body.action === "request" || body.action === "record_yappy")
+        setReason("");
+      if (body.action === "record_yappy") {
+        setManualReference("");
+        setManualAck(false);
+      }
       setNotice(
-        result.busy
+        body.action === "record_yappy"
           ? es
-            ? "Hay una comprobación en curso. Actualiza el estado en unos instantes."
-            : "A check is already running. Refresh the status shortly."
-          : es
-            ? "Acción registrada. Consulta el estado actualizado; «Pendiente» no significa que el dinero ya se haya devuelto."
-            : "Action recorded. Check the updated status; “Pending” does not mean the money has been returned.",
+            ? "Devolución Yappy registrada. No se ha enviado dinero desde este panel."
+            : "Yappy refund recorded. This panel did not transfer funds."
+          : result.busy
+            ? es
+              ? "Hay una comprobación en curso. Actualiza el estado en unos instantes."
+              : "A check is already running. Refresh the status shortly."
+            : es
+              ? "Acción registrada. Consulta el estado actualizado; «Pendiente» no significa que el dinero ya se haya devuelto."
+              : "Action recorded. Check the updated status; “Pending” does not mean the money has been returned.",
       );
       setRevision((v) => v + 1);
     } catch (e) {
@@ -178,8 +193,8 @@ export function RefundsDashboard({
           </h1>
           <p>
             {es
-              ? "Revisa cada caso, autoriza el importe y consulta el resultado de Stripe."
-              : "Review each case, approve the amount and check Stripe’s result."}
+              ? "Revisa cada caso, gestiona Stripe y registra devoluciones verificadas de Yappy."
+              : "Review each case, manage Stripe and record verified Yappy refunds."}
           </p>
         </div>
         <button
@@ -212,6 +227,8 @@ export function RefundsDashboard({
             return;
           }
           setOrder(input.trim());
+          setManualReference("");
+          setManualAck(false);
           setData(null);
           setSelected([]);
           setNotice("");
@@ -290,17 +307,25 @@ export function RefundsDashboard({
               onSubmit={(e) => {
                 e.preventDefault();
                 void action({
-                  action: "request",
+                  action:
+                    data.paymentMethod === "yappy" ? "record_yappy" : "request",
                   order: data.order!.id,
                   units: selected,
                   reason,
+                  ...(data.paymentMethod === "yappy"
+                    ? { reference: manualReference, ack: manualAck }
+                    : {}),
                 });
               }}
             >
               <p className="commerce-muted">
-                {es
-                  ? "Selecciona las eSIM que se deben revisar. El importe se obtiene del pedido original. Crear una solicitud todavía no devuelve dinero."
-                  : "Select the eSIMs to review. The amount comes from the original order. Creating a request does not refund money yet."}
+                {data.paymentMethod === "yappy"
+                  ? es
+                    ? "Yappy: primero completa y verifica la devolución externa. Selecciona aquí exactamente las eSIM y el importe devueltos para registrar el resultado; este panel no envía dinero."
+                    : "Yappy: first complete and verify the external refund. Select the exact refunded eSIMs and amount here to record the result; this panel does not transfer money."
+                  : es
+                    ? "Selecciona las eSIM que se deben revisar. El importe se obtiene del pedido original. Crear una solicitud todavía no devuelve dinero."
+                    : "Select the eSIMs to review. The amount comes from the original order. Creating a request does not refund money yet."}
               </p>
               <div className="refund-units">
                 {data.order.units.map((u) => (
@@ -349,6 +374,38 @@ export function RefundsDashboard({
               )}
               {data.order.units.some((u) => !u.reserved) && (
                 <>
+                  {data.paymentMethod === "yappy" && (
+                    <>
+                      <label className="refund-reason">
+                        {es
+                          ? "Referencia de la devolución en Yappy"
+                          : "Yappy refund reference"}
+                        <input
+                          required
+                          minLength={3}
+                          maxLength={200}
+                          value={manualReference}
+                          onChange={(e) => setManualReference(e.target.value)}
+                          disabled={busy}
+                          autoComplete="off"
+                        />
+                      </label>
+                      <label className="commerce-checkbox">
+                        <input
+                          type="checkbox"
+                          required
+                          checked={manualAck}
+                          onChange={(e) => setManualAck(e.target.checked)}
+                          disabled={busy}
+                        />
+                        <span>
+                          {es
+                            ? "Confirmo que verifiqué la devolución externa por el importe seleccionado. Registrar esto no cancela la eSIM en el proveedor."
+                            : "I confirm I verified the external refund for the selected amount. Recording this does not cancel the provider eSIM."}
+                        </span>
+                      </label>
+                    </>
+                  )}
                   <label className="refund-reason" htmlFor="refund-reason">
                     {es
                       ? "Motivo y revisión interna"
@@ -371,7 +428,11 @@ export function RefundsDashboard({
                   <button
                     className="button button-primary"
                     disabled={
-                      busy || !selected.length || reason.trim().length < 10
+                      busy ||
+                      !selected.length ||
+                      reason.trim().length < 10 ||
+                      (data.paymentMethod === "yappy" &&
+                        (!manualAck || manualReference.trim().length < 3))
                     }
                   >
                     {busy ? (
@@ -379,7 +440,14 @@ export function RefundsDashboard({
                     ) : (
                       <ArrowRight size={17} />
                     )}{" "}
-                    {es ? "Crear solicitud" : "Create request"} · {money(total)}
+                    {data.paymentMethod === "yappy"
+                      ? es
+                        ? "Registrar devolución verificada"
+                        : "Record verified refund"
+                      : es
+                        ? "Crear solicitud"
+                        : "Create request"}{" "}
+                    · {money(total)}
                   </button>
                 </>
               )}

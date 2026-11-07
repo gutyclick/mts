@@ -8,9 +8,17 @@ if (!process.stdin.isTTY || !process.stdout.isTTY) {
   process.exit(1);
 }
 const live = process.argv.includes("--live");
+const siteIndex = process.argv.indexOf("--site");
+const site = siteIndex < 0 ? "business" : process.argv[siteIndex + 1];
 try {
+  if (!["business", "retail"].includes(site)) throw Error();
+  const domain =
+    site === "business"
+      ? "https://portal.mytripsim.com"
+      : "https://www.mytripsim.com";
+  const prefix = `YAPPY_${site.toUpperCase()}_${live ? "LIVE" : "TEST"}_`;
   console.log(
-    "Yappy Comercial: introduce el ID de comercio y la clave secreta del botón configurado para https://portal.mytripsim.com. La entrada queda oculta. No se crearán transacciones.",
+    `Yappy Comercial: introduce el ID y la clave secreta del botón configurado para ${domain}. La entrada queda oculta. No se crearán transacciones.`,
   );
   const output = new Writable({
     write(_c, _e, callback) {
@@ -37,6 +45,12 @@ try {
   }
   const merchant = await ask("ID del comercio: "),
     secret = await ask("Clave secreta: ");
+  const testPhone = live
+    ? null
+    : await ask(
+        "Teléfono registrado para pruebas Yappy (8 dígitos, sin prefijo): ",
+      );
+  if (testPhone !== null && !/^\d{8}$/.test(testPhone)) throw Error();
   const bytes = Buffer.from(secret, "base64"),
     decoded = bytes.toString("utf8");
   if (
@@ -52,11 +66,13 @@ try {
   let content = existsSync(".env.local")
     ? readFileSync(".env.local", "utf8")
     : "";
-  for (const [name, value] of [
-    [live ? "YAPPY_LIVE_MERCHANT_ID" : "YAPPY_TEST_MERCHANT_ID", merchant],
-    [live ? "YAPPY_LIVE_SECRET" : "YAPPY_TEST_SECRET", secret],
-    ["YAPPY_DOMAIN", "https://portal.mytripsim.com"],
-  ]) {
+  const values = [
+    [prefix + "MERCHANT_ID", merchant],
+    [prefix + "SECRET", secret],
+    [`YAPPY_${site.toUpperCase()}_DOMAIN`, domain],
+  ];
+  if (testPhone) values.push([prefix + "ALIAS_YAPPY", testPhone]);
+  for (const [name, value] of values) {
     const line = name + "=" + JSON.stringify(value),
       pattern = new RegExp("^" + name + "=.*$", "m");
     content = pattern.test(content)

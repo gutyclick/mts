@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { languagePreferenceCookie } from "@/lib/language-preference";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -340,6 +341,7 @@ export function PortalApp({
               className="bp-language"
               href={portalHref(otherLocale, base, route.view, route.tripId)}
               aria-label={t.language}
+              onClick={() => { document.cookie = languagePreferenceCookie(otherLocale, window.location.protocol === "https:"); }}
             >
               <Globe2 size={17} />
               {otherLocale.toUpperCase()}

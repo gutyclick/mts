@@ -1,7 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sessionResponse } from "./lib/supabase/auth-proxy";
 import { isPortalHost, portalRewrite } from "./lib/portal/routing";
+import { languageCookie, languageEntryPath } from "./lib/language-preference";
 export async function proxy(request: NextRequest) {
+  const entry = languageEntryPath(
+    request.nextUrl.pathname,
+    request.cookies.get(languageCookie)?.value,
+    request.headers.get("accept-language"),
+  );
+  if (entry) {
+    const target = request.nextUrl.clone();
+    target.pathname = entry;
+    const response = NextResponse.redirect(target, 307);
+    response.headers.set("Cache-Control", "private, no-store, max-age=0");
+    response.headers.set("Vary", "Accept-Language, Cookie");
+    if (
+      isPortalHost(request.headers.get("host")) ||
+      entry.startsWith("/portal/")
+    )
+      response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
   const headers = new Headers(request.headers);
   // Surface headers only select presentation. They never authorize data access.
   const preview = /^\/portal(?:\/|$)/.test(request.nextUrl.pathname);

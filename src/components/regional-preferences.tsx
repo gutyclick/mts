@@ -12,6 +12,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { Check, Globe2, Coins, X, Search, LoaderCircle } from "lucide-react";
 import { type Locale } from "@/lib/i18n";
 import { regionalLanguageHref } from "@/lib/regional-preferences";
+import { languagePreferenceCookie } from "@/lib/language-preference";
 import { currencies } from "@/lib/currency";
 import { useCurrency } from "./currency-provider";
 
@@ -189,6 +190,7 @@ export function RegionalPreferences({
                 className={`regional-option${option.code === locale ? " is-selected" : ""}`}
                 aria-current={option.code === locale ? "true" : undefined}
                 onClick={(e) => {
+                  document.cookie = languagePreferenceCookie(option.code, window.location.protocol === "https:");
                   if (option.code === locale) {
                     e.preventDefault();
                     close();
@@ -202,6 +204,7 @@ export function RegionalPreferences({
                   );
                 }}
                 onAuxClick={(e) => {
+                  document.cookie = languagePreferenceCookie(option.code, window.location.protocol === "https:");
                   e.currentTarget.href = regionalLanguageHref(
                     pathname,
                     option.code,

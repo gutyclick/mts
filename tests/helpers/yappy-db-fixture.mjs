@@ -13,18 +13,25 @@ export async function fixture() {
     "20261025000100_retail_prices.sql",
     "20261025000300_test_checkout.sql",
     "20261025000400_checkout_recipient_and_elements.sql",
+    "20261025000500_payment_holds.sql",
     "20261025000900_esim_fulfillment.sql",
     "20261026000300_checkout_legal_acceptance.sql",
   ])
     await db.exec(readFileSync(`supabase/migrations/${name}`, "utf8"));
-  await db.exec(`alter table checkout_orders drop constraint checkout_orders_livemode_check;alter table checkout_orders drop constraint checkout_orders_status_check;
-  alter table checkout_orders add column payment_total int,add column payment_currency text,add column payment_in_progress bool default false,add column payment_hold_expires_at timestamptz;
+  await db.exec(`alter table checkout_orders drop constraint checkout_orders_livemode_check;
+  alter table checkout_orders add column payment_total int,add column payment_currency text;
   insert into catalog_destinations(slug,name,code,type,image,artwork_kind,is_published) values('panama','{"es":"Panamá","en":"Panama"}','PA','country','/flags/pa.svg','flag',true);
   insert into catalog_plans(id,destination_slug,name,allowance,data_gb,days,coverage_code,is_published,retail_price_cents) values('PA_1_7','panama','Panama 1GB 7Days','1GB',1,7,'PA',true,400);
   insert into provider_package_bindings(plan_id,provider_slug,package_code,volume_bytes,days) values('PA_1_7','PA_1_7','fixture',1073741824,7);`);
   await db.exec(
     readFileSync(
       "supabase/migrations/20261107000100_checkout_yappy.sql",
+      "utf8",
+    ),
+  );
+  await db.exec(
+    readFileSync(
+      "supabase/migrations/20261107000300_yappy_hold_consistency.sql",
       "utf8",
     ),
   );

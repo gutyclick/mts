@@ -28,6 +28,7 @@ try {
   const check = `select to_regclass('public.checkout_yappy_attempts') is not null as installed,
   to_regprocedure('public.retail_yappy_settle(text,text,text,boolean)') is not null as settlement,
   to_regprocedure('public.admin_record_yappy_refund(uuid,uuid,uuid[],text,text,boolean)') is not null as manual_refunds,
+  position('payment_hold_started_at=now()' in pg_get_functiondef(to_regprocedure('public.retail_yappy_claim(uuid,text,integer,text,boolean)'))) > 0 as consistent_hold,
   case when to_regclass('public.checkout_yappy_attempts') is not null then
     not has_table_privilege('anon','public.checkout_yappy_attempts','select') and not has_table_privilege('authenticated','public.checkout_yappy_attempts','select')
     and (select relrowsecurity from pg_class where oid='public.checkout_yappy_attempts'::regclass) else false end as private_attempts,
@@ -43,6 +44,10 @@ try {
     query("supabase/migrations/20261107000200_yappy_manual_refunds.sql", true);
     state = query(`${folder}/check.sql`)[0];
   }
+  if (args.includes("--apply") && !state.consistent_hold) {
+    query("supabase/migrations/20261107000300_yappy_hold_consistency.sql", true);
+    state = query(`${folder}/check.sql`)[0];
+  }
   writeFileSync(`${folder}/readiness.json`, JSON.stringify(state, null, 2));
   console.log(JSON.stringify({ ...state, activationPerformed: false }));
   if (
@@ -50,7 +55,8 @@ try {
     !state.settlement ||
     !state.private_attempts ||
     !state.private_settlement ||
-    !state.manual_refunds
+    !state.manual_refunds ||
+    !state.consistent_hold
   )
     process.exitCode = 1;
 } catch {

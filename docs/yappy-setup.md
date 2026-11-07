@@ -45,3 +45,7 @@ Las pruebas automatizadas usan mocks y bases efímeras: no consumen saldo ni eSI
 Todavía se necesita una transacción de aceptación autorizada del comercio para verificar el botón en el dispositivo del cliente, el IPN real y la entrega completa. Una autorización de comercio correcta no prueba ese recorrido.
 
 Documentación técnica: [integración oficial Yappy](https://www.yappy.com.pa/comercial/desarrolladores/boton-de-pago-yappy-nueva-integracion/).
+
+## Corrección de la espera (7 de noviembre de 2026)
+
+La migración `20261107000300_yappy_hold_consistency.sql` conserva la restricción existente de espera: guarda inicio y vencimiento conjuntamente. No modifica pedidos existentes. El instalador comprueba y aplica también esta corrección. La prueba de base de datos carga la migración real de esperas para detectar incompatibilidades. Un rechazo de preparación anterior al contacto con Yappy ya no se etiqueta como pago incierto; los casos realmente inciertos mantienen la protección contra duplicados.

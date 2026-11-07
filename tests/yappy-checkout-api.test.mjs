@@ -46,6 +46,7 @@ function fixture({
   uncertain = false,
   guest = false,
   enabled = true,
+  claimError = null,
 } = {}) {
   const calls = [];
   let purchases = 0,
@@ -63,6 +64,8 @@ function fixture({
     rpc: async (name, args) => {
       calls.push({ name, args });
       if (name === "create_checkout_v3") return { data: order };
+      if (name === "retail_yappy_claim" && claimError)
+        return { error: claimError };
       if (name === "prepare_checkout_payment")
         return {
           data: { ...order, payment_total: 400, payment_currency: "USD" },
@@ -255,6 +258,17 @@ test("confirmed request prepares existing order and binds a single mocked provid
     400,
   );
   assert.ok(!names.includes("retail_yappy_settle"));
+});
+test("a rejected database claim before provider contact is not reported as an uncertain payment", async () => {
+  const f = fixture({
+    claimError: { message: "payment_hold_consistent", code: "23514" },
+  });
+  await assert.rejects(
+    f.begin(f.request()),
+    (e) => e.code === "yappy_unavailable",
+  );
+  assert.equal(f.purchases, 0);
+  assert.ok(f.calls.some((c) => c.name === "retail_yappy_preparation_failed"));
 });
 test("existing or uncertain transaction is not retried with a new provider order; guests cannot use account coupons", async () => {
   const f = fixture({ pending: true });

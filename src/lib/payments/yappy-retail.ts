@@ -254,7 +254,12 @@ export async function beginRetailYappy(request: NextRequest) {
       p_domain: settings.config.domain,
       p_live: live,
     });
-    if (claim.error) throw new RetailYappyError("yappy_payment_pending");
+    if (claim.error)
+      throw new RetailYappyError(
+        claim.error.message.includes("yappy_payment_pending")
+          ? "yappy_payment_pending"
+          : "yappy_unavailable",
+      );
     claimed = true;
     const payment = await createYappyOrder(settings.config, {
       orderId: ref,

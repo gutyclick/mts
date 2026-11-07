@@ -7,6 +7,14 @@ test("authoritative success enqueues exact quantity once; duplicates and later f
   try {
     const id = await order();
     await claim(id);
+    const hold = (
+      await db.query(
+        "select payment_hold_started_at is not null as started, payment_hold_expires_at=payment_hold_started_at+interval '5 minutes' as consistent from checkout_orders where id=$1",
+        [id],
+      )
+    ).rows[0];
+    assert.equal(hold.started, true);
+    assert.equal(hold.consistent, true);
     assert.equal(
       (await db.query("select count(*)::int n from esim_fulfillments")).rows[0]
         .n,
